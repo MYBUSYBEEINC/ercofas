@@ -313,7 +313,7 @@
     <value>Tetapan umum</value>
   </data>
   <data name="HomeIndexTabTitle" xml:space="preserve">
-    <value>NetStarter- Templat Pemula Aplikasi Web ASP.NET MVC C#</value>
+    <value>ERCOFAS. Templat Pemula Aplikasi Web ASP.NET MVC C#</value>
   </data>
   <data name="IDCardNumber" xml:space="preserve">
     <value>Nombor Kad Pengenalan</value>
@@ -432,8 +432,8 @@
   <data name="Name" xml:space="preserve">
     <value>Nama</value>
   </data>
-  <data name="NetStarter" xml:space="preserve">
-    <value>NetStarter</value>
+  <data name="ERCOFAS" xml:space="preserve">
+    <value>ERCOFAS</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>Kata laluan baharu</value>
@@ -645,8 +645,8 @@
   <data name="ThisRoleHasTheLeastNumberOfUser" xml:space="preserve">
     <value>Peranan ini mempunyai bilangan pengguna paling sedikit, mungkin peranan ini mempunyai kebenaran teratas.</value>
   </data>
-  <data name="ToNetStarter" xml:space="preserve">
-    <value>Kepada NetStarter</value>
+  <data name="ToERCOFAS" xml:space="preserve">
+    <value>Kepada ERCOFAS</value>
   </data>
   <data name="TopRole" xml:space="preserve">
     <value>Peranan Teratas</value>

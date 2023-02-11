@@ -1,4 +1,4 @@
-﻿namespace NetStarter.Enumeration
+﻿namespace ERCOFAS.Enumeration
 {
     public class UserTypeEnum
     {

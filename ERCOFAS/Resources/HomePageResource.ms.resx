@@ -223,7 +223,7 @@
     <value>Ini ialah Aplikasi Web C# ASP.NET MVC dengan Rangka Kerja .NET. Ia membantu untuk memulakan projek anda dengan beberapa modul penting</value>
   </data>
   <data name="HomeIndexTabTitle" xml:space="preserve">
-    <value>NetStarter- Templat Pemula Aplikasi Web ASP.NET MVC C#</value>
+    <value>ERCOFAS. Templat Pemula Aplikasi Web ASP.NET MVC C#</value>
   </data>
   <data name="HomeTitleOne" xml:space="preserve">
     <value>Mulakan projek .net anda dengan mudah dengan</value>
@@ -243,8 +243,8 @@
   <data name="Login" xml:space="preserve">
     <value>Log masuk</value>
   </data>
-  <data name="NetStarterFAQArticles" xml:space="preserve">
-    <value>Artikel Soalan Lazim NetStarter</value>
+  <data name="ERCOFAS.AQArticles" xml:space="preserve">
+    <value>Artikel Soalan Lazim ERCOFAS</value>
   </data>
   <data name="OurProducts" xml:space="preserve">
     <value>Produk kami</value>
@@ -265,7 +265,7 @@
     <value>Jimat Masa Anda</value>
   </data>
   <data name="SaveYourTimeDescription" xml:space="preserve">
-    <value>Masa adalah wang. NetStarter boleh menjimatkan masa dan wang anda dengan mempercepatkan proses pembangunan awal.</value>
+    <value>Masa adalah wang. ERCOFAS.boleh menjimatkan masa dan wang anda dengan mempercepatkan proses pembangunan awal.</value>
   </data>
   <data name="SendingEmail" xml:space="preserve">
     <value>Menghantar E-mel</value>
@@ -294,8 +294,8 @@
   <data name="TheFollowingArticle" xml:space="preserve">
     <value>artikel berikut</value>
   </data>
-  <data name="ToNetStarter" xml:space="preserve">
-    <value>Kepada NetStarter</value>
+  <data name="ToERCOFAS" xml:space="preserve">
+    <value>Kepada ERCOFAS</value>
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>Muat Naik Fail</value>
@@ -316,7 +316,7 @@
     <value>Lihat Lagi</value>
   </data>
   <data name="WebAppTitle" xml:space="preserve">
-    <value>NetStarter</value>
+    <value>ERCOFAS</value>
   </data>
   <data name="Whatyouget" xml:space="preserve">
     <value>Apa yang kamu dapat</value>
@@ -324,10 +324,10 @@
   <data name="WhatyougetDescription" xml:space="preserve">
     <value>Selepas Membeli, Anda Akan Mendapat Fail Zip Yang Mengandungi Perkara Berikut</value>
   </data>
-  <data name="WhyNetStarter" xml:space="preserve">
-    <value>Mengapa NetStarter</value>
+  <data name="WhyERCOFAS" xml:space="preserve">
+    <value>Mengapa ERCOFAS</value>
   </data>
-  <data name="WhyNetStarterLargeTitle" xml:space="preserve">
+  <data name="WhyERCOFAS.argeTitle" xml:space="preserve">
     <value>Mulakan Projek Anda Dengan Pengurusan Pengguna, Kebenaran Peranan &amp; Banyak Lagi</value>
   </data>
 </root>

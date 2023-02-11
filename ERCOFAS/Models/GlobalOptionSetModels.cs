@@ -1,10 +1,10 @@
-﻿using NetStarter.Resources;
+﻿using ERCOFAS.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace NetStarter.Models
+namespace ERCOFAS.Models
 {
     public class GlobalOptionSet
     {

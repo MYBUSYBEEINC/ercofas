@@ -1,8 +1,8 @@
-﻿using NetStarter.Models;
+﻿using ERCOFAS.Models;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace NetStarter.Controllers
+namespace ERCOFAS.Controllers
 {
     [Authorize]
     public class MenuSelectionController : Controller

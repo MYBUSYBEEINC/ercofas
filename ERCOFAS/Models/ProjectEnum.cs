@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 
-namespace NetStarter.Models
+namespace ERCOFAS.Models
 {
     //project default enum
 

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NetStarter.Resources {
+namespace ERCOFAS.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace NetStarter.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NetStarter.Resources.HomePageResource", typeof(HomePageResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ERCOFAS.Resources.HomePageResource", typeof(HomePageResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -165,6 +165,15 @@ namespace NetStarter.Resources {
         public static string EnvatoPortfolio {
             get {
                 return ResourceManager.GetString("EnvatoPortfolio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERCOFAS.FAQ Articles.
+        /// </summary>
+        public static string ERCOFAS_AQArticles {
+            get {
+                return ResourceManager.GetString("ERCOFAS.AQArticles", resourceCulture);
             }
         }
         
@@ -376,7 +385,7 @@ namespace NetStarter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NetStarter- ASP.NET MVC C# Web Application Starter Template.
+        ///   Looks up a localized string similar to ERCOFAS. ASP.NET MVC C# Web Application Starter Template.
         /// </summary>
         public static string HomeIndexTabTitle {
             get {
@@ -439,15 +448,6 @@ namespace NetStarter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NetStarter FAQ Articles.
-        /// </summary>
-        public static string NetStarterFAQArticles {
-            get {
-                return ResourceManager.GetString("NetStarterFAQArticles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Our Products.
         /// </summary>
         public static string OurProducts {
@@ -502,7 +502,7 @@ namespace NetStarter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Time is money. NetStarter can save your time and money by speeding up the initial development process..
+        ///   Looks up a localized string similar to Time is money. ERCOFAS.can save your time and money by speeding up the initial development process..
         /// </summary>
         public static string SaveYourTimeDescription {
             get {
@@ -592,11 +592,11 @@ namespace NetStarter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To NetStarter.
+        ///   Looks up a localized string similar to To ERCOFAS.
         /// </summary>
-        public static string ToNetStarter {
+        public static string ToERCOFAS {
             get {
-                return ResourceManager.GetString("ToNetStarter", resourceCulture);
+                return ResourceManager.GetString("ToERCOFAS", resourceCulture);
             }
         }
         
@@ -655,7 +655,7 @@ namespace NetStarter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NetStarter.
+        ///   Looks up a localized string similar to ERCOFAS.
         /// </summary>
         public static string WebAppTitle {
             get {
@@ -682,20 +682,20 @@ namespace NetStarter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Why NetStarter.
+        ///   Looks up a localized string similar to Why ERCOFAS.
         /// </summary>
-        public static string WhyNetStarter {
+        public static string WhyERCOFAS {
             get {
-                return ResourceManager.GetString("WhyNetStarter", resourceCulture);
+                return ResourceManager.GetString("WhyERCOFAS", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Start Your Project With User Management, Role Permission &amp; More.
         /// </summary>
-        public static string WhyNetStarterLargeTitle {
+        public static string WhyERCOFAS_argeTitle {
             get {
-                return ResourceManager.GetString("WhyNetStarterLargeTitle", resourceCulture);
+                return ResourceManager.GetString("WhyERCOFAS.argeTitle", resourceCulture);
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace NetStarter
+namespace ERCOFAS
 {
     public class BundleConfig
     {

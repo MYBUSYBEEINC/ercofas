@@ -1,7 +1,7 @@
-﻿using NetStarter.Models;
+﻿using ERCOFAS.Models;
 using System.Linq;
 
-namespace NetStarter.Helpers
+namespace ERCOFAS.Helpers
 {
     /// <summary>
     /// The helper class for the user.

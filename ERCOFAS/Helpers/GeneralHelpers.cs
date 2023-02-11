@@ -3,7 +3,7 @@ using System.Reflection;
 using System.ComponentModel;
 
 
-namespace NetStarter.Helpers
+namespace ERCOFAS.Helpers
 {
     public static class GeneralHelpers
     {

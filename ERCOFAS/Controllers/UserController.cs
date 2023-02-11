@@ -8,14 +8,14 @@ using System.Web.Mvc;
 using ExcelDataReader;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using NetStarter.Models;
+using ERCOFAS.Models;
 using System.Data;
 using System.Globalization;
-using NetStarter.Resources;
+using ERCOFAS.Resources;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
 
-namespace NetStarter.Controllers
+namespace ERCOFAS.Controllers
 {
     [Authorize]
     public class UserController : Controller

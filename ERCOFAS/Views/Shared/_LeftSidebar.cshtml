@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNet.Identity
-@using NetStarter.Models;
-@using NetStarter.Helpers
-@using NetStarter.Resources
-@using NetStarter.Enumeration;
+@using ERCOFAS.Models;
+@using ERCOFAS.Helpers
+@using ERCOFAS.Resources
+@using ERCOFAS.Enumeration;
 @{
     var userRole = RoleHelpers.GetMainRole();
 }
@@ -312,7 +312,7 @@
 
 <!-- offcanvas Sidebar for Mobile phone device -->
 <aside id="offcanvas" class="offcanvas offcanvas-start" tabindex="-1">
-    <div class="brandname ps-3">@Resource.NetStarter</div>
+    <div class="brandname ps-3">@Resource.ERCOFAS./div>
     <ul class="sidebar-nav" id="sidebar-nav">
         @if (dashboardPermission.ViewRight == true)
         {

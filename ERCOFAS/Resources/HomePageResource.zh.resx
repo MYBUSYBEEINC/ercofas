@@ -223,7 +223,7 @@
     <value>这是一个带有 .NET Framework 的 ASP.NET MVC C# Web 应用程序。它有助于通过一些基本模块启动您的项目</value>
   </data>
   <data name="HomeIndexTabTitle" xml:space="preserve">
-    <value>NetStarter- ASP.NET MVC C# Web 程序模板</value>
+    <value>ERCOFAS. ASP.NET MVC C# Web 程序模板</value>
   </data>
   <data name="HomeTitleOne" xml:space="preserve">
     <value>使用</value>
@@ -243,8 +243,8 @@
   <data name="Login" xml:space="preserve">
     <value>登录</value>
   </data>
-  <data name="NetStarterFAQArticles" xml:space="preserve">
-    <value>NetStarter 常见问题解答文章</value>
+  <data name="ERCOFAS.AQArticles" xml:space="preserve">
+    <value>ERCOFAS.常见问题解答文章</value>
   </data>
   <data name="OurProducts" xml:space="preserve">
     <value>我们的产品</value>
@@ -265,7 +265,7 @@
     <value>节省您的时间</value>
   </data>
   <data name="SaveYourTimeDescription" xml:space="preserve">
-    <value>时间是金钱。NetStarter可以让你加速完成您的.NET项目编码，大大的节省了重复写同样的代码的时间。</value>
+    <value>时间是金钱。ERCOFAS.以让你加速完成您的.NET项目编码，大大的节省了重复写同样的代码的时间。</value>
   </data>
   <data name="SendingEmail" xml:space="preserve">
     <value>发送邮件</value>
@@ -294,8 +294,8 @@
   <data name="TheFollowingArticle" xml:space="preserve">
     <value>这篇文章</value>
   </data>
-  <data name="ToNetStarter" xml:space="preserve">
-    <value>进NetStarter</value>
+  <data name="ToERCOFAS" xml:space="preserve">
+    <value>进ERCOFAS</value>
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>上传文件</value>
@@ -316,7 +316,7 @@
     <value>查看更多</value>
   </data>
   <data name="WebAppTitle" xml:space="preserve">
-    <value>NetStarter</value>
+    <value>ERCOFAS</value>
   </data>
   <data name="Whatyouget" xml:space="preserve">
     <value>您可以得到什么</value>
@@ -324,10 +324,10 @@
   <data name="WhatyougetDescription" xml:space="preserve">
     <value>购买后，您将获得一个 Zip 文件，其中包含以下的内容</value>
   </data>
-  <data name="WhyNetStarter" xml:space="preserve">
-    <value>为什么使用NetStarter</value>
+  <data name="WhyERCOFAS" xml:space="preserve">
+    <value>为什么使用ERCOFAS</value>
   </data>
-  <data name="WhyNetStarterLargeTitle" xml:space="preserve">
+  <data name="WhyERCOFAS.argeTitle" xml:space="preserve">
     <value>拥有用户管理、角色权限设定等功能来启动您的项目</value>
   </data>
 </root>

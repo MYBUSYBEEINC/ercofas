@@ -13,8 +13,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NetStarter</RootNamespace>
-    <AssemblyName>NetStarter</AssemblyName>
+    <RootNamespace>ERCOFAS</RootNamespace>
+    <AssemblyName>ERCOFAS</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -336,6 +336,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\HomePageResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomePageResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\HomePageResource.ms.Designer.cs">
       <DependentUpon>HomePageResource.ms.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -345,11 +350,6 @@
       <DependentUpon>HomePageResource.zh.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\HomePageResource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HomePageResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -724,20 +724,22 @@
     <EmbeddedResource Include="Resources\HomePageResource.ms.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HomePageResource.ms.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HomePageResource.zh.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HomePageResource.zh.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HomePageResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>HomePageResource.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>HomePageResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.ms.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -747,6 +749,7 @@
     <EmbeddedResource Include="Resources\Resource.zh.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.zh.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
-using NetStarter.Models;
-using NetStarter.Resources;
+using ERCOFAS.Models;
+using ERCOFAS.Resources;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace NetStarter.Controllers
+namespace ERCOFAS.Controllers
 {
     [Authorize]
     public class UserAttachmentController : Controller

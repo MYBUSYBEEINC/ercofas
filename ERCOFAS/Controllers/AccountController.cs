@@ -14,13 +14,13 @@ using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using NetStarter.Helpers;
-using NetStarter.Models;
-using NetStarter.Resources;
+using ERCOFAS.Helpers;
+using ERCOFAS.Models;
+using ERCOFAS.Resources;
 using reCaptcha;
 using RestSharp;
 
-namespace NetStarter.Controllers
+namespace ERCOFAS.Controllers
 {
     /// <summary>
     /// The account controller

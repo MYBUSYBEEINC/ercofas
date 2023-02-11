@@ -1,4 +1,4 @@
-﻿using NetStarter.Resources;
+﻿using ERCOFAS.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using CompareAttribute = System.ComponentModel.DataAnnotations.CompareAttribute;
 
-namespace NetStarter.Models
+namespace ERCOFAS.Models
 {
     //keep user profile information
     public class UserProfile

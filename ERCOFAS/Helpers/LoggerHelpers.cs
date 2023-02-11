@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 
-namespace NetStarter.Helpers
+namespace ERCOFAS.Helpers
 {
     /// <summary>
     /// The helper class for logger.

@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace NetStarter.Helpers
+namespace ERCOFAS.Helpers
 {
     /// <summary>
     /// The helper class for geo location.

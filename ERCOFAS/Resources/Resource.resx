@@ -421,7 +421,7 @@
     <value>HearingType</value>
   </data>
   <data name="HomeIndexTabTitle" xml:space="preserve">
-    <value>NetStarter- ASP.NET MVC C# Web Application Starter Template</value>
+    <value>ERCOFAS. ASP.NET MVC C# Web Application Starter Template</value>
   </data>
   <data name="IDCardNumber" xml:space="preserve">
     <value>ID Card Number</value>
@@ -615,7 +615,7 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="NetStarter" xml:space="preserve">
+  <data name="ERCOFAS" xml:space="preserve">
     <value>ERC OFAS</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
@@ -942,7 +942,7 @@
   <data name="ThisRoleHasTheLeastNumberOfUser" xml:space="preserve">
     <value>This role has the least number of user, perhaps it's a role with top permission.</value>
   </data>
-  <data name="ToNetStarter" xml:space="preserve">
+  <data name="ToERCOFAS" xml:space="preserve">
     <value>To ERC OFAS</value>
   </data>
   <data name="TotalCasesFiled" xml:space="preserve">

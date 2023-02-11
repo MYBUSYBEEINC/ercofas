@@ -5,9 +5,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using NetStarter.Models;
+using ERCOFAS.Models;
 
-namespace NetStarter
+namespace ERCOFAS
 {
     public partial class Startup
     {

@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Globalization;
 
-namespace NetStarter.Helpers
+namespace ERCOFAS.Helpers
 {
     /// <summary>
     /// The helper class for the date.

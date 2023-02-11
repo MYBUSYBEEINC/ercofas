@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace NetStarter.Models
+namespace ERCOFAS.Models
 {
     //project default enum
 

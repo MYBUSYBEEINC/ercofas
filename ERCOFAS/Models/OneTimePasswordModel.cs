@@ -1,4 +1,4 @@
-﻿namespace NetStarter.Models
+﻿namespace ERCOFAS.Models
 {
     public class OneTimePasswordModel
     {

@@ -313,7 +313,7 @@
     <value>通用设置</value>
   </data>
   <data name="HomeIndexTabTitle" xml:space="preserve">
-    <value>NetStarter- ASP.NET MVC C# Web 应用程序入门模板</value>
+    <value>ERCOFAS. ASP.NET MVC C# Web 应用程序入门模板</value>
   </data>
   <data name="IDCardNumber" xml:space="preserve">
     <value>身份证号码</value>
@@ -432,8 +432,8 @@
   <data name="Name" xml:space="preserve">
     <value>姓名</value>
   </data>
-  <data name="NetStarter" xml:space="preserve">
-    <value>NetStarter</value>
+  <data name="ERCOFAS" xml:space="preserve">
+    <value>ERCOFAS</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>新密码</value>
@@ -645,8 +645,8 @@
   <data name="ThisRoleHasTheLeastNumberOfUser" xml:space="preserve">
     <value>最少用户拥有此用户身份。此身份可能是系统中的顶级用户身份。</value>
   </data>
-  <data name="ToNetStarter" xml:space="preserve">
-    <value>至 NetStarter</value>
+  <data name="ToERCOFAS" xml:space="preserve">
+    <value>至 ERCOFAS</value>
   </data>
   <data name="TopRole" xml:space="preserve">
     <value>顶级用户身份</value>

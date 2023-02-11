@@ -1,10 +1,10 @@
-﻿using NetStarter.Models;
+﻿using ERCOFAS.Models;
 using PasswordGenerator;
 using System;
 using System.Linq;
 using System.Security.Cryptography;
 
-namespace NetStarter.Helpers
+namespace ERCOFAS.Helpers
 {
     /// <summary>
     /// The helper class for password.

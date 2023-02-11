@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using NetStarter.Resources;
+using ERCOFAS.Resources;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NetStarter.Models
+namespace ERCOFAS.Models
 {
     public class AspNetUserTypes
     {

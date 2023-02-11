@@ -1,9 +1,9 @@
-﻿using NetStarter.Resources;
+﻿using ERCOFAS.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace NetStarter.Models
+namespace ERCOFAS.Models
 {
     public class LoginHistory
     {

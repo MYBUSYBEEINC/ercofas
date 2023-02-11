@@ -8,22 +8,22 @@ using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
-using NetStarter.Models;
+using ERCOFAS.Models;
 using System.Globalization;
 using System.Data;
 using System.IO;
 using System.Web.Hosting;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
-using NetStarter.Resources;
+using ERCOFAS.Resources;
 using Newtonsoft.Json;
 using System.Security.AccessControl;
 using KellermanSoftware.CompareNetObjects;
-using static NetStarter.Models.GeneralEnum;
+using static ERCOFAS.Models.GeneralEnum;
 using System.Xml.Linq;
-using NetStarter.Helpers;
+using ERCOFAS.Helpers;
 
-namespace NetStarter.Controllers
+namespace ERCOFAS.Controllers
 {
     [Authorize]
     public class GeneralController : Controller

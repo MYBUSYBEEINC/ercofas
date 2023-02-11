@@ -1,9 +1,9 @@
-﻿using NetStarter.Models;
+﻿using ERCOFAS.Models;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 
-namespace NetStarter.Helpers
+namespace ERCOFAS.Helpers
 {
     /// <summary>
     /// The helper class for the email.

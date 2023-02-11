@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNet.Identity;
-using NetStarter.Models;
+using ERCOFAS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace NetStarter.Controllers
+namespace ERCOFAS.Controllers
 {
     [Authorize]
     public class LoginHistoryController : Controller

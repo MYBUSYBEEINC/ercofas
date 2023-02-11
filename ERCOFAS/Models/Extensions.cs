@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
-using NetStarter.Controllers;
+using ERCOFAS.Controllers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,10 +9,10 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Security.Principal;
-using NetStarter.Resources;
+using ERCOFAS.Resources;
 using System.Text;
 
-namespace NetStarter.Models
+namespace ERCOFAS.Models
 {
     public static class Extensions
     {

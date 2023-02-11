@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using NetStarter.Enumeration;
-using NetStarter.Helpers;
-using NetStarter.Models;
+using ERCOFAS.Enumeration;
+using ERCOFAS.Helpers;
+using ERCOFAS.Models;
 
-namespace NetStarter.Controllers
+namespace ERCOFAS.Controllers
 {
     [Authorize]
     public class DashboardController : Controller

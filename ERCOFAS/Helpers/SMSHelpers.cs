@@ -1,10 +1,10 @@
-﻿using NetStarter.Models;
+﻿using ERCOFAS.Models;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Linq;
 
-namespace NetStarter.Helpers
+namespace ERCOFAS.Helpers
 {
     /// <summary>
     /// The helper class for SMS (Short Message Service).

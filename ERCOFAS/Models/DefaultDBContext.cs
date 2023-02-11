@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace NetStarter.Models
+namespace ERCOFAS.Models
 {
     public class DefaultDBContext : DbContext
     {

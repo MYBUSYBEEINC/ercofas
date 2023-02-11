@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NetStarter.Models
+namespace ERCOFAS.Models
 {
     public class AspNetUserClaims
     {

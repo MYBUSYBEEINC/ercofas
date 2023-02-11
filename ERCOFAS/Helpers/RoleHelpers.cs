@@ -1,10 +1,10 @@
-﻿using NetStarter.Enumeration;
-using NetStarter.Models;
+﻿using ERCOFAS.Enumeration;
+using ERCOFAS.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace NetStarter.Helpers
+namespace ERCOFAS.Helpers
 {
     /// <summary>
     /// The helper class for role.

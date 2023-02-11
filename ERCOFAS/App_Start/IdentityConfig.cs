@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using NetStarter.Models;
+using ERCOFAS.Models;
 
-namespace NetStarter
+namespace ERCOFAS
 {
     public class EmailService : IIdentityMessageService
     {

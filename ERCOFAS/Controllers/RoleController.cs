@@ -6,10 +6,10 @@ using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using NetStarter.Models;
-using NetStarter.Resources;
+using ERCOFAS.Models;
+using ERCOFAS.Resources;
 
-namespace NetStarter.Controllers
+namespace ERCOFAS.Controllers
 {
     [Authorize]
     public class RoleController : Controller

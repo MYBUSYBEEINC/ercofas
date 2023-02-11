@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using NetStarter.Resources;
+using ERCOFAS.Resources;
 using System.Linq;
 using System.Web;
 
-namespace NetStarter.Models
+namespace ERCOFAS.Models
 {
     public class AspNetRoles
     {

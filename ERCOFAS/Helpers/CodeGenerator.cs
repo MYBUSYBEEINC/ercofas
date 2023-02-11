@@ -1,6 +1,6 @@
 ﻿using PasswordGenerator;
 
-namespace NetStarter.Helpers
+namespace ERCOFAS.Helpers
 {
     /// <summary>
     /// The helper class for code generator.

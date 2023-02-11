@@ -1,4 +1,4 @@
-﻿using NetStarter.Resources;
+﻿using ERCOFAS.Resources;
 using System;
 using System.Data.Linq;
 using System.Globalization;
@@ -6,7 +6,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
-namespace NetStarter.Controllers
+namespace ERCOFAS.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller

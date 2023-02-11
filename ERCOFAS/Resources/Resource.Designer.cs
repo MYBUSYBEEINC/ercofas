@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NetStarter.Resources {
+namespace ERCOFAS.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace NetStarter.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NetStarter.Resources.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ERCOFAS.Resources.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -736,6 +736,15 @@ namespace NetStarter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ERC OFAS.
+        /// </summary>
+        public static string ERCOFAS {
+            get {
+                return ResourceManager.GetString("ERCOFAS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Electronic Registration Number Prefix.
         /// </summary>
         public static string ERNumberPrefix {
@@ -970,7 +979,7 @@ namespace NetStarter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NetStarter- ASP.NET MVC C# Web Application Starter Template.
+        ///   Looks up a localized string similar to ERCOFAS. ASP.NET MVC C# Web Application Starter Template.
         /// </summary>
         public static string HomeIndexTabTitle {
             get {
@@ -1551,15 +1560,6 @@ namespace NetStarter.Resources {
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ERC OFAS.
-        /// </summary>
-        public static string NetStarter {
-            get {
-                return ResourceManager.GetString("NetStarter", resourceCulture);
             }
         }
         
@@ -2538,9 +2538,9 @@ namespace NetStarter.Resources {
         /// <summary>
         ///   Looks up a localized string similar to To ERC OFAS.
         /// </summary>
-        public static string ToNetStarter {
+        public static string ToERCOFAS {
             get {
-                return ResourceManager.GetString("ToNetStarter", resourceCulture);
+                return ResourceManager.GetString("ToERCOFAS", resourceCulture);
             }
         }
         

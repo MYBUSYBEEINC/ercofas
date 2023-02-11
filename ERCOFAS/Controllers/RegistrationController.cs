@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using NetStarter.Helpers;
-using NetStarter.Models;
-using NetStarter.Resources;
+using ERCOFAS.Helpers;
+using ERCOFAS.Models;
+using ERCOFAS.Resources;
 
-namespace NetStarter.Controllers
+namespace ERCOFAS.Controllers
 {
     [Authorize]
     public class RegistrationController : Controller

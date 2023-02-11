@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using NetStarter.Resources;
+using ERCOFAS.Resources;
 using System.Web.Routing;
 
-namespace NetStarter.CustomHelper
+namespace ERCOFAS.CustomHelper
 {
     public static class CustomHelper
     {

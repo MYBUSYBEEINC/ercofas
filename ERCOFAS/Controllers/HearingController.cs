@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using NetStarter.Helpers;
-using NetStarter.Models;
-using NetStarter.Resources;
-using static NetStarter.Models.ProjectEnum;
+using ERCOFAS.Helpers;
+using ERCOFAS.Models;
+using ERCOFAS.Resources;
+using static ERCOFAS.Models.ProjectEnum;
 
-namespace NetStarter.Controllers
+namespace ERCOFAS.Controllers
 {
     [Authorize]
     public class HearingController : Controller

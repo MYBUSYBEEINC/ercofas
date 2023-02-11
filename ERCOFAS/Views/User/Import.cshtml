@@ -1,5 +1,5 @@
-﻿@model NetStarter.Models.ImportFromExcel
-@using NetStarter.Resources
+﻿@model ERCOFAS.Models.ImportFromExcel
+@using ERCOFAS.Resources
 @{
     ViewBag.Title = Resource.ImportUserFromExcel;
     Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
@@ -22,7 +22,7 @@
 <section class="section mt-3">
     @using (Html.BeginForm("Import", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
     {
-        var errors = ((List<NetStarter.Models.ImportFromExcelError>)TempData["ErrorList"]);
+        var errors = ((List<ERCOFAS.Models.ImportFromExcelError>)TempData["ErrorList"]);
 
         if (TempData["UploadResult"] != null)
         {

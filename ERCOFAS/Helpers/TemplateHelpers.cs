@@ -1,4 +1,4 @@
-﻿namespace NetStarter.Helpers
+﻿namespace ERCOFAS.Helpers
 {
     /// <summary>
     /// The helper class for the template.

@@ -223,7 +223,7 @@
     <value>This is a ASP.NET MVC C# Web Application with .NET Framework. It helps to kick start your project with some essential modules</value>
   </data>
   <data name="HomeIndexTabTitle" xml:space="preserve">
-    <value>NetStarter- ASP.NET MVC C# Web Application Starter Template</value>
+    <value>ERCOFAS. ASP.NET MVC C# Web Application Starter Template</value>
   </data>
   <data name="HomeTitleOne" xml:space="preserve">
     <value>Start your .net project easily with</value>
@@ -243,8 +243,8 @@
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
-  <data name="NetStarterFAQArticles" xml:space="preserve">
-    <value>NetStarter FAQ Articles</value>
+  <data name="ERCOFAS.AQArticles" xml:space="preserve">
+    <value>ERCOFAS.FAQ Articles</value>
   </data>
   <data name="OurProducts" xml:space="preserve">
     <value>Our Products</value>
@@ -265,7 +265,7 @@
     <value>Save Your Time</value>
   </data>
   <data name="SaveYourTimeDescription" xml:space="preserve">
-    <value>Time is money. NetStarter can save your time and money by speeding up the initial development process.</value>
+    <value>Time is money. ERCOFAS.can save your time and money by speeding up the initial development process.</value>
   </data>
   <data name="SendingEmail" xml:space="preserve">
     <value>Sending Email</value>
@@ -294,8 +294,8 @@
   <data name="TheFollowingArticle" xml:space="preserve">
     <value>the following article</value>
   </data>
-  <data name="ToNetStarter" xml:space="preserve">
-    <value>To NetStarter</value>
+  <data name="ToERCOFAS" xml:space="preserve">
+    <value>To ERCOFAS</value>
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>Upload File</value>
@@ -316,7 +316,7 @@
     <value>View More</value>
   </data>
   <data name="WebAppTitle" xml:space="preserve">
-    <value>NetStarter</value>
+    <value>ERCOFAS</value>
   </data>
   <data name="Whatyouget" xml:space="preserve">
     <value>What you get</value>
@@ -324,10 +324,10 @@
   <data name="WhatyougetDescription" xml:space="preserve">
     <value>After Purchasing, You Will Get A Zip File Which Contains The Following</value>
   </data>
-  <data name="WhyNetStarter" xml:space="preserve">
-    <value>Why NetStarter</value>
+  <data name="WhyERCOFAS" xml:space="preserve">
+    <value>Why ERCOFAS</value>
   </data>
-  <data name="WhyNetStarterLargeTitle" xml:space="preserve">
+  <data name="WhyERCOFAS.argeTitle" xml:space="preserve">
     <value>Start Your Project With User Management, Role Permission &amp; More</value>
   </data>
 </root>
