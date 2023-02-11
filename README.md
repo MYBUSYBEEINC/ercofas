@@ -1,2 +1,2 @@
-# ercofas
-A project for ERC OFAS to file and monitor non-EVOSS transactions online. Anytime, anywhere.
+# erc-ofas-v2
+An ERC-OFAS version 2 project using MVC (Model-View-Controller) using Net Starter aura theme. 

@@ -1,0 +1,532 @@
+﻿@model NetStarter.Models.TotalCountViewModel
+@using NetStarter.Models;
+@using NetStarter.Resources
+@{
+    ViewBag.Title = Resource.Dashboard;
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+    CurrentUserPermission userStatusPermission = User.Identity.IsAllowed(ProjectEnum.ModuleCode.UserStatus.ToString());
+    CurrentUserPermission roleManagementPermission = User.Identity.IsAllowed(ProjectEnum.ModuleCode.RoleManagement.ToString());
+    CurrentUserPermission userManagementPermission = User.Identity.IsAllowed(ProjectEnum.ModuleCode.UserManagement.ToString());
+}
+
+<section id="dashboard">
+    <div class="container-fluid px-0">
+        <div class="bg-white mb-4 p-2 rounded shadow">
+            <div class="row">
+                <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
+                    <h6>Notification Highlights</h6>
+                </div>
+                <div class="col px-0">
+                    <div class="row mb-2">
+                        <div class="col text-secondary"><strong>Pre-Filing Case</strong></div>
+                        <div class="col d-flex align-items-center justify-content-end text-muted me-4"><small>[Date] [Time]</small></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="m-0 text-muted">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1 d-flex align-items-center justify-content-end gap-3 pe-4">
+                    <button class="btn text-secondary rounded-circle border-secondary border-2"><strong><</strong></button>
+                    <button class="btn text-secondary rounded-circle border-secondary border-2"><strong>></strong></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white mb-4 p-2 rounded shadow">
+            <div class="row">
+                <div class="col ps-4 text-blue-green">
+                    <h6>Overview</h6>
+                </div>
+                @*<div class="col text-end pe-4 text-muted d-flex align-items-center justify-content-end">
+                    <small>@Convert.ToDateTime(DateTime.Now).ToString("dddd, MMMM dd yyyy hh:mm tt")</small>
+                </div>*@
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <div class="bg-white rounded ratio ratio-4x3">
+                    <div class="text-secondary ps-4 pt-4"><strong>Pre-Filing Data</strong></div>
+                    <div class="card-body text-center">
+                        <canvas id="myDoughnutChart" class="my-4 pt-4"></canvas>
+                        <div class="row">
+                            <div class="col text-start">
+                                <small class="text-secondary ms-4 ps-4">Approved</small>
+                            </div>
+                            <div class="col text-start">
+                                <small class="text-secondary ms-4 ps-4">Declined</small>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <h3 class="text-gold">76%</h3>
+                            </div>
+                            <div class="col">
+                                <h3 class="text-gold">24%</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="bg-white rounded ratio ratio-4x3">
+                    <div class="text-secondary ps-4 pt-4"><strong>Case Hearing</strong></div>
+                    <div class="card-body text-center">
+                        <canvas id="myBarChart" class="my-4 pt-4"></canvas>
+                        <div class="row">
+                            <div class="col text-start">
+                                <small class="text-secondary ms-4 ps-4">Total</small>
+                            </div>
+                            <div class="col text-start">
+                                <small class="text-secondary ms-4 ps-4">This Month</small>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <h3 class="text-gold">726</h3>
+                            </div>
+                            <div class="col">
+                                <h3 class="text-gold">233</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white mb-4 p-2 rounded shadow">
+            <div class="row">
+                <div class="col">
+                    <div class="bg-white shadow">
+                        <div class="text-secondary ps-4 pt-4"><strong>Payment</strong></div>
+                        <div class="card-body text-center">
+                            <canvas id="myLineChart" class="mb-4" height="40"></canvas>
+                            <div class="row">
+                                <div class="col text-start">
+                                    <small class="text-secondary ms-4 ps-4">Total</small>
+                                </div>
+                                <div class="col text-start">
+                                    <small class="text-secondary ms-4 ps-4">This Month</small>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col">
+                                    <h3 class="text-gold">945,789</h3>
+                                </div>
+                                <div class="col">
+                                    <h3 class="text-gold">124,543</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*1st row*@
+        <div class="row mb-4">
+            <div class="col">
+                <div class="accordion-item hover-effect">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Registrations
+                            <span class="bg-pink rounded-circle text-white px-2 py-1 ms-2">
+                                @Model.TotalRegistrations
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                            <a href="@Url.Action("Index", "Registration")">
+                                <img src="~/Assets/dashboard-icons/VectorReg.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="accordion-item hover-effect">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                        <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                            Amendments
+                            <span class="bg-pink rounded-circle text-white px-2 py-1 ms-2">
+                                @Model.TotalAmendments
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                            <a href="@Url.Action("UnderConstruction", "General")">
+                                <img src="~/Assets/dashboard-icons/VectorAmen.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="accordion-item hover-effect">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                            Case/Pleadings
+                            <span class="bg-pink rounded-circle text-white px-2 py-1 ms-2">
+                                @Model.TotalPreFilings
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                            <a href="@Url.Action("Index", "PreFiledCase")">
+                                <img src="~/Assets/dashboard-icons/VectorCasePlead.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*2nd row*@
+        <div class="row mb-4">
+            <div class="col">
+                <div class="accordion-item hover-effect">
+                    <h2 class="accordion-header" id="flush-headingFour">
+                        <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                            Letters and Correspondents
+                            <span class="bg-violet rounded-circle text-white px-2 py-1 ms-2">
+                                @Model.TotalLetterCorrespondents
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseFour" class="accordion-collapse collapse show" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                            <a href="@Url.Action("UnderConstruction", "General")">
+                                <img src="~/Assets/dashboard-icons/VectorRecLetCor.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="accordion-item hover-effect">
+                    <h2 class="accordion-header" id="flush-headingFive">
+                        <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                            Validation of In-service Meter Sampling
+                            <span class="bg-violet rounded-circle text-white px-2 py-1 ms-2">
+                                @Model.TotalValidatioMeterSamplings
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseFive" class="accordion-collapse collapse show" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                            <a href="@Url.Action("UnderConstruction", "General")">
+                                <img src="~/Assets/dashboard-icons/VectorValServMetSamp.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*3rd row*@
+        <div class="row mb-4">
+            <div class="col">
+                <div class="accordion-item hover-effect">
+                    <h2 class="accordion-header" id="flush-headingSix">
+                        <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                            Request for Sealing and Acceptance Testing of Meters
+                            <span class="bg-blue-green rounded-circle text-white px-2 py-1 ms-2">
+                                @Model.TotalSealingRequestTestingMeters
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseSix" class="accordion-collapse collapse show" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                            <a href="@Url.Action("UnderConstruction", "General")">
+                                <img src="~/Assets/dashboard-icons/VectorReqSealAccTestMet.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="accordion-item hover-effect">
+                    <h2 class="accordion-header" id="flush-headingSeven">
+                        <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
+                            Transaction
+                            <span class="bg-blue-green rounded-circle text-white px-2 py-1 ms-2">
+                                @Model.TotalSealingRequestTestingMeters
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseSeven" class="accordion-collapse collapse show"  aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                            <a href="@Url.Action("Index", "Transaction")">
+                                <img src="~/Assets/dashboard-icons/VectorTransc.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*4th row*@
+        <div class="row mb-4">
+            <div class="col">
+                <div class="accordion-item hover-effect">
+                    <h2 class="accordion-header" id="flush-headingEight">
+                        <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEight" aria-expanded="false" aria-controls="flush-collapseEight">
+                            Request for Retail Electricity Supplier
+                            <span class="bg-moss-green rounded-circle text-white px-2 py-1 ms-2">
+                                @Model.TotalRetailElectricitySuppliers
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseEight" class="accordion-collapse collapse show" aria-labelledby="flush-headingEight" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                            <a href="@Url.Action("UnderConstruction", "General")">
+                                <img src="~/Assets/dashboard-icons/VectorReqRetElecSup.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="accordion-item hover-effect">
+                    <h2 class="accordion-header" id="flush-headingNine">
+                        <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseNine" aria-expanded="false" aria-controls="flush-collapseNine">
+                            Audit Trail
+                            <span class="bg-moss-green rounded-circle text-white px-2 py-1 ms-2">
+                                @Model.TotalAuditLogs
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseNine" class="accordion-collapse collapse show" aria-labelledby="flush-headingNine" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                            <a href="@Url.Action("UnderConstruction", "General")">
+                                <img src="~/Assets/dashboard-icons/VectorAudTrail.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*5th row*@
+        <div class="row mb-4">
+            <div class="col">
+                <div class="accordion-item hover-effect">
+                    <h2 class="accordion-header" id="flush-headingTen">
+                        <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTen" aria-expanded="false" aria-controls="flush-collapseTen">
+                            User Management
+                            <span class="bg-mauve rounded-circle text-white px-2 py-1 ms-2">
+                                0
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTen" class="accordion-collapse collapse show" aria-labelledby="flush-headingTen" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                            <a href="@Url.Action("UnderConstruction", "General")">
+                                <img src="~/Assets/dashboard-icons/VectorUserMan.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="accordion-item hover-effect">
+                    <h2 class="accordion-header" id="flush-headingEleven">
+                        <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEleven" aria-expanded="false" aria-controls="flush-collapseEleven">
+                            Role Management
+                            <span class="bg-mauve rounded-circle text-white px-2 py-1 ms-2">
+                                0
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseEleven" class="accordion-collapse collapse show" aria-labelledby="flush-headingEleven" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                            <a href="@Url.Action("UnderConstruction", "General")">
+                                <img src="~/Assets/dashboard-icons/VectorRoleMan.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style type="text/css">
+
+    .bg-mauve {
+        background: #849bdc;
+    }
+
+    .bg-pink {
+        background: #ff7d7d;
+    }
+
+    .bg-violet {
+        background: #745bb3;
+    }
+
+    .bg-blue-green {
+        background: #499bb3;
+    }
+
+    .bg-moss-green {
+        background: #b3aa40;
+    }
+
+    .text-blue-green {
+        color: #499bb3;
+    }
+
+    .text-dark-brown {
+        color: #646464;
+    }
+
+    .text-gold {
+        color: #b38b64;
+    }
+
+    a {
+        color: inherit !important;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .card {
+        border: 0;
+    }
+
+    #piechart svg:nth-child(2) {
+        display: none;
+    }
+
+    /*for collapsible*/
+    .accordion-button:not(.collapsed) {
+        background-color: #f8f9fa !important;
+        color: #b38b64 !important;
+    }
+    .accordion-button:focus {
+         border-color: none !important; 
+         box-shadow: none !important;
+    }
+
+    button {
+        outline: 0 !important;
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+    }
+    .accordion-body {
+        min-height: 120px;
+    }
+    /*for collapsible*/
+</style>
+
+@section Scripts{
+    <!-- For Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <script type="text/javascript">
+        /*Doughnut Chart: Pre - Filing Data*/
+        var ctx = document.getElementById('myDoughnutChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Approved", "Declined"],
+                datasets: [{
+                    data: [76, 24],
+                    backgroundColor: [
+                        'rgba(179, 170, 64)',
+                        'rgba(229,222,130)'
+                    ]
+                }]
+            }
+        });
+
+        /*Bar Chart: Case Hearing*/
+        var ctx = document.getElementById('myBarChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+                datasets: [{
+                    label: 'Cases',
+                    data: [19, 99, 69, 129, 39, 119, 49, 59, 129, 99, 149],
+                    backgroundColor: [
+                        'rgba(228,188,148)',
+                        'rgba(228,188,148)',
+                        'rgba(228,188,148)',
+                        'rgba(179,139,100)',
+                        'rgba(228,188,148)',
+                        'rgba(179,139,100)',
+                        'rgba(228,188,148)',
+                        'rgba(228,188,148)',
+                        'rgba(179,139,100)',
+                        'rgba(179,139,100)',
+                        'rgba(179,139,100)'
+                    ]
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 500,
+                            stepSize: 100
+                        }
+                    }]
+                }
+            }
+        });
+        /*Line Chart: Payment*/
+        var ctx = document.getElementById('myLineChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+                datasets: [{
+                    label: 'Payments',
+                    data: [400000, 300000, 500000, 400000, 300000, 500000, 400000, 300000, 200000, 400000, 600000],
+                    backgroundColor: 'rgba(132,155,220)'
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 1000000,
+                            stepSize: 500000
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+    <!-- For Charts -->
+}

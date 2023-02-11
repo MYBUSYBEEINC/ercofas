@@ -1,0 +1,351 @@
+﻿@model NetStarter.Models.SettingsModel
+@using NetStarter.CustomHelper
+@using NetStarter.Models;
+@using NetStarter.Resources
+@{
+
+    ViewBag.Title = Resource.EditSettings;
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="pagetitle mb-sm-0 fw600">@ViewBag.Title</h4>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Edit", "Settings", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+<section class="section mt-3">
+    <div class="bg-white rounded p-3 shadow">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li>
+                            <a class="nav-link active" style="cursor:pointer" data-toggle="tab" onclick="settingstab(event, 'tab-1')">General</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" style="cursor:pointer" onclick="settingstab(event, 'tab-2')">Simple Mail Transfer Protocol (SMTP)</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" style="cursor:pointer" onclick="settingstab(event, 'tab-3')">One Time Password (OTP)</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" style="cursor:pointer" onclick="settingstab(event, 'tab-4')">Password</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" style="cursor:pointer" onclick="settingstab(event, 'tab-5')">System Parameters</a>
+                        </li>
+                    </ul>
+                    <br />
+                    <div role="tabpanel" id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="bg-white tab-content m-3">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.CompanyName, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.MobileNumber, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Website, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.Website, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Website, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ERNumberPrefix, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.ERNumberPrefix, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 text-break">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "form-label fw600" })
+                                            @Html.TextAreaFor(model => model.Address, htmlAttributes: new { @class = "form-control", @rows = "3" })
+                                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "invalid-message" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 text-break">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.AboutUs, htmlAttributes: new { @class = "form-label fw600" })
+                                            @Html.TextAreaFor(model => model.AboutUs, htmlAttributes: new { @class = "form-control", @rows = "3" })
+                                            @Html.ValidationMessageFor(model => model.AboutUs, "", new { @class = "invalid-message" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" id="tab-2" class="tab-pane" style="display:none">
+                        <div class="panel-body">
+                            <div class="bg-white tab-content m-3">
+                                <div class="row">
+                                    <p><strong>SMTP (Simple Mail Transfer Protocol)</strong> server is an application that's primary purpose is to send, receive, and/or relay outgoing mail between email senders and receivers.</p>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.SMTPServerName, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.SMTPServerName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.SMTPServerName, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.SMTPPort, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.SMTPPort, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.SMTPFromEmail, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.SMTPFromEmail, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.SMTPFromEmail, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.SMTPPassword, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.SMTPPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.SMTPPassword, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 text-break">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.SMTPEnableSSL, htmlAttributes: new { @class = "form-label fw600" })
+                                            @Html.EditorFor(model => model.SMTPEnableSSL, new { htmlAttributes = new { @class = "" } })
+                                            @Html.ValidationMessageFor(model => model.SMTPEnableSSL, "", new { @class = "invalid-message" })
+                                            <p class="fw-light text-muted">
+                                                The primary reason why SSL is used is to keep sensitive information sent across the Internet encrypted so that only the intended recipient can access it.
+                                                This is important because the information you send on the Internet is passed from computer to computer to get to the destination server.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" id="tab-3" class="tab-pane" style="display:none">
+                        <div class="panel-body">
+                            <div class="bg-white tab-content m-3">
+                                <div class="row">
+                                    <p><strong>OTP (One-Time PIN)</strong> a one-time PIN code is a code that is automatically generated and sent, usually to a mobile device, to allow a single login session or transaction.</p>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.OTPBaseUrl, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.OTPBaseUrl, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.OTPBaseUrl, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.OTPSenderId, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.OTPSenderId, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.OTPSenderId, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.OTPAPIKey, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.OTPAPIKey, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.OTPAPIKey, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.OTPClientId, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.OTPClientId, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.OTPClientId, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.OTPUsername, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.OTPUsername, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.OTPUsername, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.OTPPassword, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.OTPPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.OTPPassword, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" id="tab-4" class="tab-pane" style="display:none">
+                        <div class="panel-body">
+                            <div class="bg-white tab-content m-3">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.MinPasswordLength, htmlAttributes: new { @class = "fw600" })
+                                                @Html.EditorFor(model => model.MinPasswordLength, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.MinPasswordLength, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.MinSpecialCharacters, htmlAttributes: new { @class = "fw600" })
+                                                @Html.EditorFor(model => model.MinSpecialCharacters, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.MinSpecialCharacters, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.MaxSignOnAttempts, htmlAttributes: new { @class = "fw600" })
+                                                @Html.EditorFor(model => model.MaxSignOnAttempts, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.MaxSignOnAttempts, "", new { @class = "invalid-message" })
+                                                <p class="fw-light text-muted">
+                                                    The number of consecutive sign-on or password verification attempts that are not correct by users.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.EnforcePasswordHistoryId, htmlAttributes: new { @class = "required fw600" })
+                                                @CustomHelper.CustomDropDownList("EnforcePasswordHistoryId", Model.EnforcePasswordHistorySelectList)
+                                                @Html.ValidationMessageFor(model => model.EnforcePasswordHistoryId, "", new { @class = "invalid-message" })
+                                                <p class="fw-light text-muted">
+                                                    The policy setting determines the number of unique new passwords that must be associated with a user account before an old password can be reused.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" id="tab-5" class="tab-pane" style="display:none">
+                        <div class="panel-body">
+                            <div class="bg-white tab-content m-3">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div class="form-group">
+                                                <label class="fw600">Deactivate User After (<i>In Days</i>)</label>
+                                                @Html.EditorFor(model => model.DeactivateUserAfter, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                                @Html.ValidationMessageFor(model => model.MinPasswordLength, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <a type="button" class="btn btn-p8 bg-light hover-boxshadow me-1" href="@Url.Action("index")">@Resource.Cancel</a>
+
+                        <button type="submit" class="addnewbtn btn btn-p8 hover-boxshadow hover-bg-primarycolor">@Resource.Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    }
+@section scripts{
+    <script>
+        function settingstab(evt, tabname) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-pane");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("nav-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabname).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+}

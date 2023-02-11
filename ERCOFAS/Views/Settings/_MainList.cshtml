@@ -1,0 +1,339 @@
+﻿@model NetStarter.Models.SettingsListing
+@using NetStarter.Resources
+
+<section class="section mt-3">
+    <div class="bg-white rounded p-3 shadow">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li><a class="nav-link active" style="cursor:pointer" data-toggle="tab" onclick="settingstab(event, 'tab-1')">General</a></li>
+                        <li><a class="nav-link" style="cursor:pointer" onclick="settingstab(event, 'tab-2')">Simple Mail Transfer Protocol (SMTP)</a></li>
+                        <li><a class="nav-link" style="cursor:pointer" onclick="settingstab(event, 'tab-3')">One Time Password (OTP)</a></li>
+                        <li><a class="nav-link" style="cursor:pointer" onclick="settingstab(event, 'tab-4')">Password</a></li>
+                        <li><a class="nav-link" style="cursor:pointer" onclick="settingstab(event, 'tab-5')">System Parameters</a></li>
+                    </ul>
+                    <br />
+                    <div role="tabpanel" id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="bg-white tab-content m-3">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].CompanyName, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].PhoneNumber, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].EmailAddress, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].MobileNumber, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].MobileNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].Website, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].Website, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].ERNumberPrefix, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].ERNumberPrefix, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 text-break">
+                                        <div>
+                                            @Html.LabelFor(model => model.Listing[0].Address, htmlAttributes: new { @class = "form-label fw600" })
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Listing[0].Address, new { htmlAttributes = new { @class = "form-control" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 text-break">
+                                        <div>
+                                            @Html.LabelFor(model => model.Listing[0].AboutUs, htmlAttributes: new { @class = "form-label fw600" })
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Listing[0].AboutUs, new { htmlAttributes = new { @class = "form-control" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" id="tab-2" class="tab-pane" style="display:none">
+                        <div class="panel-body">
+                            <div class="bg-white tab-content m-3">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].SMTPFromEmail, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].SMTPFromEmail, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].SMTPPort, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].SMTPPort, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].SMTPPassword, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].SMTPPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].SMTPServerName, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].SMTPServerName, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 text-break">
+                                        <div>
+                                            @Html.LabelFor(model => model.Listing[0].SMTPEnableSSL, htmlAttributes: new { @class = "form-label fw600" })
+                                        </div>
+                                        <div>
+                                            @Html.DisplayFor(model => model.Listing[0].SMTPEnableSSL, new { htmlAttributes = new { @class = "form-control" } })
+                                        </div>
+                                        <p class="fw-light text-muted">
+                                            The primary reason why SSL is used is to keep sensitive information sent across the Internet encrypted so that only the intended recipient can access it.
+                                            This is important because the information you send on the Internet is passed from computer to computer to get to the destination server.
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" id="tab-3" class="tab-pane" style="display:none">
+                        <div class="panel-body">
+                            <div class="bg-white tab-content m-3">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].OTPBaseUrl, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].OTPBaseUrl, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].OTPAPIKey, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].OTPAPIKey, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].OTPSenderId, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].OTPSenderId, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].OTPClientId, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].OTPClientId, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].OTPUsername, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].OTPUsername, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].OTPPassword, htmlAttributes: new { @class = "form-label fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].OTPPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" id="tab-4" class="tab-pane" style="display:none">
+                        <div class="panel-body">
+                            <div class="bg-white tab-content m-3">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].MinPasswordLength, htmlAttributes: new { @class = "fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].MinPasswordLength, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].MinSpecialCharacters, htmlAttributes: new { @class = "fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].MinSpecialCharacters, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].MaxSignOnAttempts, htmlAttributes: new { @class = "fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].MaxSignOnAttempts, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                            <p class="fw-light text-muted">
+                                                The number of consecutive sign-on or password verification attempts that are not correct by users.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                @Html.LabelFor(model => model.Listing[0].EnforcePasswordHistoryId, htmlAttributes: new { @class = "fw600" })
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].EnforcePasswordHistoryDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                            <p class="fw-light text-muted">
+                                                The policy setting determines the number of unique new passwords that must be associated with a user account before an old password can be reused.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" id="tab-5" class="tab-pane" style="display:none">
+                        <div class="panel-body">
+                            <div class="bg-white tab-content m-3">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 text-break">
+                                            <div>
+                                                <label class="fw600">Deactivate User After (<i>In Days</i>)</label>
+                                            </div>
+                                            <div>
+                                                @Html.DisplayFor(model => model.Listing[0].DeactivateUserAfter, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        @foreach (var item in Model.Listing)
+                        {
+                            <a class="btn btn-p8 hover-boxshadow me-1 addnewbtn hover-bg-primarycolor" href="@Url.Action("edit", new { Id = @Html.ValueFor(modelItem => item.Id) })">@Resource.Edit Settings</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

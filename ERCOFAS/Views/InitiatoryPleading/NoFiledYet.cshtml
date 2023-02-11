@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+
+
+<section>
+    <div class="bg-white mb-5 p-2 rounded">
+        <div class="row">
+            <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
+                <h6>Notification Highlights</h6>
+            </div>
+            <div class="col px-0">
+                <div class="row mb-2">
+                    <div class="col text-secondary"><strong>Pre-Filing Case</strong></div>
+                    <div class="col d-flex align-items-center justify-content-end text-muted me-4"><small>[Date] [Time]</small></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="m-0 text-muted">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 pe-0 d-flex align-items-center justify-content-center">
+                <button class="btn text-secondary rounded-circle border-secondary border-2 me-4"><strong><</strong></button>
+                <button class="btn text-secondary rounded-circle border-secondary border-2"><strong>></strong></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-5 rounded" style="height:80vh;">
+        <h3 class="text-center mb-5" style="color: #6f83bc">Initiatory and Subsequent Pleadings</h3>
+        <div class="d-flex flex-column align-items-center border border-1 rounded p-3 py-5">
+            <h5 class="text-secondary mb-5">"There are NO Completed Pre-Filing Application on Record"</h5>
+            <small class="text-muted my-2 mx-0">Note: If you would like to submit a pleading etc. for a record not found in OFAS, please go to:</small>
+            <button class="border-0 text-white w-25 rounded p-2 text-center hover-effect" style="background-color: #5069b1;" onclick="location.href = '@Url.Action("underconstruction","general")';">Letters / Correspondences Section</button>
+        </div>
+    </div>
+</section>

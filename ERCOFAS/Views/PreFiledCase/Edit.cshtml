@@ -1,0 +1,1588 @@
+﻿@model NetStarter.Models.PreFiledCaseViewModel
+@using NetStarter.CustomHelper
+@using NetStarter.Resources
+@{
+    if (string.IsNullOrEmpty(Model.Id))
+    {
+        ViewBag.Title = "File Case";
+    }
+    else
+    {
+        ViewBag.Title = "Edit Pre-Filed Case";
+    }
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+
+<style type="text/css">
+
+    .reg-icon {
+        height: 40px;
+        margin-bottom: 5px;
+    }
+
+    .boxShadow:hover {
+        box-shadow: 0 0 8px #5069b1;
+        transition: 0.35s;
+        cursor: pointer;
+    }
+
+    #payment-tag {
+        display: none;
+    }
+
+    #fee-tag:hover {
+        cursor: pointer;
+    }
+
+    input[type=text] {
+        border: 1px solid #ced4da !important;
+        border-radius: 0.25rem !important;
+    }
+
+    #main {
+        background: #dbdfea;
+        border-top: solid 3px #e4e8f4;
+    }
+
+    .text-blue-green {
+        color: #499bb3;
+    }
+
+    .erc-text-blue {
+        color: #6f83bc;
+    }
+
+    .erc-text-dark-blue {
+        color: #3a4360;
+    }
+
+    .bg-gold {
+        background: #B38B64;
+    }
+
+    /* slider */
+    .ProgressBar-icon {
+        width: 1.5em;
+        height: 1.5em;
+        background-color: #499bb3;
+        border-radius: 50%;
+        padding: 0.5em;
+        max-width: 100%;
+        z-index: 10;
+        position: relative;
+        transition: all .25s ease-out;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    #msform {
+        text-align: center;
+        position: relative;
+        margin-top: 20px;
+    }
+
+        #msform fieldset .form-card {
+            background: white;
+            border: 0 none;
+            border-radius: 0px;
+            padding: 20px 40px 30px 40px;
+            box-sizing: border-box;
+            width: 94%;
+            margin: 0 3% 20px 3%;
+            position: relative;
+        }
+
+        #msform fieldset {
+            background: white;
+            border: 0 none;
+            border-radius: 0.5rem;
+            box-sizing: border-box;
+            width: 100%;
+            margin: 0;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+            #msform fieldset:not(:first-of-type) {
+                display: none;
+            }
+
+            #msform fieldset .form-card {
+                text-align: left;
+                color: #9E9E9E;
+            }
+
+        #msform input, #msform textarea {
+            padding: 0px 8px 4px 8px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            border-radius: 0px;
+            margin-bottom: 25px;
+            margin-top: 2px;
+            width: 100%;
+            box-sizing: border-box;
+            color: #2C3E50;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+            #msform input:focus, #msform textarea:focus {
+                -moz-box-shadow: none !important;
+                -webkit-box-shadow: none !important;
+                box-shadow: none !important;
+                border: none;
+                font-weight: bold;
+                border-bottom: 2px solid #5069b1;
+                outline-width: 0;
+            }
+
+        #msform .action-button {
+            width: 100px;
+            background: #5069b1;
+            color: white;
+            border: 0 none;
+            border-radius: 0px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
+
+            #msform .action-button:hover, #msform .action-button:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px #5069b1;
+            }
+
+        #msform .action-button-previous {
+            width: 100px;
+            background: #d2d8e9;
+            color: #fff;
+            border: 0 none;
+            border-radius: 0px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
+
+            #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px #616161;
+            }
+
+    select.list-dt {
+        border: none;
+        outline: 0;
+        border-bottom: 1px solid #ccc;
+        padding: 2px 5px 3px 5px;
+        margin: 2px;
+    }
+
+        select.list-dt:focus {
+            border-bottom: 2px solid #5069b1;
+        }
+
+    .card {
+        z-index: 0;
+        border: none;
+        position: relative;
+    }
+
+    .fs-title {
+        font-size: 25px;
+        color: #2C3E50;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: #6666;
+        padding: 0;
+        width: 95%;
+        margin: 0 auto;
+    }
+
+        #progressbar .active {
+            color: #666666;
+        }
+
+        #progressbar li {
+            list-style-type: none;
+            font-weight: bold;
+            width: 14%;
+            float: left;
+            position: relative;
+        }
+
+            #progressbar li:before {
+                width: 50px;
+                height: 50px;
+                line-height: 45px;
+                display: block;
+                font-size: 18px;
+                color: #ffffff;
+                background: lightgray;
+                border-radius: 50%;
+                margin: 0 auto 10px auto;
+                padding: 2px;
+            }
+
+            #progressbar li:after {
+                content: '';
+                width: 100%;
+                height: 2px;
+                background: lightgray;
+                position: absolute;
+                left: 0;
+                top: 128px;
+                z-index: -1;
+                color: #499bb3;
+                border-radius: 100px;
+            }
+
+            #progressbar li.active:before, #progressbar li.active:after {
+                background: #499bb3;
+            }
+
+    .radio-group {
+        position: relative;
+        margin-bottom: 25px;
+    }
+
+    .radio {
+        display: inline-block;
+        border-radius: 0;
+        background: #5069b1;
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        cursor: pointer;
+        margin: 8px 2px;
+    }
+
+        .radio:hover {
+            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .radio.selected {
+            box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
+        }
+
+    .fit-image {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    input.invalid {
+        background-color: #ffdddd;
+    }
+
+    .timeline {
+        border-left: 1px solid hsl(0, 0%, 90%);
+        position: relative;
+        list-style: none;
+    }
+
+        .timeline .timeline-item {
+            position: relative;
+        }
+
+        .timeline .timeline-item:after {
+            position: absolute;
+            display: block;
+            top: 0;
+        }
+
+        .timeline .timeline-item:after {
+            background-color: hsl(0, 0%, 90%);
+            left: -38px;
+            border-radius: 50%;
+            height: 11px;
+            width: 11px;
+            content: "";
+        }
+
+</style>
+
+<section class="mt-3">
+    <div class="container-fluid px-0">
+
+        <div class="row bg-white mx-2 mb-4 py-2" style="border-radius:1.5rem;">
+            <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
+                <h6>Notification Highlights</h6>
+            </div>
+            <div class="col px-0">
+                <div class="row mb-2">
+                    <div class="col text-secondary"><strong>Pre-Filing Case</strong></div>
+                    <div class="col d-flex align-items-center justify-content-end text-muted me-4"><small>[Date] [Time]</small></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="mb-0 text-muted">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 pe-0 d-flex align-items-center justify-content-center">
+                <button class="btn text-secondary rounded-circle border-secondary border-2 me-4"><strong><</strong></button>
+                <button class="btn text-secondary rounded-circle border-secondary border-2"><strong>></strong></button>
+            </div>
+        </div>
+
+        <div class="row mb-4 p-2 shadow">
+            <div class="col">
+                <div class="card px-2" style="border-radius:1.5rem!important;">
+                    <h3 class="erc-text-blue text-center my-5 pb-3">Pre-Filing</h3>
+                    <div id="msform">
+                        <ul id="progressbar" class="d-flex justify-content-center">
+                            <li class="active" id="case-nature"><img src="~/Assets/pre-filing-icons/VectorTypeNature.png" class="reg-icon"><br />Case Type/<br />Case Nature<br /><svg id="account-svg" class="ProgressBar-icon mt-4"></svg></li>
+                            <li id="title"><img src="~/Assets/pre-filing-icons/VectorCaseTitle.png" class="reg-icon"><br />Case<br />Title<br /><svg id="class-svg" class="ProgressBar-icon mt-4"></svg></li>
+                            <li id="initial"><img src="~/Assets/pre-filing-icons/VectorInitialReview.png" class="reg-icon"><br />Initial<br />Review<br /><svg id="class-svg" class="ProgressBar-icon mt-4"></svg></li>
+                            <li id="upload"><img src="~/Assets/pre-filing-icons/VectorUploadFiles.png" class="reg-icon"><br />Upload<br />Files<br /><svg id="personal-svg" class="ProgressBar-icon mt-4"></svg></li>
+                            <li id="docu"><img src="~/Assets/pre-filing-icons/VectorDocuReview.png" class="reg-icon"><br />Document<br />Review<br /><svg id="personal-svg" class="ProgressBar-icon mt-4"></svg></li>
+                            <li id="payment"><img src="~/Assets/pre-filing-icons/VectorPayment.png" class="reg-icon"><br />Payment<br /><br /><svg id="payment-svg" class="ProgressBar-icon mt-4"></svg></li>
+                            <li id="verification"><img src="~/Assets/pre-filing-icons/VectorPaymentVerif.png" class="reg-icon"><br />Payment<br />Verification<br /><svg id="payment-svg" class="ProgressBar-icon mt-4"></svg></li>
+                            <li id="confirm"><img src="~/Assets/pre-filing-icons/VectorCompleted.png" class="reg-icon"><br />Pre-Filing<br />Completed<br /><svg id="confirm-svg" class="ProgressBar-icon mt-4"></svg></li>
+                        </ul>
+                        @using (Html.BeginForm("Edit", "PreFiledCase", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
+                        {
+                            @class = "form-horizontal",
+                            role = "form",
+                            enctype = "multipart/form-data"
+                        }))
+                        {
+                            <fieldset class="active">
+                                <div class="form-card rounded my-5">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="case-type" class="text-secondary mb-2 required fw600">Case Type</label>
+                                            @CustomHelper.CustomDropDownList("CaseTypeId", Model.CaseTypeSelectList)
+                                            @Html.ValidationMessageFor(model => model.CaseTypeId, "", new { @class = "invalid-message select-invalid-message" })
+                                        </div>
+                                        <div class="col">
+                                            <label for="case-nature" class="text-secondary case-nature mb-2 required fw600">Case nature</label>
+                                            @CustomHelper.CustomDropDownList("CaseNatureId", Model.CaseNatureSelectList)
+                                            @Html.ValidationMessageFor(model => model.CaseNatureId, "", new { @class = "invalid-message select-invalid-message" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="button" id="btnNextCaseType" name="next" class="next action-button rounded" value="Next" />
+                            </fieldset>
+                            <fieldset>
+                                @Html.HiddenFor(model => model.CaseTypeName)
+                                @Html.HiddenFor(model => model.CaseNatureName)
+                                <div class="form-card rounded my-5">
+                                    <div class="form-group">
+                                        <label for="subject-for-request" class="text-secondary mb-2 required fw600">Subject of Request</label>
+                                        @Html.EditorFor(model => model.RequestSubject, new { htmlAttributes = new { @class = "border rounded", rows = "2", @maxlength = "100" } })
+                                        @Html.ValidationMessageFor(model => model.RequestSubject, "", new { @class = "invalid-message" })
+                                        <div class="my-3">
+                                            <span class="text-secondary required fw600">Upload Pre-filing Application</span>
+                                            <div class="clearfix"></div>
+                                            @if (Model.Id == null)
+                                            {
+                                                @Html.TextBox("ApplicationForm", "", new { @type = "file", @class = "form-control mb-2", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.ApplicationForm, "", new { @class = "invalid-message" })
+                                                <span><small>Upload file</small></span><br />
+                                                <button type="button" id="btnAttachMoreDocument" class=" mb-3 mt-0 ps-0 bg-transparent erc-text-blue border-0">
+                                                    <i class="fa-solid fa-plus p-1 me-1 rounded" style="background: #6f83bc; color: #fff !important;"></i> Attach more document
+                                                </button>
+                                                @Html.TextBox("Documents", "", new { @type = "file", @class = "form-control mb-2 initial-attach-more", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx", @hidden = "hidden" })
+                                                @Html.ValidationMessageFor(model => model.Documents, "", new { @class = "" })
+                                            }
+                                        </div>
+                                    </div>
+                                    @if (Model.Attachments != null && Model.Attachments.Count > 0)
+                                    {
+                                        <p hidden><strong>List of Uploaded Document(s)</strong></p>
+                                        <ul id="uploadedDocument" class="list-group" hidden>
+                                            @foreach (var item in Model.Attachments)
+                                            {
+                                                <li class="list-group-item">
+                                                    @Html.DisplayFor(modelItem => item.UniqueFileName)
+                                                    <span class="fs-19 canedit">
+                                                        <a href="~/Documents/@item.UniqueFileName" data-bs-placement="right" title="Download" download>
+                                                            <i class="fa-solid fa-download text-edit hover-color-secondarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="Download"></i>
+                                                        </a> &nbsp;
+                                                    </span>
+                                                    <span class="fs-19 candelete" onclick="triggerDeleteConfirmationModal('@item.UniqueFileName', '@Url.Action("deletefile", new { id = item.Id })')">
+                                                        <i class="fa-solid fa-trash-can text-delete hover-color-secondarycolor cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"></i>
+                                                    </span>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous rounded" value="Back" />
+                                <input type="submit" id="btnNextSubmitInitial" name="next" class="next-initial-upload action-button rounded" value="Submit" />
+                            </fieldset>
+                            <fieldset>
+                                @Html.HiddenFor(model => model.Id)
+                                @Html.HiddenFor(model => model.InitialReviewStatus)
+                                @Html.HiddenFor(model => model.InitialReviewRequired)
+                                <div class="form-card rounded mb-0">
+                                    @if (Model.InitialReviewStatus == "Pending" || Model.InitialReviewStatus == "Updated" || string.IsNullOrEmpty(Model.InitialReviewStatus))
+                                    {
+                                        <div id="docu-on-review" class="form-card rounded d-flex justify-content-center">
+                                            <div class="form-card rounded border text-center w-100 mt-5 mb-0 p-5" style="border-radius:1.5rem!important;">
+                                                <img src="~/Assets/load.png" class="my-5">
+                                                <h3 class="text-secondary mb-5">Review on Process</h3>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (Model.InitialReviewStatus == "Approved" || Model.InitialReviewStatus == "Accepted")
+                                    {
+                                        <div id="docu-approved" class="form-card rounded d-flex justify-content-center">
+                                            <div class="form-card rounded border text-center w-100 my-5 p-5" style="border-radius:1.5rem!important;">
+                                                <img src="~/Assets/pre-filing-icons/VectorApproved.png" class="my-5">
+                                                <h3 class="text-secondary">Document Approved</h3>
+                                                <small class="text-secondary">You may proceed with the next process</small>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (Model.InitialReviewStatus == "Rejected")
+                                    {
+                                        <div id="docu-declined" class="form-card rounded d-flex justify-content-center">
+                                            <div class="form-card rounded border text-center w-100 my-5 p-5" style="border-radius:1.5rem!important;">
+                                                <img src="~/Assets/pre-filing-icons/VectorDeclined.png" class="my-5">
+                                                <h3 class="text-secondary">Document Declined</h3>
+                                                <small class="text-secondary"><strong>Note: </strong>There is an error in the Pre-Filing Application Form</small>
+                                                <div class="border rounded w-100 p-5 text-start mt-5">
+                                                    @if (!string.IsNullOrEmpty(Model.Remarks))
+                                                    {
+                                                        <h6 class="text-secondary"><strong>Remarks</strong></h6>
+                                                    }
+                                                    <ul class="my-3">
+                                                        @if (!string.IsNullOrEmpty(Model.Remarks))
+                                                        {
+                                                            <li>@Html.DisplayFor(model => model.Remarks)</li>
+                                                        }
+                                                        @if (Model.Attachments != null && Model.Attachments.Count > 0)
+                                                        {
+                                                            foreach (var item in Model.Attachments)
+                                                            {
+                                                                if (item.PreFiledCaseId == Model.Id && item.StatusId == "Remarks")
+                                                                {
+                                                                    <li>
+                                                                        @Html.DisplayFor(model => item.FileName)
+                                                                        <input type="hidden" id="hdnInitialUniqueFileName" value="@item.UniqueFileName" />
+                                                                        <span style="margin-left:15px"></span>
+                                                                        <i id="downloadInitialFile" class="fa fa-download text-success"></i>
+                                                                    </li>
+                                                                }
+                                                            }
+                                                        }
+                                                    </ul>
+                                                    <h6 class="text-secondary"><strong>Action Needed</strong></h6>
+                                                    <ul class="my-3">
+                                                        <li>Re-upload documents</li>
+                                                    </ul>
+                                                    <button type="button" class="upload-btn text-white rounded border-0 bg-gold px-2 mx-3 upload-initial-document"><small>Upload</small></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous rounded" value="Back" />
+                                <input type="button" name="next" class="next next-initial-review action-button rounded" value="Next" />
+                            </fieldset>
+                            <fieldset>
+                                @Html.HiddenFor(model => model.DocumentsUploadStatus)
+                                <div id="juridical-form" class="form-card rounded">
+                                    <div class="my-5">
+                                        <small>
+                                            <strong>Note:</strong> Please ensure that the file names of the soft/electronic copies of the application/petitions, annexes,
+                                            other supporting documents, pre-filing requirements are the same as the document title. You may upload files in PDF or jpeg format.
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id-presented" class="text-secondary mb-2">1. ID Presented Upon Notary</label>
+                                        <div class="clearfix"></div>
+                                        @Html.TextBox("NotaryPresentedId", "", new { @type = "file", @class = "form-control w-75", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                        @Html.ValidationMessageFor(model => model.NotaryPresentedId, "", new { @class = "invalid-message" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cafs" class="text-secondary mb-2">2. Certification Against Forum Shopping (CAFS)</label>
+                                        <div class="clearfix"></div>
+                                        @Html.TextBox("CertificationForum", "", new { @type = "file", @class = "form-control w-75", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                        @Html.ValidationMessageFor(model => model.CertificationForum, "", new { @class = "invalid-message" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="authority-of-counsel" class="text-secondary mb-2">3. Authority of Counsel (Board Resolution or Secretary Certificate)</label>
+                                        <div class="clearfix"></div>
+                                        @Html.TextBox("AuthorityCounsel", "", new { @type = "file", @class = "form-control w-75", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                        @Html.ValidationMessageFor(model => model.AuthorityCounsel, "", new { @class = "invalid-message" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="authority-of-affiant" class="text-secondary mb-2">4. Authority of Affiant to execute Verification/CAFS (Board Resolution or Secretary Certificate)</label>
+                                        <div class="clearfix"></div>
+                                        @Html.TextBox("AuthorityAffiant", "", new { @type = "file", @class = "form-control w-75", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                        @Html.ValidationMessageFor(model => model.AuthorityAffiant, "", new { @class = "invalid-message" })
+                                    </div>
+                                    <div class="form-group field-service">
+                                        <label for="service-to-lgu" class="text-secondary mb-2">
+                                            5. Service to local government unit(LGU) legislative body of the municipality and province or the city where applicants principally operate<br />
+                                            <a href="#" class="ms-3 erc-text-blue"><small>click here for more info</small></a>
+                                        </label>
+                                        <div class="clearfix"></div>
+                                        @Html.TextBox("ServiceLocalGovernmentUnit", "", new { @type = "file", @class = "form-control w-75", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                        @Html.ValidationMessageFor(model => model.ServiceLocalGovernmentUnit, "", new { @class = "invalid-message" })
+                                    </div>
+                                    <div class="form-group field-publication">
+                                        <label for="publication" class="text-secondary mb-2">
+                                            6. Publication in a newspaper of general circulation within applicant''s franchise area<br />
+                                            <a href="#" class="ms-3 erc-text-blue"><small>click here for more info</small></a>
+                                        </label>
+                                        <div class="clearfix"></div>
+                                        @Html.TextBox("Publication", "", new { @type = "file", @class = "form-control w-75", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                        @Html.ValidationMessageFor(model => model.Publication, "", new { @class = "" })
+                                    </div>
+                                    <div class="form-group field-exemption">
+                                        <label for="exemption-from-competitive" class="text-secondary mb-2">7. Exemption from Competitive Selection Process</label>
+                                        <div class="clearfix"></div>
+                                        @Html.TextBox("ExemptionCompetitive", "", new { @type = "file", @class = "form-control w-75", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                        @Html.ValidationMessageFor(model => model.ExemptionCompetitive, "", new { @class = "invalid-message" })
+                                    </div>
+                                    <div class="form-group field-competitive">
+                                        <label for="competitive" class="text-secondary mb-2">8. Competitive</label>
+                                        <div class="clearfix"></div>
+                                        @Html.TextBox("Competitive", "", new { @type = "file", @class = "form-control w-75", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                        @Html.ValidationMessageFor(model => model.Competitive, "", new { @class = "invalid-message" })
+                                    </div>
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous rounded" value="Back" />
+                                <input type="submit" id="btnNextSubmitDocumentFiles" name="next" class="next-upload-files action-button rounded" value="Submit" />
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card rounded mb-0">
+                                    @if (Model.DocumentsUploadStatus == "Pending" || Model.DocumentsUploadStatus == "Updated" || string.IsNullOrEmpty(Model.DocumentsUploadStatus))
+                                    {
+                                        <div id="docus-on-review" class="form-card rounded d-flex justify-content-center">
+                                            <div class="form-card rounded border text-center w-100 mt-5 mb-0 p-5" style="border-radius:1.5rem!important;">
+                                                <img src="~/Assets/load.png" class="my-5">
+                                                <h3 class="text-secondary mb-5">Document on Process</h3>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (Model.DocumentsUploadStatus == "Approved" || Model.DocumentsUploadStatus == "Accepted")
+                                    {
+                                        <div id="docus-approved" class="form-card rounded d-flex justify-content-center">
+                                            <div class="form-card rounded border text-center w-100 my-5 p-5" style="border-radius:1.5rem!important;">
+                                                <img src="~/Assets/pre-filing-icons/VectorApproved.png" class="my-5">
+                                                <h3 class="text-secondary">Documents Approved</h3>
+                                                <small class="text-secondary">You may proceed with the next process</small>                                                
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (Model.DocumentsUploadStatus == "Rejected")
+                                    {
+                                        <div id="docus-declined" class="form-card rounded d-flex justify-content-center">
+                                            <div class="form-card rounded border text-center w-100 my-5 p-5" style="border-radius:1.5rem!important;">
+                                                <img src="~/Assets/pre-filing-icons/VectorDeclined.png" class="my-5">
+                                                <h3 class="text-secondary">Documents Declined</h3>
+                                                <small class="text-secondary"><strong>Note: </strong>There is an error in the Documents submitted</small>
+                                                <div class="border rounded w-100 p-5 text-start mt-5">
+                                                    <h6 class="text-secondary"><strong>Remarks</strong></h6>
+                                                    <ul class="my-3">
+                                                        @if (!string.IsNullOrEmpty(Model.Remarks))
+                                                        {
+                                                            <li>@Html.DisplayFor(model => model.Remarks)</li>
+                                                        }
+                                                        @if (Model.Attachments != null && Model.Attachments.Count > 0)
+                                                        {
+                                                            foreach (var item in Model.Attachments)
+                                                            {
+                                                                if (item.PreFiledCaseId == Model.Id && item.StatusId == "Remarks")
+                                                                {
+                                                                    <li>
+                                                                        @Html.DisplayFor(model => item.FileName)
+                                                                        <input type="hidden" id="hdnDocumentUniqueFileName" value="@item.UniqueFileName" />
+                                                                        <span style="margin-left:15px"></span>
+                                                                        <i id="downloadDocumentFile" class="fa fa-download text-success"></i>
+                                                                    </li>
+                                                                }
+                                                            }
+                                                        }
+                                                    </ul>
+                                                    <h6 class="text-secondary"><strong>Action Needed</strong></h6>
+                                                    <ul class="my-3">
+                                                        <li>Re-upload documents</li>
+                                                    </ul>
+                                                    <button type="button" class="upload-btn text-white rounded border-0 bg-gold px-2 mx-3 upload-file-document"><small>Upload</small></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous rounded" value="Back" />
+                                <input type="button" name="next" class="next-document-review action-button rounded" value="Next" />
+                            </fieldset>
+                            <fieldset>
+                                @Html.HiddenFor(model => model.PaymentStatus)
+                                <div class="form-card rounded mb-0">
+                                    <div id="docus-on-review" class="form-card rounded d-flex justify-content-center">
+                                        <div class="form-card rounded border text-center w-100 mt-5 mb-0 p-5" style="border-radius:1.5rem!important;">
+                                            <img src="~/Assets/pre-filing-icons/VectorPayFee.png" class="my-5">
+                                            <section class="py-5">
+                                                <ul class="timeline">
+                                                    @if (Model.PaymentStatus == "Approved" || Model.PaymentStatus == "Pending")
+                                                    {
+                                                        <li class="timeline-item mb-5">
+                                                            <h5 class="fw-bold">SOA is now available</h5>
+                                                            <p class="text-muted mb-2 fw-bold">@DateTime.Now.ToString("MM-dd-yyyy")</p>
+                                                            <p class="text-muted">
+                                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit
+                                                                necessitatibus adipisci, ad alias, voluptate pariatur officia
+                                                                repellendus repellat inventore fugit perferendis totam dolor
+                                                                voluptas et corrupti distinctio maxime corporis optio?
+                                                            </p>
+                                                        </li>
+                                                        <li class="timeline-item mb-5">
+                                                            <h5 class="fw-bold">Waiting for SOA Generation</h5>
+                                                            <p class="text-muted mb-2 fw-bold">@Convert.ToDateTime(@Model.CreatedOn).ToString("MM-dd-yyyy")</p>
+                                                            <p class="text-muted">
+                                                                Quisque ornare dui nibh, sagittis egestas nisi luctus nec. Sed
+                                                                aliquet laoreet sapien, eget pulvinar lectus maximus vel.
+                                                                Phasellus suscipit porta mattis.
+                                                            </p>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="timeline-item mb-5">
+                                                            <h5 class="fw-bold">Waiting for SOA Generation</h5>
+                                                            <p class="text-muted mb-2 fw-bold">@Convert.ToDateTime(@Model.CreatedOn).ToString("MM-dd-yyyy")</p>
+                                                            <p class="text-muted">
+                                                                Quisque ornare dui nibh, sagittis egestas nisi luctus nec. Sed
+                                                                aliquet laoreet sapien, eget pulvinar lectus maximus vel.
+                                                                Phasellus suscipit porta mattis.
+                                                            </p>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </section>
+                                            @*<h3 class="text-secondary mb-5" style="margin-bottom: 5px !important;">SOA is now available</h3>@DateTime.Now.ToString("MM-dd-yyyy")
+                                                <h3 class="text-secondary mb-5" style="margin-top:20px; margin-bottom: 5px !important;">Waiting for SOA Generation</h3>@Convert.ToDateTime(@Model.CreatedOn).ToString("MM-dd-yyyy")*@
+                                        </div>
+                                    </div>
+
+                                    @*<div id="payment-tag" class="form-card rounded border w-75 my-5 py-5" style="border-radius:1.5rem!important;">
+                                            <h6 class="erc-text-dark-blue"><strong>Pay Case/Pleading Fee</strong></h6>
+                                            <div class="border-bottom my-3"></div>
+                                            <h6 class="erc-text-dark-blue my-4">Online Payment</h6>
+                                            <div class="row mt-3 d-flex align-items-center">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col erc-text-dark-blue">
+                                                            <strong>Name:</strong>
+                                                        </div>
+                                                        <div class="col">
+                                                            [Name]
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col erc-text-dark-blue">
+                                                            <strong>Email:</strong>
+                                                        </div>
+                                                        <div class="col">
+                                                            [Email]
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col erc-text-dark-blue">
+                                                            <strong>Mobile No.:</strong>
+                                                        </div>
+                                                        <div class="col">
+                                                            [Mobile No.]
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col erc-text-dark-blue">
+                                                            <strong>Case Type:</strong>
+                                                        </div>
+                                                        <div class="col">
+                                                            [Case Type]
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col erc-text-dark-blue">
+                                                            <strong>Case Nature:</strong>
+                                                        </div>
+                                                        <div class="col">
+                                                            [Case Nature]
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <h6 class="erc-text-dark-blue">Payment Reference No.:</h6>
+                                                    <input type="text" class="my-3 p-3 text-center erc-text-dark-blue" />
+                                                </div>
+                                            </div>
+                                            <div class="row d-flex justify-content-center py-3 erc-text-dark-blue">
+                                                Payment thru:
+                                            </div>
+                                            <div class="row d-flex justify-content-center">
+                                                <div class="col-3 boxShadow border rounded text-center p-2 mx-2">
+                                                    <img src="~/Assets/UCPB.png" class="reg-icon">
+                                                </div>
+                                                <div class="col-3 boxShadow border rounded text-center p-2 mx-2">
+                                                    <img src="~/Assets/LB.png" class="reg-icon">
+                                                </div>
+                                            </div>
+                                        </div>*@
+
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous rounded" value="Back" />
+                                <input type="button" name="next" class="next action-button pay-now rounded" value="Pay Now" />
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card rounded mb-0">
+                                    <div id="docus-on-review" class="form-card rounded d-flex justify-content-center">
+                                        <div class="form-card rounded border text-center w-100 mt-5 mb-0 p-5" style="border-radius:1.5rem!important;">
+                                            @*<img src="~/Assets/pre-filing-icons/VectorRedirect.png" class="my-5">
+                                                <h3 class="text-secondary mb-5">Redirected to ERC Payment System</h3>*@
+                                            <img src="~/Assets/pre-filing-icons/VectorApproved.png" class="my-5">
+                                            <h3 class="erc-text-blue">Online Payment Done!</h3>
+                                            <h3 class="text-secondary mb-5" style="margin-top:10px;">Payment Verified</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous rounded" value="Back" />
+                                <input type="button" name="next" class="next action-button rounded" value="Next" />
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card rounded">
+                                    <h6 class="erc-text-dark-blue my-3"><strong>Application Review</strong></h6>
+                                    <div id="docus-on-review" class="form-card rounded d-flex justify-content-center">
+                                        <div class="form-card rounded border text-center w-100 my-5 p-5" style="border-radius:1.5rem!important;">
+                                            @*<img src="~/Assets/pre-filing-icons/VectorApproved.png" class="my-5">
+                                                <h3 class="erc-text-blue">Online Payment Done!</h3>*@
+                                            <form>
+                                                <div class="border rounded p-2 px-4">
+                                                    <h2 class="erc-text-blue mb-4">Profile</h2>
+                                                    <div class="row">
+                                                        <div class="col text-center">
+                                                            <figure class="figure">
+                                                                <a href="~/Assets/defaultProfilePicture.jpg" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to Open Image in New Tab"><img src="~/Assets/defaultProfilePicture.jpg" class="figure-img img-fluid rounded" alt="Profile picture image"></a>
+                                                            </figure>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div class="col erc-text-dark-blue">
+                                                                    <strong>Name:</strong>
+                                                                </div>
+                                                                <br />
+                                                                <div class="text-secondary">
+                                                                    @Html.DisplayFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control d-block" } })
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col erc-text-dark-blue">
+                                                                    <strong>Position:</strong>
+                                                                </div>
+                                                                <div class="text-secondary">
+                                                                    @Html.DisplayFor(model => model.UserType, new { htmlAttributes = new { @class = "form-control d-block" } })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div class="col erc-text-dark-blue">
+                                                                    <strong>Email:</strong>
+                                                                </div>
+                                                                <div class="text-secondary">
+                                                                    <ul style="list-style-type:none;padding:0;">
+                                                                        @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control d-block" } })
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div class="col erc-text-dark-blue">
+                                                                    <strong>Mobile No.:</strong>
+                                                                </div>
+                                                                <div class="text-secondary">
+                                                                    <ul style="list-style-type:none;padding:0;">
+                                                                        @Html.DisplayFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control d-block" } })
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-center mx-0 mt-3">
+                                                    <div class="px-4 py-4 border rounded w-49">
+                                                        <div class="row mb-2">
+                                                            <div class="col erc-text-dark-blue">
+                                                                <strong class="me-2">Case Type: </strong>@Html.DisplayFor(model => model.CaseTypeId, new { htmlAttributes = new { @class = "form-control d-block" } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col erc-text-dark-blue">
+                                                                <strong class="me-2">Case Nature: </strong>@Html.DisplayFor(model => model.CaseNatureId, new { htmlAttributes = new { @class = "form-control d-block" } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="border-bottom my-4"></div>
+                                                        <div class="m-auto">
+                                                            <h5>Remarks</h5>
+                                                            @Html.DisplayFor(model => model.Remarks)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <input type="button" name="submit" class="next-prefiled-complete action-button rounded my-5" value="Ok" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="uploadInitialDocuments" tabindex="-1" aria-labelledby="uploadInitialDocumentsLabel" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadInitialDocumentsLabel">Re-upload documents</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="uploadInitialDocumentRequirements" class="modal-body">
+                    @using (Html.BeginForm("UploadDocument", "PreFiledCase", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
+                    {
+                        @class = "form-modal-upload",
+                        role = "form",
+                        enctype = "multipart/form-data"
+                    }))
+                    {
+                        @Html.HiddenFor(model => model.Id)
+                        if (Model.InitialReviewStatus == "Rejected" || Model.InitialReviewStatus == "Declined")
+                        {
+                            if (Model.PreFiledAttachmentViewModels != null && Model.PreFiledAttachmentViewModels.Count > 0)
+                            {
+                                foreach (var item in Model.PreFiledAttachmentViewModels)
+                                {
+                                    string codeName = item.CodeName;
+
+                                    if (item.StatusId == "Rejected" || item.StatusId == "Declined")
+                                    {
+                                        if (codeName == "ApplicationForm")
+                                        {
+                                            <div class="form-group">
+                                                <label class="form-label required fw600" for="ApplicationForm">Application Form</label>
+                                                @Html.TextBox("ApplicationForm", "", new { @type = "file", @class = "form-control reupload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.ApplicationForm, "", new { @class = "invalid-message" })
+                                            </div>
+                                        }
+                                        if (codeName == "OtherDocument")
+                                        {
+                                            <div class="form-group">
+                                                <label class="form-label required fw600" for="Documents">Other Document</label>
+                                                @Html.TextBox("Documents", "", new { @type = "file", @class = "form-control reupload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.Documents, "", new { @class = "invalid-message" })
+                                            </div>
+                                        }
+                                    }
+                                }
+                                if (!Model.PreFiledAttachmentViewModels.Any(x => x.CodeName == "OtherDocument"))
+                                {
+                                    <br />
+                                    <button type="button" id="btnAttachAdditionaDocument" class=" mb-3 mt-0 ps-0 bg-transparent erc-text-blue border-0">
+                                        <i class="fa-solid fa-plus p-1 me-1 rounded" style="background: #6f83bc; color: #fff !important;"></i> Attach more document
+                                    </button>
+                                    @Html.TextBox("Documents", "", new { @type = "file", @class = "form-control reupload-document attach-additional-file", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx", @hidden = "hidden" })
+                                    @Html.ValidationMessageFor(model => model.Documents, "", new { @class = "invalid-message" })
+                                }
+                            }
+                        }
+
+                        if (Model.InitialReviewStatus == "Approved" && (Model.DocumentsUploadStatus == "Rejected" || Model.DocumentsUploadStatus == "Declined"))
+                        {
+                            if (Model.PreFiledAttachmentViewModels != null && Model.PreFiledAttachmentViewModels.Count > 0)
+                            {
+                                foreach (var item in Model.PreFiledAttachmentViewModels)
+                                {
+                                    string codeName = item.CodeName;
+                                    if (codeName == "ServiceLgu")
+                                    {
+                                        codeName = "ServiceLocalGovernmentUnit";
+                                    }
+
+                                    if (item.StatusId == "Rejected" || item.StatusId == "Declined")
+                                    {
+                                        @*<div class="form-group">
+                                                <label class="form-label required fw600" for="@codeName">@item.FileTypeName</label>
+                                                @Html.TextBox(codeName, "", new { @type = "file", @class = "form-control reupload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => codeName, "", new { @class = "invalid-message" })
+                                            </div>*@
+
+                                        if (codeName == "ApplicationForm")
+                                        {
+                                            <div class="form-group">
+                                                <label class="form-label required fw600" for="ApplicationForm">Application Form</label>
+                                                @Html.TextBox("ApplicationForm", "", new { @type = "file", @class = "form-control reupload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.ApplicationForm, "", new { @class = "invalid-message" })
+                                            </div>
+                                        }
+                                        if (codeName == "NotaryPresentedId")
+                                        {
+                                            <div class="form-group">
+                                                <label class="form-label required fw600" for="NotaryIdPresented">ID Presented Upon Notary</label>
+                                                @Html.TextBox("NotaryPresentedId", "", new { @type = "file", @class = "form-control reupload-upload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.NotaryPresentedId, "", new { @class = "invalid-message" })
+                                            </div>
+                                        }
+                                        if (codeName == "CertificationForum")
+                                        {
+                                            <div class="form-group">
+                                                <label class="form-label required fw600" for="CertificationForum">Certification Against Forum Shopping(CAFS)</label>
+                                                @Html.TextBox("CertificationForum", "", new { @type = "file", @class = "form-control reupload-upload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.CertificationForum, "", new { @class = "invalid-message" })
+                                            </div>
+                                        }
+                                        if (codeName == "AuthorityCounsel")
+                                        {
+                                            <div class="form-group">
+                                                <label class="form-label required fw600" for="AuthorityCounsel">Authority of Counsel(Board Resolution or Secretary Ceritificate)</label>
+                                                @Html.TextBox("AuthorityCounsel", "", new { @type = "file", @class = "form-control reupload-upload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.AuthorityCounsel, "", new { @class = "invalid-message" })
+                                            </div>
+                                        }
+                                        if (codeName == "AuthorityAffiant")
+                                        {
+                                            <div class="form-group">
+                                                <label class="form-label required fw600" for="AuthorityAffiant">Authority of Affiant to execute Verification/CAFS(Board Resolution or Secretary Ceritificate)</label>
+                                                @Html.TextBox("AuthorityAffiant", "", new { @type = "file", @class = "form-control reupload-upload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.AuthorityAffiant, "", new { @class = "invalid-message" })
+                                            </div>
+                                        }
+                                        if (codeName == "ServiceLocalGovernmentUnit")
+                                        {
+                                            <div class="form-group">
+                                                <label class="form-label required fw600" for="ServiceLocalGovernmentUnit">Service to local government unit(lgu) legislative body of the municipality and province where applicants operate</label>
+                                                @Html.TextBox("ServiceLocalGovernmentUnit", "", new { @type = "file", @class = "form-control reupload-upload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.ServiceLocalGovernmentUnit, "", new { @class = "invalid-message" })
+                                            </div>
+                                        }
+                                        if (codeName == "Publication")
+                                        {
+                                            <div class="form-group">
+                                                <label class="form-label required fw600" for="Publication">Publication in a newspaper or general circulation with applicants franchise area</label>
+                                                @Html.TextBox("Publication", "", new { @type = "file", @class = "form-control reupload-upload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.Publication, "", new { @class = "invalid-message" })
+                                            </div>
+                                        }
+                                        if (codeName == "ExemptionCompetitive")
+                                        {
+                                            <div class="form-group">
+                                                <label class="form-label required fw600" for="ExemptionCompetitive">Exemption from Competitive Selection Process</label>
+                                                @Html.TextBox("ExemptionCompetitive", "", new { @type = "file", @class = "form-control reupload-upload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.ExemptionCompetitive, "", new { @class = "invalid-message" })
+                                            </div>
+                                        }
+                                        if (codeName == "Competitive")
+                                        {
+                                            <div class="form-group">
+                                                <label class="form-label required fw600" for="Competitive">Competitive</label>
+                                                @Html.TextBox("Competitive", "", new { @type = "file", @class = "form-control reupload-upload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                                @Html.ValidationMessageFor(model => model.Competitive, "", new { @class = "invalid-message" })
+                                            </div>
+                                        }
+                                    }
+                                }
+                                <br />
+                                <button type="button" id="btnAttachAdditionaDocument" class=" mb-3 mt-0 ps-0 bg-transparent erc-text-blue border-0">
+                                    <i class="fa-solid fa-plus p-1 me-1 rounded" style="background: #6f83bc; color: #fff !important;"></i> Attach more document
+                                </button>
+                                @Html.TextBox("Documents", "", new { @type = "file", @class = "form-control reupload-document attach-additional-file", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx", @hidden = "hidden" })
+                                @Html.ValidationMessageFor(model => model.Documents, "", new { @class = "invalid-message" })
+                            }
+                        }
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="addnewbtn submit-upload-document btn btn-p8 hover-boxshadow hover-bg-primarycolor">@Resource.Submit</button>
+                    <button type="button" class="btn btn-p8 hover-boxshadow hover-bg-secondarycolor" data-bs-dismiss="modal">@Resource.Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="survey" tabindex="-1" aria-labelledby="surveyLabel" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="surveyLabel">Survey</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="surveyBody" class="modal-body">
+                    @using (Html.BeginForm("", "PreFiledCase", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
+                    {
+                        @class = "form-modal-upload",
+                        role = "form",
+                        enctype = "multipart/form-data"
+                    }))
+                    {
+                        @Html.HiddenFor(model => model.Id)
+                        <div class="mt-2 text-center">
+                            <div class="mt-3 pt-2 fs-15 mx-4 mx-sm-5">
+                                <h4 class="fs-22 fw600"><b>Survey questions:</b></h4>                                
+                                <p class="fs-15 text-muted mx-3 mb-0 pt-1">Content here</p>
+                            </div>
+                        </div>        
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="addnewbtn submit-survey-content btn btn-p8 hover-boxshadow hover-bg-primarycolor">@Resource.Submit</button>
+                    <button type="button" class="btn btn-p8 hover-boxshadow hover-bg-secondarycolor" data-bs-dismiss="modal">@Resource.Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            var current_fs, next_fs, previous_fs;
+            var opacity;
+            
+            $(".previous").click(function () {
+
+                current_fs = $(this).parent();
+                previous_fs = $(this).parent().prev();
+
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                previous_fs.show();
+
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        previous_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 600
+                });
+            });
+
+            $('.radio-group .radio').click(function () {
+                $(this).parent().find('.radio').removeClass('selected');
+                $(this).addClass('selected');
+            });
+
+            $(".next-prefiled-complete").click(function () {
+                console.log($('#Id').val());
+                $.ajax({
+                    type: "GET",
+                    url: "/InitiatoryPleading/Add",
+                    data: { preFileCaseId: $('#Id').val() },
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data)
+                            location.href = "/InitiatoryPleading/Index";
+                    }
+                    , error: function (xhr, status, error) {
+                        var err = JSON.parse(xhr.responseText);
+                    },
+                    async: true
+                });
+            })
+
+            $(".boxShadow").on('click', function () {
+                $(".boxShadow").each(function () {
+                    $(this).css({
+                        "box-shadow": "none",
+                        "transition": "0.35s"
+                    });
+                })
+                $(this).css({
+                    "box-shadow": " 0 0 8px #5069b1"
+                });
+            });
+
+            $("#btnAttachMoreDocument").click(function () {
+
+                var elem = "#" + "Documents.initial-attach-more";
+                if ($(elem).length)
+                    $(elem).removeAttr("hidden");
+            });
+
+            $("#btnAttachAdditionaDocument").click(function () {
+
+                var elem = "#" + "Documents.attach-additional-file";
+                if ($(elem).length)
+                    $(elem).removeAttr("hidden");
+            });
+
+            var currentTab = 0;
+                       
+            initTab();
+
+            var selectedCaseTypeId;
+            var selectedCaseTypeName;
+            $("div.custom-options > span.custom-option").click(function () {
+                var parentElem = $(this)[0].parentElement.parentElement;
+                
+                if ($(parentElem).children("input").attr("id") === "CaseTypeId") {
+                    selectedCaseTypeId = $(this).attr('value');
+                    selectedCaseTypeName = $(this).text();
+                    
+                    if (selectedCaseTypeId !== "null") {
+                        setUploadFilesRequirement(selectedCaseTypeName);                        
+                        getCaseNatureList(selectedCaseTypeId);
+                    }
+                }
+
+                if ($(parentElem).children("input").attr("id") === "CaseNatureId") {
+                    var selectedCaseNatureId = $(this).attr('value');
+                    var selectedCaseNatureName = $(this).text();
+                    
+                    if (selectedCaseTypeId !== "null" && selectedCaseNatureId !== "null") {
+                        if (!initialReviewRequired(selectedCaseTypeName, selectedCaseNatureName)) {
+                            $("#initial").css("display", "none");
+                            $("#InitialReviewRequired").val(false);
+                        } else
+                            $("#initial").css("display", "block");                           
+                        
+                    }
+                }
+
+            });
+
+            $(".upload-initial-document").click(function () {
+                $("#uploadInitialDocuments").modal("show");
+            });
+
+            $(".upload-file-document").click(function () {
+                $("#uploadInitialDocuments").modal("show");
+            });
+
+            $(".submit-upload-document").click(function () {
+
+                //if (!files.length) {
+
+                //    $("#ApplicationForm.reupload-document").next("span").html("Required");
+                //    $("#ApplicationForm.reupload-document").val("");
+                //    return;
+                //}
+
+                if (!validateUploadFileRequirements()) return false;
+                //var uploadedFileRequirements = getReuploadedFileRequirements();
+                //console.log(uploadedFileRequirements);
+
+                $(".form-modal-upload").submit();
+
+                //var inputFile = $("#ApplicationForm.reupload-document").get(0);
+                //var files = inputFile.files;
+
+                //var formData = new FormData();
+                //formData.append("id", $("#Id").val())
+                //formData.append("initialDocument", files[0]);
+
+                //$.ajax({
+                //    url: '/PreFiledCase/UploadInitialDocument',
+                //    type: "POST",
+                //    contentType: false,
+                //    processData: false,
+                //    data: formData,
+                //    success: function (data) {
+                //        if (data) {
+                //            $("#ApplicationForm.reupload-document").next("span").html("");
+                //            $("#ApplicationForm.reupload-document").val("");
+                //            $("#uploadInitialDocuments").modal("hide");
+
+                //            location.href = "/PreFiledCase/Index";
+                //        } else {
+                //            $("#ApplicationForm.reupload-document").next("span").html("File upload failed.");
+                //            $("#ApplicationForm.reupload-document").val("");
+                //        }
+                //    },
+                //    error: function (err) {
+
+                //    }
+                //});
+            });
+
+            $("#btnNextSubmitInitial, #btnNextSubmitDocumentFiles").click(function () {
+
+                if (!validateForm()) return false;
+
+                $(".form-horizontal").submit();
+            });
+
+            $('.next-document-review').click(function () {
+                $("#survey").modal("show");
+            });
+
+            $(".submit-survey-content").click(function () {
+                $(".next-document-review").addClass("next");                
+                $("#survey").modal("hide");
+                //showTab(5);
+            });            
+
+            $('#downloadInitialFile').click(function () {
+                var fileName = $("#hdnInitialUniqueFileName").val();
+
+                if (fileName === "") {
+                    alert("Unable to download, the file is empty.");
+                    return;
+                }
+
+                downloadFile(fileName);
+            });
+
+            $('#downloadDocumentFile').click(function () {
+                var fileName = $("#hdnDocumentUniqueFileName").val();
+
+                if (fileName === "") {
+                    alert("Unable to download, the file is empty.");
+                    return;
+                }
+
+                downloadFile(fileName);
+            });
+
+            function initTab() {
+                console.log("init tab...");
+
+                var initialReviewStatus = $("#InitialReviewStatus").val();
+                var documentUploadStatus = $("#DocumentsUploadStatus").val();
+                
+                if (initialReviewStatus === "Pending" || initialReviewStatus === "Updated" || initialReviewStatus === "Rejected") {
+                    currentTab = 2; // Set tab to initial review.
+                } else if (initialReviewStatus === "Approved" || initialReviewStatus === "Accepted") {                   
+
+                    if (documentUploadStatus === "")
+                        currentTab = 2; // Set tab to initial review for next action upload files.
+                    if (documentUploadStatus === "Approved" || documentUploadStatus === "Accepted" || documentUploadStatus === "Pending" || documentUploadStatus === "Rejected" || documentUploadStatus === "Updated")
+                        currentTab = 4; // Set tab to document review.
+                    //else if (documentUploadStatus === "Approved" || documentUploadStatus === "Accepted")
+                    //    currentTab = 5; // Set tab to payment.
+
+                }
+                
+                var preFiledCaseType = $("#CaseTypeName").val();
+                var preFiledCaseNature = $("#CaseNatureName").val();
+                if (currentTab > 1 && !initialReviewRequired(preFiledCaseType, preFiledCaseNature)) {
+                    currentTab = currentTab + 1;
+                    $("#initial").css("display", "none");
+                    $("#InitialReviewRequired").val(false);
+                } else
+                    $("#initial").css("display", "block");
+
+
+                if (currentTab >= 2)
+                    $(".previous").attr("disabled", "disabled");
+                else
+                    $(".previous").removeAttr("disabled");
+
+
+                showTab(currentTab);
+
+                $(".previous").click(function () { nextPrev(-1); });
+                $(".next").click(function () { nextPrev(1); });
+
+                if ($("#uploadedDocument").length > 0) {
+                    $("#ApplicationForm, #Documents").not(".reupload-document").attr("disabled", "disabled");
+                    $("#ApplicationForm").next("span").removeClass("invalid-message");
+                } else {
+                    $("#ApplicationForm, #Documents").not(".reupload-document").removeAttr("disabled");
+                    $("#ApplicationForm").next("span").addClass("invalid-message");
+                }
+            }
+
+            function setUploadFilesRequirement(selectedCaseTypeName) {
+
+                if (selectedCaseTypeName === "Rule Making" || selectedCaseTypeName === "Miscellaneous Case") {
+                    $(".field-service, .field-publication").children("div.form-group > span").removeClass("invalid-message");
+                    $(".field-service, .field-publication").css("visibility", "hidden");
+                } else {
+                    $(".field-service, .field-publication").children("div.form-group > span").addClass("invalid-message");
+                    $(".field-service, .field-publication").css("visibility", "visible");
+                }
+
+                if (selectedCaseTypeName === "Prepaid Retail Electric Service") {
+                    $(".field-exemption, .field-competitive").children("div.form-group > span").addClass("invalid-message");
+                    $(".field-exemption, .field-competitive").css("visibility", "visible");
+                } else {
+                    $(".field-exemption, .field-competitive").children("div.form-group > span").removeClass("invalid-message");
+                    $(".field-exemption, .field-competitive").css("visibility", "hidden");
+                }
+            }
+
+            function showTab(n) {
+                console.log("show next tab: " + n);
+                var fieldSet = document.getElementsByTagName("fieldset");
+
+                var current_fieldSet = $("fieldset.active");
+                var next_fieldSet = $(fieldSet[n]);
+
+                if (n === 0)
+                    $("#progressbar li").eq($("fieldset").index(next_fieldSet)).addClass("active");
+                else {
+                    for (var x = 0; x <= n; x++) {
+                        $("#progressbar li").eq($("fieldset").index($(fieldSet[x]))).addClass("active");
+                    }
+                }
+
+                next_fieldSet.show();
+
+                if (n > 0) {
+
+                    current_fieldSet.animate({ opacity: 0 }, {
+                        step: function (now) {
+                            opacity = 1 - now;
+
+                            current_fieldSet.css({
+                                'display': 'none',
+                                'position': 'relative'
+                            });
+                            $(current_fieldSet).removeClass("active");
+                            $(next_fieldSet).addClass("active");
+                            next_fieldSet.css({ 'opacity': opacity });
+                        },
+                        duration: 600
+                    });
+                }
+
+                if (n === (fieldSet.length - 1)) {
+                    //document.getElementById("nextBtn").style.display = "none";
+                    //setButtonText("nextBtn", "Submit");
+                } else {
+
+                    if (n === 1) {
+
+                        if ($("#uploadedDocument").length > 0)
+                            setButtonText("next-initial-upload", "Next");
+                        else
+                            setButtonText("next-initial-upload", "Submit");
+
+                    } else if (n === 2) {
+
+                        if ($("#InitialReviewStatus").val() !== "Approved") {
+                            $(".next-initial-review").attr("disabled", "disabled").addClass("disabled");
+                        } else
+                            $(".next-initial-review").removeAttr("disabled").removeClass("disabled");
+
+                    } else if (n === 3) {
+                        var selectedCaseType = $("#CaseTypeName").val();
+                        if (selectedCaseType !== "")
+                            setUploadFilesRequirement(selectedCaseType);
+
+                    }
+                    else if (n === 4) {
+                        var documentUploadStatus = $("#DocumentsUploadStatus").val();
+                        if (documentUploadStatus !== "Approved")
+                            $(".next-document-review").attr("disabled", "disabled").addClass("disabled");
+                        else
+                            $(".next-document-review").removeAttr("disabled").removeClass("disabled").addClass("next");
+
+                    } else if (n === 5) {                        
+                        if ($("#PaymentStatus").val() === "Approved" || $("#PaymentStatus").val() === "Pending")
+                            $(".pay-now").removeAttr("disabled").removeClass("disabled");
+                        else
+                            $(".pay-now").attr("disabled", "disabled").addClass("disabled");
+
+                    }
+                }
+            }
+
+            function nextPrev(n) {
+
+                if ((n == 0 || n == 1 || n == 3) && !validateForm()) return false;
+
+                currentTab = currentTab + n;
+                showTab(currentTab);
+            }
+
+            function validateForm() {
+
+                var tab, input, i, valid = true;
+                tab = document.getElementsByTagName("fieldset");
+                input = tab[currentTab].getElementsByTagName("input");
+
+                for (i = 0; i < input.length; i++) {
+
+                    var inputValue = input[i].value;
+                    if ((inputValue === "" || inputValue === "0") && $(input[i]).next().hasClass("invalid-message")) {
+                        $(input[i]).next().html("Required");
+                        valid = false;
+                    } else if (inputValue === "null" && $(input[i]).hasClass("custom-option")) {
+                        $(".select-invalid-message").html("Required");
+                        valid = false;
+                    } else {
+                        if (currentTab === 1) {
+                            var inputTextArea = tab[currentTab].getElementsByTagName("textarea");
+                            if (inputTextArea.length > 0) {
+
+                                if (inputTextArea[0].id === "RequestSubject" && inputTextArea[0].value === "" && inputTextArea[0].nextSibling.nextSibling.className === "field-validation-valid invalid-message") {
+                                    inputTextArea[0].nextSibling.nextSibling.innerHTML = "Required";
+                                    valid = false;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return valid;
+            }
+
+            function setButtonText(elemId, text) {
+                $("." + elemId).attr("value", text);
+            }
+
+            function validateUploadFileRequirements() {
+
+                var valid = true;
+
+                var div, input, i;
+                div = document.getElementById("uploadInitialDocumentRequirements");
+                input = div.getElementsByTagName("input");
+
+                for (i = 0; i < input.length; i++) {
+                    if (input[i].type === "file") {
+
+                        if (input[i].value === "" && $(input[i]).next().hasClass("invalid-message")) {
+                            $(input[i]).next().html("Required");
+                            valid = false;
+                        }
+
+                    }
+                }
+
+                return valid;
+            }
+                        
+            function getReuploadedFileRequirements() {
+
+                var formData = new FormData();
+
+                div = document.getElementById("uploadInitialDocumentRequirements");
+                input = div.getElementsByTagName("input");
+
+                for (i = 0; i < input.length; i++) {
+                    if (input[i].type === "file") {
+                        var inputId = "#" + input[i].id;
+                        var inputFile = $(inputId).get(0);
+                        console.log(inputFile);
+                        if (inputFile.length) {
+                            var files = inputFile.files;
+                            formData.append("id", $("#Id").val())
+                            formData.append("initialDocument", files[0]);
+                        }
+                    }
+                }
+
+                return formData;
+            }
+          
+            function initialReviewRequired(caseType, caseNature) {
+               
+                var initialReview = true;
+                if (caseType === "Retail Electricity Supplier License" || caseType === "Prepaid Retail Electric Service") {
+                    if (caseNature === "Retail Electricity Supplier" || "PRES")
+                        initialReview = false;
+
+                } else if (caseType === "Miscellaneous Case") {
+                    if (caseNature === "BSUP")
+                        initialReview = false;
+
+                } else if (caseType === "Rate Case") {
+                    if (caseNature === "Contract for the Supply of Electric Energy (CSEE)" || caseNature === "Contract for the Supply of Electric Energy"
+                        || caseNature === "FIT-All" || caseNature === "Letter of Agreement (LOA)" || caseNature === "Letter of Agreement"
+                        || caseNature === "Market Transaction Fees (MTF)" || caseNature === "Market Transaction Fees"
+                        || caseNature === "Price Determination Methodology (PDM)" || caseNature === "Price Determination Methodology") {
+                        initialReview = false;
+                    }
+
+                } else if (caseType === "Rule Making") {
+                    if (caseNature === "None" || caseNature === "Re: EC's TRAC" || caseNature === "Re ECs TRAC")
+                        initialReview = false;
+                    
+                }
+
+                return initialReview;
+            }
+
+            function downloadFile(fileName) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/PreFiledCase/DownloadFile",
+                    data: { fileName: fileName },
+                    //xhrFields: {
+                    //    responseType: 'blob'
+                    //},
+                    success: function (data) {
+
+                        // get the file name to download.
+                        const blob = new Blob([data], { type: 'application/octetstream' });
+                        var a = document.createElement('a');
+                        var url = window.URL.createObjectURL(blob);
+                        a.href = url;
+                        a.download = fileName;
+                        document.body.append(a);
+                        a.click();
+                        a.remove();
+                        window.URL.revokeObjectURL(url);
+                    }
+                    , error: function (xhr, status, error) {
+                        var err = JSON.parse(xhr.responseText);
+                    }
+                });
+            }
+
+            function getCaseNatureList(caseTypeId) {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/PreFiledCase/GetCaseNatureList",
+                    data: { caseTypeId: caseTypeId },
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                                                
+                        var options = '<span class="custom-option selected" data-value="null" value="null">Please select...</span>'
+                        $(".case-nature").next("div.select-wrapper").children("div.select").children("div.custom-options").empty();
+                        for (var i = 0; i < data.length; i++) {
+                            var spanValue = data[i].Value + "_" + data[i].Text;
+                            options += "<span class='custom-option' data-value=" + data[i].Value + " value=" + data[i].Value + " onclick=\"triggerSelect('" + spanValue + "')\">" + data[i].Text + "</span>";
+                        }
+                        $(".case-nature").next("div.select-wrapper").children("div.select").children("div.custom-options").append(options);                        
+                    }
+                    , error: function (xhr, status, error) {
+                        var err = JSON.parse(xhr.responseText);
+                    }
+                });
+            }
+            
+        });
+
+        function triggerSelect(data) {
+            
+            var strData = data.split("_");
+            $("#CaseNatureId").val(strData[0]);
+            $(".case-nature").next("div.select-wrapper").children("div.select").children("div.select__trigger").children("span").html(strData[1]);            
+        }
+
+    </script>
+}

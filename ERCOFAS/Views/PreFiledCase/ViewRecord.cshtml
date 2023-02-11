@@ -1,0 +1,1979 @@
+﻿@model NetStarter.Models.PreFiledCaseViewModel
+@using NetStarter.CustomHelper
+@using NetStarter.Models
+@using NetStarter.Resources
+@using NetStarter.Helpers
+@using NetStarter.Enumeration
+@{
+    var userRole = RoleHelpers.GetMainRole();
+
+    if (userRole != null)
+    {
+        if (userRole == UserTypeEnum.Client.ToString())
+        {
+            ViewBag.Title = "Preview";
+        }
+        else if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+        {
+            if (Model.Id != null && Model.InitialReviewStatus != "Approved")
+            {
+                ViewBag.Title = "Initial Review";
+            }
+            else if (Model.Id != null || Model.InitialReviewStatus == "Approved" && Model.DocumentsUploadStatus != null)
+            {
+                ViewBag.Title = "Document Review";
+            }
+        }
+
+    }
+    ViewBag.Module = "Pre-Filed Case";
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.225/build/pdf.js"></script>
+
+<section>
+    <div class="row mb-4 mt-2">
+        <div class="col">
+            <div class="card border-0 rounded">
+                <div class="row bg-white mx-2 py-2" style="border-radius:1.5rem;">
+                    <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
+                        <h6>Notification Highlights</h6>
+                    </div>
+                    <div class="col px-0">
+                        <div class="row mb-2">
+                            <div class="col text-secondary"><strong>Pre-Filing Case</strong></div>
+                            <div class="col d-flex align-items-center justify-content-end text-muted me-4"><small>[Date] [Time]</small></div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p class="mb-0 text-muted">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 pe-0 d-flex align-items-center justify-content-center">
+                        <button class="btn text-secondary rounded-circle border-secondary border-2 me-4"><strong><</strong></button>
+                        <button class="btn text-secondary rounded-circle border-secondary border-2"><strong>></strong></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-2">
+        <div class="col">
+            <div class="card p-5 border-0 rounded">
+                <h1 class="erc-text-blue text-center">@ViewBag.Title</h1>
+                <div class="w-100 m-auto py-5">
+                </div>
+
+                <form id="msform">
+                    <div class="border rounded p-2 px-4">
+                        <h2 class="erc-text-blue mb-4">Profile</h2>
+                        <div class="row justify-content-end">
+                            <div class="col-3">
+                                <div class="col-6 float-end me-0 ps-3" style="color:#2dea29;"><strong>Verified</strong></div>
+                            </div>
+                            <div class="col-3">
+                                <div class="col-6 float-end me-0 ps-3" style="color:#2dea29;"><strong>Verified</strong></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <figure class="figure">
+                                    <a href="~/Assets/defaultProfilePicture.jpg" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to Open Image in New Tab"><img src="~/Assets/defaultProfilePicture.jpg" class="figure-img img-fluid rounded" alt="Profile picture image"></a>
+                                </figure>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col erc-text-dark-blue">
+                                        <strong>Name:</strong>
+                                    </div>
+                                    <div class="col text-secondary">
+                                        @Model.FullName
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col erc-text-dark-blue">
+                                        <strong>Position:</strong>
+                                    </div>
+                                    <div class="col text-secondary">
+                                        @Model.UserType
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col erc-text-dark-blue">
+                                        <strong>Email:</strong>
+                                    </div>
+                                    <div class="col text-secondary">
+                                        <ul style="list-style-type:none;padding:0;">
+                                            @if (Model.Emails != null)
+                                            {
+                                                foreach (var item in Model.Emails.Where(x => x.IsVerified))
+                                                {
+                                                    <li>@Html.DisplayFor(modelItem => item.EmailAddress)</li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col erc-text-dark-blue">
+                                        <strong>Mobile No.:</strong>
+                                    </div>
+                                    <div class="col text-secondary">
+                                        <ul style="list-style-type:none;padding:0;">
+                                            @if (Model.MobileNumbers != null)
+                                            {
+                                                foreach (var item in Model.MobileNumbers.Where(x => x.IsVerified))
+                                                {
+                                                    <li>@Html.DisplayFor(modelItem => item.MobileNumber)</li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mx-0 mt-3">
+                        <div class="px-4 py-4 border rounded w-49">
+                            <div class="row mb-2">
+                                <div class="col erc-text-dark-blue">
+                                    <strong class="me-2">Case Type: </strong>@Html.DisplayFor(model => model.CaseTypeId, new { htmlAttributes = new { @class = "form-control d-block" } })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col erc-text-dark-blue">
+                                    <strong class="me-2">Case Nature: </strong>@Html.DisplayFor(model => model.CaseNatureId, new { htmlAttributes = new { @class = "form-control d-block" } })
+                                </div>
+                            </div>
+                            <div class="border-bottom my-4"></div>
+                            <table class="mb-6">
+                                <thead>
+                                    <tr>
+                                        <th class="erc-text-dark-blue">Pre-Filing Application Form</th>
+                                        <th class="text-center erc-text-dark-blue">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (userRole != null)
+                                    {
+                                        if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                                        {
+                                            if (Model.PreFiledAttachmentViewModels != null && Model.PreFiledAttachmentViewModels.Count > 0)
+                                            {
+                                                foreach (var item in Model.PreFiledAttachmentViewModels)
+                                                {
+                                                    if (item.StatusId != "Remarks")
+                                                    {
+                                                        <tr>
+                                                            <td class="td75 text-secondary">
+                                                                @Html.DisplayFor(model => item.FileTypeName)
+                                                            </td>
+                                                            <td>
+                                                                @*Service Lgu*@
+                                                                @if (item.FileTypeName == "Service Lgu")
+                                                                {
+                                                                    if (userRole == UserTypeEnum.Client.ToString())
+                                                                    {
+
+                                                                        <span id="fstatus" class="action-button-approve p-0 m-1">@Html.DisplayFor(modelItem => item.StatusId)</span>
+
+
+                                                                    }
+                                                                    else if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                                                                    {
+                                                                        @Html.HiddenFor(modelItem => item.FileTypeName, new { id = "slftn" })
+                                                                        @Html.HiddenFor(modelItem => item.StatusId, new { id = "sls" })
+                                                                        @Html.HiddenFor(modelItem => item.Id, new { id = "getfidOfSl" })
+
+                                                                        <a hidden id="slph" class="slph p-0 m-1"></a>
+                                                                        <div class="sl-group" hidden>
+                                                                            <div class="sl1-container" hidden>
+                                                                                <a id="slab" href="javascript:void(0)" class="pop2 action-button-approve p-0 m-1 hover-bg-primarycolor">Approve</a>
+                                                                            </div>
+                                                                            <div class="sl2-container" hidden>
+                                                                                <a id="slrb" href="javascript:void(0)" class="pop2 action-button-decline p-0 m-1 hover-bg-primarycolor">Reject</a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    }
+                                                                }
+                                                                @*Publication*@
+                                                                @if (item.FileTypeName == "Publication")
+                                                                {
+                                                                    if (userRole == UserTypeEnum.Client.ToString())
+                                                                    {
+
+                                                                        <span id="fstatus" class="action-button-approve p-0 m-1">@Html.DisplayFor(modelItem => item.StatusId)</span>
+
+
+                                                                    }
+                                                                    else if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                                                                    {
+                                                                        @Html.HiddenFor(modelItem => item.FileTypeName, new { id = "pftn" })
+                                                                        @Html.HiddenFor(modelItem => item.StatusId, new { id = "ps" })
+                                                                        @Html.HiddenFor(modelItem => item.Id, new { id = "getfidOfP" })
+
+                                                                        <a hidden id="pph" class="pph p-0 m-1"></a>
+                                                                        <div class="p-group" hidden>
+                                                                            <div class="p1-container" hidden>
+                                                                                <a id="pab" href="javascript:void(0)" class="pop2 action-button-approve p-0 m-1 hover-bg-primarycolor">Approve</a>
+                                                                            </div>
+                                                                            <div class="p2-container" hidden>
+                                                                                <a id="prb" href="javascript:void(0)" class="pop2 action-button-decline p-0 m-1 hover-bg-primarycolor">Reject</a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    }
+                                                                }
+                                                                @*Notary Presented Id*@
+                                                                @if (item.FileTypeName == "Notary Presented Id")
+                                                                {
+                                                                    if (userRole == UserTypeEnum.Client.ToString())
+                                                                    {
+
+                                                                        <span id="fstatus" class="action-button-approve p-0 m-1">@Html.DisplayFor(modelItem => item.StatusId)</span>
+
+
+                                                                    }
+                                                                    else if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                                                                    {
+                                                                        @Html.HiddenFor(modelItem => item.FileTypeName, new { id = "npiftn" })
+                                                                        @Html.HiddenFor(modelItem => item.StatusId, new { id = "npis" })
+                                                                        @Html.HiddenFor(modelItem => item.Id, new { id = "getfidOfNotaryPresentedId" })
+
+                                                                        <a hidden id="npiph" class="npiph p-0 m-1"></a>
+                                                                        <div class="npi-group" hidden>
+                                                                            <div class="npi1-container" hidden>
+                                                                                <a id="npiab" href="javascript:void(0)" class="pop2 action-button-approve p-0 m-1 hover-bg-primarycolor">Approve</a>
+                                                                            </div>
+                                                                            <div class="npi2-container" hidden>
+                                                                                <a id="npirb" href="javascript:void(0)" class="pop2 action-button-decline p-0 m-1 hover-bg-primarycolor">Reject</a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    }
+                                                                }
+                                                                @*Authority Counsel*@
+                                                                @if (item.FileTypeName == "Authority Counsel")
+                                                                {
+                                                                    if (userRole == UserTypeEnum.Client.ToString())
+                                                                    {
+
+                                                                        <span id="fstatus" class="action-button-approve p-0 m-1">@Html.DisplayFor(modelItem => item.StatusId)</span>
+
+
+                                                                    }
+                                                                    else if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                                                                    {
+                                                                        @Html.HiddenFor(modelItem => item.FileTypeName, new { id = "acftn" })
+                                                                        @Html.HiddenFor(modelItem => item.StatusId, new { id = "acs" })
+                                                                        @Html.HiddenFor(modelItem => item.Id, new { id = "getfidOfAuthorityCounsel" })
+
+                                                                        <a hidden id="acph" class="acph p-0 m-1"></a>
+                                                                        <div class="ac-group" hidden>
+                                                                            <div class="ac1-container" hidden>
+                                                                                <a id="acab" href="javascript:void(0)" class="pop2 action-button-approve p-0 m-1 hover-bg-primarycolor">Approve</a>
+                                                                            </div>
+                                                                            <div class="ac2-container" hidden>
+                                                                                <a id="acrb" href="javascript:void(0)" class="pop2 action-button-decline p-0 m-1 hover-bg-primarycolor">Reject</a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    }
+                                                                }
+                                                                @*Certification Forum*@
+                                                                @if (item.FileTypeName == "Certification Forum")
+                                                                {
+                                                                    if (userRole == UserTypeEnum.Client.ToString())
+                                                                    {
+
+                                                                        <span id="fstatus" class="action-button-approve p-0 m-1">@Html.DisplayFor(modelItem => item.StatusId)</span>
+
+
+                                                                    }
+                                                                    else if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                                                                    {
+                                                                        @Html.HiddenFor(modelItem => item.FileTypeName, new { id = "cfftn" })
+                                                                        @Html.HiddenFor(modelItem => item.StatusId, new { id = "cfs" })
+                                                                        @Html.HiddenFor(modelItem => item.Id, new { id = "getfidOfCertificationForum" })
+
+                                                                        <a hidden id="cfph" class="cfph p-0 m-1"></a>
+                                                                        <div class="cf-group" hidden>
+                                                                            <div class="cf1-container" hidden>
+                                                                                <a id="cfab" href="javascript:void(0)" class="pop2 action-button-approve p-0 m-1 hover-bg-primarycolor">Approve</a>
+                                                                            </div>
+                                                                            <div class="cf2-container" hidden>
+                                                                                <a id="cfrb" href="javascript:void(0)" class="pop2 action-button-decline p-0 m-1 hover-bg-primarycolor">Reject</a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    }
+                                                                }
+                                                                @*Authority Affiant*@
+                                                                @if (item.FileTypeName == "Authority Affiant")
+                                                                {
+                                                                    if (userRole == UserTypeEnum.Client.ToString())
+                                                                    {
+
+                                                                        <span id="fstatus" class="action-button-approve p-0 m-1">@Html.DisplayFor(modelItem => item.StatusId)</span>
+
+
+                                                                    }
+                                                                    else if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                                                                    {
+                                                                        @Html.HiddenFor(modelItem => item.FileTypeName, new { id = "aaftn" })
+                                                                        @Html.HiddenFor(modelItem => item.StatusId, new { id = "aas" })
+                                                                        @Html.HiddenFor(modelItem => item.Id, new { id = "getfidOfAuthorityAffiant" })
+
+                                                                        <a hidden id="aaph" class="aaph p-0 m-1"></a>
+                                                                        <div class="aa-group" hidden>
+                                                                            <div class="aa1-container" hidden>
+                                                                                <a id="aaab" href="javascript:void(0)" class="pop2 action-button-approve p-0 m-1 hover-bg-primarycolor">Approve</a>
+                                                                            </div>
+                                                                            <div class="aa2-container" hidden>
+                                                                                <a id="aarb" href="javascript:void(0)" class="pop2 action-button-decline p-0 m-1 hover-bg-primarycolor">Reject</a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    }
+                                                                }
+                                                                @*Other Document*@
+                                                                @if (item.FileTypeName == "Other Document")
+                                                                {
+                                                                    if (userRole == UserTypeEnum.Client.ToString())
+                                                                    {
+
+                                                                        <span id="fstatus" class="action-button-approve p-0 m-1">@Html.DisplayFor(modelItem => item.StatusId)</span>
+
+
+                                                                    }
+                                                                    else if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                                                                    {
+                                                                        @Html.HiddenFor(modelItem => item.FileTypeName, new { id = "odftn" })
+                                                                        @Html.HiddenFor(modelItem => item.StatusId, new { id = "ods" })
+                                                                        @Html.HiddenFor(modelItem => item.Id, new { id = "getfidOfOtherDocument" })
+
+                                                                        <a hidden id="odph" class="odph p-0 m-1"></a>
+                                                                        <div class="od-group" hidden>
+                                                                            <div class="od1-container" hidden>
+                                                                                <a id="odab" href="javascript:void(0)" class="pop2 action-button-approve p-0 m-1 hover-bg-primarycolor">Approve</a>
+                                                                            </div>
+                                                                            <div class="od2-container" hidden>
+                                                                                <a id="odrb" href="javascript:void(0)" class="pop2 action-button-decline p-0 m-1 hover-bg-primarycolor">Reject</a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    }
+                                                                }
+                                                                @*Application Form*@
+                                                                @if (item.FileTypeName == "Application Form")
+                                                                {
+                                                                    if (userRole == UserTypeEnum.Client.ToString())
+                                                                    {
+
+                                                                        <span id="fstatus" class="action-button-approve p-0 m-1">@Html.DisplayFor(modelItem => item.StatusId)</span>
+
+
+                                                                    }
+                                                                    else if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                                                                    {
+                                                                        @Html.HiddenFor(modelItem => item.FileTypeName, new { id = "afftn" })
+                                                                        @Html.HiddenFor(modelItem => item.StatusId, new { id = "afs" })
+                                                                        @Html.HiddenFor(modelItem => item.Id, new { id = "getfid" })
+
+                                                                        <a hidden id="afph" class="afph p-0 m-1"></a>
+                                                                        <div class="a-group" hidden>
+                                                                            <div class="a1-container" hidden>
+                                                                                <a hidden id="afab" href="javascript:void(0)" class="pop2 action-button-approve p-0 m-1 hover-bg-primarycolor">Approve</a>
+                                                                            </div>
+                                                                            <div class="a2-container" hidden>
+                                                                                <a hidden id="afrb" href="javascript:void(0)" class="pop2 action-button-decline p-0 m-1 hover-bg-primarycolor">Reject</a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    }
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="border-bottom my-4"></div>
+                            <h2 class="erc-text-blue mb-4">Summary</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="erc-text-dark-blue ">List of Document submitted</th>
+                                        <th class="text-center erc-text-dark-blue">Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.PreFiledAttachmentViewModels != null && Model.PreFiledAttachmentViewModels.Count > 0)
+                                    {
+                                        foreach (var item in Model.PreFiledAttachmentViewModels)
+                                        {
+                                            if (item.StatusId == "Approved")
+                                            {
+                                                <tr>
+                                                    <td class="w-75 text-secondary">
+                                                        @Html.DisplayFor(modelItem => item.FileTypeName)
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span style="color:#80e9e9;">&#x2714;</span>
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                            else if (item.StatusId != "Remarks")
+                                            {
+                                                <tr>
+                                                    <td class="w-75 text-secondary">
+                                                        @Html.DisplayFor(modelItem => item.FileTypeName)
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span style="color:#80e9e9;">&#x2715;</span>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="ms-auto border rounded w-49">
+                            <h2 class="erc-text-blue mx-2 my-2 mb-4">Submitted Documents</h2>
+                            <div class="my-cards">
+                                @if (Model.PreFiledAttachmentViewModels != null && Model.PreFiledAttachmentViewModels.Count > 0)
+                                {
+                                    foreach (var item in Model.PreFiledAttachmentViewModels)
+                                    {
+                                        if (Path.GetExtension(item.FileName) == ".pdf" && item.StatusId != "Remarks")
+                                        {
+                                            <div class="my-card d-flex align-items-center justify-content-center mb-4 row">
+                                                <input hidden id="pdflinkvalue" value="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" />
+                                                <a id="pdflink" href="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" target="_blank">
+                                                    <canvas class="img-thumbnail mw-100 mh-100" id="pdfpreview"></canvas>
+                                                </a>
+                                                <label class="text-sm-center" style="font-size:14px">
+                                                    @Html.DisplayFor(modelItem => item.FileTypeName)
+                                                    @if (item.StatusId == "Approved")
+                                                    {
+                                                        <i class="fa fa-check-circle text-success fa-1x"></i>
+                                                    }
+                                                    else if (item.StatusId == "Rejected")
+                                                    {
+                                                        <i class="fa fa-multiply text-danger fa-1x"></i>
+
+                                                    }
+                                                </label>
+                                            </div>
+                                        }
+                                        else if (Path.GetExtension(item.FileName) == ".jpg" && item.StatusId != "Remarks" ||
+                                            Path.GetExtension(item.FileName) == ".jpeg" && item.StatusId != "Remarks" ||
+                                            Path.GetExtension(item.FileName) == ".png" && item.StatusId != "Remarks" ||
+                                            Path.GetExtension(item.FileName) == ".gif" && item.StatusId != "Remarks")
+                                        {
+                                            <div class="pop my-card d-flex align-items-center justify-content-center mb-4">
+                                                <a href="#">
+                                                    <img class="img-thumbnail mw-100 mh-100" src="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)">
+                                                </a>
+                                                <label class="text-sm-center" style="font-size:12px">@Html.DisplayFor(modelItem => item.FileTypeName) </label>
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border rounded mt-3 p-4">
+                        <h2 class="erc-text-blue mb-4">Complete Documentation?</h2>
+                        @if (userRole != null)
+                        {
+                            if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                            {
+                                if (Model.InitialReviewStatus != "Approved")
+                                {
+                                    <div class="form-check" id="ai" style="cursor:pointer;">
+                                        <input type="radio" value="Approved" id="ap" />
+                                        <label for="complete-documentation" class="text-dark">
+                                            Yes <small class="text-muted ms-2">Approved (Endorse Application)</small>
+                                        </label>
+                                    </div>
+                                    <div class="form-check" id="ri" style="cursor:pointer;">
+                                        <input type="radio" value="Rejected" id="re" />
+                                        <label for="complete-documentation" class="text-dark">
+                                            No <small class="text-muted ms-2">(Notify stakeholder for incomplete documents)</small>
+                                        </label>
+                                    </div>
+
+                                }
+                                else if (Model.InitialReviewStatus == "Approved" && Model.DocumentsUploadStatus != "Approved")
+                                {
+                                    <div class="form-check" id="ad" style="cursor:pointer;">
+                                        <input type="radio" value="Approved" id="ap" />
+                                        <label for="complete-documentation" class="text-dark">
+                                            Yes <small class="text-muted ms-2">Approved</small>
+                                        </label>
+                                    </div>
+                                    <div class="form-check" id="rd" style="cursor:pointer;">
+                                        <input type="radio" value="Rejected" id="re" />
+                                        <label for="complete-documentation" class="text-dark">
+                                            No <small class="text-muted ms-2">(Notify stakeholder for incomplete documents)</small>
+                                        </label>
+                                    </div>
+                                }
+                                else if (Model.InitialReviewStatus == "Approved" && Model.DocumentsUploadStatus == "Approved")
+                                {
+                                    <h5 class="badge btn-success">For Payment</h5>
+                                }
+                            }
+                        }
+
+                        <div class="border-bottom my-4"></div>
+                        <div class="m-auto">
+                            <h5>Remarks</h5>
+                            @if (userRole != null)
+                            {
+                                if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                                {
+                                    @Html.TextArea("Remarks", new { @class = "border rounded w-100 p-4 mt-4", @rows = "5", id = "Remarks" })
+
+                                }
+                                else if (userRole == UserTypeEnum.Client.ToString())
+                                {
+                                    @Html.DisplayFor(model => model.Remarks)
+                                }
+                            }
+                        </div>
+                        <br />
+                        @if (userRole != null)
+                        {
+                            if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                            {
+                                <h2 class="erc-text-blue mb-4">Upload Remarks File</h2>
+                                <input type="file" id="fileToUpload" class="form-control" multiple="multiple" />
+                            }
+                        }
+                        <br />
+                        <h2 class="erc-text-blue mb-4">Remarks File</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="erc-text-dark-blue ">List of File Remarks</th>
+                                    @if (userRole != null)
+                                    {
+                                        if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                                        {
+                                            <th class="text-center erc-text-dark-blue">Action</th>
+
+                                        }
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Attachments != null && Model.Attachments.Count > 0)
+                                {
+                                    foreach (var item in Model.Attachments)
+                                    {
+                                        if (item.StatusId == "Remarks")
+                                        {
+                                            <tr>
+                                                <td class="w-75 text-secondary">
+                                                    @Html.HiddenFor(modelItem => item.FileUrl, new { @id = "rf" })
+                                                </td>
+                                                @if (userRole != null)
+                                                {
+                                                    if (userRole != UserTypeEnum.Client.ToString())
+                                                    {
+                                                        <td class="text-center">
+                                                            <a href="@Url.Action("deleteremarksfile", new { Id = item.Id, prefileId = Model.Id})">
+                                                                <i class="fa fa-trash-can text-danger"></i>
+                                                            </a>
+                                                            <span style="margin:5px;"> </span>
+                                                            <a href="javascript:void(0)" type="button" id="filebt">
+                                                                <i class="fa fa-download text-success"></i>
+                                                            </a>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="text-center">
+                                                            <a href="javascript:void(0)" type="button" id="filebt">
+                                                                <i class="fa fa-download text-success"></i>
+                                                            </a>
+                                                        </td>
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="float-end mt-4">
+                        <a class="btn btn-p8 bg-light hover-boxshadow me-1" href="@Url.Action("index","PreFiledCase")" style="background-color:white;">Back to List</a>
+                        @if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                        {
+                            if (Model.DocumentsUploadStatus == "Approved" && Model.InitialReviewStatus == "Approved")
+                            {
+                            }
+                            else
+                            {
+                                <a id="tss" class="action-button"> Submit </a>
+
+                            }
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- image modal -->
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="mx-2 mt-2">
+                    <button type="button" class="btn float-end  p-2" data-dismiss="modal" id="closeMediaModal"><strong>&#10005;</strong></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="img-id" class="imagepreview">
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button id="download-button" class="btn btn-primary text-white">Download Image</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cmodal" tabindex="-1" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pt-4">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body border-0 pb-4">
+                    <div class="mt-2 text-center">
+                        <i class="cmodalicon fa-solid fa-5x"></i>
+                        <div class="mt-3 pt-2 fs-15 mx-4 mx-sm-5">
+                            <h4 class="fs-22 fw600">Are you sure you want to <span id="getfilestatus" class="saver"></span> this</h4>
+
+                            <input hidden id="getidOf" />
+                            <h5 class="fs-20"><span class="ftnm" id="getfilename"></span></h5>
+                            <p class="fs-15 text-muted mx-3 mb-0 pt-1">You cannot change after you confirm</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center mt-4 mb-3">
+                        <button type="button" class="btn small btn-light hover-boxshadow" data-bs-dismiss="modal">@Resource.Cancel</button>
+                        <a href="javascript:void(0)" class="saverbtn btn small hover-boxshadow"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="successupload" tabindex="-1" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pt-4">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body border-0 pb-4">
+                    <div class="mt-2 text-center">
+                        <i class="fa-solid fa-check-double text-success fa-5x"></i>
+                        <div class="mt-3 pt-2 fs-15 mx-4 mx-sm-5">
+                            <h4 class="fs-22 text-success fw600">Successfully!</h4>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 mt-4 mb-3">
+                        <button type="button" class="btn small btn-light hover-boxshadow" data-bs-dismiss="modal">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.225/build/pdf.js"></script>
+    <script>
+
+        $(function () {
+            var pdflinkvalue = document.getElementById("pdflinkvalue");
+            // Get the canvas element
+            var canvas = document.getElementById("pdfpreview");
+
+            // Load the PDF
+            pdfjsLib.getDocument(pdflinkvalue.value).then(function (pdf) {
+                pdf = pdf;
+            });
+
+            // Set the canvas size to match the size of the first page
+            var scale = 1.5;
+            var viewport = pdf.getPage(1).getViewport({ scale: scale });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            // Render the first page of the PDF in the canvas
+            pdf.getPage(1).then(function (page) {
+                var context = canvas.getContext("2d");
+                var renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                page.render(renderContext);
+            });
+        });
+
+        var dButton = document.getElementById("filebt");
+
+        $("#filebt").click(function () {
+            var file = document.getElementById("rf");
+            console.log(file.value)
+            var url = file.value;
+            var fu = url;
+            var link = document.createElement("a");
+            link.href = fu;
+            link.download = "file";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        })
+
+        var applicationFormId;
+        var statusOfApplicationForm;
+
+        var servicelguId;
+        var statusOfServiceLgu;
+
+        var publicationId;
+        var statusOfPublication;
+
+        var notarypresentedId;
+        var statusOfNotaryPresentedId;
+
+        var authoritycounselId;
+        var statusOfAuthorityCounsel;
+
+        var certificationforumId;
+        var statusOfCertificationForum;
+
+        var authorityaffiantId;
+        var statusOfAuthorityAffiant;
+
+        var otherdocumentId;
+        var statusOfOtherDocument;
+
+        $(function () {
+            var afftn = document.getElementById("afftn");
+            var afs = document.getElementById("afs");
+
+            var slftn = document.getElementById("slftn");
+            var sls = document.getElementById("sls");
+
+            var pftn = document.getElementById("pftn");
+            var ps = document.getElementById("ps");
+
+            var npiftn = document.getElementById("npiftn");
+            var npis = document.getElementById("npis");
+
+            var acftn = document.getElementById("acftn");
+            var acs = document.getElementById("acs");
+
+            var cfftn = document.getElementById("cfftn");
+            var cfs = document.getElementById("cfs");
+
+            var aaftn = document.getElementById("aaftn");
+            var aas = document.getElementById("aas");
+
+            var odftn = document.getElementById("odftn");
+            var ods = document.getElementById("ods");
+
+            if (afftn.value != null) {
+                if (afs.value == "Approved") {
+                    $(".afph").attr("hidden", false);
+                    $("#afph").text("Approved");
+                    $('.td75').width("75%");
+                    $('.afph').addClass("action-button-approve");
+                }
+                else if (afs.value == "Rejected") {
+                    $(".afph").attr("hidden", false);
+                    $("#afph").text("Rejected");
+                    $('.td75').width("75%");
+                    $('.afph').addClass("action-button-decline");
+                    $('.afph').removeClass("action-button-approve");
+
+                }
+                else {
+                    $('.td75').width("60%");
+                    $(".a-group").attr("hidden", false);
+                    $(".a1-container").attr("hidden", false);
+                    $(".a2-container").attr("hidden", false);
+                    $("#afab").attr("hidden", false);
+                    $("#afrb").attr("hidden", false);
+                    $(".afph").attr("hidden", true);
+                }
+            }
+
+            if (slftn.value != null) {
+                if (sls.value == "Approved") {
+                    $(".slph").attr("hidden", false);
+                    $("#slph").text("Approved");
+                    $('.td75').width("75%");
+                    $('.slph').addClass("action-button-approve");
+                }
+                else if (sls.value == "Rejected") {
+                    $(".slph").attr("hidden", false);
+                    $("#slph").text("Rejected");
+                    $('.td75').width("75%");
+                    $('.slph').addClass("action-button-decline");
+                    $('.slph').removeClass("action-button-approve");
+
+                }
+                else {
+                    $('.td75').width("60%");
+                    $(".sl-group").attr("hidden", false);
+                    $(".sl1-container").attr("hidden", false);
+                    $(".sl2-container").attr("hidden", false);
+                    $("#slab").attr("hidden", false);
+                    $("#slrb").attr("hidden", false);
+                    $(".slph").attr("hidden", true);
+                }
+            }
+
+            if (pftn.value != null) {
+                if (ps.value == "Approved") {
+                    $(".pph").attr("hidden", false);
+                    $("#pph").text("Approved");
+                    $('.td75').width("75%");
+                    $('.pph').addClass("action-button-approve");
+                }
+                else if (ps.value == "Rejected") {
+                    $(".pph").attr("hidden", false);
+                    $("#pph").text("Rejected");
+                    $('.td75').width("75%");
+                    $('.pph').addClass("action-button-decline");
+                    $('.pph').removeClass("action-button-approve");
+
+                }
+                else {
+                    $('.td75').width("60%");
+                    $(".p-group").attr("hidden", false);
+                    $(".p1-container").attr("hidden", false);
+                    $(".p2-container").attr("hidden", false);
+                    $("#pab").attr("hidden", false);
+                    $("#prb").attr("hidden", false);
+                    $(".pph").attr("hidden", true);
+                }
+            }
+
+
+            if (npiftn.value != null) {
+                if (npis.value == "Approved") {
+                    $(".npiph").attr("hidden", false);
+                    $("#npiph").text("Approved");
+                    $('.td75').width("75%");
+                    $('.npiph').addClass("action-button-approve");
+                }
+                else if (npis.value == "Rejected") {
+                    $(".npiph").attr("hidden", false);
+                    $("#npiph").text("Rejected");
+                    $('.td75').width("75%");
+                    $('.npiph').addClass("action-button-decline");
+                    $('.npiph').removeClass("action-button-approve");
+
+                }
+                else {
+                    $('.td75').width("60%");
+                    $(".npi-group").attr("hidden", false);
+                    $(".npi1-container").attr("hidden", false);
+                    $(".npi2-container").attr("hidden", false);
+                    $("#npiab").attr("hidden", false);
+                    $("#npirb").attr("hidden", false);
+                    $(".npiph").attr("hidden", true);
+                }
+            }
+
+            if (acftn.value != null) {
+                if (acs.value == "Approved") {
+                    $(".acph").attr("hidden", false);
+                    $("#acph").text("Approved");
+                    $('.td75').width("75%");
+                    $('.acph').addClass("action-button-approve");
+                }
+                else if (acs.value == "Rejected") {
+                    $(".acph").attr("hidden", false);
+                    $("#acph").text("Rejected");
+                    $('.td75').width("75%");
+                    $('.acph').addClass("action-button-decline");
+                    $('.acph').removeClass("action-button-approve");
+
+                }
+                else {
+                    $('.td75').width("60%");
+                    $(".ac-group").attr("hidden", false);
+                    $(".ac1-container").attr("hidden", false);
+                    $(".ac2-container").attr("hidden", false);
+                    $("#acab").attr("hidden", false);
+                    $("#acrb").attr("hidden", false);
+                    $(".acph").attr("hidden", true);
+                }
+            }
+
+            if (cfftn.value != null) {
+                if (cfs.value == "Approved") {
+                    $(".cfph").attr("hidden", false);
+                    $("#cfph").text("Approved");
+                    $('.td75').width("75%");
+                    $('.cfph').addClass("action-button-approve");
+                }
+                else if (cfs.value == "Rejected") {
+                    $(".cfph").attr("hidden", false);
+                    $("#cfph").text("Rejected");
+                    $('.td75').width("75%");
+                    $('.cfph').addClass("action-button-decline");
+                    $('.cfph').removeClass("action-button-approve");
+
+                }
+                else {
+                    $('.td75').width("60%");
+                    $(".cf-group").attr("hidden", false);
+                    $(".cf1-container").attr("hidden", false);
+                    $(".cf2-container").attr("hidden", false);
+                    $("#cfab").attr("hidden", false);
+                    $("#cfrb").attr("hidden", false);
+                    $(".cfph").attr("hidden", true);
+                }
+            }
+
+            if (aaftn.value != null) {
+                if (aas.value == "Approved") {
+                    $(".aaph").attr("hidden", false);
+                    $("#aaph").text("Approved");
+                    $('.td75').width("75%");
+                    $('.aaph').addClass("action-button-approve");
+                }
+                else if (cfs.value == "Rejected") {
+                    $(".aaph").attr("hidden", false);
+                    $("#aaph").text("Rejected");
+                    $('.td75').width("75%");
+                    $('.aaph').addClass("action-button-decline");
+                    $('.aaph').removeClass("action-button-approve");
+
+                }
+                else {
+                    $('.td75').width("60%");
+                    $(".aa-group").attr("hidden", false);
+                    $(".aa1-container").attr("hidden", false);
+                    $(".aa2-container").attr("hidden", false);
+                    $("#aaab").attr("hidden", false);
+                    $("#aarb").attr("hidden", false);
+                    $(".aaph").attr("hidden", true);
+                }
+            }
+
+            if (odftn.value != null) {
+                if (ods.value == "Approved") {
+                    $(".odph").attr("hidden", false);
+                    $("#odph").text("Approved");
+                    $('.td75').width("75%");
+                    $('.odph').addClass("action-button-approve");
+                }
+                else if (ods.value == "Rejected") {
+                    $(".odph").attr("hidden", false);
+                    $("#odph").text("Rejected");
+                    $('.td75').width("75%");
+                    $('.odph').addClass("action-button-decline");
+                    $('.odph').removeClass("action-button-approve");
+
+                }
+                else {
+                    $('.td75').width("60%");
+                    $(".od-group").attr("hidden", false);
+                    $(".od1-container").attr("hidden", false);
+                    $(".od2-container").attr("hidden", false);
+                    $("#odab").attr("hidden", false);
+                    $("#odrb").attr("hidden", false);
+                    $(".odph").attr("hidden", true);
+                }
+            }
+        });
+
+        $(function () {
+            //application form
+            $('#afab').on('click', function () {
+                var afftn = document.getElementById("afftn");
+                var afs = document.getElementById("afs");
+                var fileid = document.getElementById("getfid");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(afftn.value);
+
+                $('.cmodalicon').removeClass('fa-trash-can text-danger');
+                $('.fs-20').removeClass('text-danger');
+                $('.saverbtn').removeClass('btn-danger');
+
+                $('.fs-20').addClass('text-success');
+                $('.saverbtn').addClass('btn-success');
+                $('.cmodalicon').addClass('fa-check-circle text-success');
+
+                $('.saver').text("Approve");
+                $('.saverbtn').text("Approve");
+
+                $('#cmodal').modal('show');
+            });
+            //service lgu
+            $('#slab').on('click', function () {
+                var slftn = document.getElementById("slftn");
+                var sls = document.getElementById("sls");
+                var fileidsl = document.getElementById("getfidOfSl");
+
+                $('#getidOf').val(fileidsl.value);
+                $('.ftnm').text(slftn.value);
+
+                $('.cmodalicon').removeClass('fa-trash-can text-danger');
+                $('.fs-20').removeClass('text-danger');
+                $('.saverbtn').removeClass('btn-danger');
+
+                $('.fs-20').addClass('text-success');
+                $('.saverbtn').addClass('btn-success');
+                $('.cmodalicon').addClass('fa-check-circle text-success');
+
+                $('.saver').text("Approve");
+                $('.saverbtn').text("Approve");
+
+                $('#cmodal').modal('show');
+            });
+            //publication
+            $('#pab').on('click', function () {
+                var pftn = document.getElementById("pftn");
+                var ps = document.getElementById("ps");
+                var fileid = document.getElementById("getfidOfP");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(pftn.value);
+
+                $('.cmodalicon').removeClass('fa-trash-can text-danger');
+                $('.fs-20').removeClass('text-danger');
+                $('.saverbtn').removeClass('btn-danger');
+
+                $('.fs-20').addClass('text-success');
+                $('.saverbtn').addClass('btn-success');
+                $('.cmodalicon').addClass('fa-check-circle text-success');
+
+                $('.saver').text("Approve");
+                $('.saverbtn').text("Approve");
+
+                $('#cmodal').modal('show');
+            });
+            //notary
+            $('#npiab').on('click', function () {
+                var npiftn = document.getElementById("npiftn");
+                var npis = document.getElementById("npis");
+                var fileid = document.getElementById("getfidOfNotaryPresentedId");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(npiftn.value);
+
+                $('.cmodalicon').removeClass('fa-trash-can text-danger');
+                $('.fs-20').removeClass('text-danger');
+                $('.saverbtn').removeClass('btn-danger');
+
+                $('.fs-20').addClass('text-success');
+                $('.saverbtn').addClass('btn-success');
+                $('.cmodalicon').addClass('fa-check-circle text-success');
+
+                $('.saver').text("Approve");
+                $('.saverbtn').text("Approve");
+
+                $('#cmodal').modal('show');
+            });
+            //authority
+            $('#acab').on('click', function () {
+                var acftn = document.getElementById("acftn");
+                var acs = document.getElementById("acs");
+                var fileid = document.getElementById("getfidOfAuthorityCounsel");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(acftn.value);
+
+                $('.cmodalicon').removeClass('fa-trash-can text-danger');
+                $('.fs-20').removeClass('text-danger');
+                $('.saverbtn').removeClass('btn-danger');
+
+                $('.fs-20').addClass('text-success');
+                $('.saverbtn').addClass('btn-success');
+                $('.cmodalicon').addClass('fa-check-circle text-success');
+
+                $('.saver').text("Approve");
+                $('.saverbtn').text("Approve");
+
+                $('#cmodal').modal('show');
+            });
+            //certifiacation
+            $('#cfab').on('click', function () {
+                var cfftn = document.getElementById("cfftn");
+                var cfs = document.getElementById("acs");
+                var fileid = document.getElementById("getfidOfCertificationForum");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(cfftn.value);
+
+                $('.cmodalicon').removeClass('fa-trash-can text-danger');
+                $('.fs-20').removeClass('text-danger');
+                $('.saverbtn').removeClass('btn-danger');
+
+                $('.fs-20').addClass('text-success');
+                $('.saverbtn').addClass('btn-success');
+                $('.cmodalicon').addClass('fa-check-circle text-success');
+
+                $('.saver').text("Approve");
+                $('.saverbtn').text("Approve");
+
+                $('#cmodal').modal('show');
+            });
+            //authority
+            $('#aaab').on('click', function () {
+                var aaftn = document.getElementById("aaftn");
+                var aas = document.getElementById("aas");
+                var fileid = document.getElementById("getfidOfAuthorityAffiant");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(aaftn.value);
+
+                $('.cmodalicon').removeClass('fa-trash-can text-danger');
+                $('.fs-20').removeClass('text-danger');
+                $('.saverbtn').removeClass('btn-danger');
+
+                $('.fs-20').addClass('text-success');
+                $('.saverbtn').addClass('btn-success');
+                $('.cmodalicon').addClass('fa-check-circle text-success');
+
+                $('.saver').text("Approve");
+                $('.saverbtn').text("Approve");
+
+                $('#cmodal').modal('show');
+            });
+            //other
+            $('#odab').on('click', function () {
+                var odftn = document.getElementById("odftn");
+                var ods = document.getElementById("ods");
+                var fileid = document.getElementById("getfidOfOtherDocument");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(odftn.value);
+
+                $('.cmodalicon').removeClass('fa-trash-can text-danger');
+                $('.fs-20').removeClass('text-danger');
+                $('.saverbtn').removeClass('btn-danger');
+
+                $('.fs-20').addClass('text-success');
+                $('.saverbtn').addClass('btn-success');
+                $('.cmodalicon').addClass('fa-check-circle text-success');
+
+                $('.saver').text("Approve");
+                $('.saverbtn').text("Approve");
+
+                $('#cmodal').modal('show');
+            });
+        });
+
+        $(function () {
+            //reject application form
+            $('#afrb').on('click', function () {
+                var afftn = document.getElementById("afftn");
+                var afs = document.getElementById("afs");
+                var fileid = document.getElementById("getfid");
+
+                $('#getidOf').val(fileid.value);
+
+                $('.fs-20').removeClass('text-success');
+                $('.saverbtn').removeClass('btn-success');
+                $('.cmodalicon').removeClass('fa-check-circle text-success');
+
+
+                $('.fs-20').addClass('text-danger');
+                $('.ftnm').text(afftn.value);
+                $('.saver').text("Reject");
+                $('.saverbtn').text("Reject");
+                $('.saverbtn').addClass('btn-danger');
+                $('.cmodalicon').addClass('fa-trash-can text-danger');
+                $('#cmodal').modal('show');
+            });
+            //reject service lgu
+            $('#slrb').on('click', function () {
+                var slftn = document.getElementById("slftn");
+                var sls = document.getElementById("sls");
+                var fileid = document.getElementById("getfidOfSl");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(slftn.value);
+
+
+                $('.fs-20').removeClass('text-success');
+                $('.saverbtn').removeClass('btn-success');
+                $('.cmodalicon').removeClass('fa-check-circle text-success');
+
+                $('.fs-20').addClass('text-danger');
+                $('.saverbtn').addClass('btn-danger');
+                $('.cmodalicon').addClass('fa-trash-can text-danger');
+
+                $('.saver').text("Reject");
+                $('.saverbtn').text("Reject");
+
+                $('#cmodal').modal('show');
+            });
+            //reject publication
+            $('#prb').on('click', function () {
+                var pftn = document.getElementById("pftn");
+                var ps = document.getElementById("ps");
+                var fileid = document.getElementById("getfidOfP");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(pftn.value);
+
+
+                $('.fs-20').removeClass('text-success');
+                $('.saverbtn').removeClass('btn-success');
+                $('.cmodalicon').removeClass('fa-check-circle text-success');
+
+                $('.fs-20').addClass('text-danger');
+                $('.saverbtn').addClass('btn-danger');
+                $('.cmodalicon').addClass('fa-trash-can text-danger');
+
+                $('.saver').text("Reject");
+                $('.saverbtn').text("Reject");
+
+                $('#cmodal').modal('show');
+            });
+            //reject notary
+            $('#npirb').on('click', function () {
+                var npiftn = document.getElementById("npiftn");
+                var npis = document.getElementById("npis");
+                var fileid = document.getElementById("getfidOfNotaryPresentedId");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(npiftn.value);
+
+
+                $('.fs-20').removeClass('text-success');
+                $('.saverbtn').removeClass('btn-success');
+                $('.cmodalicon').removeClass('fa-check-circle text-success');
+
+                $('.fs-20').addClass('text-danger');
+                $('.saverbtn').addClass('btn-danger');
+                $('.cmodalicon').addClass('fa-trash-can text-danger');
+
+                $('.saver').text("Reject");
+                $('.saverbtn').text("Reject");
+
+                $('#cmodal').modal('show');
+            });
+            //reject authority
+            $('#acrb').on('click', function () {
+                var acftn = document.getElementById("acftn");
+                var acs = document.getElementById("acs");
+                var fileid = document.getElementById("getfidOfAuthorityCounsel");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(acftn.value);
+
+
+                $('.fs-20').removeClass('text-success');
+                $('.saverbtn').removeClass('btn-success');
+                $('.cmodalicon').removeClass('fa-check-circle text-success');
+
+                $('.fs-20').addClass('text-danger');
+                $('.saverbtn').addClass('btn-danger');
+                $('.cmodalicon').addClass('fa-trash-can text-danger');
+
+                $('.saver').text("Reject");
+                $('.saverbtn').text("Reject");
+
+                $('#cmodal').modal('show');
+            });
+            //reject certification forum
+            $('#cfrb').on('click', function () {
+                var cfftn = document.getElementById("cfftn");
+                var acs = document.getElementById("cfs");
+                var fileid = document.getElementById("getfidOfCertificationForum");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(cfftn.value);
+
+
+                $('.fs-20').removeClass('text-success');
+                $('.saverbtn').removeClass('btn-success');
+                $('.cmodalicon').removeClass('fa-check-circle text-success');
+
+                $('.fs-20').addClass('text-danger');
+                $('.saverbtn').addClass('btn-danger');
+                $('.cmodalicon').addClass('fa-trash-can text-danger');
+
+                $('.saver').text("Reject");
+                $('.saverbtn').text("Reject");
+
+                $('#cmodal').modal('show');
+            });
+
+            //reject authority affiant
+            $('#aarb').on('click', function () {
+                var aaftn = document.getElementById("aaftn");
+                var aas = document.getElementById("aas");
+                var fileid = document.getElementById("getfidOfAuthorityAffiant");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(aaftn.value);
+
+
+                $('.fs-20').removeClass('text-success');
+                $('.saverbtn').removeClass('btn-success');
+                $('.cmodalicon').removeClass('fa-check-circle text-success');
+
+                $('.fs-20').addClass('text-danger');
+                $('.saverbtn').addClass('btn-danger');
+                $('.cmodalicon').addClass('fa-trash-can text-danger');
+
+                $('.saver').text("Reject");
+                $('.saverbtn').text("Reject");
+
+                $('#cmodal').modal('show');
+            });
+            //reject other document
+            $('#odrb').on('click', function () {
+                var odftn = document.getElementById("odftn");
+                var ods = document.getElementById("ods");
+                var fileid = document.getElementById("getfidOfOtherDocument");
+
+                $('#getidOf').val(fileid.value);
+                $('.ftnm').text(odftn.value);
+
+
+                $('.fs-20').removeClass('text-success');
+                $('.saverbtn').removeClass('btn-success');
+                $('.cmodalicon').removeClass('fa-check-circle text-success');
+
+                $('.fs-20').addClass('text-danger');
+                $('.saverbtn').addClass('btn-danger');
+                $('.cmodalicon').addClass('fa-trash-can text-danger');
+
+                $('.saver').text("Reject");
+                $('.saverbtn').text("Reject");
+
+                $('#cmodal').modal('show');
+            });
+        });
+
+        $(function () {
+            $('.saverbtn').click(function () {
+                var fid = document.getElementById("getidOf");
+                var fid = fid.value;
+                var ftname = document.getElementById("getfilename");
+                var gfstatus = document.getElementById("getfilestatus");
+                var statusOf = gfstatus.textContent;
+                if (ftname.textContent == "Application Form") {
+                    console.log("true");
+                    $('.a-group').attr("hidden", true);
+                    $('.afph').attr("hidden", false);
+
+                    if (statusOf == "Approve") {
+                        applicationFormId = fid;
+                        statusOfApplicationForm = "Approved";
+                        $('.afph').text("Approved");
+                        $('.td75').width("75%");
+                        $('.afph').addClass("action-button-approve");
+                        $('.afph').removeClass("action-button-decline");
+
+                    }
+                    else if (statusOf == "Reject") {
+                        applicationFormId = fid;
+                        statusOfApplicationForm = "Rejected";
+                        $('.afph').text("Rejected");
+                        $('.td75').width("75%");
+                        $('.afph').addClass("action-button-decline");
+                        $('.afph').removeClass("action-button-approve");
+
+                    }
+                    $('#cmodal').modal('hide');
+                }
+
+                if (ftname.textContent == "Service Lgu") {
+                    console.log("slgu");
+                    $('.sl-group').attr("hidden", true);
+                    $('.slph').attr("hidden", false);
+
+                    if (statusOf == "Approve") {
+                        servicelguId = fid;
+                        statusOfServiceLgu = "Approved";
+                        $('.slph').text("Approved");
+                        $('.td75').width("75%");
+                        $('.slph').addClass("action-button-approve");
+                        $('.slph').removeClass("action-button-decline");
+
+                    }
+                    else if (statusOf == "Reject") {
+                        applicationFormId = fid;
+                        statusOfApplicationForm = "Rejected";
+                        $('.slph').text("Rejected");
+                        $('.td75').width("75%");
+                        $('.slph').addClass("action-button-decline");
+                        $('.slph').removeClass("action-button-approve");
+
+                    }
+                    $('#cmodal').modal('hide');
+                }
+
+                if (ftname.textContent == "Publication") {
+                    console.log("publication");
+                    $('.p-group').attr("hidden", true);
+                    $('.pph').attr("hidden", false);
+
+                    if (statusOf == "Approve") {
+                        publicationId = fid;
+                        statusOfPublication = "Approved";
+                        $('.pph').text("Approved");
+                        $('.td75').width("75%");
+                        $('.pph').addClass("action-button-approve");
+                        $('.pph').removeClass("action-button-decline");
+
+                    }
+                    else if (statusOf == "Reject") {
+                        publicationId = fid;
+                        statusOfPublication = "Rejected";
+                        $('.pph').text("Rejected");
+                        $('.td75').width("75%");
+                        $('.pph').addClass("action-button-decline");
+                        $('.pph').removeClass("action-button-approve");
+
+                    }
+                    $('#cmodal').modal('hide');
+                }
+
+                if (ftname.textContent == "Notary Presented Id") {
+                    console.log("notary");
+                    $('.npi-group').attr("hidden", true);
+                    $('.npiph').attr("hidden", false);
+
+                    if (statusOf == "Approve") {
+                        notarypresentedId = fid;
+                        statusOfNotaryPresentedId = "Approved";
+                        $('.npiph').text("Approved");
+                        $('.td75').width("75%");
+                        $('.npiph').addClass("action-button-approve");
+                        $('.npiph').removeClass("action-button-decline");
+
+                    }
+                    else if (statusOf == "Reject") {
+                        notarypresentedId = fid;
+                        statusOfNotaryPresentedId = "Rejected";
+                        $('.npiph').text("Rejected");
+                        $('.td75').width("75%");
+                        $('.npiph').addClass("action-button-decline");
+                        $('.npiph').removeClass("action-button-approve");
+
+                    }
+                    $('#cmodal').modal('hide');
+                }
+
+                if (ftname.textContent == "Authority Counsel") {
+                    console.log("counsel");
+                    $('.ac-group').attr("hidden", true);
+                    $('.acph').attr("hidden", false);
+
+                    if (statusOf == "Approve") {
+                        authoritycounselId = fid;
+                        statusOfAuthorityCounsel = "Approved";
+                        $('.acph').text("Approved");
+                        $('.td75').width("75%");
+                        $('.acph').addClass("action-button-approve");
+                        $('.acph').removeClass("action-button-decline");
+
+                    }
+                    else if (statusOf == "Reject") {
+                        authoritycounselId = fid;
+                        statusOfAuthorityCounsel = "Rejected";
+                        $('.acph').text("Rejected");
+                        $('.td75').width("75%");
+                        $('.acph').addClass("action-button-decline");
+                        $('.acph').removeClass("action-button-approve");
+
+                    }
+                    $('#cmodal').modal('hide');
+                }
+
+                if (ftname.textContent == "Certification Forum") {
+                    console.log("certification forum");
+                    $('.cf-group').attr("hidden", true);
+                    $('.cfph').attr("hidden", false);
+
+                    if (statusOf == "Approve") {
+                        certificationforumId = fid;
+                        statusOfCertificationForum = "Approved";
+                        $('.cfph').text("Approved");
+                        $('.td75').width("75%");
+                        $('.cfph').addClass("action-button-approve");
+                        $('.cfph').removeClass("action-button-decline");
+
+                    }
+                    else if (statusOf == "Reject") {
+                        certificationforumId = fid;
+                        statusOfCertificationForum = "Rejected";
+                        $('.cfph').text("Rejected");
+                        $('.td75').width("75%");
+                        $('.cfph').addClass("action-button-decline");
+                        $('.cfph').removeClass("action-button-approve");
+
+                    }
+                    $('#cmodal').modal('hide');
+                }
+
+                if (ftname.textContent == "Authority Affiant") {
+                    console.log("authority affiant");
+                    $('.aa-group').attr("hidden", true);
+                    $('.aaph').attr("hidden", false);
+
+                    if (statusOf == "Approve") {
+                        authorityaffiantId = fid;
+                        statusOfAuthorityAffiant = "Approved";
+                        $('.aaph').text("Approved");
+                        $('.td75').width("75%");
+                        $('.aaph').addClass("action-button-approve");
+                        $('.aaph').removeClass("action-button-decline");
+
+                    }
+                    else if (statusOf == "Reject") {
+                        authorityaffiantId = fid;
+                        statusOfAuthorityAffiant = "Rejected";
+                        $('.aaph').text("Rejected");
+                        $('.td75').width("75%");
+                        $('.aaph').addClass("action-button-decline");
+                        $('.aaph').removeClass("action-button-approve");
+
+                    }
+                    $('#cmodal').modal('hide');
+                }
+
+                if (ftname.textContent == "Other Document") {
+                    console.log("other document");
+                    $('.od-group').attr("hidden", true);
+                    $('.odph').attr("hidden", false);
+
+                    if (statusOf == "Approve") {
+                        otherdocumentId = fid;
+                        statusOfOtherDocument = "Approved";
+                        $('.odph').text("Approved");
+                        $('.td75').width("75%");
+                        $('.odph').addClass("action-button-approve");
+                        $('.odph').removeClass("action-button-decline");
+
+                    }
+                    else if (statusOf == "Reject") {
+                        otherdocumentId = fid;
+                        statusOfOtherDocument = "Rejected";
+                        $('.odph').text("Rejected");
+                        $('.td75').width("75%");
+                        $('.odph').addClass("action-button-decline");
+                        $('.odph').removeClass("action-button-approve");
+
+                    }
+                    $('#cmodal').modal('hide');
+                }
+            });
+        });
+
+
+
+        var i = document.getElementById("Id");
+        var ai = document.getElementById("ai");
+        var ri = document.getElementById("ri");
+        var ad = document.getElementById("ad");
+        var rd = document.getElementById("rd");
+        var ap = document.getElementById("ap");
+        var re = document.getElementById("re");
+        var rem = document.getElementById("Remarks");
+        var v;
+        $(ai).click(function () {
+            ap.checked = true;
+            v = "ai";
+            re.checked = false;
+        });
+
+        $(ri).click(function () {
+            re.checked = true;
+            v = "ri";
+            ap.checked = false;
+        });
+
+        $(ad).click(function () {
+            ap.checked = true;
+            v = "ad";
+            re.checked = false;
+        });
+
+        $(rd).click(function () {
+            re.checked = true;
+            v = "rd";
+            ap.checked = false;
+        });
+
+        $("#tss").click(function () {
+            console.log("this is id " + applicationFormId)
+            console.log(statusOfApplicationForm)
+            console.log(v)
+            console.log(rem.value)
+            //console.log(fileUpload.value);
+            console.log(i.value)
+            var fileUpload = document.querySelector("#fileToUpload");
+            if (!fileUpload.files.length) {
+                var fileData = new FormData();
+                fileData.append("remarks", rem.value);
+                fileData.append("pi", i.value);
+                fileData.append("v", v);
+                fileData.append("applicationFormId", applicationFormId);
+                fileData.append("statusOfApplicationForm", statusOfApplicationForm);
+                fileData.append("servicelguId", servicelguId);
+                fileData.append("statusOfServiceLgu", statusOfServiceLgu);
+                fileData.append("publicationId", publicationId);
+                fileData.append("statusOfPublication", statusOfPublication);
+                fileData.append("notarypresentedId", notarypresentedId);
+                fileData.append("statusOfNotaryPresentedId", statusOfNotaryPresentedId);
+                fileData.append("authoritycounselId", authoritycounselId);
+                fileData.append("statusOfAuthorityCounsel", statusOfAuthorityCounsel);
+                fileData.append("certificationforumId", certificationforumId);
+                fileData.append("statusOfCertificationForum", statusOfCertificationForum);
+                fileData.append("authorityaffiantId", authorityaffiantId);
+                fileData.append("statusOfAuthorityAffiant", statusOfAuthorityAffiant);
+                fileData.append("otherdocumentId", otherdocumentId);
+                fileData.append("statusOfOtherDocument", statusOfOtherDocument);
+                $.ajax({
+                    url: '/prefiledcase/uploadfile',
+                    type: 'post',
+                    datatype: 'json',
+                    contentType: false,
+                    processData: false,
+                    async: false,
+                    data: fileData,
+                    success: function (response) {
+                        $('#successupload').modal('show');
+                    }
+                });
+                location.reload();
+
+            }
+            else {
+                console.log("this is id " + applicationFormId)
+                console.log(statusOfApplicationForm)
+                var files = fileUpload.files;
+                var fileData = new FormData();
+                for (var fi = 0; fi < files.length; fi++) {
+                    fileData.append(files[fi].name, files[fi]);
+                }
+                fileData.append("remarks", rem.value);
+                fileData.append("pi", i.value);
+                fileData.append("v", v);
+                fileData.append("applicationFormId", applicationFormId);
+                fileData.append("statusOfApplicationForm", statusOfApplicationForm);
+                fileData.append("servicelguId", servicelguId);
+                fileData.append("statusOfServiceLgu", statusOfServiceLgu);
+                fileData.append("publicationId", publicationId);
+                fileData.append("statusOfPublication", statusOfPublication);
+                fileData.append("notarypresentedId", notarypresentedId);
+                fileData.append("statusOfNotaryPresentedId", statusOfNotaryPresentedId);
+                fileData.append("authoritycounselId", authoritycounselId);
+                fileData.append("statusOfAuthorityCounsel", statusOfAuthorityCounsel);
+                fileData.append("certificationforumId", certificationforumId);
+                fileData.append("statusOfCertificationForum", statusOfCertificationForum);
+                fileData.append("authorityaffiantId", authorityaffiantId);
+                fileData.append("statusOfAuthorityAffiant", statusOfAuthorityAffiant);
+                fileData.append("otherdocumentId", otherdocumentId);
+                fileData.append("statusOfOtherDocument", statusOfOtherDocument);
+
+                $.ajax({
+                    url: '/prefiledcase/uploadfile',
+                    type: 'post',
+                    datatype: 'json',
+                    contentType: false,
+                    processData: false,
+                    async: false,
+                    data: fileData,
+                    success: function (response) {
+                        $('#successupload').modal('show');
+                    }
+                });
+                location.reload();
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        const downloadButton = document.getElementById("download-button");
+
+        downloadButton.addEventListener("click", () => {
+            const imageUrl = document.getElementById("img-id").src;
+            const link = document.createElement("a");
+            link.href = imageUrl;
+            link.download = "image";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+
+    <script type="text/javascript">
+        /*pdf 1*/
+        var url = document.getElementById("canvas-id").href;
+        var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+        var loadingTask = pdfjsLib.getDocument(url);
+        loadingTask.promise.then(function (pdf) {
+
+            var pageNumber = 1;
+            pdf.getPage(pageNumber).then(function (page) {
+
+                var scale = 1;
+                var viewport = page.getViewport({ scale: scale });
+
+                var canvas = document.getElementById('the-canvas');
+                var context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                var renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                var renderTask = page.render(renderContext);
+                renderTask.promise.then(function () {
+                });
+            });
+        });
+        /*pdf 2*/
+        pdfUrl2 = document.getElementById("canvas-id-2").href;
+        const pdfCanvas = document.getElementById("the-canvas-2");
+        const pdfContext = pdfCanvas.getContext("2d");
+
+        pdfjsLib.getDocument(pdfUrl2).promise.then(pdf => {
+            pdf.getPage(1).then(page => {
+                const viewport = page.getViewport({ scale: 1 });
+                pdfCanvas.width = viewport.width;
+                pdfCanvas.height = viewport.height;
+
+                page.render({
+                    canvasContext: pdfContext,
+                    viewport: viewport
+                });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('.pop').on('click', function () {
+                $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+                $('#imagemodal').modal('show');
+            });
+        });
+
+        $('#closeMediaModal').click(function () {
+            $('#imagemodal').modal('hide');
+            $('#pdfmodal').modal('hide');
+        });
+
+        let bd = document.getElementById('dl-btn');
+        let img = document.querySelector('.imagepreview');
+        bd.addEventListener('click', () => {
+            let impath = img.getAttribute('src');
+            let fn = getFileName(impath);
+            saveAs(impath, fn);
+        });
+        function getFileName(str) {
+            return str.substring(str.lastIndexOf('/') + 1);
+        }
+    </script>
+
+    <script type="text/javascript">
+
+    </script>
+}
+
+<style type="text/css">
+    .od-group,
+    .aa-group,
+    .cf-group,
+    .ac-group,
+    .npi-group,
+    .p-group,
+    .sl-group,
+    .a-group {
+        display: flex;
+    }
+
+    .od1-container,
+    .aa1-container,
+    .cf1-container,
+    .ac1-container,
+    .npi1-container,
+    .p1-container,
+    .sl1-container,
+    .a1-container {
+        width: 60%;
+        margin: 0;
+    }
+
+    .od2-container,
+    .aa2-container,
+    .cf2-container,
+    .ac2-container,
+    .npi2-container,
+    .p2-container,
+    .sl2-container,
+    .a2-container {
+        width: 40%;
+        margin: 0;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    td {
+        padding: 10px 0 10px 0;
+    }
+
+    .text-blue-green {
+        color: #499bb3;
+    }
+
+    #main {
+        background: #edeff4;
+    }
+
+    .my-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
+    }
+
+    .my-card {
+        height: 200px;
+        width: 200px;
+    }
+
+    #the-canvas {
+        direction: ltr;
+        max-width: 300px;
+    }
+
+    .modal-dialog {
+        position: relative;
+        display: table; /* This is important */
+        overflow-y: auto;
+        overflow-x: auto;
+        width: auto;
+        min-width: 500px;
+    }
+
+    .rule {
+        height: 4px;
+        background: #bbbbbb;
+    }
+
+        .rule:before, .rule:after {
+            content: '';
+            height: 40px;
+            width: 40px;
+            border-radius: 25px;
+            float: left;
+            background: #bbbbbb;
+            margin-top: -20px;
+        }
+
+        .rule:after {
+            float: right;
+        }
+
+    .erc-text-dark-blue {
+        color: #3a4360;
+    }
+
+    #msform .action-button-approve {
+        width: 100px;
+        background: #dcfcfc;
+        color: #37b5b5;
+        border: 0;
+        border-radius: 5px;
+    }
+
+    #msform .action-button-decline {
+        width: 100px;
+        background: #ffe4e4;
+        color: #ff0000;
+        border: 0;
+        border-radius: 5px;
+    }
+
+    #msform .action-button {
+        width: 200px;
+        background: #5069b1;
+        color: white;
+        border: 0 none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
+
+        #msform .action-button:hover, #msform .action-button:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #5069b1;
+        }
+
+    #msform .action-button-previous {
+        width: 200px;
+        background: #d2d8e9;
+        color: #000;
+        border: 0 none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
+
+        #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #d2d8e9;
+        }
+
+    .rounded {
+        border-radius: 1rem !important;
+    }
+
+    .w-49 {
+        width: 49.5%;
+    }
+
+    body {
+        background: #edeff4 !important;
+        font-size: larger;
+    }
+
+    .erc-text-blue {
+        color: #6f83bc;
+    }
+</style>

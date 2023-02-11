@@ -1,0 +1,294 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+    ViewBag.Title = "Virtual Hearing";
+}
+
+<section>
+    <div class="container-fluid">
+        <div class="row bg-white mx-2 py-2 rounded">
+            <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
+                <h6>Notification Highlights</h6>
+            </div>
+            <div class="col px-0">
+                <div class="row mb-2">
+                    <div class="col text-secondary"><strong>Pre-Filing Case</strong></div>
+                    <div class="col d-flex align-items-center justify-content-end text-muted me-4"><small>[Date] [Time]</small></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="m-0 text-muted">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 pe-0 d-flex align-items-center justify-content-center">
+                <button class="btn text-secondary rounded-circle border-secondary border-2 me-4"><strong><</strong></button>
+                <button class="btn text-secondary rounded-circle border-secondary border-2"><strong>></strong></button>
+            </div>
+        </div>
+        <h3 class="text-mauve text-center my-5">Virtual Hearings</h3>
+        <div class="bg-white mx-2 p-4 rounded">
+            <div class="container-fluid">
+                <form id="msform">
+                    <fieldset>
+                        <div class="float-start text-start w-100 p-0 m-0">
+                            <h6 class="text-secondary mb-4"><strong>Type of Hearing</strong></h6>
+                            <div class="ms-3">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                                    <label class="ps-2 text-secondary">Inital Hearing</label>
+                                </div>
+                                <div>
+                                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                                    <label class="ps-2 text-secondary">Written Order</label>
+                                </div>
+                                <div>
+                                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                                    <label class="ps-2 text-secondary">Open Court</label>
+                                </div>
+                            </div>
+                            <hr class="my-5" />
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                            <label class="ps-2 text-secondary">Request Schedule</label>
+                        </div>
+                        <input type="button" name="next" class="next rounded hover-effect border-0 my-5 px-4 py-1" value="Send Request" />
+                    </fieldset>
+                    <fieldset>
+                        <div class="border rounded p-5 mb-5">
+                            <img src="~/Assets/VectorLoading.png" />
+                            <h6 class="my-4 text-secondary">Scheduling on Process</h6>
+                        </div>
+                        <input type="button" name="previous" class="previous rounded hover-effect border-0 my-5 me-2 px-4 py-1" value="Back" />
+                        <input type="button" name="next" class="next rounded hover-effect border-0 my-5 px-4 py-1" value="Next" />
+                    </fieldset>
+                    <fieldset>
+                        <div class="border rounded p-5 mb-5">
+                            <h5 class="text-center text-secondary" mb-2"><strong>Notification</strong></h5>
+                            <div class="text-start">
+                                <h6 class="text-secondary mt-4"><strong>Date of Hearing</strong></h6>
+                                <small class="text-secondary mb-4">[Date] [Time]</small>
+                                <h6 class="text-secondary mt-4"><strong>Other Details</strong></h6>
+                                <small class="text-secondary mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+                                <h6 class="text-secondary mt-4"><strong>Virtual Hearing Link</strong></h6>
+                                <small class="text-secondary mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+                            </div>
+                        </div>
+                        <input type="button" name="previous" class="previous hover-effect rounded border-0 my-5 me-2 px-4 py-1" value="Back" />
+                        <input type="button" name="next" class="next rounded hover-effect border-0 my-5 px-4 py-1" value="Next" />
+                    </fieldset>
+                    <fieldset>
+                        <div class="text-start">
+                            <div class="mb-5">
+                                <label for="formFile" class="form-label text-secondary">Promulgation of IO/NVH</label>
+                                <input class="form-control w-50" type="file" id="formFile">
+                            </div>
+                            <div class="mb-5">
+                                <label for="formFile" class="form-label text-secondary">Hearing Documents</label>
+                                <input class="form-control w-50" type="file" id="formFile">
+                            </div>
+                            <h5 class="text-mauve">Select Key Personnel</h5>
+                            <hr />
+                            <label class="form-label text-secondary">Personnel</label>
+                            <select class="form-select w-50 mb-5" aria-label="">
+                                <option selected> </option>
+                                <option value="1">[Personnel 1]</option>
+                                <option value="2">[Personnel 2]</option>
+                                <option value="3">[Personnel 3]</option>
+                            </select>
+                        </div>
+                        <input type="button" name="previous" class="previous hover-effect rounded border-0 my-5 me-2 px-4 py-1" value="Back" />
+                        <input type="button" name="next" class="next rounded hover-effect border-0 my-5 px-4 py-1" value="Next" />
+                    </fieldset>
+                    <fieldset>
+                        <div class="row mb-5">
+                            <div class="col">
+                                <h5 class="text-center text-secondary"><strong>Notify Stakeholder and concerned Services</strong></h5>
+                            </div>
+                        </div>
+                        <div class="w-75 mx-auto">
+                            <div class="row my-5">
+                                <div class="col text-start">
+                                    <label class="form-label text-secondary">Stakeholder</label>
+                                    <select class="form-select mb-5" aria-label="">
+                                        <option selected> </option>
+                                        <option value="1">[Stakeholder 1]</option>
+                                        <option value="2">[Stakeholder 2]</option>
+                                        <option value="3">[Stakeholder 3]</option>
+                                    </select>
+                                </div>
+                                <div class="col text-start">
+                                    <label class="form-label text-secondary">Concerned Services</label>
+                                    <select class="form-select mb-5" aria-label="">
+                                        <option selected> </option>
+                                        <option value="1">[Concerned Services 1]</option>
+                                        <option value="2">[Concerned Services 2]</option>
+                                        <option value="3">[Concerned Services 3]</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="button" name="previous" class="previous hover-effect rounded border-0 my-5 me-2 px-4 py-1" value="Back" />
+                        <input type="button" name="next" class="next rounded hover-effect border-0 my-5 px-4 py-1" value="Next" />
+                    </fieldset>
+                    <fieldset>
+                        <div class="row mb-5">
+                            <div class="col">
+                                <h5 class="text-center text-secondary"><strong>Registration of Hearing Participants</strong></h5>
+                            </div>
+                        </div>
+                        <div class="w-75 mx-auto">
+                            <div class="row text-start mb-4">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="text-secondary">Name</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="text-secondary">Email Address</label>
+                                        <input type="email" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-start mb-4">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="text-secondary">Contact No.</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="text-secondary">Other Details</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-5" />
+                        <div class="w-75 mx-auto">
+                            <div class="row text-start mb-4">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="text-secondary">Name</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="text-secondary">Email Address</label>
+                                        <input type="email" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-start mb-4">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="text-secondary">Contact No.</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="text-secondary">Other Details</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-5" />
+                        <div class="text-start w-75 mx-auto">
+                            <span class="btn border-0 bg-white hover-effect p-0 ps-2">
+                                <i class="text-secondary fas fa-plus "></i> <input class="bg-white border-0 text-secondary" type="reset" value="Add Participants" />
+                            </span>
+                        </div>
+
+                        <input type="button" name="previous" class="previous hover-effect rounded border-0 my-5 me-2 px-4 py-1" value="Back" />
+                        <input type="button" name="next" class="submit rounded hover-effect border-0 my-5 px-4 py-1" value="Submit" />
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style type="text/css">
+    #msform {
+        text-align: center;
+        position: relative;
+        margin-top: 20px
+    }
+
+        #msform fieldset {
+            background: white;
+            border: 0 none;
+            width: 100%;
+            position: relative
+        }
+
+            #msform fieldset:not(:first-of-type) {
+                display: none
+            }
+
+    .next, .submit {
+        background-color: #566eb4;
+        color: #fff;
+    }
+    .previous {
+        background-color: #96abe9;
+        color: #fff;
+    }
+</style>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        var current_fs, next_fs, previous_fs;
+        var opacity;
+
+        $(".next").click(function () {
+
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
+
+            next_fs.show();
+
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+
+                    opacity = 1 - now;
+
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({ 'opacity': opacity });
+                },
+
+            });
+        });
+
+        $(".previous").click(function () {
+
+            current_fs = $(this).parent();
+            previous_fs = $(this).parent().prev();
+
+            previous_fs.show();
+
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+                    opacity = 1 - now;
+
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    previous_fs.css({ 'opacity': opacity });
+                },
+            });
+        });
+    </script>
+}

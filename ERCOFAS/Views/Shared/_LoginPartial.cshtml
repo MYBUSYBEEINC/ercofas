@@ -1,0 +1,138 @@
+﻿@using Microsoft.AspNet.Identity
+@using NetStarter.Resources
+@if (Request.IsAuthenticated)
+{   
+    <div class="btn-group">
+        <button id="notificationLink" class="btn bg-white bg-transparent color-primarycolor">
+            <i class="fa fa-bell text-blue-green" style="font-size:1.5em;"></i>
+            <span class="bell-badge">3</span>
+        </button>
+        <div id="notificationContainer" class="rounded">
+            <div id="notificationTitle" class="rounded text-secondary">Notifications</div>
+            <div id="notificationsBody" class="notifications">
+                <div class="single-notif">
+                    <a href="#">
+                        <small><span class="me-2 text-muted">[Date] [Time]</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+                    </a>
+                </div>
+                <div class="single-notif">
+                    <a href="#">
+                        <small><span class="me-2 text-muted">[Date] [Time]</span>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</small>
+                    </a>
+                </div>
+                <div class="single-notif">
+                    <a href="#">
+                        <small><span class="me-2 text-muted">[Date] [Time]</span>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</small>
+                    </a>
+                </div>
+            </div>
+            <div id="notificationFooter" class="rounded-bottom text-secondary"><a href="#">See All</a></div>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+            <button class="btn bg-white bg-transparent color-primarycolor" onclick="javascript:document.getElementById('logoutForm').submit()">
+                <i class="fa fa-sign-out text-blue-green" style="font-size:1.5em;"></i>
+            </button>
+        }
+    </div>
+}
+else
+{
+    <span class="pe-3">@Html.ActionLink(Resource.Register, "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</span>
+    <span> @Html.ActionLink(Resource.Login, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</span>
+}
+
+<style type="text/css">
+    #header .bell-badge {
+        padding: 1px 6px;
+        border-radius: 50%;
+        color: white;
+        background-color: #ff0000;
+        position: absolute;
+        top: -4px;
+        left: 28px;
+        font-size: 0.8em;
+    }
+
+    #header .btn i:hover {
+        color: #37b5b5;
+        transition: all .2s ease-in-out;
+    }
+
+    .btn:focus, .btn:focus-visible {
+        outline: 0 !important;
+        box-shadow: none !important;
+    }
+
+    #header .dropdown-toggle::after {
+        display: none !important;
+    }
+
+    /*notifications*/
+    #notificationContainer {
+        background-color: #fff;
+        border: 1px solid rgba(100, 100, 100, .4);
+        -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+        overflow: visible;
+        position: absolute;
+        top: 33px;
+        margin-left: -350px;
+        width: 400px;
+        z-index: -1;
+        display: none;
+    }
+
+    #notificationTitle {
+        font-weight: bold;
+        padding: 8px;
+        font-size: 13px;
+        background-color: #ffffff;
+        position: fixed;
+        z-index: 1000;
+        width: 384px;
+    }
+
+    #notificationsBody {
+        padding: 33px 5px 0px 5px !important;
+        min-height: 300px;
+    }
+
+    #notificationFooter {
+        background-color: #e9eaed;
+        text-align: center;
+        font-weight: bold;
+        padding: 8px;
+        font-size: 12px;
+        border-top: 1px solid #dddddd;
+    }
+
+    .single-notif {
+        margin: 3% 0 3% 0;
+        line-height: 1.2em;
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#notificationLink").click(function () {
+            $("#notificationContainer").slideToggle(200);
+            return false;
+        });
+
+        //Document Click hiding the popup 
+        $(document).click(function () {
+            $("#notificationContainer").hide();
+        });
+
+        //Popup on click
+        $("#notificationContainer").click(function () {
+            return false;
+        });
+    });
+</script>

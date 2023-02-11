@@ -1,0 +1,168 @@
+﻿@model NetStarter.Models.TotalCountViewModel
+@{
+    ViewBag.Title = "Case/Pleading";
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+    ViewBag.Title = "Case/Pleading - Menu Selection";
+}
+
+<section>
+    <div class="container-fluid px-0">
+        <div class="bg-white mb-5 p-2 shadow" style="border-radius:10px;">
+            <div class="row">
+                <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
+                    <h6>Notification Highlights</h6>
+                </div>
+                <div class="col px-0">
+                    <div class="row mb-2">
+                        <div class="col text-secondary"><strong>Pre-Filing Case</strong></div>
+                        <div class="col d-flex align-items-center justify-content-end text-muted me-4"><small>[Date] [Time]</small></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="mb-0 text-muted">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 pe-0 d-flex align-items-center justify-content-center">
+                    <button class="btn text-secondary rounded-circle border-secondary border-2 me-4"><strong><</strong></button>
+                    <button class="btn text-secondary rounded-circle border-secondary border-2"><strong>></strong></button>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="erc-text-blue text-center mb-5">Case/Pleading</h3>
+
+        <div class="row mb-4">
+            <div class="col">
+                <a href="@Url.Action("index","prefiledcase")">
+                    <div class="card shadow">
+                        <div class="p-2">
+                            <span class="my-badge bg-violet float-end text-white">
+                                @Model.TotalPreFilings
+                            </span>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="mb-2">
+                                <img src="~/Assets/case-pleading-icons/VectorPreFiling.png">
+                            </div>
+                            <div class="text-dark-brown">
+                                Pre-Filing
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="@Url.Action("Index","InitiatoryPleading")">
+                    <div class="card shadow">
+                        <div class="p-2">
+                            <span class="my-badge bg-violet float-end text-white">
+                                @Model.TotalInitiatorySubsequentPleadings
+                            </span>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="mb-2">
+                                <img src="~/Assets/case-pleading-icons/VectorISP.png">
+                            </div>
+                            <div class="text-dark-brown">
+                                Initiatory and Subsequent Pleadings
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <a href="@Url.Action("VirtualHearing","Hearing")">
+                    <div class="card shadow">
+                        <div class="p-2">
+                            <span class="my-badge bg-violet float-end text-white">
+                                @Model.TotalVirtualHearings
+                            </span>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="mb-2">
+                                <img src="~/Assets/case-pleading-icons/VectorVirtHear.png">
+                            </div>
+                            <div class="text-dark-brown">
+                                Virtual Hearings
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style type="text/css">
+    .erc-text-blue {
+        color: #6f83bc;
+    }
+
+    .my-badge {
+        padding: 1px 10px;
+        border-radius: 50%;
+        color: white;
+    }
+
+    .bg-pink {
+        background: #ff7d7d;
+    }
+
+    .bg-violet {
+        background: #745bb3;
+    }
+
+    .bg-blue-green {
+        background: #499bb3;
+    }
+
+    .bg-moss-green {
+        background: #b3aa40;
+    }
+
+    .text-blue-green {
+        color: #499bb3;
+    }
+
+    .text-dark-brown {
+        color: #646464;
+    }
+
+    .text-gold {
+        color: #b38b64;
+    }
+
+    a {
+        color: inherit !important;
+    }
+
+    #main {
+        background: #dbdfea;
+        border-top: solid 3px #e4e8f4;
+        position: fixed;
+        bottom: 0;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .card {
+        border: 0;
+        border-radius: 10px;
+        min-height: 200px;
+    }
+
+    #piechart svg:nth-child(2) {
+        display: none;
+    }
+</style>

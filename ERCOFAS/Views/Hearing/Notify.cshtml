@@ -1,0 +1,63 @@
+﻿@model NetStarter.Models.HearingPersonnelViewModel
+@using NetStarter.CustomHelper
+@using NetStarter.Resources
+@{
+    ViewBag.Title = "Notify";
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div style="--bs-breadcrumb-divider: '>';">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item fw-normal">
+                    <a class="color-primarycolor opacity-50" href="@Url.Action("index")">Hearing</a>
+                </li>
+                <li class="breadcrumb-item fw-normal active">@ViewBag.Title</li>
+            </ol>
+        </div>
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between pt-2">
+            <h4 class="pagetitle mb-sm-0 fw600">@ViewBag.Title</h4>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Notify", "Hearing", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
+{
+    @class = "form-horizontal",
+    role = "form",
+    enctype = "multipart/form-data"
+}))
+{
+    <section class="section mt-3">
+        <div class="bg-white rounded p-3 p-lg-4 p-xl-5 shadow">
+            @Html.HiddenFor(model => model.HearingId)
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        @Html.LabelFor(model => model.StakeHolderUserId, htmlAttributes: new { @class = "form-label required fw600" })
+                        @CustomHelper.CustomDropDownList("StakeHolderUserId", Model.StakeHolderSelectList)
+                        @Html.ValidationMessageFor(model => model.StakeHolderUserId, "", new { @class = "invalid-message" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        <label class="form-label required fw600" for="ServiceUserId">Concern Services</label>
+                        @CustomHelper.CustomDropDownList("ServiceUserId", Model.ServiceSelectList)
+                        @Html.ValidationMessageFor(model => model.ServiceUserId, "", new { @class = "invalid-message" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <a type="button" class="btn btn-p8 bg-light hover-boxshadow me-1" href="@Url.Action("index")">@Resource.BackToList</a>
+                @if (Model.SystemDefault == false)
+                {
+                    <button type="submit" class="addnewbtn btn btn-p8 hover-boxshadow hover-bg-primarycolor">@Resource.Notify</button>
+                }
+            </div>
+        </div>
+
+    </section>
+}

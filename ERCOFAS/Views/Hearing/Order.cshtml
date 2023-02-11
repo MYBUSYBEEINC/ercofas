@@ -1,0 +1,243 @@
+﻿@model NetStarter.Models.HearingViewModel
+@using NetStarter.CustomHelper
+@using NetStarter.Resources
+@{
+    ViewBag.Title = "Sign & Order";
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+<style type="text/css">
+    .input-meeting-password {
+        width: 530px !important;
+        height: 35px !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div style="--bs-breadcrumb-divider: '>';">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item fw-normal">
+                    <a class="color-primarycolor opacity-50" href="@Url.Action("index")">Hearing</a>
+                </li>
+                <li class="breadcrumb-item fw-normal active">@ViewBag.Title</li>
+            </ol>
+        </div>
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between pt-2">
+            <h4 class="pagetitle mb-sm-0 fw600">@ViewBag.Title</h4>
+        </div>
+    </div>
+</div>
+
+<section class="section mt-3">
+    <div class="bg-white rounded p-3 p-lg-4 p-xl-5 shadow">
+        @Html.HiddenFor(model => model.Id)
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 text-break">
+                    <label class="form-label fw600" for="Schedule">Date of Hearing</label>
+                    <div class="input-group date" data-provide="datepicker" data-date-format="mm/dd/yyyy">
+                        @Html.EditorFor(model => model.Schedule, new { htmlAttributes = new { @class = "form-control date-picker", @disabled = "disabled" } })
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 text-break">
+                    <label class="form-label required fw600" for="MeetingLink">Meeting Link</label>
+                    @Html.EditorFor(model => model.MeetingLink, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MeetingLink, "", new { @class = "meeting-link invalid-message" })
+                </div>
+            </div>
+        </div>
+        @using (Html.BeginForm("UploadDocument", "Hearing", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        <label class="form-label fw600">Upload Initial Order</label>
+                        @Html.TextBoxFor(model => model.Files, "", new { @type = "file", @multiple = "multiple", @class = "form-control document-initial-order" })
+                        <div class="pt-2 small"><a id="remove-file-link-order" class="cursor-pointer color-primarycolor hover-color-secondarycolor small">@Resource.Removeselectedfile</a></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        <label class="form-label fw600">Digital Signature</label>
+                        @Html.TextBoxFor(model => model.HearingFiles, "", new { @type = "file", @multiple = "multiple", @class = "form-control document-digital-signature" })
+                        <div class="pt-2 small"><a id="remove-file-link-signature" class="cursor-pointer color-primarycolor hover-color-secondarycolor small">@Resource.Removeselectedfile</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        <button class="btn btn-success btn-sm upload-document-initial-order" style="background-color: #28a745; border-color: #28a745; color: #fff;" disabled type="submit">
+                            <i class="fa fa-upload"></i> Upload
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        <button class="btn btn-success btn-sm upload-document-digital-signature" style="background-color: #28a745; border-color: #28a745; color: #fff;" disabled type="submit">
+                            <i class="fa fa-upload"></i> Upload
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 text-break">
+                    <label class="form-label required fw600" for="MeetingPassword">Meeting Password</label>
+                    @Html.PasswordFor(model => model.MeetingPassword, new { htmlAttributes = new { @class = "form-control input-meeting-password" } })
+                    @Html.ValidationMessageFor(model => model.MeetingPassword, "", new { @class = "meeting-password invalid-message" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 text-break">
+                    <label class="form-label fw600" for="Description">Description</label>
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <a type="button" class="btn btn-p8 bg-light hover-boxshadow me-1" href="@Url.Action("index")">@Resource.BackToList</a>
+            @if (Model.SystemDefault == false)
+            {
+                <button type="submit" class="addnewbtn send-order-btn btn btn-p8 hover-boxshadow hover-bg-primarycolor">Send</button>
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            var hearingScheduleDate = "";
+
+            if ($("#Schedule").val() !== isNaN && $("#Schedule").val() !== "") {
+                hearingScheduleDate = new Date($("#Schedule").val());
+
+                var year = hearingScheduleDate.getFullYear();
+
+                var month = (1 + hearingScheduleDate.getMonth()).toString();
+                month = month.length > 1 ? month : '0' + month;
+
+                var day = hearingScheduleDate.getDate().toString();
+                day = day.length > 1 ? day : '0' + day;
+
+                hearingScheduleDate = month + '/' + day + '/' + year;
+
+                $("#Schedule").val(hearingScheduleDate);
+            }
+
+            $(".document-initial-order").change(function () {
+                var result = validateFile('Files', false);
+                if (result != "") {
+                    $(".document-initial-order").val("");
+                    $("#validation-msg").show();
+                    $("#validation-msg").html(result);
+                    $(".upload-document-initial-order").attr("disabled", "disabled");
+                } else {
+                    $("#validation-msg").hide();
+                    $(".upload-document-initial-order").removeAttr("disabled");
+                }
+            });
+
+            $("#remove-file-link-order").click(function () {
+                $(".document-initial-order").val("");
+                $(".upload-document-initial-order").attr("disabled", "disabled");
+            });
+
+            $(".document-digital-signature").change(function () {
+                var result = validateFile('HearingFiles', false);
+
+                if (result != "") {
+                    $(".document-digital-signature").val("");
+                    $("#validation-msg").show();
+                    $("#validation-msg").html(result);
+                    $(".upload-document-digital-signature").attr("disabled", "disabled");
+                } else {
+                    $("#validation-msg").hide();
+                    $(".upload-document-digital-signature").removeAttr("disabled");
+                }
+            });
+
+            $("#remove-file-link-signature").click(function () {
+                $(".document-digital-signature").val("");
+                $(".upload-document-digital-signature").attr("disabled", "disabled");
+            });
+
+            $(".send-order-btn").click(function () {
+
+                var meetingLink = $("#MeetingLink").val();
+                if (meetingLink === "") {
+                    $(".meeting-link").html("Required");
+                    $(".meeting-link").show();
+                    return;
+                }
+
+                if (!isValidUrl(meetingLink)) {
+                    $(".meeting-link").html("Invalid meeting link");
+                    $(".meeting-link").show();
+                    return;
+                }
+
+                if ($("#MeetingPassword").val() === "") {
+                    $(".meeting-password").html("Required");
+                    $(".meeting-password").show();
+                    return;
+                }
+
+                $(".meeting-link").html("");
+                $(".meeting-password").html("");
+                $(".meeting-link").hide();
+                $(".meeting-password").hide("");
+
+                $.ajax({
+                    type: 'POST',
+                    url: `/Hearing/Order`,
+                    data: JSON.stringify({
+                        id: $('#Id').val(),
+                        schedule: $("#Schedule").val(),
+                        meetingLink: $("#MeetingLink").val(),
+                        description: $("#Description").val(),
+                        meetingPassword: $("#MeetingPassword").val(),
+                        hearingStatus: 6 // Signed
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        if (data.success)
+                            location.href = "/Hearing/index";
+                    },
+                    error: function (err) {
+                        console.log('There was a problem sending a virtual hearing for sign and order. Please try again later.');
+                    },
+                    async: true
+                });
+
+            });
+
+            const isValidUrl = urlString => {
+                try {
+                    return Boolean(new URL(urlString));
+                }
+                catch (e) {
+                    return false;
+                }
+            }
+
+        });
+
+    </script>
+}

@@ -1,0 +1,322 @@
+﻿@model NetStarter.Models.TotalCountViewModel
+@using NetStarter.Resources
+@{
+    ViewBag.Title = Resource.Dashboard;
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+
+
+<section id="dashboard">
+    <div class="container-fluid px-0">
+        <div class="bg-white mb-5 p-2 shadow" style="border-radius:10px;">
+            <div class="row">
+                <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
+                    <h6>Notification Highlights</h6>
+                </div>
+                <div class="col px-0">
+                    <div class="row mb-2">
+                        <div class="col text-secondary"><strong>Pre-Filing Case</strong></div>
+                        <div class="col d-flex align-items-center justify-content-end text-muted me-4"><small>[Date] [Time]</small></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="mb-0 text-muted">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 pe-0 d-flex align-items-center justify-content-center">
+                    <button class="btn text-secondary rounded-circle border-secondary border-2 me-4"><strong><</strong></button>
+                    <button class="btn text-secondary rounded-circle border-secondary border-2"><strong>></strong></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <a href="@Url.Action("Index", "PreFiledCase")">
+                    <div class="card shadow">
+                        <div class="p-2">
+                            <span class="my-badge bg-violet float-end text-white">
+                                @Model.TotalPreFilings
+                            </span>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="mb-2">
+                                <img src="~/Assets/dashboard-icons/VectorCasePlead.png">
+                            </div>
+                            <div class="text-dark-brown">
+                                Case/Pleading
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="@Url.Action("UnderConstruction", "General")">
+                    <div class="card shadow">
+                        <div class="p-2">
+                            <span class="my-badge bg-violet float-end text-white">
+                                @Model.TotalSealingRequestTestingMeters
+                            </span>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="mb-2">
+                                <img src="~/Assets/dashboard-icons/VectorReqSealAccTestMet.png">
+                            </div>
+                            <div class="text-dark-brown">
+                                Request for Sealing and Acceptance Testing of Meters
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <a href="@Url.Action("UnderConstruction", "General")">
+                    <div class="card shadow">
+                        <div class="p-2">
+                            <span class="my-badge bg-violet float-end text-white">
+                                @Model.TotalVirtualHearings
+                            </span>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="mb-2">
+                                <img src="~/Assets/dashboard-icons/VectorVirtHear.png">
+                            </div>
+                            <div class="text-dark-brown">
+                                Virtual Hearings
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="@Url.Action("UnderConstruction", "General")">
+                    <div class="card shadow">
+                        <div class="p-2">
+                            <span class="my-badge bg-violet float-end text-white">
+                                @Model.TotalInServiceMeterSamplings
+                            </span>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="mb-2">
+                                <img src="~/Assets/dashboard-icons/VectorValServMetSamp.png">
+                            </div>
+                            <div class="text-dark-brown">
+                                Validation of In-Service Meter Samplings
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <a href="@Url.Action("UnderConstruction", "General")">
+                    <div class="card shadow">
+                        <div class="p-2">
+                            <span class="my-badge bg-violet float-end text-white">
+                                @Model.TotalRetailElectricitySuppliers
+                            </span>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="mb-2">
+                                <img src="~/Assets/dashboard-icons/VectorReqRetElecSup.png">
+                            </div>
+                            <div class="text-dark-brown">
+                                Request for Retail Electricity Suppliers
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="@Url.Action("Index", "Transaction")">
+                    <div class="card shadow">
+                        <div class="p-2">
+                            <span class="my-badge bg-blue-green float-end text-white">3</span>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="mb-2">
+                                <img src="~/Assets/dashboard-icons/VectorTransc.png">
+                            </div>
+                            <div class="text-dark-brown">
+                                Transactions
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style type="text/css">
+    .my-badge {
+        padding: 1px 10px;
+        border-radius: 50%;
+        color: white;
+    }
+
+    .bg-pink {
+        background: #ff7d7d;
+    }
+
+    .bg-violet {
+        background: #745bb3;
+    }
+
+    .bg-blue-green {
+        background: #499bb3;
+    }
+
+    .bg-moss-green {
+        background: #b3aa40;
+    }
+
+    .text-blue-green {
+        color: #499bb3;
+    }
+
+    .text-dark-brown {
+        color: #646464;
+    }
+
+    .text-gold {
+        color: #b38b64;
+    }
+
+    a {
+        color: inherit !important;
+    }
+
+    #main {
+        background: #dbdfea;
+        border-top: solid 3px #e4e8f4;
+        position: fixed;
+        bottom: 0;
+        top: 0;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .card {
+        border: 0;
+        border-radius: 10px;
+        min-height: 200px;
+    }
+
+    #piechart svg:nth-child(2) {
+        display: none;
+    }
+</style>
+
+@section Scripts{
+    <!-- For Charts-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <script type="text/javascript">
+        /*Doughnut Chart: Pre - Filing Data*/
+        var ctx = document.getElementById('myDoughnutChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Approved", "Declined"],
+                datasets: [{
+                    data: [76, 24],
+                    backgroundColor: [
+                        'rgba(179, 170, 64)',
+                        'rgba(229,222,130)'
+                    ]
+                }]
+            }
+        });
+
+        /*Bar Chart: Case Hearing*/
+        var ctx = document.getElementById('myBarChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+                datasets: [{
+                    label: 'Cases',
+                    data: [19, 99, 69, 129, 39, 119, 49, 59, 129, 99, 149],
+                    backgroundColor: [
+                        'rgba(228,188,148)',
+                        'rgba(228,188,148)',
+                        'rgba(228,188,148)',
+                        'rgba(179,139,100)',
+                        'rgba(228,188,148)',
+                        'rgba(179,139,100)',
+                        'rgba(228,188,148)',
+                        'rgba(228,188,148)',
+                        'rgba(179,139,100)',
+                        'rgba(179,139,100)',
+                        'rgba(179,139,100)'
+                    ]
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 500,
+                            stepSize: 100
+                        }
+                    }]
+                }
+            }
+        });
+        /*Line Chart: Payment*/
+        var ctx = document.getElementById('myLineChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+                datasets: [{
+                    label: 'Payments',
+                    data: [400000, 300000, 500000, 400000, 300000, 500000, 400000, 300000, 200000, 400000, 600000],
+                    backgroundColor: 'rgba(132,155,220)'
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 1000000,
+                            stepSize: 500000
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+}

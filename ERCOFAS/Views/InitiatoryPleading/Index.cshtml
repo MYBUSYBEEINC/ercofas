@@ -1,0 +1,103 @@
+﻿@model NetStarter.Models.InitiatoryPleadingListing
+@using NetStarter.Models;
+@using NetStarter.Resources
+@{
+    ViewBag.Title = Resource.InitiatoryPleadings;
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+    ViewBag.TableIdPrefix = "initiatorypleading";
+    CurrentUserPermission permission = User.Identity.IsAllowed(ProjectEnum.ModuleCode.InitiatoryPleading.ToString());
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-center">
+            <h4 class="pagetitle mb-sm-0 fw600 text-blue-green">Pre-Filed Case with Docket Number</h4>
+        </div>
+    </div>
+</div>
+
+<section class="section dashboard mt-3">
+    <div class="bg-white rounded p-3 shadow">
+        <div class="row">
+            <div class="col d-flex align-items-center">
+                <span id="exportToExcel" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button mx-2"><i class="fa-solid fa-file-excel pe-1"></i> @Resource.ExporttoExcel</span>
+                <span id="exportToPdf" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button"><i class="fa-solid fa-file-pdf pe-1"></i> @Resource.ExporttoPdf</span>
+            </div>
+            <div class="col-3">
+                <div class="justify-content-end">
+                    @Html.Partial("~/Views/Shared/_TableLengthDropDown.cshtml", new ViewDataDictionary { { "DropDownId", ViewBag.TableIdPrefix + "-tableDropDown" } })
+                </div>
+                <div id="searchinput" class="input-group mt-2">
+                    @Html.TextBox("search", "", htmlAttributes: new { type = "text", @class = "form-control", @placeholder = Resource.SearchDot })
+                    <button type="button" class="input-group-text bg-transparent hover-bg-primarycolor hover-color-white" id="searchbtn"><i class="fa-solid fa-magnifying-glass pe-1"></i> @Resource.Search</button>
+                    <button type="button" class="input-group-text bg-transparent hover-bg-primarycolor hover-color-white" id="resetbtn"><i class="fa-solid fa-rotate-left pe-1"></i> @Resource.Reset</button>
+                </div>
+            </div>
+        </div>
+        <div id="@ViewBag.TableIdPrefix-table-wrapper">
+            <div class="table-responsive">
+                <table id="@ViewBag.TableIdPrefix-table" class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-white">
+                        <tr>
+                            <th class="thead"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="spinner d-flex justify-content-center align-items-center text-center color-primarycolor py-5">
+                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div><strong> &nbsp; @Resource.Loading </strong>
+                </div>
+            </div>
+            <div class="dummyfooter row justify-content-between">
+                <div class="col-md-6">@Resource.Showing0Entries</div>
+                <div class="col-md-6 text-end">@Resource.Page0OfPage0</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script>
+        var tableIdPrefix = "@ViewBag.TableIdPrefix";
+        var canView = "@permission.ViewRight";
+        var canAdd = "@permission.AddRight";
+        var canEdit = "@permission.EditRight";
+        var canDelete = "@permission.DeleteRight";
+
+        $(document).ready(function(){
+            var url = "@(Html.Raw(Url.Action("GetPartialViewInitiatoryPleadings", "InitiatoryPleading")))";
+            $("#" + tableIdPrefix +"-table").load(url, function(responseTxt, statusTxt, xhr){
+                if (statusTxt == "success") {
+                    hideDummySpinnerHeaderFooter(tableIdPrefix+"-table-wrapper");
+                }
+                if (statusTxt == "error") {
+                    //no record in database
+                    if (xhr.status == 500) {
+                        hideDummySpinnerHeaderFooter(tableIdPrefix+"-table-wrapper");
+                        var table = $("#" + tableIdPrefix +"-table").DataTable({ dom: 'rtip', "pageLength": 10 });
+                    }
+                }
+              });
+        });
+    </script>
+}
+
+<style type="text/css">
+    thead th {
+        background: #499bb3 !important;
+        color: #e1f7fd;
+    }
+
+    .bg-blue-green {
+        background: #499bb3;
+    }
+
+    .text-mauve {
+        color: #5069b1;
+    }
+
+    a.paginate_button.current {
+        background: #499bb3;
+    }
+</style>

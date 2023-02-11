@@ -1,0 +1,155 @@
+﻿@model NetStarter.Models.InitiatoryPleadingListing
+@using NetStarter.Resources
+@using NetStarter.Helpers;
+@using NetStarter.Enumeration;
+@{
+    var userRole = RoleHelpers.GetMainRole();
+}
+
+@Html.DisplayFor(modelItem => Model.Listing)
+
+<thead class="table-light">
+    <tr>
+        <th class="thead">Subject of Request</th>
+        <th class="thead">Full Name</th>
+        <th class="thead">Barcode</th>
+        <th class="thead">Docket No.</th>
+        <th class="thead">Created On</th>
+        <th class="thead text-center">@Resource.Actions</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model.Listing)
+    {
+        <tr style="color: #212529;">
+            <td>@Html.DisplayFor(modelItem => item.DocumentName)</td>
+            <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
+            <td>@Html.DisplayFor(modelItem => item.Barcode)</td>
+            <td>@Html.DisplayFor(modelItem => item.DocketNumber)</td>
+            <td>@Html.DisplayFor(modelItem => item.CreatedOn)</td>
+            <td class="text-center">
+                <div class="d-flex text-breakspaces actioncol">
+                    <div class="btn-group">
+                        @if (userRole != null)
+                        {
+                            if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                            {
+                                <button id="view-@item.Id" type="button" class="btn btn-primary btn-sm view-button-admin" data-id="@item.Id"><i class="fa-solid fa-eye"></i> View</button>;
+                            }
+                            else if (userRole == UserTypeEnum.Client.ToString())
+                            {
+                                <button id="view-@item.Id" type="button" class="btn btn-primary btn-sm view-button" data-id="@item.Id"><i class="fa-solid fa-eye"></i> View</button>;
+                            }
+                            if(userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Client.ToString())
+                            {
+                                <span class="fs-19" style="margin-left: 5px;"><a href="@Url.Action("edit", new { Id = @Html.ValueFor(modelItem => item.Id) })"><i class="fa-solid fa-pen text-edit hover-color-primarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i></a></span>
+                            }
+                        }
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+</tbody>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on("click", "#initiatorypleading-table tbody tr td .view-button", function (e) {
+            e.preventDefault();
+            var id = parseInt($(this).attr('data-id'));
+
+            $('#select-action-modal').modal('toggle');
+        });
+
+        $(document).on("click", "#initiatorypleading-table tbody tr td .view-button-admin", function (e) {
+            e.preventDefault();
+            var id = parseInt($(this).attr('data-id'));
+
+            $('#select-action-admin-modal').modal('toggle');
+        });
+    });
+
+    var fileName = "@Resource.ListOfInitiatoryPleadings";//the file name for excel and pdf file (Export to excel, pdf feature)
+    var indexLastColumn = $('#' + tableIdPrefix + '-table').find('tr')[0].cells.length - 1;
+    //initialize datatable
+    var table = $('#' + tableIdPrefix + '-table').DataTable({
+        dom: 'Brtip',
+        "pageLength": 10,
+        //order: [[2, 'desc']],
+        scrollY: 'auto',
+        scrollX: 'auto',
+        deferRender: true,
+        scroller: true,
+        buttons: [
+            {
+                extend: 'csv',
+                title: fileName,
+                exportOptions: { columns: getColumnsToBeExported(tableIdPrefix) }
+            }, {
+                extend: 'excel',
+                title: fileName,
+                exportOptions: { columns: getColumnsToBeExported(tableIdPrefix) }
+            }, {
+                extend: 'pdf',
+                title: fileName,
+                exportOptions: { columns: getColumnsToBeExported(tableIdPrefix) },
+                customize: function (doc) {
+                    var colCount = adjustPdfColWidth(tableIdPrefix);
+                    doc.content[1].table.widths = colCount;
+                }
+            }
+        ],
+        "columnDefs": [{
+            'targets': [indexLastColumn], // column index (start from 0)
+            'orderable': false, // set orderable false for selected columns
+        }]
+    });
+
+    if (canEdit == 'False') {
+        $('#' + tableIdPrefix + '-table .canedit').hide();
+    }
+    if (canDelete == 'False') {
+        $('#' + tableIdPrefix + '-table .candelete').hide();
+    }
+
+    $("#exportToExcel").click(function () {
+        $(".buttons-excel").trigger("click");
+    });
+    $("#exportToPdf").click(function () {
+        $(".buttons-pdf").trigger("click");
+    });
+
+    //initialize tooltip
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    //event listener for search, reset, and "show 10 records" buttons
+    document.getElementById("searchbtn").addEventListener("click", searchTable);
+    document.getElementById("resetbtn").addEventListener("click", resetTable);
+
+    function searchTable() {
+        var valToSearch = document.getElementById("search").value;
+        table.search(valToSearch).draw();
+    }
+
+    function resetTable() {
+        document.getElementById("search").value = "";
+        table.search("").draw();
+    }
+
+    //event listener for the "show 10 records" drop down list
+    for (const option of document.querySelectorAll("#" + tableIdPrefix + "-tableDropDown .custom-option")) {
+        option.addEventListener('click', function () {
+            if (!this.classList.contains('selected')) {
+                this.parentNode.querySelector('.custom-option.selected').classList.remove('selected');
+                this.classList.add('selected');
+                this.closest('.select').querySelector('.select__trigger span').textContent = this.textContent;
+                let chosenValue = this.getAttribute("data-value");
+                table.page.len(chosenValue).draw();
+            }
+        })
+    }
+</script>

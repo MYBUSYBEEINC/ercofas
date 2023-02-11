@@ -1,0 +1,606 @@
+﻿@model NetStarter.Models.PreRegistrationViewModel
+@using NetStarter.Models;
+@using NetStarter.Resources
+@{
+    ViewBag.Title = "Application Review";
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+    ViewBag.TableIdPrefix = "applicationreview";
+    CurrentUserPermission permission = User.Identity.IsAllowed(ProjectEnum.ModuleCode.PreFiledCase.ToString());
+}
+
+<section>
+    <div class="row justify-content-center mt-2">
+        <div class="col">
+            <div class="card p-5 border-0 rounded">
+                <h1 class="erc-text-blue text-center">Application Review</h1>
+
+                <div class="w-100 m-auto py-5">
+                    <div class="rule w-50 m-auto"></div>
+                    <div class="row mt-5">
+                        <div class="col text-center">
+                            <strong>Date Submitted @Model.CreatedOn</strong>
+                        </div>
+                        <div class="col text-center">
+                            <strong>Expected Feedback 3 days</strong> <br />
+                            <small class="text-muted">Time elapsed [Time]</small>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="border rounded p-2 px-4">
+                    <h2 class="erc-text-blue mb-4">Profile</h2>
+                    <div class="row justify-content-end">
+                        <div class="col-3">
+                            <div class="col-6 float-end me-0 ps-3" style="color:#2dea29;"><strong>Verified</strong></div>
+                        </div>
+                        <div class="col-3">
+                            <div class="col-6 float-end me-0 ps-3" style="color:#2dea29;"><strong>Verified</strong></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <figure class="figure">
+                                <a href="~/Assets/defaultProfilePicture.jpg" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to Open Image in New Tab"><img src="~/Assets/defaultProfilePicture.jpg" class="figure-img img-fluid rounded" alt="Profile picture image"></a>
+                            </figure>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col erc-text-dark-blue">
+                                    <strong>Name:</strong>
+                                </div>
+                                <div class="col text-secondary">
+                                    @Model.Name
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col erc-text-dark-blue">
+                                    <strong>Position:</strong>
+                                </div>
+                                <div class="col text-secondary">
+                                    N/A
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col erc-text-dark-blue">
+                                    <strong>Email:</strong>
+                                </div>
+                                <div class="col text-secondary">
+                                    <ul style="list-style-type:none;padding:0;">
+                                        @if (Model.Emails != null)
+                                        {
+                                            foreach (var item in Model.Emails.Where(x => x.IsVerified))
+                                            {
+                                                <li>@Html.DisplayFor(modelItem => item.EmailAddress)</li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col erc-text-dark-blue">
+                                    <strong>Mobile No.:</strong>
+                                </div>
+                                <div class="col text-secondary">
+                                    <ul style="list-style-type:none;padding:0;">
+                                        @if (Model.MobileNumbers != null)
+                                        {
+                                            foreach (var item in Model.MobileNumbers.Where(x => x.IsVerified))
+                                            {
+                                                <li>@Html.DisplayFor(modelItem => item.MobileNumber)</li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mx-0 mt-3">
+                    <div class="px-4 py-2 border rounded w-49">
+                        <table class="mb-4">
+                            <thead>
+                                <tr>
+                                    <th class="erc-text-dark-blue">List of Document Submitted</th>
+                                    <th class="text-center erc-text-dark-blue">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Attachments != null)
+                                {
+                                    foreach (var item in Model.Attachments)
+                                    {
+                                        <tr>
+                                            <td class="w-50 text-secondary">
+                                                @Html.DisplayFor(modelItem => item.DocumentName)
+                                            </td>
+                                            <td class="text-center">
+                                                @if (!item.IsApproved.HasValue)
+                                                {
+                                                    <input type="button" onclick="location.href='@Url.Action("ApproveDocument", "Registration", new { registrationId = item.PreRegistrationId, documentId = item.Id })'" name="approve" class="action-button-approve btn-outline-success p-0 m-1" value="Approve" />
+                                                    <input type="button" onclick="location.href='@Url.Action("DeclineDocument", "Registration", new { registrationId = item.PreRegistrationId, documentId = item.Id })'" name="decline" class="action-button-decline btn-outline-danger p-0 m-1" value="Decline" />
+                                                }
+                                                else
+                                                {
+                                                    if (item.IsApproved == true)
+                                                    {
+                                                        <span class="label label-success m-1">Approved</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="label label-danger m-1">Declined</span>
+                                                    }
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <table class="mb-4">
+                            <thead>
+                                <tr>
+                                    <th class="erc-text-dark-blue">List of Email</th>
+                                    <th class="erc-text-dark-blue text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Emails != null)
+                                {
+                                    foreach (var item in Model.Emails)
+                                    {
+                                        <tr>
+                                            <td class="w-50 text-secondary">
+                                                @Html.DisplayFor(modelItem => item.EmailAddress)
+                                            </td>
+                                            <td class="text-center">
+                                                @if (item.IsVerified)
+                                                {
+                                                    <span class="label label-success m-1">Verified</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-default m-1">Unverified</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="erc-text-dark-blue">List of Phone No.</th>
+                                    <th class="erc-text-dark-blue text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.MobileNumbers != null)
+                                {
+                                    foreach (var item in Model.MobileNumbers)
+                                    {
+                                        <tr>
+                                            <td class="w-50 text-secondary">
+                                                @Html.DisplayFor(modelItem => item.MobileNumber)
+                                            </td>
+                                            <td class="text-center">
+                                                @if (item.IsVerified)
+                                                {
+                                                    <span class="label label-success m-1">Verified</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-default m-1">Unverified</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <div class="border-bottom my-4"></div>
+                        <h2 class="erc-text-blue mb-4">Summary</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="erc-text-dark-blue">List of Document Submitted</th>
+                                    <th class="text-center erc-text-dark-blue">Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Attachments != null)
+                                {
+                                    foreach (var item in Model.Attachments)
+                                    {
+                                        <tr>
+                                            <td class="w-50 text-secondary">
+                                                @Html.DisplayFor(modelItem => item.DocumentName)
+                                            </td>
+                                            <td class="text-center">
+                                                @if (!item.IsApproved.HasValue)
+                                                {
+                                                    <label class="text-muted">No review yet</label>
+                                                }
+                                                else
+                                                {
+                                                    if (item.IsApproved == true)
+                                                    {
+                                                        <span style="color:#80e9e9;">&#x2714;</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span style="color:#ff0000;">&#x2717;</span>
+                                                    }
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="erc-text-dark-blue">List of Email</th>
+                                    <th class="text-center erc-text-dark-blue">Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Emails != null)
+                                {
+                                    foreach (var item in Model.Emails)
+                                    {
+                                        <tr>
+                                            <td class="w-50 text-secondary">
+                                                @Html.DisplayFor(modelItem => item.EmailAddress)
+                                            </td>
+                                            <td class="text-center">
+                                                @if (item.IsVerified)
+                                                {
+                                                    <span style="color:#80e9e9;">&#x2714;</span>
+                                                }
+                                                else
+                                                {
+                                                    <span style="color:#ff0000;">&#x2717;</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="erc-text-dark-blue">List of Phone No.</th>
+                                    <th class="text-center erc-text-dark-blue">Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.MobileNumbers != null)
+                                {
+                                    foreach (var item in Model.MobileNumbers)
+                                    {
+                                        <tr>
+                                            <td class="w-50 text-secondary">
+                                                @Html.DisplayFor(modelItem => item.MobileNumber)
+                                            </td>
+                                            <td class="text-center">
+                                                @if (item.IsVerified)
+                                                {
+                                                    <span style="color:#80e9e9;">&#x2714;</span>
+                                                }
+                                                else
+                                                {
+                                                    <span style="color:#ff0000;">&#x2717;</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="ms-auto border rounded w-49">
+                        <h2 class="erc-text-blue mx-2 my-2 mb-5">Submitted Documents</h2>
+                        <div class="my-cards pt-5">
+                            @if (Model.Attachments != null)
+                            {
+                                foreach (var item in Model.Attachments)
+                                {
+                                    if (Path.GetExtension(item.FileName) == ".pdf")
+                                    {
+                                        <div class="my-card d-flex align-items-center justify-content-center mb-4">
+                                            <a id="canvas-id" href="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" target="_blank">
+                                                <canvas class="img-thumbnail mw-100 mh-100" id="the-canvas"></canvas>
+                                            </a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="pop my-card d-flex align-items-center justify-content-center mb-4">
+                                            <a href="#">
+                                                <img class="img-thumbnail mw-100 mh-100" src="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)">
+                                            </a>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                @using (Html.BeginForm("ApplicationReview", "Registration", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
+                {
+                    @id = "msform",
+                    role = "form",
+                }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="border rounded mt-3 px-4 py-2">
+                        <h2 class="erc-text-blue mb-4">Complete Documentation?</h2>
+                        <div class="form-check">
+                            <label for="@Model.IsCompleted" class="text-dark">
+                                @Html.RadioButtonFor(m => m.IsCompleted, true, new { @id = "iscompleted-yes", @checked = "checked" })
+                                Yes <small class="text-muted ms-2">Approved</small>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label for="@Model.IsCompleted" class="text-dark">
+                                @Html.RadioButtonFor(m => m.IsCompleted, false, new { @id = "iscompleted-no" })
+                                No <small class="text-muted ms-2">(Notify stakeholder for incomplete documents)</small>
+                            </label>
+                        </div>
+                        <div class="border-bottom my-4"></div>
+                        <div class="m-auto">
+                            <h5>Remarks</h5>
+                            @Html.TextAreaFor(m => m.Remarks, new { @class = "border rounded w-100 p-4 mt-4", @rows = "5", @placeholder = "Enter your remarks here..." })
+                        </div>
+                    </div>
+                    <div class="float-end mt-4">
+                        <button type="button" name="previous" class="action-button-previous" onclick="location.href='@Url.Action("Index", "Registration")'">Back</button>
+                        @if (Model.RegistrationStatusId == null || Model.RegistrationStatusId == "200257E4-E6C8-4159-8A6F-4475E0A95B32")
+                        {
+                            <button type="submit" class="action-button">Submit</button>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- image modal -->
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="mx-2 mt-2">
+                    <button type="button" class="btn float-end  p-2" data-dismiss="modal" id="closeMediaModal"><strong>&#10005;</strong></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="img-id" class="imagepreview">
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button id="download-button" class="btn btn-primary text-white">Download Image</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+    <script type="text/javascript">
+
+        const downloadButton = document.getElementById("download-button");
+
+        downloadButton.addEventListener("click", () => {
+            const imageUrl = document.getElementById("img-id").src;
+            const link = document.createElement("a");
+            link.href = imageUrl;
+            link.download = "image";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+
+    <script type="text/javascript">
+        var url = document.getElementById("canvas-id").href;
+        var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+        var loadingTask = pdfjsLib.getDocument(url);
+        loadingTask.promise.then(function (pdf) {
+
+            var pageNumber = 1;
+            pdf.getPage(pageNumber).then(function (page) {
+
+                var scale = 1;
+                var viewport = page.getViewport({ scale: scale });
+
+                var canvas = document.getElementById('the-canvas');
+                var context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                var renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                var renderTask = page.render(renderContext);
+                renderTask.promise.then(function () {
+                });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('.pop').on('click', function () {
+                $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+                $('#imagemodal').modal('show');
+            });
+        });
+
+        $('#closeMediaModal').click(function () {
+            $('#imagemodal').modal('hide');
+            $('#pdfmodal').modal('hide');
+        });
+
+        let bd = document.getElementById('dl-btn');
+        let img = document.querySelector('.imagepreview');
+        bd.addEventListener('click', () => {
+            let impath = img.getAttribute('src');
+            let fn = getFileName(impath);
+            saveAs(impath, fn);
+        });
+        function getFileName(str) {
+            return str.substring(str.lastIndexOf('/') + 1);
+        }
+    </script>
+}
+
+<style type="text/css">
+    #main {
+        background: #edeff4;
+    }
+
+    .my-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
+    }
+
+    .my-card {
+        height: 200px;
+        width: 200px;
+    }
+
+    #the-canvas {
+        direction: ltr;
+        max-width: 300px;
+    }
+
+    .modal-dialog {
+        position: relative;
+        display: table; /* This is important */
+        overflow-y: auto;
+        overflow-x: auto;
+        width: auto;
+        min-width: 500px;
+    }
+
+    .rule {
+        height: 4px;
+        background: #bbbbbb;
+    }
+
+        .rule:before, .rule:after {
+            content: '';
+            height: 40px;
+            width: 40px;
+            border-radius: 25px;
+            float: left;
+            background: #bbbbbb;
+            margin-top: -20px;
+        }
+
+        .rule:after {
+            float: right;
+        }
+
+    .erc-text-dark-blue {
+        color: #3a4360;
+    }
+
+    #msform .action-button-approve {
+        width: 100px;
+        border: 0;
+        border-radius: 5px;
+        /*       background: #dcfcfc;
+        color: #37b5b5;*/
+    }
+
+    #msform .action-button-decline {
+        width: 100px;
+        border: 0;
+        border-radius: 5px;
+        /*  background: #ffe4e4;
+        color: #ff0000;*/
+    }
+
+    #msform .action-button {
+        width: 200px;
+        background: #5069b1;
+        color: white;
+        border: 0 none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
+
+        #msform .action-button:hover, #msform .action-button:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #5069b1;
+        }
+
+    #msform .action-button-previous {
+        width: 200px;
+        background: #d2d8e9;
+        color: #000;
+        border: 0 none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
+
+        #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #d2d8e9;
+        }
+
+    .rounded {
+        border-radius: 1rem !important;
+    }
+
+    .w-49 {
+        width: 49.5%;
+    }
+
+    body {
+        background: #edeff4 !important;
+        font-family: system-ui;
+        font-size: larger;
+    }
+
+    .erc-text-blue {
+        color: #6f83bc;
+    }
+
+    .label-success {
+        background-color: #5cb85c;
+    }
+
+    .label-default {
+        background-color: #777;
+    }
+
+    .label-danger {
+        background-color: #d9534f;
+    }
+
+    .label {
+        display: inline;
+        padding: 0.2em 0.6em 0.3em;
+        font-size: 18px;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25em;
+    }
+</style>

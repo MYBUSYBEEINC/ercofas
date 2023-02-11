@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "One Time Password (OTP)";
+}
+
+@Html.Partial("~/Views/Shared/_Notification.cshtml")
+
+<header id="masthead" class="table header-full text-white">
+    <div id="companyInfo" class="row-header">
+        <div id="logo" class="cell p-2">
+            <img src="~/Assets/logo/93x93.png">
+        </div>
+        <div id="brand" class="cell col70">
+            <div>Republic of the Philippines</div>
+            <div><h3>ENERGY REGULATORY COMMISSION</h3></div>
+        </div>
+    </div>
+</header>
+
+<section>
+    <div class="container-fluid" id="grad1">
+        <div class="row justify-content-center">
+            <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center">
+                <div class="card mt-3 border-0">
+                    <div class="row p-4 rounded">
+                        <div class="col-md-12 mx-0">
+                            <img class="otp-image mb-5" height="200" src="~/Assets/otp.png" alt="OTP">
+                            <div class="prompt mb-2">
+                                An OTP (One Time Password) has been sent to <strong>@ViewBag.MobileNumber</strong>. Please enter the OTP in the field below to validate your mobile number.
+                            </div>
+                            @using (Html.BeginForm("ValidateOTP", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "otp-form", @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="digit-group text-center" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+                                    <input type="text" id="digit-1" name="digit-1" data-next="digit-2" class="rounded" />
+                                    <input type="text" id="digit-2" name="digit-2" data-next="digit-3" class="rounded" data-previous="digit-1" />
+                                    <input type="text" id="digit-3" name="digit-3" data-next="digit-4" class="rounded" data-previous="digit-2" />
+                                    <span class="splitter">&ndash;</span>
+                                    <input type="text" id="digit-4" name="digit-4" data-next="digit-5" class="rounded" data-previous="digit-3" />
+                                    <input type="text" id="digit-5" name="digit-5" data-next="digit-6" class="rounded" data-previous="digit-4" />
+                                    <input type="text" id="digit-6" name="digit-6" data-previous="digit-5" class="rounded" />
+                                </div>
+                                <button type="submit" class="btn color-white hover-color-white hover-boxshadow validate-btn hover-moveup mt-4">
+                                    <i class="fa fa-check-circle"></i> Validate
+                                </button>
+                            }
+                            <p class="text-muted text-center mt-3">
+                                Didn't receive code?
+                                @Html.ActionLink("Request again", "RequestOTP", "Account", new { id = "123", @class = "req-again" }, null)
+                            </p>
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.digit-group').find('input').each(function () {
+                $(this).attr('maxlength', 1);
+                $(this).on('keyup', function (e) {
+                    var parent = $($(this).parent());
+
+                    if (e.keyCode === 8 || e.keyCode === 37) {
+                        var prev = parent.find('input#' + $(this).data('previous'));
+
+                        if (prev.length) {
+                            $(prev).select();
+                        }
+                    } else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+                        var next = parent.find('input#' + $(this).data('next'));
+
+                        if (next.length) {
+                            $(next).select();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+<style type="text/css">
+    main.position-relative {
+        width: 100%;
+    }
+
+    body, #top-navigation.scrolled {
+        background: #edeff4 !important;
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 0;
+    }
+
+    #masthead {
+        border-collapse: collapse;
+    }
+
+    .table {
+        display: table;
+    }
+
+    .row-header {
+        display: table-row;
+    }
+
+    .cell {
+        width: 1%;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .col70 {
+        width: 70%;
+    }
+
+    .col30 {
+        width: 30%;
+    }
+
+    #logo img {
+        display: block;
+    }
+
+    .header-full {
+        background: #2c3655;
+    }
+
+    .otp-image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+
+    input {
+        width: 80px;
+        height: 80px;
+        background-color: #5069b1;
+        border: none;
+        line-height: 50px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 400;
+        color: white;
+        margin: 0 2px;
+    }
+
+
+    .splitter {
+        padding: 0 5px;
+        color: #5069b1;
+        font-size: 24px;
+    }
+
+    .prompt {
+        font-size: 15px;
+        text-align: center;
+        font-weight: 400;
+    }
+
+    .validate-btn {
+        background-color: #2c3655 !important;
+        width: 270px !important;
+    }
+</style>

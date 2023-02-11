@@ -1,0 +1,54 @@
+﻿@model NetStarter.Models.PreRegistrationViewModel
+@using NetStarter.CustomHelper
+@using NetStarter.Resources
+@{
+    if (string.IsNullOrEmpty(Model.Id))
+    {
+        ViewBag.Title = "Pre-Register Approve";
+    }
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div style="--bs-breadcrumb-divider: '>';">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item fw-normal">
+                    <a class="color-primarycolor opacity-50" href="@Url.Action("index")">Pre-Registration</a>
+                </li>
+                @if (!string.IsNullOrEmpty(Model.Id))
+                {
+                    <li class="breadcrumb-item fw-normal"><a class="color-primarycolor opacity-50" href="@Url.Action("viewrecord", new { Id = Model.Id})">View Pre-Registration</a></li>
+                }
+                <li class="breadcrumb-item fw-normal active">@ViewBag.Title</li>
+            </ol>
+        </div>
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between pt-2">
+            <h4 class="pagetitle mb-sm-0 fw600">@ViewBag.Title</h4>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Approve", "PreRegistration", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
+{
+    @class = "form-horizontal",
+    role = "form",
+    enctype = "multipart/form-data"
+}))
+{
+    <section class="section mt-3">
+        <div class="bg-white rounded p-3 p-lg-4 p-xl-5 shadow">
+            <div class="row">
+                <div class="mb-3 text-break">
+                    Are you sure you want to Approve this application?
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <a type="button" class="btn btn-p8 bg-light hover-boxshadow me-1" href="@Url.Action("viewrecord")">@Resource.BackToList</a>
+                    <button type="submit" class="addnewbtn btn btn-p8 hover-boxshadow hover-bg-primarycolor">@Resource.Approve</button>
+            </div>
+        </div>
+    </section>
+}

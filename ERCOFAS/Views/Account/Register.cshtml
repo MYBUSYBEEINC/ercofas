@@ -1,0 +1,905 @@
+﻿@model NetStarter.Models.PreRegistrationViewModel
+@using NetStarter.CustomHelper
+@using NetStarter.Resources
+@{
+    ViewBag.Title = "ERC Request for Email Registration (RER)";
+}
+
+@Html.Partial("~/Views/Shared/_Notification.cshtml")
+@Html.Partial("~/Views/Shared/_DialogPrompt.cshtml")
+
+<header id="masthead" class="table header-full text-white">
+    <div id="companyInfo" class="row-header">
+        <div id="logo" class="cell p-2">
+            <img src="~/Assets/logo/93x93.png">
+        </div>
+        <div id="brand" class="cell col70">
+            <div>Republic of the Philippines</div>
+            <div><h3>ENERGY REGULATORY COMMISSION</h3></div>
+        </div>
+    </div>
+</header>
+
+<section>
+    <div class="container-fluid" id="grad1">
+        <div class="row justify-content-center mt-0">
+            <div class="col-11 col-sm-9 col-md-7 col-lg-8 text-center p-0 mt-3 mb-2">
+                <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                    <div class="row p-5 rounded">
+                        <h2 class="fw600 text-capitalizetitle-lg text-center mb-5">ERC Request for Email Registration (RER)</h2>
+                        <div class="col-md-12 mx-0">
+                            @using (Html.BeginForm("PreRegister", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
+                            {
+                                @id = "msform",
+                                role = "form",
+                                enctype = "multipart/form-data"
+                            }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <ul id="progressbar">
+                                    <li class="active mb-5" id="account"><img src="~/Assets/type.png" class="reg-icon"><br />Type of RER<br /><svg id="account-svg" class="ProgressBar-icon"></svg></li>
+                                    <li id="class"><img src="~/Assets/class.png" class="reg-icon"><br />Classification of RER<br /><svg id="class-svg" class="ProgressBar-icon"></svg></li>
+                                    <li id="personal"><img src="~/Assets/form.png" class="reg-icon"><br />Form<br /><svg id="personal-svg" class="ProgressBar-icon"></svg></li>
+                                    <li id="payment"><img src="~/Assets/send files.png" class="reg-icon"><br />Upload Files<br /><svg id="payment-svg" class="ProgressBar-icon"></svg></li>
+                                    <li id="confirm"><img src="~/Assets/verification process.png" class="reg-icon"><br />Verification Process<br /><svg id="confirm-svg" class="ProgressBar-icon"></svg></li>
+                                </ul>
+
+                                <fieldset>
+                                    <div class="form-card rounded">
+                                        <h4 class="text-dark">Step 1 - Type of RER</h4>
+                                        <p>By clicking "Next", you consent to the collection, generation, use, processing, storage and retention of your data</p>
+
+                                        <h5 class="mt-5 mb-3">Type of RER</h5>
+                                        <div class="form-check">
+                                            <label for="@Model.RERTypeId" class="text-dark">
+                                                @Html.RadioButtonFor(m => m.RERTypeId, "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9", new { @id = "individual", @checked = "checked" })
+                                                Individual (Consumers)
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label for="@Model.RERTypeId" class="text-dark">
+                                                @Html.RadioButtonFor(m => m.RERTypeId, "AE2DCD91-DACC-4C75-A2A3-51644ABE69BB", new { @id = "juridical-entity" })
+                                                Juridical Entity (DU, Transco, GenCo, RES, QTP, Counsel, Gov't Agency)
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <input type="button" name="next" class="next action-button rounded" value="Next" />
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-card rounded">
+                                        <h4 class="text-dark">Step 2 - Classification of RER for Juridical Entity</h4>
+                                        <h5 class="mt-5 mb-3">Classification of RER</h5>
+                                        <p id="rer-classification-required" class="required-fields text-danger">Please select a classification of RER to proceed.</p>
+                                        @foreach (var item in Model.RERClassifications)
+                                        {
+                                            <div class="form-check">
+                                                <label for="@Model.RERClassificationId" class="text-dark">
+                                                    @Html.RadioButtonFor(model => model.RERClassificationId, item.Id, new { @id = "rer-classification" })
+                                                    @item.Code - @item.DisplayName
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                    <input type="button" name="previous" class="previous action-button-previous rounded" value="Back" />
+                                    <input type="button" name="next" data-step="rer-classification" class="next action-button rounded" value="Next" />
+                                </fieldset>
+                                <fieldset>
+                                    <div id="juridical-form" class="form-card rounded">
+                                        <h4 class="text-dark">Step 3 - Juridical Entity Form</h4>
+                                        <p>For application representing companies and organizations</p>
+                                        <p>Juridical Entity Requirements:</p>
+                                        <p>The RER must be accompanied by a Certification of Authorization containing the following:</p>
+                                        <ol>
+                                            <li>Designated address to be used</li>
+                                            <li>Two(2) designated mobile numbers that the ERC's personnel can contact during work hours</li>
+                                            <li>The name of the two(2) dedicated liason officers that will be authorized to manage and operate the designated mobile number and e-mail address</li>
+                                            <li>Copies of the company-issued identification cards(IDs) and/or government-issued IDs of the liason officers who will handle the designated mobile numbers</li>
+                                        </ol>
+                                        <p class="mb-5">reminder: Kindly reflect here the information as stated in your submitted Authorization/Certification</p>
+                                        <p id="juridical-required-fields" class="required-fields text-danger">Please fill-out required fields below marked with red asterisk ( <strong>*</strong> )</p>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.JuridicalEntityName, htmlAttributes: new { @class = "text-dark required" })
+                                            @Html.EditorFor(model => model.JuridicalEntityName, new { htmlAttributes = new { id = "juridical-entity-name", @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.JuridicalEntityName, "", new { @class = "invalid-message" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.OfficeAddress, htmlAttributes: new { @class = "text-dark required" })
+                                            @Html.EditorFor(model => model.OfficeAddress, new { htmlAttributes = new { id = "office-address", @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.OfficeAddress, "", new { @class = "invalid-message" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.OfficeTelephone, htmlAttributes: new { @class = "text-dark" })
+                                            @Html.EditorFor(model => model.OfficeTelephone, new { htmlAttributes = new { id = "office-telephone", @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.OfficeTelephone, "", new { @class = "invalid-message" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.EmailAddress1, htmlAttributes: new { @class = "text-dark required" })<br />
+                                            <small class="form-text text-muted">@Resource.DesignatedEmailAddress1</small><br />
+                                            <small id="juridical-invalid-email1" class="form-text text-muted invalid-message"></small>
+                                            @Html.EditorFor(model => model.EmailAddress1, new { htmlAttributes = new { id = "email-address1", @class = "form-control" } })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.EmailAddress2, htmlAttributes: new { @class = "text-dark required" })<br />
+                                            <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
+                                            <small id="juridical-invalid-email2" class="form-text text-muted invalid-message"></small>
+                                            @Html.EditorFor(model => model.EmailAddress2, new { htmlAttributes = new { id = "email-address2", @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.EmailAddress2, "", new { @class = "invalid-message" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.EmailAddress3, htmlAttributes: new { @class = "text-dark" })<br />
+                                            <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
+                                            <small id="juridical-invalid-email3" class="form-text text-muted invalid-message"></small>
+                                            @Html.EditorFor(model => model.EmailAddress3, new { htmlAttributes = new { id = "email-address3", @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.EmailAddress3, "", new { @class = "invalid-message" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.EmailAddress4, htmlAttributes: new { @class = "text-dark" })<br />
+                                            <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
+                                            <small id="juridical-invalid-email4" class="form-text text-muted invalid-message"></small>
+                                            @Html.EditorFor(model => model.EmailAddress4, new { htmlAttributes = new { id = "email-address4", @class = "form-control" } })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.EmailAddress5, htmlAttributes: new { @class = "text-dark" })<br />
+                                            <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
+                                            <small id="juridical-invalid-email5" class="form-text text-muted invalid-message"></small>
+                                            @Html.EditorFor(model => model.EmailAddress5, new { htmlAttributes = new { id = "email-address5", @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.EmailAddress5, "", new { @class = "invalid-message" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MobileNumber1, htmlAttributes: new { @class = "text-dark required" })<br />
+                                            <small class="form-text text-muted">@Resource.DesignatedMobileNumber1Info</small>
+                                            @Html.EditorFor(model => model.MobileNumber1, new { htmlAttributes = new { id = "mobile-number1", @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.MobileNumber1, "", new { @class = "invalid-message" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MobileNumber2, htmlAttributes: new { @class = "text-dark required" })<br />
+                                            <small class="form-text text-muted">@Resource.DesignatedMobileNumber2Info</small>
+                                            @Html.EditorFor(model => model.MobileNumber2, new { htmlAttributes = new { id = "mobile-number2", @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.MobileNumber2, "", new { @class = "invalid-message" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.LiaisonOfficer1, htmlAttributes: new { @class = "text-dark required" })<br />
+                                            <small class="form-text text-muted">@Resource.DedicatedLiasonInfo</small>
+                                            @Html.EditorFor(model => model.LiaisonOfficer1, new { htmlAttributes = new { id = "dedicated-liason1", @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.LiaisonOfficer1, "", new { @class = "invalid-message" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.LiaisonOfficer2, htmlAttributes: new { @class = "text-dark required" })<br />
+                                            <small class="form-text text-muted">@Resource.DedicatedLiasonInfo</small>
+                                            @Html.EditorFor(model => model.LiaisonOfficer2, new { htmlAttributes = new { id = "dedicated-liason2", @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.LiaisonOfficer2, "", new { @class = "invalid-message" })
+                                        </div>
+                                    </div>
+                                    <div id="individual-form" class="form-card rounded">
+                                        <h4 class="text-dark">Step 2 - Individual Person Form</h4>
+                                        <p>Requirements for Request for Email Registration (Individual):</p>
+                                        <ol class="mb-5">
+                                            <li>Valid Email Address</li>
+                                            <li>Working Mobile Phone number</li>
+                                            <li>
+                                                Philsys ID or any Government ID
+                                                <a id="goverment-id-help" href="#">
+                                                    <i class="fa-solid fa-question-circle color-primarycolor hover-color-secondarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="Help"></i>
+                                                </a>
+                                            </li>
+                                        </ol>
+                                        <p id="individual-required-fields" class="required-fields text-danger">Please fill-out required fields below marked with red asterisk ( <strong>*</strong> )</p>
+                                        <div class="row">
+                                            <div class="mb-3 text-break w-50 text-dark">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "form-label fw600 required" })
+                                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { id = "individual-firstname", @class = "form-control" } })
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 text-break w-50 text-dark">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "form-label fw600 required" })
+                                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { id = "individual-lastname", @class = "form-control" } })
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 text-break w-50 text-dark">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "form-label" })
+                                                    @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { id = "individual-middlename", @class = "form-control" } })
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 text-break w-50 text-dark">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "form-label fw600 required" })<br />
+                                                    @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { id = "individual-emailaddress", @class = "form-control" } })
+                                                    <small id="individual-invalid-email" class="form-text text-muted invalid-message"></small>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 text-break text-dark">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.MobileNumber, htmlAttributes: new { @class = "form-label fw600 required" })
+                                                    <div class="row">
+                                                        <div class="col-5">
+                                                            @Html.DropDownList("CountryCode", Model.CountrySelectList, new { @class = "form-control" })
+                                                        </div>
+                                                        <div class="col-7">
+                                                            @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { id = "individual-mobilenumber", @class = "form-control", @placeholder = "Mobile number without the country code" } })
+                                                        </div>
+                                                        @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "invalid-message" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="button" name="previous" class="previous action-button-previous rounded" value="Back" />
+                                    <input type="button" name="next" data-step="individual-juridical-form" class="next action-button rounded" value="Next" />
+                                </fieldset>
+                                <fieldset>
+                                    <div id="requirements" class="form-card rounded">
+                                        <h4 id="upload-files-header" class="text-dark">Step 3 - Upload Files</h4>
+                                        <h5 class="mt-5 text-dark">Upload Documents</h5>
+                                        <p class="mb-2">Upload image, word or pdf file.</p>
+                                        @foreach (var item in Model.RequiredDocuments)
+                                        {
+                                            <div class="mb-3 text-break text-dark @item.RERType">
+                                                <div class="form-group">
+                                                    <small class="form-text text-muted">
+                                                        Attach <strong>@item.Name</strong> here.
+                                                    </small>
+                                                    <div class="clear"></div>
+                                                    @Html.TextBoxFor(m => m.File, new { @id = item.Id, @class = "form-control", type = "file" })
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <input type="button" name="previous" class="previous action-button-previous rounded" value="Back" />
+                                    <input type="button" name="next" class="next action-button rounded" value="Next" />
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-card rounded">
+                                        <h2 class="fs-title text-center">Thank you!</h2>
+                                        <br><br>
+                                        <div class="row justify-content-center">
+                                            <p class="text-center">
+                                                Thank you for your submission, you will now proceed to the verification process<br />
+                                                Please check your email for an email verification link
+                                            </p>
+                                            <p class="text-center">Please ensure that you have completely read and understood the instructions before you click "Register"</p>
+                                        </div>
+                                    </div>
+                                    <input type="button" name="previous" class="previous action-button-previous rounded" value="Back" />
+                                    <input type="submit" name="submit" class="next action-button rounded" value="Register" />
+                                </fieldset>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#requirements .Individual').show();
+            $('#requirements .JuridicalEntity').hide();
+
+            $('#goverment-id-help').click(function (e) {
+                e.preventDefault();
+
+                $('#goverment-identification-help-modal').modal('toggle');
+            });
+
+            $('input[type="radio"]').click(function () {
+                if ($(this).attr('id') == 'juridical-entity') {
+                    $('#rer-class-box').show();
+                    $('#class').show();
+                    $('#requirements .JuridicalEntity').show();
+                    $('#requirements .Individual').hide();
+                    document.getElementById("upload-files-header").innerHTML = "Step 4 - Upload Files";
+                    document.getElementById("personal").innerHTML = "<img src='/Assets/form.png' class='reg-icon'><br />Juridical Entity Form<br /><svg class='ProgressBar-icon'></svg>";
+                    document.getElementById("individual-form").style.display = "none";
+                    document.getElementById("juridical-form").style.display = "block";
+                    document.getElementById("account").style.width = "20%";
+                    document.getElementById("class").style.width = "20%";
+                    document.getElementById("personal").style.width = "20%";
+                    document.getElementById("payment").style.width = "20%";
+                    document.getElementById("confirm").style.width = "20%";
+                } else if ($(this).attr('id') == 'individual') {
+                    $('#rer-class-box').hide();
+                    $('#class').hide();
+                    $('#requirements .Individual').show();
+                    $('#requirements .JuridicalEntity').hide();
+                    document.getElementById("upload-files-header").innerHTML = "Step 3 - Upload Files";
+                    document.getElementById("personal").innerHTML = "<img src='/Assets/form.png' class='reg-icon'><br />Individual Person Form<br /><svg class='ProgressBar-icon'></svg>";
+                    document.getElementById("juridical-form").style.display = "none";
+                    document.getElementById("individual-form").style.display = "block";
+                    document.getElementById("account").style.width = "25%";
+                    document.getElementById("personal").style.width = "25%";
+                    document.getElementById("payment").style.width = "25%";
+                    document.getElementById("confirm").style.width = "25%";
+                }
+            });
+
+            if (document.getElementById('juridical-entity').checked) {
+                document.getElementById("upload-files-header").innerHTML = "Step 4 - Upload Files";
+                document.getElementById("personal").innerHTML = "<img src='/Assets/form.png' class='reg-icon'><br />Juridical Entity Form<br /><svg class='ProgressBar-icon'></svg>";
+                document.getElementById("individual-form").style.display = "none";
+                document.getElementById("juridical-form").style.display = "block";
+            } else if (document.getElementById('individual').checked) {
+                document.getElementById("upload-files-header").innerHTML = "Step 3 - Upload Files";
+                document.getElementById("personal").innerHTML = "<img src='/Assets/form.png' class='reg-icon'><br />Individual Person Form<br /><svg class='ProgressBar-icon'></svg>";
+                document.getElementById("juridical-form").style.display = "none";
+                document.getElementById("individual-form").style.display = "block";
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        function isValidIndividualForm() {
+            if ($('#individual-firstname').val().trim().length === 0) {
+                return false;
+            }
+            if ($('#individual-lastname').val().trim().length === 0) {
+                return false;
+            }
+            if ($('#individual-emailaddress').val().trim().length === 0) {
+                return false;
+            }
+            if ($('#individual-mobilenumber').val().trim().length === 0) {
+                return false;
+            }
+            return true;
+        }
+
+        function isValidJuridicalForm() {
+            if ($('#juridical-entity-name').val().trim().length === 0) {
+                return false;
+            }
+            if ($('#office-address').val().trim().length === 0) {
+                return false;
+            }
+            if ($('#email-address1').val().trim().length === 0) {
+                return false;
+            }
+            if ($('#email-address2').val().trim().length === 0) {
+                return false;
+            }
+            if ($('#mobile-number1').val().trim().length === 0) {
+                return false;
+            }
+            if ($('#mobile-number2').val().trim().length === 0) {
+                return false;
+            }
+            if ($('#dedicated-liason1').val().trim().length === 0) {
+                return false;
+            }
+            if ($('#dedicated-liason2').val().trim().length === 0) {
+                return false;
+            }
+            return true;
+        }
+
+        function isValidEmailAddress(emailAddress) {
+            var expression = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            if (!expression.test(emailAddress)) {
+                return false;
+            }
+            return true;
+        }
+
+        function hasSelectedRERClassification() {
+            if (!$("input[name='RERClassificationId']:checked").val()) {
+                return false;
+            }
+            return true;
+        }
+
+        function scrollToDiv(divId) {
+            $('html, body').animate({
+                scrollTop: $(`#${divId}`).offset().top
+            }, 100);
+        }
+
+        $(document).ready(function () {
+            var current_fs, next_fs, previous_fs; //fieldsets
+            var opacity;
+
+            $('#individual-invalid-email').hide();
+            $('#individual-required-fields').hide();
+            $('#rer-classification-required').hide();
+            $('#juridical-required-fields').hide();
+            $('#juridical-invalid-email1').hide();
+            $('#juridical-invalid-email2').hide();
+            $('#juridical-invalid-email3').hide();
+            $('#juridical-invalid-email4').hide();
+            $('#juridical-invalid-email5').hide();
+
+            $('#individual-mobilenumber, #mobile-number1, #mobile-number2').keypress(function (e) {
+                var charCode = (e.which) ? e.which : event.keyCode
+                if (String.fromCharCode(charCode).match(/[^0-9]/g))
+                    return false;
+            });
+
+            $(".next").click(function () {
+                var step = $(this).attr('data-step');
+                if (typeof step !== 'undefined') {
+                    if (step === 'rer-classification') {
+                        if (!hasSelectedRERClassification()) {
+                            $('#rer-classification-required').show();
+                            return;
+                        } else {
+                            $('#rer-classification-required').hide();
+                        }
+                    } else if (step === 'individual-juridical-form') {
+                        if (!$("#juridical-form").is(":visible")) {
+                            if (!isValidIndividualForm()) {
+                                $('#individual-required-fields').show();
+                                scrollToDiv('individual-form');
+                                return;
+                            } else {
+                                $('#individual-required-fields').hide();
+                            }
+
+                            if (!isValidEmailAddress($('#individual-emailaddress').val())) {
+                                $('#individual-invalid-email').html(`<strong>${$('#individual-emailaddress').val()}</strong> is not a valid email address.`);
+                                $('#individual-invalid-email').show();
+                                return;
+                            } else {
+                                $('#individual-invalid-email').hide();
+                            }
+                        } else {
+                            if (!isValidJuridicalForm()) {
+                                $('#juridical-required-fields').show();
+                                scrollToDiv('juridical-form');
+                                return;
+                            }
+
+                            if (!isValidEmailAddress($('#email-address1').val())) {
+                                $('#juridical-invalid-email1').html(`<strong>${$('#email-address1').val()}</strong> is not a valid email address.`);
+                                $('#juridical-invalid-email1').show();
+                                scrollToDiv('juridical-entity-name');
+                                return;
+                            } else {
+                                $('#juridical-invalid-email1').hide();
+                            }
+
+                            if (!isValidEmailAddress($('#email-address2').val())) {
+                                $('#juridical-invalid-email2').html(`<strong>${$('#email-address2').val()}</strong> is not a valid email address.`);
+                                $('#juridical-invalid-email2').show();
+                                scrollToDiv('office-address');
+                                return;
+                            } else {
+                                $('#juridical-invalid-email2').hide();
+                            }
+
+                            if (!isValidEmailAddress($('#email-address3').val())) {
+                                $('#juridical-invalid-email3').html(`<strong>${$('#email-address3').val()}</strong> is not a valid email address.`);
+                                $('#juridical-invalid-email3').show();
+                                scrollToDiv('office-address');
+                                return;
+                            } else {
+                                $('#juridical-invalid-email3').hide();
+                            }
+
+                            if (!isValidEmailAddress($('#email-address4').val())) {
+                                $('#juridical-invalid-email4').html(`<strong>${$('#email-address4').val()}</strong> is not a valid email address.`);
+                                $('#juridical-invalid-email4').show();
+                                scrollToDiv('office-address');
+                                return;
+                            } else {
+                                $('#juridical-invalid-email4').hide();
+                            }
+
+                            if (!isValidEmailAddress($('#email-address5').val())) {
+                                $('#juridical-invalid-email5').html(`<strong>${$('#email-address5').val()}</strong> is not a valid email address.`);
+                                $('#juridical-invalid-email5').show();
+                                scrollToDiv('email-address1');
+                                return;
+                            } else {
+                                $('#juridical-invalid-email5').hide();
+                            }
+                        }
+                    }
+                }
+
+                current_fs = $(this).parent();
+                next_fs = $(this).parent().next();
+
+                if ($(this).parent().find('.form-check input:checked').val() == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9") {
+                    next_fs = $(this).parent().next().next();
+                } else {
+                    next_fs = $(this).parent().next();
+                }
+
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                next_fs.show();
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        next_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 600
+                });
+            });
+
+            $(".previous").click(function () {
+
+                current_fs = $(this).parent();
+                previous_fs = $(this).parent().prev();
+
+                if ($(this).parent().prev().prev().find('.form-check input:checked').val() == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9") {
+                    previous_fs = $(this).parent().prev().prev();
+                } else {
+                    previous_fs = $(this).parent().prev();
+                }
+
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                previous_fs.show();
+
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        previous_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 600
+                });
+            });
+            $('.radio-group .radio').click(function () {
+                $(this).parent().find('.radio').removeClass('selected');
+                $(this).addClass('selected');
+            });
+            $(".submit").click(function () {
+                return false;
+            })
+        });
+    </script>
+}
+
+<style type="text/css">
+    .required-fields {
+        color: red !important;
+        font-style: italic;
+    }
+
+    .invalid-message {
+        position: absolute;
+        margin-top: -20px;
+    }
+
+    .reg-icon {
+        height: 40px;
+        margin-bottom: 5px;
+    }
+
+    .text-box, input[type=text] {
+        border: 1px solid #dee2e6 !important;
+        border-radius: 0.25rem !important;
+    }
+
+    .upload-btn {
+        background: #B38B64;
+    }
+
+    body, #top-navigation.scrolled {
+        background: #edeff4 !important;
+        font-family: system-ui;
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 0;
+    }
+
+    #masthead {
+        border-collapse: collapse;
+    }
+
+    .table {
+        display: table;
+    }
+
+    .row-header {
+        display: table-row;
+    }
+
+    .cell {
+        width: 1%;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .col70 {
+        width: 70%;
+    }
+
+    .col30 {
+        width: 30%;
+    }
+
+    #logo img {
+        display: block;
+    }
+
+    .header-full {
+        background: #2c3655;
+    }
+
+    .btn-primary:focus {
+        box-shadow: none;
+    }
+
+    .text-erc-blue, i.fa-solid.fa-plus {
+        color: #5069b1 !important;
+    }
+
+    .form-check {
+        margin-bottom: 0.5rem;
+    }
+
+    input#government-agencies {
+        vertical-align: bottom;
+    }
+
+    #class {
+        display: none;
+    }
+
+    #individual, #juridical-entity, #distribution-utilites, #transmition-utility, #generation-companies, #retail-electricity-suppliers,
+    #qualified-third-parties, #government-agencies, #counsel-on-record, #entry-of-appearance, #all-persons, #others, #juridical-entity-form {
+        width: 20px !important;
+    }
+
+    /* slider */
+
+    .ProgressBar-icon {
+        width: 1.5em;
+        height: 1.5em;
+        background-color: #499bb3;
+        fill: $gray;
+        border-radius: 50%;
+        padding: 0.5em;
+        max-width: 100%;
+        z-index: 10;
+        position: relative;
+        transition: all .25s ease-out;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    #msform {
+        text-align: center;
+        position: relative;
+        margin-top: 20px;
+    }
+
+    #msform fieldset .form-card {
+        background: white;
+        border: 0 none;
+        border-radius: 0px;
+        /* box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2); */
+        padding: 20px 40px 30px 40px;
+        box-sizing: border-box;
+        width: 94%;
+        margin: 0 3% 20px 3%;
+        position: relative;
+    }
+
+    #msform fieldset {
+        background: white;
+        border: 0 none;
+        border-radius: 0.5rem;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+        padding-bottom: 20px;
+        position: relative;
+    }
+
+    #msform fieldset:not(:first-of-type) {
+        display: none;
+    }
+
+    #msform fieldset .form-card {
+        text-align: left;
+        color: #9E9E9E;
+    }
+
+    #msform input[type=text] {
+        height: 35px;
+    }
+
+    #msform input, #msform textarea {
+        padding: 0px 8px 4px 8px;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        border-radius: 0px;
+        margin-bottom: 20px;
+        margin-top: 2px;
+        /* width: 100%;*/
+        box-sizing: border-box;
+        color: #2C3E50;
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    #msform input:focus, #msform textarea:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: none;
+        font-weight: bold;
+        border-bottom: 2px solid #5069b1;
+        outline-width: 0;
+    }
+
+    #msform .action-button {
+        width: 100px;
+        background: #5069b1;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
+
+    #msform .action-button:hover, #msform .action-button:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px #5069b1;
+    }
+
+    #msform .action-button-previous {
+        width: 100px;
+        background: #d2d8e9;
+        color: #fff;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
+
+    #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px #616161;
+    }
+
+    select.list-dt {
+        border: none;
+        outline: 0;
+        border-bottom: 1px solid #ccc;
+        padding: 2px 5px 3px 5px;
+        margin: 2px;
+    }
+
+    select.list-dt:focus {
+        border-bottom: 2px solid #5069b1;
+    }
+
+    select {
+        appearance: auto !important;
+    }
+
+    .card {
+        z-index: 0;
+        border: none;
+        border-radius: 0.5rem;
+        position: relative;
+    }
+
+    .fs-title {
+        font-size: 25px;
+        color: #2C3E50;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey;
+        padding: 0;
+    }
+
+        #progressbar .active {
+            color: #000000;
+        }
+
+        #progressbar li {
+            list-style-type: none;
+            font-size: 12px;
+            width: 25%;
+            float: left;
+            position: relative;
+        }
+
+        #progressbar #account:before {
+            height: 25px;
+            width: 25px;
+            background-color: #499bb3;
+            border-radius: 50%;
+        }
+
+        #progressbar #class:before {
+        }
+
+        #progressbar #personal:before {
+        }
+
+        #progressbar #payment:before {
+        }
+
+        #progressbar #confirm:before {
+        }
+
+        #progressbar li:before {
+            width: 50px;
+            height: 50px;
+            line-height: 45px;
+            display: block;
+            font-size: 18px;
+            color: #ffffff;
+            background: lightgray;
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            padding: 2px;
+        }
+
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: lightgray;
+            position: absolute;
+            left: 0;
+            top: 74px;
+            z-index: -1;
+            color: #499bb3;
+        }
+
+        #progressbar li.active:before, #progressbar li.active:after {
+            background: #499bb3;
+        }
+
+    .radio-group {
+        position: relative;
+        margin-bottom: 25px;
+    }
+
+    .radio {
+        display: inline-block;
+        border-radius: 0;
+        background: #5069b1;
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        cursor: pointer;
+        margin: 8px 2px;
+    }
+
+        .radio:hover {
+            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .radio.selected {
+            box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
+        }
+
+    .fit-image {
+        width: 100%;
+        object-fit: cover;
+    }
+</style>

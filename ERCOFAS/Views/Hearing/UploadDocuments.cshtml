@@ -1,0 +1,206 @@
+﻿@model NetStarter.Models.HearingDocumentsViewModel
+@using NetStarter.CustomHelper
+@using NetStarter.Resources
+@{
+    ViewBag.Title = "Upload Document";
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div style="--bs-breadcrumb-divider: '>';">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item fw-normal">
+                    <a class="color-primarycolor opacity-50" href="@Url.Action("index")">Hearing</a>
+                </li>
+                <li class="breadcrumb-item fw-normal active">@ViewBag.Title</li>
+            </ol>
+        </div>
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between pt-2">
+            <h4 class="pagetitle mb-sm-0 fw600">@ViewBag.Title</h4>
+        </div>
+    </div>
+</div>
+
+<section class="section mt-3">
+
+    <div class="bg-white rounded p-3 p-lg-4 p-xl-5 shadow">
+        @using (Html.BeginForm("UploadDocument", "Hearing", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(model => model.HearingId)
+            <div class="alert alert-danger alert-dismissible pb-2" style="display:none;" id="validation-msg"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        <label class="form-label fw600">Promulgation of IO/NVH</label>
+                        @Html.TextBoxFor(model => model.Files, "", new { @type = "file", @multiple = "multiple", @class = "form-control document-promulgation" })
+                        <div class="pt-2 small"><a id="remove-file-link-promulgation" class="cursor-pointer color-primarycolor hover-color-secondarycolor small">@Resource.Removeselectedfile</a></div>
+                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "invalid-message" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        <button class="btn btn-success btn-sm upload-document-promulgation" style="background-color: #28a745; border-color: #28a745; color: #fff;" disabled type="submit">
+                            <i class="fa fa-upload"></i> Upload
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        <label class="form-label fw600">Hearing Documents</label>
+                        @Html.TextBoxFor(model => model.HearingFiles, "", new { @type = "file", @multiple = "multiple", @class = "form-control document-hearing" })
+                        <div class="pt-2 small"><a id="remove-file-link-hearing" class="cursor-pointer color-primarycolor hover-color-secondarycolor small">@Resource.Removeselectedfile</a></div>
+                        @Html.ValidationMessageFor(model => model.HearingFiles, "", new { @class = "invalid-message" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        <button class="btn btn-success btn-sm upload-document-hearing" style="background-color: #28a745; border-color: #28a745; color: #fff;" disabled type="submit">
+                            <i class="fa fa-upload"></i> Upload
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm("AssignPersonnel", "Hearing", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(model => model.HearingId)
+            <div class="row">
+                <h6 style="color: blue;">Select Key Personnel</h6>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        @Html.LabelFor(model => model.Personnel, htmlAttributes: new { @class = "form-label required fw600" })
+                        @CustomHelper.CustomDropDownList("Personnel", Model.PersonnelSelectList)
+                        @Html.ValidationMessageFor(model => model.Personnel, "", new { @class = "invalid-message" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3 text-break">
+                        <label class="form-label fw600" style="color: #fff;">Personnel</label>
+                        <br />
+                        <button class="btn btn-info btn-md assign-btn" disabled type="submit">
+                            <i class="fa fa-user-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <a type="button" class="btn btn-p8 bg-light hover-boxshadow me-1" href="@Url.Action("index")">@Resource.BackToList</a>
+            @if (Model.SystemDefault == false)
+            {
+                <button type="submit" class="addnewbtn btn btn-p8 hover-boxshadow hover-bg-primarycolor">@Resource.Submit</button>
+            }
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function () {
+
+            $(".document-promulgation").change(function () {
+                var result = validateFile('Files', false);
+                if (result != "") {
+                    $(".document-promulgation").val("");
+                    $("#validation-msg").show();
+                    $("#validation-msg").html(result);
+                    $(".upload-document-promulgation").attr("disabled", "disabled");
+                } else {
+                    $("#validation-msg").hide();
+                    $(".upload-document-promulgation").removeAttr("disabled");
+                }
+            });
+
+            $("#remove-file-link-promulgation").click(function () {
+                $(".document-promulgation").val("");
+                $(".upload-document-promulgation").attr("disabled", "disabled");
+            });
+
+            $(".document-hearing").change(function () {
+                var result = validateFile('HearingFiles', false);
+
+                if (result != "") {
+                    $(".document-hearing").val("");
+                    $("#validation-msg").show();
+                    $("#validation-msg").html(result);
+                    $(".upload-document-hearing").attr("disabled", "disabled");
+                } else {
+                    $("#validation-msg").hide();
+                    $(".upload-document-hearing").removeAttr("disabled");
+                }
+            });
+
+            $("#remove-file-link-hearing").click(function () {
+                $(".document-hearing").val("");
+                $(".upload-document-hearing").attr("disabled", "disabled");
+            });
+
+            $(".addnewbtn").click(function () {
+                location.href = "/Hearing/index";
+            });
+
+            $("div.custom-options > span.custom-option").click(function () {
+                var selectedPersonnel = $("#Personnel").val();
+                console.log(selectedPersonnel);
+                if (selectedPersonnel === null || selectedPersonnel === "null")
+                    $(".assign-btn").attr("disabled", "disabled");
+                else
+                    $(".assign-btn").removeAttr("disabled");
+
+            });
+        });
+
+        uploadDocument = function (documentType, formFile) {
+
+            var formData = new FormData();
+            formData.append("formFile", formFile[0]);
+            formData.append("hearingId", $("#id").val());
+            formData.append("documentType", documentType);
+
+            $.ajax({
+                url: '/Hearing/UploadDocument',
+                type: "POST",
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (data) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                    if (data)
+                        $('.hearing-invalid-message').html('Your have been successfully uploaded a document.');
+                    else
+                        $('.hearing-invalid-message').html('Error in uploading a document!');
+
+                },
+                error: function (err) {
+                    console.log("upload file error");
+                },
+                async: true
+            });
+        }
+
+    </script>
+
+}

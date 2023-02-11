@@ -1,0 +1,64 @@
+﻿@model NetStarter.Models.SettingsModel
+
+@using NetStarter.Models;
+@using NetStarter.Resources
+@{
+    ViewBag.Title = "System Settings";
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+    ViewBag.TableIdPrefix = "settings";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="pagetitle mb-sm-0 fw600">@ViewBag.Title</h4>
+        </div>
+    </div>
+</div>
+<div id="@ViewBag.TableIdPrefix">
+    <div class="responsive">
+        <div id="@ViewBag.TableIdPrefix" class="table table-hover align-middle mb-0">
+
+        </div>
+        <div class="spinner d-flex justify-content-center align-items-center text-center color-primarycolor py-5">
+            <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div><strong> &nbsp; @Resource.Loading </strong>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var tableIdPrefix = "@ViewBag.TableIdPrefix";
+
+        $(document).ready(function(){
+            var url = "@(Html.Raw(Url.Action("GetPartialViewSettings", "Settings")))";
+            $("#" + tableIdPrefix).load(url, function(responseTxt, statusTxt, xhr){
+                if (statusTxt == "success") {
+                    hideDummySpinnerHeaderFooter(tableIdPrefix);
+                }
+                if (statusTxt == "error") {
+                    //no record in database
+                    if (xhr.status == 500) {
+                        hideDummySpinnerHeaderFooter(tableIdPrefix);
+                    }
+                }
+              });
+        });
+    </script>
+    <script>
+        function settingstab(evt, tabname) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-pane");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("nav-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabname).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+    </script>
+}

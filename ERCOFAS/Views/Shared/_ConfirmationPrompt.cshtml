@@ -1,0 +1,168 @@
+﻿@using NetStarter.Resources
+<div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pt-4">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body border-0 pb-4">
+                <div class="mt-2 text-center">
+                    <i class="fa-solid fa-trash-can text-delete fs-1"></i>
+                    <div class="mt-3 pt-2 fs-15 mx-4 mx-sm-5">
+                        <h4 class="fs-22 fw600">Are you sure you want to logout?</h4>
+                        <h5 class="fs-20 text-delete"><span id="record-to-delete"></span></h5>
+                        <p class="fs-15 text-muted mx-3 mb-0 pt-1">@Resource.Thiscannotbeundone</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-3">
+                    <button type="button" class="btn small btn-light hover-boxshadow" data-bs-dismiss="modal">@Resource.Close</button>
+                    <button type="button" class="btn small btn-danger hover-boxshadow" id="confirmed-deletebtn">@Resource.YesDeleteIt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pt-4">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body border-0 pb-4">
+                <div class="mt-2 text-center">
+                    <i class="fa-solid fa-trash-can text-delete fs-1"></i>
+                    <div class="mt-3 pt-2 fs-15 mx-4 mx-sm-5">
+                        <h4 class="fs-22 fw600">@Resource.AreyouSureToDeleteThisRecord</h4>
+                        <h5 class="fs-20 text-delete"><span id="record-to-delete"></span></h5>
+                        <p class="fs-15 text-muted mx-3 mb-0 pt-1">@Resource.Thiscannotbeundone</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-3">
+                    <button type="button" class="btn small btn-light hover-boxshadow" data-bs-dismiss="modal">@Resource.Close</button>
+                    <button type="button" class="btn small btn-danger hover-boxshadow" id="confirmed-deletebtn">@Resource.YesDeleteIt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmApproveModal" tabindex="-1" aria-labelledby="confirmApproveModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pt-4">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body border-0 pb-4">
+                <div class="mt-2 text-center">
+                    <i class="fa-solid fa-check-circle text-success fa-5x"></i>
+                    <div class="mt-3 pt-2 fs-15 mx-4 mx-sm-5">
+                        <h4 class="fs-22 fw600"><b>@Resource.AreYouSureToApprove</b></h4>
+                        <h5 class="fs-20 text-success" hidden><span id="record-to-approve"></span></h5>
+                        <p class="fs-15 text-muted mx-3 mb-0 pt-1">@Resource.Thisapprovedregistrationcannotbeundone</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-3">
+                    <button type="button" class="btn small btn-light hover-boxshadow" data-bs-dismiss="modal">@Resource.Cancel</button>
+                    <button type="button" class="btn small btn-success hover-boxshadow" id="confirmed-approvebtn">@Resource.YesApproveIt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmRejectModal" tabindex="-1" aria-labelledby="confirmRejectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pt-4">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body border-0 pb-4">
+                <div class="mt-2 text-center">
+                    <i class="fa-solid fa-trash-can text-delete fa-5x"></i>
+                    <div class="mt-3 pt-2 fs-15 mx-4 mx-sm-5">
+                        <h4 class="fs-22 fw600"><b>@Resource.AreYouSureToReject</b></h4>
+                        <h5 class="fs-20 text-delete" hidden><span id="record-to-reject"></span></h5>
+                        <p class="fs-15 text-muted mx-3 mb-0 pt-1">@Resource.Thisrejectedregistrationcannotbeundone</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-3">
+                    <button type="button" class="btn small btn-light hover-boxshadow" data-bs-dismiss="modal">@Resource.Cancel</button>
+                    <button type="button" class="btn small btn-danger hover-boxshadow" id="confirmed-rejectbtn">@Resource.YesRejectIt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmApproveModal" tabindex="-1" aria-labelledby="confirmApproveModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pt-4">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body border-0 pb-4">
+                <div class="mt-2 text-center">
+                    <i class="fa-solid fa-check-circle text-approve fa-5x"></i>
+                    <div class="mt-3 pt-2 fs-15 mx-4 mx-sm-5">
+                        <h4 class="fs-22 fw600"><b>Are you sure to approve this file?</b></h4>
+                        <h5 class="fs-20 text-delete" hidden><span id="record-to-approve"></span></h5>
+                        <p class="fs-15 text-muted mx-3 mb-0 pt-1">This cannot be changed</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-3">
+                    <button type="button" class="btn small btn-light hover-boxshadow" data-bs-dismiss="modal">@Resource.Cancel</button>
+                    <button type="button" class="btn small btn-danger hover-boxshadow" id="confirmed-approvebtn">@Resource.YesApproveIt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmSubmitModal" tabindex="-1" aria-labelledby="confirmSubmitModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pt-4">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body border-0 pb-4">
+                <div class="mt-2 text-center">
+                    <i class="fa-solid fa-check-circle text-submit fa-5x"></i>
+                    <div class="mt-3 pt-2 fs-15 mx-4 mx-sm-5">
+                        <h4 class="fs-22 fw600"><b>Are you sure to submit this review?</b></h4>
+                        <h5 class="fs-20 text-delete" hidden><span id="record-to-submit"></span></h5>
+                        <p class="fs-15 text-muted mx-3 mb-0 pt-1">This cannot be changed</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-3">
+                    <button type="button" class="btn small btn-light hover-boxshadow" data-bs-dismiss="modal">@Resource.Cancel</button>
+                    <button type="button" class="btn small btn-danger hover-boxshadow" id="confirmed-submitbtn">@Resource.YesApproveIt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmReviewModal" tabindex="-1" aria-labelledby="confirmReviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pt-4">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body border-0 pb-4">
+                <div class="mt-2 text-center">
+                    <i class="fa-solid fa-file-pen text-submit fa-5x"></i>
+                    <div class="mt-3 pt-2 fs-15 mx-4 mx-sm-5">
+                        <h4 class="fs-22 fw600"><b>Are you sure to submit this review?</b></h4>
+                        <h5 class="fs-20 text-approve" hidden><span id="record-to-review"></span></h5>
+                        <p class="fs-15 text-muted mx-3 mb-0 pt-1">This cannot be changed</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-3">
+                    <button type="button" class="btn small btn-light hover-boxshadow" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn small btn-success hover-boxshadow" id="confirmed-reviewbtn">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
