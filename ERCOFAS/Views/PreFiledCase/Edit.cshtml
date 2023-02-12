@@ -1018,17 +1018,17 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="survey" tabindex="-1" aria-labelledby="surveyLabel" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+    <div class="modal fade" id="survey" tabindex="-1" aria-labelledby="surveyLabel" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="surveyLabel">Survey</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" id="btnCloseSurvey" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="surveyBody" class="modal-body">
                     @using (Html.BeginForm("", "PreFiledCase", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
                     {
-                        @class = "form-modal-upload",
+                        @class = "form-modal-survey",
                         role = "form",
                         enctype = "multipart/form-data"
                     }))
@@ -1044,7 +1044,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="addnewbtn submit-survey-content btn btn-p8 hover-boxshadow hover-bg-primarycolor">@Resource.Submit</button>
-                    <button type="button" class="btn btn-p8 hover-boxshadow hover-bg-secondarycolor" data-bs-dismiss="modal">@Resource.Close</button>
+                    <button type="button" id="btnCancelSurvey" class="btn btn-p8 hover-boxshadow hover-bg-secondarycolor" data-bs-dismiss="modal">@Resource.Close</button>
                 </div>
             </div>
         </div>
@@ -1309,6 +1309,13 @@
                     $("#ApplicationForm, #Documents").not(".reupload-document").removeAttr("disabled");
                     $("#ApplicationForm").next("span").addClass("invalid-message");
                 }
+
+                $("#btnCloseSurvey, #btnCancelSurvey").click(function () {
+
+                    var nextTab = currentTab - 1;
+                    currentTab = nextTab;
+                    showTab(nextTab);
+                });
             }
 
             function setUploadFilesRequirement(selectedCaseTypeName) {

@@ -16,6 +16,10 @@
         <th class="thead">Date Submitted</th>
         <th class="thead">Pre-Filing Application</th>
         <th class="thead">Documents Upload</th>
+        @if (userRole != null && (userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Admin.ToString()))
+        {
+            <th class="thead">Office</th>
+        }
         <th class="thead text-center">Payment Status</th>
         <th class="thead text-center">Pre-Filing Status</th>
         <th class="thead text-center">@Resource.Actions</th>
@@ -55,6 +59,10 @@
                 <span>N/A</span>
             }
         </td>
+        @if (userRole != null && (userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Admin.ToString()))
+        {
+            <td>@Html.DisplayFor(modelItem => item.Office)</td>
+        }
         <td class="text-center">
             @if (!string.IsNullOrEmpty(item.PaymentStatus))
             {

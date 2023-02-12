@@ -22,6 +22,7 @@ namespace ERCOFAS.Models
         public string InitialReviewStatus { get; set; }
         public string DocumentsUploadStatus { get; set; }
         public string PaymentStatus { get; set; }
+        public string Office { get; set; }
         public DateTime? CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
@@ -86,6 +87,7 @@ namespace ERCOFAS.Models
         public string UserType { get; set; }
         public List<PreRegistrationEmails> Emails { get; set; }
         public List<PreRegistrationMobiles> MobileNumbers { get; set; }
+        public string Office { get; set; }
     }
 
     public class PreFiledCaseListing

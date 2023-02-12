@@ -81,8 +81,9 @@ namespace ERCOFAS.Controllers
                         FullName = t6.FullName,
                         Email = t2.Email,
                         PhoneNumber = t2.PhoneNumber,
-                        UserType = t8.Name
-                    }).ToList();
+                        UserType = t8.Name,
+                        Office = t1.Office
+                    }).OrderByDescending(x => x.CreatedOn).ToList();
 
             var userRole = RoleHelpers.GetMainRole();
             if (userRole != null && userRole == UserTypeEnum.Client.ToString())
@@ -234,6 +235,7 @@ namespace ERCOFAS.Controllers
                     prefiledCase.CaseTypeId = model.CaseTypeId;
                     prefiledCase.Remarks = model.Remarks;
                     prefiledCase.DocumentsUploadStatus = Constant.DocumentUpload_Status_Pending;
+                    prefiledCase.Office = prefiledCase.InitialReviewStatus == Constant.InitialReview_Status_Approved && prefiledCase.Office == "Applicant" ? "LS" : prefiledCase.Office;
                     prefiledCase.ModifiedOn = general.GetSystemTimeZoneDateTimeNow();
                     db.Entry(prefiledCase).State = EntityState.Modified;
                     db.SaveChanges();
@@ -251,6 +253,7 @@ namespace ERCOFAS.Controllers
                     prefiledCase.CaseNatureId = model.CaseNatureId;
                     prefiledCase.FileCaseStatusId = "3188CF59-2C55-47AB-8DF0-AC8EB643C825";
                     prefiledCase.InitialReviewStatus = model.InitialReviewRequired ? Constant.InitialReview_Status_Pending : Constant.InitialReview_Status_Approved;
+                    prefiledCase.Office = "ROS";
                     prefiledCase.PaymentStatus = Constant.Payment_Status_Pending;
                     prefiledCase.Remarks = model.Remarks;
                     prefiledCase.CreatedOn = general.GetSystemTimeZoneDateTimeNow();
@@ -360,8 +363,10 @@ namespace ERCOFAS.Controllers
                     else
                     {
                         if (preFiledCase.InitialReviewStatus == "Approved" && preFiledCase.DocumentsUploadStatus == "Rejected")
+                        {
                             preFiledCase.DocumentsUploadStatus = "Updated";
-
+                            preFiledCase.Office = "LS";
+                        }
                     }
 
                     db.Entry(preFiledCase).State = EntityState.Modified;
@@ -627,6 +632,7 @@ namespace ERCOFAS.Controllers
                         if (s == "ai")
                         {
                             attachment.InitialReviewStatus = "Approved";
+                            attachment.Office = "Applicant";
                             attachment.Remarks = remarks;
                         }
                         else if (s == "ri")
@@ -638,12 +644,14 @@ namespace ERCOFAS.Controllers
                         else if (s == "ad")
                         {
                             attachment.DocumentsUploadStatus = "Approved";
+                            attachment.Office = "Acctg";
                             attachment.Remarks = remarks;
 
                         }
                         else if (s == "rd")
                         {
                             attachment.DocumentsUploadStatus = "Rejected";
+                            attachment.Office = "Applicant";
                             attachment.Remarks = remarks;
 
                         }
@@ -784,6 +792,7 @@ namespace ERCOFAS.Controllers
                         if (s == "ai")
                         {
                             attachment.InitialReviewStatus = "Approved";
+                            attachment.Office = "Applicant";
                             attachment.Remarks = remarks;
                         }
                         else if (s == "ri")
@@ -795,12 +804,14 @@ namespace ERCOFAS.Controllers
                         else if (s == "ad")
                         {
                             attachment.DocumentsUploadStatus = "Approved";
+                            attachment.Office = "Acctg";
                             attachment.Remarks = remarks;
 
                         }
                         else if (s == "rd")
                         {
                             attachment.DocumentsUploadStatus = "Rejected";
+                            attachment.Office = "Applicant";
                             attachment.Remarks = remarks;
 
                         }
