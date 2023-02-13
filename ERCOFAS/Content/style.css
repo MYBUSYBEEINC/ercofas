@@ -375,8 +375,8 @@ table.dataTable thead > tr > td.sorting_asc_disabled.locked-column, table.dataTa
     z-index: 950;
 }
 
-table thead {
-    background-color: #499bb3;
+#initiatorypleading-table_wrapper table thead {
+    background-color: #e2f7fd;
     color: white;
 }
 
