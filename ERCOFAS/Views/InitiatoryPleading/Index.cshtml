@@ -8,16 +8,9 @@
     CurrentUserPermission permission = User.Identity.IsAllowed(ProjectEnum.ModuleCode.InitiatoryPleading.ToString());
 }
 
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-center">
-            <h4 class="pagetitle mb-sm-0 fw600 text-blue-green">Pre-Filed Case with Docket Number</h4>
-        </div>
-    </div>
-</div>
-
 <section class="section dashboard mt-3">
-    <div class="bg-white rounded p-3 shadow">
+    <h3 class="text-center text-mauve">Pre-Filed Case with Docket Number</h3>
+    <div class="bg-white rounded p-3 mt-4 shadow">
         <div class="row">
             <div class="col d-flex align-items-center">
                 <span id="exportToExcel" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button mx-2"><i class="fa-solid fa-file-excel pe-1"></i> @Resource.ExporttoExcel</span>
@@ -93,9 +86,6 @@
         background: #499bb3;
     }
 
-    .text-mauve {
-        color: #5069b1;
-    }
 
     a.paginate_button.current {
         background: #499bb3;

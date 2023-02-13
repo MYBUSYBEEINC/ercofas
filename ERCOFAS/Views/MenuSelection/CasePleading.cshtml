@@ -7,7 +7,7 @@
 
 <section>
     <div class="container-fluid px-0">
-        <div class="bg-white mb-5 p-2 shadow" style="border-radius:10px;">
+        <div class="bg-white mb-5 p-2 shadow rounded">
             <div class="row">
                 <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
                     <h6>Notification Highlights</h6>
@@ -38,7 +38,7 @@
         <div class="row mb-4">
             <div class="col">
                 <a href="@Url.Action("index","prefiledcase")">
-                    <div class="card shadow">
+                    <div class="bg-white rounded hover-effect shadow">
                         <div class="p-2">
                             <span class="my-badge bg-violet float-end text-white">
                                 @Model.TotalPreFilings
@@ -57,7 +57,7 @@
             </div>
             <div class="col">
                 <a href="@Url.Action("Index","InitiatoryPleading")">
-                    <div class="card shadow">
+                    <div class="bg-white rounded hover-effect shadow">
                         <div class="p-2">
                             <span class="my-badge bg-violet float-end text-white">
                                 @Model.TotalInitiatorySubsequentPleadings
@@ -79,7 +79,7 @@
         <div class="row mb-4">
             <div class="col">
                 <a href="@Url.Action("VirtualHearing","Hearing")">
-                    <div class="card shadow">
+                    <div class="bg-white rounded hover-effect shadow">
                         <div class="p-2">
                             <span class="my-badge bg-violet float-end text-white">
                                 @Model.TotalVirtualHearings
@@ -143,12 +143,6 @@
         color: inherit !important;
     }
 
-    #main {
-        background: #dbdfea;
-        border-top: solid 3px #e4e8f4;
-        position: fixed;
-        bottom: 0;
-    }
 
     .cards {
         display: grid;

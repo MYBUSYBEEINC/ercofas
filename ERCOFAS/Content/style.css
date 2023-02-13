@@ -339,6 +339,11 @@ table {
     color: #000000 !important;
     margin: 0 !important;
 }
+
+.dataTables_scrollHeadInner {
+    padding: 0 0 0 0 !important;
+    width: 100% !important;
+}
 .table-responsive { font-size: 14.2px; position: relative; margin-bottom: 1rem; }
 .thead { font-size: 14.8px; }
 .table > :not(:first-child) { border-top: none; }
@@ -371,7 +376,8 @@ table.dataTable thead > tr > td.sorting_asc_disabled.locked-column, table.dataTa
 }
 
 table thead {
-    background-color: #e2f7fd;
+    background-color: #499bb3;
+    color: white;
 }
 
 table th {
@@ -379,6 +385,7 @@ table th {
     border-top-right-radius: 10px;*/
     padding: 8px;
     font-weight: 500;
+    vertical-align: middle;
 }
 
 /*--------------------------------------------------------------
@@ -602,6 +609,8 @@ table th {
     cursor: pointer;
 }
 
+
+
 /*--------------------------------------------------------------
 # Additions
 --------------------------------------------------------------*/
@@ -609,4 +618,8 @@ table th {
 #main {
     background: #dbdfea;
     min-height: 100vh !important;
+}
+
+.text-mauve {
+    color: #6f83bc;
 }
