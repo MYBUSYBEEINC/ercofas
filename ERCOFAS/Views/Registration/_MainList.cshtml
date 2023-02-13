@@ -3,7 +3,7 @@
 
 @Html.DisplayFor(modelItem => Model.Listing)
 
-<thead>
+<thead class="table-light">
     <tr>
         <th class="thead">ER Number</th>
         <th class="thead">Name</th>
@@ -18,7 +18,7 @@
 <tbody>
     @foreach (var item in Model.Listing)
     {
-    <tr>
+    <tr style="color: #212529;">
         <td>@item.ERNumber</td>
         <td>@item.Name</td>
         <td>@item.RERTypeId</td>

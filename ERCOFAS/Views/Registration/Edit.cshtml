@@ -2,7 +2,7 @@
 @using ERCOFAS.Models;
 @using ERCOFAS.Resources
 @{
-    ViewBag.Title = "Application Review";
+    ViewBag.Title = "RER Review";
     Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
     ViewBag.TableIdPrefix = "applicationreview";
     CurrentUserPermission permission = User.Identity.IsAllowed(ProjectEnum.ModuleCode.PreFiledCase.ToString());
@@ -12,7 +12,7 @@
     <div class="row justify-content-center mt-2">
         <div class="col">
             <div class="card p-5 border-0 rounded">
-                <h1 class="erc-text-blue text-center">Application Review</h1>
+                <h1 class="erc-text-blue text-center">RER Review</h1>
 
                 <div class="w-100 m-auto py-5">
                     <div class="rule w-50 m-auto"></div>
@@ -498,19 +498,19 @@
         background: #bbbbbb;
     }
 
-        .rule:before, .rule:after {
-            content: '';
-            height: 40px;
-            width: 40px;
-            border-radius: 25px;
-            float: left;
-            background: #bbbbbb;
-            margin-top: -20px;
-        }
+    .rule:before, .rule:after {
+        content: '';
+        height: 40px;
+        width: 40px;
+        border-radius: 25px;
+        float: left;
+        background: #bbbbbb;
+        margin-top: -20px;
+    }
 
-        .rule:after {
-            float: right;
-        }
+    .rule:after {
+        float: right;
+    }
 
     .erc-text-dark-blue {
         color: #3a4360;
@@ -543,9 +543,9 @@
         margin: 10px 5px;
     }
 
-        #msform .action-button:hover, #msform .action-button:focus {
-            box-shadow: 0 0 0 2px white, 0 0 0 3px #5069b1;
-        }
+    #msform .action-button:hover, #msform .action-button:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px #5069b1;
+    }
 
     #msform .action-button-previous {
         width: 200px;

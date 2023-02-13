@@ -46,7 +46,7 @@ namespace ERCOFAS.Controllers
                     {
                         Id = t1.Id,
                         ERNumber = t1.RegistrationStatusId == null ? "N/A" : t1.ERNumber,
-                        Name = t1.RERTypeId == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9" ? t1.FirstName + " " + t1.LastName : t1.JuridicalEntityName,
+                        Name = t1.RERTypeId == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9" ? t1.FirstName + " " + t1.MiddleName + " " + t1.LastName : t1.JuridicalEntityName,
                         RERTypeId = t2.DisplayName,
                         RERClassificationId = t1.RERTypeId == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9" ? "N/A" : t4.DisplayName,
                         TempUsername = t1.TempUsername,
@@ -65,7 +65,7 @@ namespace ERCOFAS.Controllers
             {
                 PreRegistration registration = db.PreRegistration.Where(a => a.Id == Id).FirstOrDefault();
                 model.Id = registration.Id;
-                model.Name = registration.RERTypeId == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9" ? registration.FirstName + " " + registration.LastName : registration.JuridicalEntityName;
+                model.Name = registration.RERTypeId == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9" ? registration.FirstName + " " + registration.MiddleName + " " + registration.LastName : registration.JuridicalEntityName;
                 model.CreatedOn = registration.CreatedOn;
                 model.Attachments = db.PreRegistrationAttachments.Where(x => x.PreRegistrationId == registration.Id).ToList();
                 model.Emails = db.PreRegistrationEmails.Where(x => x.PreRegistrationId == registration.Id).ToList();
@@ -229,36 +229,13 @@ namespace ERCOFAS.Controllers
                         documents += string.Format("<tr style=\"border: 1px solid #ddd;\"><td style=\"border-right: 1px solid #ddd;\">{0}</td><td>{1}</td></tr>", item.DocumentName, status);
                 }
             }
-            
+
             var emailNotification = db.Notifications.FirstOrDefault(x => x.NotificationTypeId == notificationTypeId);
             if (emailNotification != null)
             {
                 string subject = emailNotification.Subject.Replace("{fullname}", string.Format("{0} {1}", registration.FirstName, registration.LastName));
                 string username = string.Format("{0}{1}", registration.FirstName.Replace(" ", string.Empty), registration.LastName.Replace(" ", string.Empty));
                 string generatedPassword = PasswordHelpers.GeneratePassword();
-
-                emailNotification.Content = emailNotification.Content.Replace("{firstname}", registration.FirstName);
-                emailNotification.Content = emailNotification.Content.Replace("{baseurl}", settings.BaseUrl);
-
-                foreach (var item in db.PreRegistrationEmails.Where(x => x.PreRegistrationId == registrationId).ToList())
-                {
-                    if (!model.IsCompleted)
-                    {
-                        emailNotification.Content = emailNotification.Content.Replace("{documents}", documents);
-                        emailNotification.Content = emailNotification.Content.Replace("{remarks}", string.Format("Reviewer Remarks: {0}", model.Remarks));
-                        emailNotification.Content = emailNotification.Content.Replace("{url}", settings.BaseUrl);
-                        EmailHelpers.SendEmail(item.EmailAddress, subject, emailNotification.Content);
-                    } 
-                    else
-                    {
-                        string attachmentPath = "D:/OFAS/ApplicationFiles/Certificate of Registration (COR).pdf";
-                    
-                        emailNotification.Content = emailNotification.Content.Replace("{username}", username);
-                        emailNotification.Content = emailNotification.Content.Replace("{password}", generatedPassword);
-                        emailNotification.Content = emailNotification.Content.Replace("{url}", settings.BaseUrl);
-                        EmailHelpers.SendEmail(item.EmailAddress, subject, emailNotification.Content, attachmentPath);
-                    }
-                }
 
                 if (model.IsCompleted)
                 {
@@ -271,6 +248,27 @@ namespace ERCOFAS.Controllers
                 {
                     registration.RegistrationStatusId = "200257E4-E6C8-4159-8A6F-4475E0A95B32";
                     db.SaveChanges();
+                }
+
+                emailNotification.Content = emailNotification.Content.Replace("{firstname}", registration.FirstName);
+                emailNotification.Content = emailNotification.Content.Replace("{baseurl}", settings.BaseUrl);
+
+                foreach (var item in db.PreRegistrationEmails.Where(x => x.PreRegistrationId == registrationId).ToList())
+                {
+                    if (!model.IsCompleted)
+                    {
+                        emailNotification.Content = emailNotification.Content.Replace("{documents}", documents);
+                        emailNotification.Content = emailNotification.Content.Replace("{remarks}", !string.IsNullOrEmpty(model.Remarks) ? 
+                            string.Format("Reviewer Remarks: {0}", model.Remarks): string.Empty);
+                        EmailHelpers.SendEmail(item.EmailAddress, subject, emailNotification.Content);
+                    } 
+                    else
+                    {
+                        string attachmentPath = "D:/OFAS/ApplicationFiles/Certificate of Registration (COR).pdf";                  
+                        emailNotification.Content = emailNotification.Content.Replace("{username}", username);
+                        emailNotification.Content = emailNotification.Content.Replace("{password}", generatedPassword);
+                        EmailHelpers.SendEmail(item.EmailAddress, subject, emailNotification.Content, attachmentPath);
+                    }
                 }
                 TempData["NotifySuccess"] = "You have submitted a review for this application.";
             }
