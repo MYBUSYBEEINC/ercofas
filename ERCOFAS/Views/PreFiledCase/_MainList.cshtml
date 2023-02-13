@@ -18,7 +18,7 @@
         <th class="thead">Documents Upload</th>
         @if (userRole != null && (userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Admin.ToString()))
         {
-            <th class="thead">Office</th>
+            <th class="thead">Service</th>
         }
         <th class="thead text-center">Payment Status</th>
         <th class="thead text-center">Pre-Filing Status</th>
@@ -91,11 +91,11 @@
             <div class="d-flex text-breakspaces actioncol">
                 @if (userRole != null)
                 {
-                    if (userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Client.ToString())
+                    if ((userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Client.ToString()) && item.FileCaseStatusId != "Completed")
                     {
                         <span class="fs-19 canedit"><a href="@Url.Action("edit", new { Id = @Html.ValueFor(modelItem => item.Id) })"><i class="fa-solid fa-pen text-edit hover-color-primarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i></a> &nbsp;</span>
                     }
-                    if (userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Admin.ToString())
+                    if ((userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Admin.ToString()) || (userRole == UserTypeEnum.Client.ToString() && item.FileCaseStatusId == "Completed"))
                     {
                         <span class="fs-19 canview"><a href="@Url.Action("viewrecord", new { Id = @Html.ValueFor(modelItem => item.Id) })"><i class="fa-solid fa-eye text-primary hover-color-secondarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="View"></i></a></span>
                     }

@@ -897,13 +897,14 @@
                                 }
                                 if (!Model.PreFiledAttachmentViewModels.Any(x => x.CodeName == "OtherDocument"))
                                 {
-                                    <br />
-                                    <button type="button" id="btnAttachAdditionaDocument" class=" mb-3 mt-0 ps-0 bg-transparent erc-text-blue border-0">
-                                        <i class="fa-solid fa-plus p-1 me-1 rounded" style="background: #6f83bc; color: #fff !important;"></i> Attach more document
-                                    </button>
-                                    @Html.TextBox("Documents", "", new { @type = "file", @class = "form-control reupload-document attach-additional-file", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx", @hidden = "hidden" })
-                                    @Html.ValidationMessageFor(model => model.Documents, "", new { @class = "invalid-message" })
+
                                 }
+                                <br />
+                                <button type="button" id="btnAttachAdditionaDocument" class=" mb-3 mt-0 ps-0 bg-transparent erc-text-blue border-0">
+                                    <i class="fa-solid fa-plus p-1 me-1 rounded" style="background: #6f83bc; color: #fff !important;"></i> Upload more documents
+                                </button>
+                                @Html.TextBox("Documents", "", new { @type = "file", @class = "form-control reupload-document attach-additional-file", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx", @hidden = "hidden" })
+                                @Html.ValidationMessageFor(model => model.Documents, "", new { @class = "invalid-message" })
                             }
                         }
 
@@ -922,10 +923,10 @@
                                     if (item.StatusId == "Rejected" || item.StatusId == "Declined")
                                     {
                                         @*<div class="form-group">
-                                                <label class="form-label required fw600" for="@codeName">@item.FileTypeName</label>
-                                                @Html.TextBox(codeName, "", new { @type = "file", @class = "form-control reupload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
-                                                @Html.ValidationMessageFor(model => codeName, "", new { @class = "invalid-message" })
-                                            </div>*@
+                                <label class="form-label required fw600" for="@codeName">@item.FileTypeName</label>
+                                @Html.TextBox(codeName, "", new { @type = "file", @class = "form-control reupload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                                @Html.ValidationMessageFor(model => codeName, "", new { @class = "invalid-message" })
+                            </div>*@
 
                                         if (codeName == "ApplicationForm")
                                         {
@@ -1003,7 +1004,7 @@
                                 }
                                 <br />
                                 <button type="button" id="btnAttachAdditionaDocument" class=" mb-3 mt-0 ps-0 bg-transparent erc-text-blue border-0">
-                                    <i class="fa-solid fa-plus p-1 me-1 rounded" style="background: #6f83bc; color: #fff !important;"></i> Attach more document
+                                    <i class="fa-solid fa-plus p-1 me-1 rounded" style="background: #6f83bc; color: #fff !important;"></i> Upload more documents
                                 </button>
                                 @Html.TextBox("Documents", "", new { @type = "file", @class = "form-control reupload-document attach-additional-file", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx", @hidden = "hidden" })
                                 @Html.ValidationMessageFor(model => model.Documents, "", new { @class = "invalid-message" })
@@ -1026,7 +1027,7 @@
                     <button type="button" id="btnCloseSurvey" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="surveyBody" class="modal-body">
-                    @using (Html.BeginForm("", "PreFiledCase", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
+                    @using (Html.BeginForm("SubmitSurvey", "PreFiledCase", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
                     {
                         @class = "form-modal-survey",
                         role = "form",
@@ -1034,14 +1035,64 @@
                     }))
                     {
                         @Html.HiddenFor(model => model.Id)
-                        <div class="mt-2 text-center">
-                            <div class="mt-3 pt-2 fs-15 mx-4 mx-sm-5">
-                                <h4 class="fs-22 fw600"><b>Survey questions:</b></h4>                                
-                                <p class="fs-15 text-muted mx-3 mb-0 pt-1">Content here</p>
-                            </div>
-                        </div>        
+                        @*<div class="mt-2 text-center">*@
+                        <section class="section mt-3">
+                                <h5 class=""><b>I. Client Information</b></h5>
+                                *Note : Development in progress. Please click Submit button to proceed.
+                                <div class="bg-white rounded p-3 p-lg-4 p-xl-5 shadow">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.PreFiledSurveyInformation.Name, htmlAttributes: new { @class = "form-label required fw600" })
+                                                @Html.EditorFor(model => model.PreFiledSurveyInformation.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.Name, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.PreFiledSurveyInformation.Company, htmlAttributes: new { @class = "form-label fw600" })
+                                                @Html.EditorFor(model => model.PreFiledSurveyInformation.Company, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.Company, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="" class="form-label fw600">Date:</label>
+                                                @Html.EditorFor(model => model.PreFiledSurveyInformation.SurveyDateTimeIn, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.SurveyDateTimeIn, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="" class="form-label fw600">Time In:</label>
+                                                @Html.EditorFor(model => model.PreFiledSurveyInformation.SurveyDateTimeOut, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.SurveyDateTimeOut, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="" class="form-label fw600">Office/s Visited:</label>
+                                                @Html.EditorFor(model => model.PreFiledSurveyInformation.OfficeVisited, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.OfficeVisited, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="" class="form-label fw600">Purpose of Visit:</label>
+                                                @Html.EditorFor(model => model.PreFiledSurveyInformation.PurposeVisit, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.PurposeVisit, "", new { @class = "invalid-message" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                        </section>
+                        @*</div>*@
                     }
-                </div>
+                    </div>
                 <div class="modal-footer">
                     <button type="button" class="addnewbtn submit-survey-content btn btn-p8 hover-boxshadow hover-bg-primarycolor">@Resource.Submit</button>
                     <button type="button" id="btnCancelSurvey" class="btn btn-p8 hover-boxshadow hover-bg-secondarycolor" data-bs-dismiss="modal">@Resource.Close</button>
@@ -1091,7 +1142,7 @@
             });
 
             $(".next-prefiled-complete").click(function () {
-                console.log($('#Id').val());
+                
                 $.ajax({
                     type: "GET",
                     url: "/InitiatoryPleading/Add",
@@ -1161,9 +1212,10 @@
                         if (!initialReviewRequired(selectedCaseTypeName, selectedCaseNatureName)) {
                             $("#initial").css("display", "none");
                             $("#InitialReviewRequired").val(false);
-                        } else
-                            $("#initial").css("display", "block");                           
-                        
+                        } else {
+                            $("#initial").css("display", "block");
+                            $("#InitialReviewRequired").val(true);
+                        }                        
                     }
                 }
 
@@ -1287,9 +1339,10 @@
                     currentTab = currentTab + 1;
                     $("#initial").css("display", "none");
                     $("#InitialReviewRequired").val(false);
-                } else
+                } else {
                     $("#initial").css("display", "block");
-
+                    $("#InitialReviewRequired").val(true);
+                }
 
                 if (currentTab >= 2)
                     $(".previous").attr("disabled", "disabled");
@@ -1491,7 +1544,7 @@
                     if (input[i].type === "file") {
                         var inputId = "#" + input[i].id;
                         var inputFile = $(inputId).get(0);
-                        console.log(inputFile);
+                        
                         if (inputFile.length) {
                             var files = inputFile.files;
                             formData.append("id", $("#Id").val())
@@ -1502,35 +1555,7 @@
 
                 return formData;
             }
-          
-            function initialReviewRequired(caseType, caseNature) {
-               
-                var initialReview = true;
-                if (caseType === "Retail Electricity Supplier License" || caseType === "Prepaid Retail Electric Service") {
-                    if (caseNature === "Retail Electricity Supplier" || "PRES")
-                        initialReview = false;
-
-                } else if (caseType === "Miscellaneous Case") {
-                    if (caseNature === "BSUP")
-                        initialReview = false;
-
-                } else if (caseType === "Rate Case") {
-                    if (caseNature === "Contract for the Supply of Electric Energy (CSEE)" || caseNature === "Contract for the Supply of Electric Energy"
-                        || caseNature === "FIT-All" || caseNature === "Letter of Agreement (LOA)" || caseNature === "Letter of Agreement"
-                        || caseNature === "Market Transaction Fees (MTF)" || caseNature === "Market Transaction Fees"
-                        || caseNature === "Price Determination Methodology (PDM)" || caseNature === "Price Determination Methodology") {
-                        initialReview = false;
-                    }
-
-                } else if (caseType === "Rule Making") {
-                    if (caseNature === "None" || caseNature === "Re: EC's TRAC" || caseNature === "Re ECs TRAC")
-                        initialReview = false;
-                    
-                }
-
-                return initialReview;
-            }
-
+                     
             function downloadFile(fileName) {
 
                 $.ajax({
@@ -1584,11 +1609,47 @@
             
         });
 
+        function initialReviewRequired(caseType, caseNature) {
+
+            var initialReview = true;
+            if (caseType === "Retail Electricity Supplier License" || caseType === "Prepaid Retail Electric Service") {
+                if (caseNature === "Retail Electricity Supplier" || "PRES")
+                    initialReview = false;
+
+            } else if (caseType === "Miscellaneous Case") {
+                if (caseNature === "BSUP")
+                    initialReview = false;
+
+            } else if (caseType === "Rate Case") {
+                if (caseNature === "Contract for the Supply of Electric Energy (CSEE)" || caseNature === "Contract for the Supply of Electric Energy"
+                    || caseNature === "FIT-All" || caseNature === "Letter of Agreement (LOA)" || caseNature === "Letter of Agreement"
+                    || caseNature === "Market Transaction Fees (MTF)" || caseNature === "Market Transaction Fees"
+                    || caseNature === "Price Determination Methodology (PDM)" || caseNature === "Price Determination Methodology") {
+                    initialReview = false;
+                }
+
+            } else if (caseType === "Rule Making") {
+                if (caseNature === "None" || caseNature === "Re: EC's TRAC" || caseNature === "Re ECs TRAC")
+                    initialReview = false;
+
+            }
+
+            return initialReview;
+        }
+
         function triggerSelect(data) {
-            
+           
             var strData = data.split("_");
             $("#CaseNatureId").val(strData[0]);
-            $(".case-nature").next("div.select-wrapper").children("div.select").children("div.select__trigger").children("span").html(strData[1]);            
+            $(".case-nature").next("div.select-wrapper").children("div.select").children("div.select__trigger").children("span").html(strData[1]);
+            
+            if (!initialReviewRequired($("#CaseTypeId").next("div.select__trigger").children("span").text(), strData[1])) {
+                $("#initial").css("display", "none");
+                $("#InitialReviewRequired").val(false);
+            } else {
+                $("#initial").css("display", "block");
+                $("#InitialReviewRequired").val(true);
+            }
         }
 
     </script>

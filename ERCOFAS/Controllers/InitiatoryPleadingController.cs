@@ -284,14 +284,23 @@ namespace ERCOFAS.Controllers
             var preFiledCase = db.PreFiledCases.Where(x => x.Id == preFileCaseId).FirstOrDefault();
             if(preFiledCase != null)
             {
-                InitiatoryPleadingModel initiatoryPleadingModel = new InitiatoryPleadingModel
-                {
-                    DocumentName = preFiledCase.RequestSubject,
-                    Description = preFiledCase.RequestSubject,
-                    Barcode = Guid.NewGuid().ToString()
-                };
-                SaveRecord(initiatoryPleadingModel);
+                preFiledCase.FileCaseStatusId = "Completed";                
+                preFiledCase.ModifiedOn = general.GetSystemTimeZoneDateTimeNow();
+                db.Entry(preFiledCase).State = EntityState.Modified;
+                db.SaveChanges();
 
+                var initiatoryPleading = db.InitiatoryPleadings.Where(x => x.DocumentName == preFiledCase.RequestSubject).FirstOrDefault();
+
+                if (initiatoryPleading == null)
+                {
+                    InitiatoryPleadingModel initiatoryPleadingModel = new InitiatoryPleadingModel
+                    {
+                        DocumentName = preFiledCase.RequestSubject,
+                        Description = preFiledCase.RequestSubject,
+                        Barcode = Guid.NewGuid().ToString()
+                    };
+                    SaveRecord(initiatoryPleadingModel);
+                }
                 saved = true;
             }
 

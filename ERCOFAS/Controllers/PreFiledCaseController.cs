@@ -59,7 +59,8 @@ namespace ERCOFAS.Controllers
                     join t2 in db.AspNetUsers on t1.UserId equals t2.Id
                     join t3 in db.GlobalOptionSets.Where(x => x.Type == "CaseType") on t1.CaseTypeId equals t3.Id
                     join t4 in db.GlobalOptionSets.Where(x => x.Type == "CaseNature") on t1.CaseNatureId equals t4.Id
-                    join t5 in db.GlobalOptionSets.Where(x => x.Type == "FileCaseStatus") on t1.FileCaseStatusId equals t5.Id
+                    join t5 in db.GlobalOptionSets.Where(x => x.Type == "FileCaseStatus") on t1.FileCaseStatusId equals t5.Id 
+                    into fileCaseStatus from preFiledCasesStatus in fileCaseStatus.DefaultIfEmpty()
                     join t6 in db.UserProfiles on t1.UserId equals t6.AspNetUserId
                     join t7 in db.AspNetUserRoles on t1.UserId equals t7.UserId
                     join t8 in db.AspNetRoles on t7.RoleId equals t8.Id
@@ -72,7 +73,7 @@ namespace ERCOFAS.Controllers
                         UserName = t2.UserName,
                         CaseTypeId = t3.DisplayName,
                         CaseNatureId = t4.DisplayName,
-                        FileCaseStatusId = t5.DisplayName,
+                        FileCaseStatusId = preFiledCasesStatus != null ? preFiledCasesStatus.DisplayName : t1.FileCaseStatusId,
                         InitialReviewStatus = t1.InitialReviewStatus,
                         DocumentsUploadStatus = t1.DocumentsUploadStatus,
                         PaymentStatus = t1.PaymentStatus,
@@ -82,7 +83,8 @@ namespace ERCOFAS.Controllers
                         Email = t2.Email,
                         PhoneNumber = t2.PhoneNumber,
                         UserType = t8.Name,
-                        Office = t1.Office
+                        Office = t1.Office,
+                        PreFilingCaseComplete = !string.IsNullOrEmpty(t1.FileCaseStatusId) && t1.FileCaseStatusId == "Completed"
                     }).OrderByDescending(x => x.CreatedOn).ToList();
 
             var userRole = RoleHelpers.GetMainRole();
@@ -113,7 +115,7 @@ namespace ERCOFAS.Controllers
                 model.CaseTypeName = db.GlobalOptionSets.FirstOrDefault(x => x.Id == preFiledCase.CaseTypeId).DisplayName;
                 model.CaseNatureId = db.GlobalOptionSets.FirstOrDefault(x => x.Id == preFiledCase.CaseNatureId).DisplayName;
                 model.CaseNatureName = db.GlobalOptionSets.FirstOrDefault(x => x.Id == preFiledCase.CaseNatureId).DisplayName;
-                model.FileCaseStatusId = db.GlobalOptionSets.FirstOrDefault(x => x.Id == preFiledCase.FileCaseStatusId).DisplayName;
+                model.FileCaseStatusId = db.GlobalOptionSets.FirstOrDefault(x => x.Id == preFiledCase.FileCaseStatusId) != null ? db.GlobalOptionSets.FirstOrDefault(x => x.Id == preFiledCase.FileCaseStatusId).DisplayName : "Completed";
                 model.Remarks = preFiledCase.Remarks;
                 model.ApprovalRemarks = preFiledCase.ApprovalRemarks;
                 model.InitialReviewStatus = preFiledCase.InitialReviewStatus;
@@ -999,6 +1001,7 @@ namespace ERCOFAS.Controllers
 
             return Json(caseNatureList, JsonRequestBehavior.AllowGet);
         }
+                
     }
     #endregion review
 }
