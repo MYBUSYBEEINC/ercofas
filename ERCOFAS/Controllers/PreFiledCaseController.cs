@@ -506,6 +506,7 @@ namespace ERCOFAS.Controllers
                         Id = x.Id,
                         FileName = x.FileName,
                         FileTypeId = x.FileTypeId,
+                        UniqueFileName = x.UniqueFileName,
                         FileTypeName = general.GetGlobalOptionSetDisplayName(x.FileTypeId),
                         CodeName = general.GetGlobalOptionSetCode(x.FileTypeId),
                         StatusId = x.StatusId

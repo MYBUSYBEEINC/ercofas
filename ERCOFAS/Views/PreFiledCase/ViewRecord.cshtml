@@ -456,42 +456,48 @@
                         </div>
                         <div class="ms-auto border rounded w-49">
                             <h2 class="erc-text-blue mx-2 my-2 mb-4">Submitted Documents</h2>
-                            <div class="my-cards">
+                            <div class="thumbnail-container">
                                 @if (Model.PreFiledAttachmentViewModels != null && Model.PreFiledAttachmentViewModels.Count > 0)
                                 {
                                     foreach (var item in Model.PreFiledAttachmentViewModels)
                                     {
                                         if (Path.GetExtension(item.FileName) == ".pdf" && item.StatusId != "Remarks")
                                         {
-                                            <div class="my-card d-flex align-items-center justify-content-center mb-4 row">
-                                                <input hidden id="pdflinkvalue" value="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" />
-                                                <a id="pdflink" href="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" target="_blank">
-                                                    <canvas class="img-thumbnail mw-100 mh-100" id="pdfpreview"></canvas>
-                                                </a>
-                                                <label class="text-sm-center" style="font-size:14px">
-                                                    @Html.DisplayFor(modelItem => item.FileTypeName)
-                                                    @if (item.StatusId == "Approved")
-                                                    {
-                                                        <i class="fa fa-check-circle text-success fa-1x"></i>
-                                                    }
-                                                    else if (item.StatusId == "Rejected")
-                                                    {
-                                                        <i class="fa fa-multiply text-danger fa-1x"></i>
+                                            <div class="thumbnail">
 
-                                                    }
-                                                </label>
+                                                <div class="align-items-center justify-content-center mb-4 row">
+                                                    <input hidden id="pdflinkvalue" value="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" />
+                                                    <a id="pdflink" href="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" target="_blank">
+                                                        <canvas class="img-thumbnail mw-100 mh-100" id="pdfpreview"></canvas>
+                                                    </a>
+                                                    <label class="text-sm-center" style="font-size:14px">
+                                                        @Html.DisplayFor(modelItem => item.FileTypeName)
+                                                        @if (item.StatusId == "Approved")
+                                                        {
+                                                            <i class="fa fa-check-circle text-success fa-1x"></i>
+                                                        }
+                                                        else if (item.StatusId == "Rejected")
+                                                        {
+                                                            <i class="fa fa-multiply text-danger fa-1x dt-right"></i>
+
+                                                        }
+                                                    </label>
+                                                </div>
                                             </div>
+
                                         }
                                         else if (Path.GetExtension(item.FileName) == ".jpg" && item.StatusId != "Remarks" ||
-                                            Path.GetExtension(item.FileName) == ".jpeg" && item.StatusId != "Remarks" ||
-                                            Path.GetExtension(item.FileName) == ".png" && item.StatusId != "Remarks" ||
-                                            Path.GetExtension(item.FileName) == ".gif" && item.StatusId != "Remarks")
+                                        Path.GetExtension(item.FileName) == ".jpeg" && item.StatusId != "Remarks" ||
+                                        Path.GetExtension(item.FileName) == ".png" && item.StatusId != "Remarks" ||
+                                        Path.GetExtension(item.FileName) == ".gif" && item.StatusId != "Remarks")
                                         {
-                                            <div class="pop my-card d-flex align-items-center justify-content-center mb-4">
-                                                <a href="#">
-                                                    <img class="img-thumbnail mw-100 mh-100" src="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)">
-                                                </a>
-                                                <label class="text-sm-center" style="font-size:12px">@Html.DisplayFor(modelItem => item.FileTypeName) </label>
+                                            <div class="thumbnail">
+                                                <div class="pop d-flex align-items-center justify-content-center mb-4 row">
+                                                    <a href="#">
+                                                        <img class="img-thumbnail mw-100 mh-100" src="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)">
+                                                    </a>
+                                                    <label class="text-sm-center" style="font-size:12px">@Html.DisplayFor(modelItem => item.FileTypeName) </label>
+                                                </div>
                                             </div>
                                         }
                                     }
@@ -1816,6 +1822,18 @@
 }
 
 <style type="text/css">
+    .thumbnail-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .thumbnail {
+        width: calc(25% - 10px);
+        height: 100px;
+        margin-bottom: 10px;
+    }
+
     .od-group,
     .aa-group,
     .cf-group,
