@@ -51,7 +51,7 @@ namespace ERCOFAS.Controllers
                         RERClassificationId = t1.RERTypeId == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9" ? "N/A" : t4.DisplayName,
                         TempUsername = t1.TempUsername,
                         TempPassword = t1.TempPassword,
-                        RegistrationStatusId = t1.RegistrationStatusId == null ? "-No Review Yet-" : t4.DisplayName,
+                        RegistrationStatusId = t1.RegistrationStatusId == null ? "-No Review Yet-" : t3.DisplayName,
                         CreatedOn = t1.CreatedOn,
                         ApprovedDate = t1.ApprovedDate,
                     }).ToList();

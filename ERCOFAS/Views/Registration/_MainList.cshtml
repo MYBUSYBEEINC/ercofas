@@ -1,5 +1,6 @@
 ﻿@model ERCOFAS.Models.PreRegistrationListing
 @using ERCOFAS.Resources
+@using ERCOFAS.Helpers;
 
 @Html.DisplayFor(modelItem => Model.Listing)
 
@@ -23,7 +24,18 @@
         <td>@item.Name</td>
         <td>@item.RERTypeId</td>
         <td>@item.RERClassificationId</td>
-        <td class="text-center">@item.RegistrationStatusId</td>
+        <td>
+            @if (!string.IsNullOrEmpty(item.RegistrationStatusId))
+            {
+                <span class="@TemplateHelpers.GetLabelCss(item.RegistrationStatusId).ToString()">
+                    @Html.DisplayFor(modelItem => item.RegistrationStatusId)
+                </span>
+            }
+            else
+            {
+                <span>N/A</span>
+            }
+        </td>
         <td>@item.CreatedOn</td>
         <td>
             @if (item.ERNumber != "N/A")
@@ -48,7 +60,7 @@
             </div>
         </td>
     </tr>
-}
+    }
 </tbody>
 
 <script>
