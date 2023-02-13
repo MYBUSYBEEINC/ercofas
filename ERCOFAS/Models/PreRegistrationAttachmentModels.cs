@@ -11,7 +11,7 @@ namespace ERCOFAS.Models
         [Key]
         [MaxLength(128)]
         public string Id { get; set; }
-        public string PreRegistrationId { get; set; }
+        public long PreRegistrationId { get; set; }
         public string DocumentName { get; set; }
         public string FileUrl { get; set; }
         public string FileName { get; set; }

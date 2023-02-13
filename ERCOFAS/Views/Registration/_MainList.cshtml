@@ -5,11 +5,13 @@
 
 <thead>
     <tr>
-        <th class="thead">@Html.DisplayNameFor(model => model.Listing[0].Name)</th>
-        <th class="thead">@Html.DisplayNameFor(model => model.Listing[0].RERTypeId)</th>
-        <th class="thead">@Html.DisplayNameFor(model => model.Listing[0].RERClassificationId)</th>
-        <th class="thead">@Html.DisplayNameFor(model => model.Listing[0].RegistrationStatusId)</th>
+        <th class="thead">ER Number</th>
+        <th class="thead">Name</th>
+        <th class="thead">Type</th>
+        <th class="thead">Class</th>
+        <th class="thead text-center">Status</th>
         <th class="thead">Date Submitted</th>
+        <th class="thead">Date Approved</th>
         <th class="thead">Action</th>
     </tr>
 </thead>
@@ -17,14 +19,32 @@
     @foreach (var item in Model.Listing)
     {
     <tr>
-        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-        <td>@Html.DisplayFor(modelItem => item.RERTypeId)</td>
-        <td>@Html.DisplayFor(modelItem => item.RERClassificationId)</td>
-        <td>@Html.DisplayFor(modelItem => item.RegistrationStatusId)</td>
-        <td>@Html.DisplayFor(modelItem => item.CreatedOn)</td>
+        <td>@item.ERNumber</td>
+        <td>@item.Name</td>
+        <td>@item.RERTypeId</td>
+        <td>@item.RERClassificationId</td>
+        <td class="text-center">@item.RegistrationStatusId</td>
+        <td>@item.CreatedOn</td>
+        <td>
+            @if (item.ERNumber != "N/A")
+            {
+                if (item.RegistrationStatusId == "Declined")
+                {
+                    <span>N/A</span>
+                }
+                else
+                {
+                    @item.ApprovedDate
+                }
+            }
+            else
+            {
+                <span>-No Review Yet-</span>
+            }
+        </td>
         <td>
             <div class="d-flex text-breakspaces actioncol">
-             <a href="@Url.Action("edit", new { Id = @Html.ValueFor(modelItem => item.Id) })" class="btn btn-outline-primary"><i class="fa-solid fa-eye text-edit text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="View"></i></a>
+                <a href="@Url.Action("edit", new { Id = @Html.ValueFor(modelItem => item.Id) })" class="btn btn-outline-primary"><i class="fa-solid fa-eye text-edit text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="View"></i></a>
             </div>
         </td>
     </tr>

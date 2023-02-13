@@ -8,7 +8,7 @@ namespace ERCOFAS.Models
         [Key]
         [MaxLength(128)]
         public string Id { get; set; }
-        public string PreRegistrationId { get; set; }
+        public long PreRegistrationId { get; set; }
         public string EmailAddress { get; set; }
         public int? Order { get; set; }
         public bool IsVerified { get; set; }

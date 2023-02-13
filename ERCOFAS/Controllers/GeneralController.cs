@@ -840,7 +840,7 @@ namespace ERCOFAS.Controllers
         }
 
 
-        public void SavePreRegistrationAttachment(List<HttpPostedFileBase> files, string preRegistrationId)
+        public void SavePreRegistrationAttachment(List<HttpPostedFileBase> files, long preRegistrationId)
         {
             foreach (HttpPostedFileBase file in files)
             {

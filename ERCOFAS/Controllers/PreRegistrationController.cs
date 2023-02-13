@@ -62,19 +62,19 @@ namespace ERCOFAS.Controllers
             return list;
         }
 
-        public List<PreRegistrationAttachment> ReadPreRegistrationAttachments(string preRegistrationId)
+        public List<PreRegistrationAttachment> ReadPreRegistrationAttachments(long preRegistrationId)
         {
             List<PreRegistrationAttachment> list = new List<PreRegistrationAttachment>();
             list = db.PreRegistrationAttachments.Where(x => x.PreRegistrationId == preRegistrationId).ToList();
             return list;
         }
 
-        public PreRegistrationViewModel GetViewModel(string Id, string type)
+        public PreRegistrationViewModel GetViewModel(long id, string type)
         {
             PreRegistrationViewModel model = new PreRegistrationViewModel();
             using (DefaultDBContext db = new DefaultDBContext())
             {
-                PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == Id).FirstOrDefault();
+                PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == id).FirstOrDefault();
                 model.Id = preRegistration.Id;
                 model.LastName = preRegistration.LastName;
                 model.FirstName = preRegistration.FirstName;
@@ -112,17 +112,14 @@ namespace ERCOFAS.Controllers
         }
 
         ///[CustomAuthorizeFilter(ProjectEnum.ModuleCode.PreRegistration, "", "true", "true", "")]
-        public ActionResult Edit(string Id)
+        public ActionResult Edit(long id)
         {
             PreRegistrationViewModel model = new PreRegistrationViewModel();
-            if (Id != null)
-            {
-                model = GetViewModel(Id, "Edit");
-            }
+            model = GetViewModel(id, "Edit");
             model.RERTypeList = general.GetRERTypeList(model.RERTypeId);
             model.RERClassificationList = general.GetRERClassificationList(model.RERClassificationId);
             model.RegistrationStatusList = general.GetRegistrationStatusList(model.RegistrationStatusId);
-            model.Attachments = ReadPreRegistrationAttachments(Id);
+            model.Attachments = ReadPreRegistrationAttachments(id);
             return View(model);
         }
 
@@ -131,14 +128,11 @@ namespace ERCOFAS.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public ActionResult ViewRecord(string Id)
+        public ActionResult ViewRecord(long id)
         {
             PreRegistrationViewModel model = new PreRegistrationViewModel();
-            if (Id != null)
-            {
-                model = GetViewModel(Id, "View");
-                model.Attachments = ReadPreRegistrationAttachments(Id);
-            }
+            model = GetViewModel(id, "View");
+            model.Attachments = ReadPreRegistrationAttachments(id);
             return View(model);
         }
 
@@ -165,7 +159,7 @@ namespace ERCOFAS.Controllers
             if (model != null)
             {
                 bool duplicated = false;
-                if (model.Id != null)
+                if (model.Id != 0)
                 {
                     duplicated = db.PreRegistration.Where(a => a.FirstName == model.FirstName && a.LastName == model.LastName && a.Id != model.Id).Any();
                 }
@@ -183,12 +177,9 @@ namespace ERCOFAS.Controllers
 
         public void SaveRecord(PreRegistrationViewModel model)
         {
-            /// string userId = User.Identity.GetUserId();
-
             if (model != null)
             {
-                //edit
-                if (model.Id != null)
+                if (model.Id != 0)
                 {
                     PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == model.Id).FirstOrDefault();
                     preRegistration.LastName = model.LastName;
@@ -199,11 +190,9 @@ namespace ERCOFAS.Controllers
                     db.Entry(preRegistration).State = EntityState.Modified;
                     db.SaveChanges();
                 }
-                //new record
                 else
                 {
                     PreRegistration preRegistration = new PreRegistration();
-                    preRegistration.Id = Guid.NewGuid().ToString();
                     preRegistration.LastName = model.LastName;
                     preRegistration.FirstName = model.FirstName;
                     preRegistration.RERTypeId = model.RERTypeId;
@@ -225,13 +214,13 @@ namespace ERCOFAS.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public ActionResult Delete(string Id)
+        public ActionResult Delete(long id)
         {
             try
             {
-                if (Id != null)
+                if (id != 0)
                 {
-                    PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == Id).FirstOrDefault();
+                    PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == id).FirstOrDefault();
                     if (preRegistration != null)
                     {
                         db.PreRegistration.Remove(preRegistration);
@@ -242,7 +231,7 @@ namespace ERCOFAS.Controllers
             }
             catch (Exception)
             {
-                PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == Id).FirstOrDefault();
+                PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == id).FirstOrDefault();
                 if (preRegistration == null)
                 {
                     TempData["NotifySuccess"] = Resource.RecordDeletedSuccessfully;
@@ -281,13 +270,13 @@ namespace ERCOFAS.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public ActionResult Approve(string Id)
+        public ActionResult Approve(long id)
         {
             try
             {
-                if (Id != null)
+                if (id != 0)
                 {
-                    PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == Id).FirstOrDefault();
+                    PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == id).FirstOrDefault();
                     if (preRegistration != null)
                     {
                         preRegistration.RegistrationStatusId = "84D92AC9-E410-4213-8B52-5900012829BC";
@@ -306,7 +295,7 @@ namespace ERCOFAS.Controllers
             }
             catch (Exception)
             {
-                PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == Id).FirstOrDefault();
+                PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == id).FirstOrDefault();
                 if (preRegistration == null)
                 {
                     TempData["NotifySuccess"] = Resource.RegistrationApprovedSuccessfully;
@@ -324,13 +313,13 @@ namespace ERCOFAS.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public ActionResult Reject(string Id)
+        public ActionResult Reject(long id)
         {
             try
             {
-                if (Id != null)
+                if (id != 0)
                 {
-                    PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == Id).FirstOrDefault();
+                    PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == id).FirstOrDefault();
                     if (preRegistration != null)
                     {
                         preRegistration.RegistrationStatusId = "C6EBCA7F-99E9-49C4-BA0E-CF7D5E913E75";
@@ -342,7 +331,7 @@ namespace ERCOFAS.Controllers
             }
             catch (Exception)
             {
-                PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == Id).FirstOrDefault();
+                PreRegistration preRegistration = db.PreRegistration.Where(a => a.Id == id).FirstOrDefault();
                 if (preRegistration == null)
                 {
                     TempData["NotifySuccess"] = Resource.RegistrationRejectedSuccessfully;

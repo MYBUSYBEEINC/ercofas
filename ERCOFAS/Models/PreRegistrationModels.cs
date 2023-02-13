@@ -10,8 +10,8 @@ namespace ERCOFAS.Models
     public class PreRegistration
     {
         [Key]
-        [MaxLength(128)]
-        public string Id { get; set; }
+        public long Id { get; set; }
+        public string ERNumber { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -26,11 +26,13 @@ namespace ERCOFAS.Models
         public string TempPassword { get; set; }
         public string RegistrationStatusId { get; set; }
         public DateTime CreatedOn { get; set; }
+        public DateTime? ApprovedDate { get; set; }
     }
 
     public class PreRegistrationViewModel
     {
-        public string Id { get; set; }
+        public long Id { get; set; }
+        public string ERNumber { get; set; }
         [Display(Name = "Name", ResourceType = typeof(Resource))]
         public string Name { get; set; }
         [Display(Name = "LastName", ResourceType = typeof(Resource))]
@@ -94,6 +96,7 @@ namespace ERCOFAS.Models
         public List<SelectListItem> CountrySelectList { get; set; }
         public bool IsCompleted { get; set; }
         public string Remarks { get; set; }
+        public DateTime? ApprovedDate { get; set; }
     }
 
     public class PreRegistrationListing

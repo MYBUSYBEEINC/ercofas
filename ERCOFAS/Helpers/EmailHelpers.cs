@@ -1,4 +1,5 @@
 ﻿using ERCOFAS.Models;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -39,8 +40,11 @@ namespace ERCOFAS.Helpers
 
                 if (!string.IsNullOrEmpty(attachmentPath))
                 {
-                    Attachment attachment = new Attachment(attachmentPath);
-                    mail.Attachments.Add(attachment);
+                    if (Directory.Exists(attachmentPath))
+                    {
+                        Attachment attachment = new Attachment(attachmentPath);
+                        mail.Attachments.Add(attachment);
+                    }
                 }
 
                 SmtpClient smtp = new SmtpClient

@@ -406,13 +406,10 @@ namespace ERCOFAS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> PreRegister(PreRegistrationViewModel model, FormCollection collection)
         {
-            string preRegistrationId = Guid.NewGuid().ToString();
-
             if (model.RERTypeId == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9")
             {
                 PreRegistration preRegistration = new PreRegistration
                 {
-                    Id = preRegistrationId,
                     LastName = model.LastName,
                     FirstName = model.FirstName,
                     MiddleName = model.MiddleName,
@@ -428,7 +425,7 @@ namespace ERCOFAS.Controllers
                     if (file != null)
                     {
                         var attachment = AttachmentHelpers.SaveToDirectory(file);
-                        await SaveAttachment(preRegistrationId, attachment.Item3, attachment.Item1, attachment.Item2, index);
+                        await SaveAttachment(preRegistration.Id, attachment.Item3, attachment.Item1, attachment.Item2, index);
                     }
                     index++;
                 }
@@ -440,8 +437,8 @@ namespace ERCOFAS.Controllers
                 if (emailNotification != null)
                 {
                     string oneTimePassword = CodeGenerator.GenerateOneTimePassword(6);
-                    await SaveEmailAddress(preRegistrationId, emailId, model.EmailAddress);
-                    await SaveMobileNumber(preRegistrationId, emailId, model.CountryCode, model.MobileNumber, oneTimePassword);
+                    await SaveEmailAddress(preRegistration.Id, emailId, model.EmailAddress);
+                    await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode, model.MobileNumber, oneTimePassword);
 
                     emailAddress = model.EmailAddress;
                 }
@@ -455,7 +452,6 @@ namespace ERCOFAS.Controllers
             {
                 PreRegistration preRegistration = new PreRegistration
                 {
-                    Id = preRegistrationId,
                     RERTypeId = model.RERTypeId,
                     RERClassificationId = model.RERClassificationId,
                     JuridicalEntityName = model.JuridicalEntityName,
@@ -474,7 +470,7 @@ namespace ERCOFAS.Controllers
                     if (file != null)
                     {
                         var attachment = AttachmentHelpers.SaveToDirectory(file);
-                        await SaveAttachment(preRegistrationId, attachment.Item3, attachment.Item1, attachment.Item2, index);
+                        await SaveAttachment(preRegistration.Id, attachment.Item3, attachment.Item1, attachment.Item2, index);
                     }
                     index++;
                 }
@@ -496,13 +492,13 @@ namespace ERCOFAS.Controllers
                     string emailId = Guid.NewGuid().ToString();
                     string oneTimePassword = CodeGenerator.GenerateOneTimePassword(6);
 
-                    await SaveEmailAddress(preRegistrationId, emailId, emailAddress, emailAddressOrder);
+                    await SaveEmailAddress(preRegistration.Id, emailId, emailAddress, emailAddressOrder);
 
                     if (emailAddressOrder == 1)
-                        await SaveMobileNumber(preRegistrationId, emailId, model.CountryCode, model.MobileNumber1, oneTimePassword, emailAddressOrder);
+                        await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode, model.MobileNumber1, oneTimePassword, emailAddressOrder);
 
                     if (emailAddressOrder == 2)
-                        await SaveMobileNumber(preRegistrationId, emailId, model.CountryCode, model.MobileNumber2, oneTimePassword, emailAddressOrder);
+                        await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode, model.MobileNumber2, oneTimePassword, emailAddressOrder);
 
                     if (emailAddressOrder == 1 || emailAddressOrder == 2)
                         emailDictionary.Add(emailId, emailAddress);
@@ -919,7 +915,7 @@ namespace ERCOFAS.Controllers
 
         #region Private 
 
-        public async Task<bool> SaveEmailAddress(string preRegistrationId, string emailId, string emailAddress, int? order = null)
+        public async Task<bool> SaveEmailAddress(long preRegistrationId, string emailId, string emailAddress, int? order = null)
         {
             PreRegistrationEmails email = new PreRegistrationEmails()
             {
@@ -936,7 +932,7 @@ namespace ERCOFAS.Controllers
             return true;
         }
 
-        public async Task<bool> SaveMobileNumber(string preRegistrationId, string emailId, string countryCode, string mobileNumber, string oneTimePassword, int? order = null)
+        public async Task<bool> SaveMobileNumber(long preRegistrationId, string emailId, string countryCode, string mobileNumber, string oneTimePassword, int? order = null)
         {
             PreRegistrationMobiles mobile = new PreRegistrationMobiles()
             {
@@ -956,7 +952,7 @@ namespace ERCOFAS.Controllers
             return true;
         }
 
-        public async Task<bool> SaveAttachment(string preRegistrationId, string fileUrl, string fileName, string uniqueFileName, int index)
+        public async Task<bool> SaveAttachment(long preRegistrationId, string fileUrl, string fileName, string uniqueFileName, int index)
         {
             List<string> documents = (List<string>)Session["Documents"];
 

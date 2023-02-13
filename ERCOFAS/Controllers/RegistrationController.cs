@@ -45,18 +45,20 @@ namespace ERCOFAS.Controllers
                     select new PreRegistrationViewModel()
                     {
                         Id = t1.Id,
+                        ERNumber = t1.RegistrationStatusId == null ? "N/A" : t1.ERNumber,
                         Name = t1.RERTypeId == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9" ? t1.FirstName + " " + t1.LastName : t1.JuridicalEntityName,
                         RERTypeId = t2.DisplayName,
                         RERClassificationId = t1.RERTypeId == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9" ? "N/A" : t4.DisplayName,
                         TempUsername = t1.TempUsername,
                         TempPassword = t1.TempPassword,
                         RegistrationStatusId = t1.RegistrationStatusId == null ? "-No Review Yet-" : t4.DisplayName,
-                        CreatedOn = t1.CreatedOn
+                        CreatedOn = t1.CreatedOn,
+                        ApprovedDate = t1.ApprovedDate,
                     }).ToList();
             return list;
         }
 
-        public PreRegistrationViewModel GetViewModel(string Id, string type)
+        public PreRegistrationViewModel GetViewModel(long Id, string type)
         {
             PreRegistrationViewModel model = new PreRegistrationViewModel();
             using (DefaultDBContext db = new DefaultDBContext())
@@ -70,36 +72,24 @@ namespace ERCOFAS.Controllers
                 model.MobileNumbers = db.PreRegistrationMobiles.Where(x => x.PreRegistrationId == registration.Id).ToList();
                 model.RegistrationStatusId = registration.RegistrationStatusId;
 
-                Session["RegistrationID"] = registration.Id;
+                Session["RegistrationID"] = model.Id;
             }
             return model;
         }
 
         [CustomAuthorizeFilter(ProjectEnum.ModuleCode.CaseType, "", "true", "true", "")]
-        public ActionResult Edit(string Id)
+        public ActionResult Edit(long id)
         {
             PreRegistrationViewModel model = new PreRegistrationViewModel();
-            if (Id != null)
-            {
-                model = GetViewModel(Id, "Edit");
-            }
-            else
-            {
-                ////display order
-                //int? maxOrder = db.GlobalOptionSets.Where(a => a.Type == "CaseType" && a.Status == "Active").Select(a => a.OptionOrder).OrderByDescending(a => a.Value).FirstOrDefault();
-                //model.OptionOrder = maxOrder + 1;
-            }
+            model = GetViewModel(id, "Edit");
             return View(model);
         }
 
         [CustomAuthorizeFilter(ProjectEnum.ModuleCode.CaseType, "true", "", "", "")]
-        public ActionResult ViewRecord(string Id)
+        public ActionResult ViewRecord(long id)
         {
             PreRegistrationViewModel model = new PreRegistrationViewModel();
-            if (Id != null)
-            {
-                model = GetViewModel(Id, "View");
-            }
+            model = GetViewModel(id, "View");
             return View(model);
         }
 
@@ -221,7 +211,7 @@ namespace ERCOFAS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ApplicationReview(PreRegistrationViewModel model)
         {
-            string registrationId = (string)Session["RegistrationID"];
+            long registrationId = (long)Session["RegistrationID"];
             var registration = db.PreRegistration.FirstOrDefault(x => x.Id == registrationId);
             var settings = db.Settings.FirstOrDefault(x => x.Id == "FA85FB3A-2A1E-47F8-9B76-6536F6A95ABB");
             string notificationTypeId = !model.IsCompleted ? "D2E7A300-2BF9-4C78-A2CD-4D3201BC48D2" : "D1567F9A-A379-4603-ADAB-66B978A34ADD";
@@ -287,7 +277,7 @@ namespace ERCOFAS.Controllers
             return Redirect(string.Format("/Registration/Edit/{0}", registrationId));
         }
 
-        public ActionResult ApproveDocument(string registrationId, string documentId)
+        public ActionResult ApproveDocument(int registrationId, string documentId)
         {
             var document = db.PreRegistrationAttachments.FirstOrDefault(x => x.PreRegistrationId == registrationId && x.Id == documentId);
             if (document != null)
@@ -300,7 +290,7 @@ namespace ERCOFAS.Controllers
             return Redirect(string.Format("/Registration/Edit/{0}", registrationId));
         }
 
-        public ActionResult DeclineDocument(string registrationId, string documentId)
+        public ActionResult DeclineDocument(int registrationId, string documentId)
         {
             var document = db.PreRegistrationAttachments.FirstOrDefault(x => x.PreRegistrationId == registrationId && x.Id == documentId);
             if (document != null)
@@ -338,6 +328,11 @@ namespace ERCOFAS.Controllers
         {
             var emailAddress = db.PreRegistrationEmails.FirstOrDefault(x => x.PreRegistrationId == registration.Id).EmailAddress;
             var mobileNumber = db.PreRegistrationMobiles.FirstOrDefault(x => x.PreRegistrationId == registration.Id).MobileNumber;
+
+            var preRegistration = db.PreRegistration.FirstOrDefault(x => x.Id == registration.Id);
+            preRegistration.ERNumber = CodeGenerator.GenerateERNumber();
+            preRegistration.ApprovedDate = DateTime.Now;
+            db.SaveChanges();
 
             AspNetUsers aspNetUser = new AspNetUsers
             {

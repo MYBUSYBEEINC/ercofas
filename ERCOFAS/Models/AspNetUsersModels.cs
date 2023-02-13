@@ -22,7 +22,7 @@ namespace ERCOFAS.Models
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public string PasswordToken { get; set; }
-        public string RegistrationId { get; set; }
+        public long? RegistrationId { get; set; }
     }
 }
 

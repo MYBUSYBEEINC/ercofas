@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(ERCOFAS.Startup))]
+[assembly: OwinStartup(typeof(ERCOFAS.Startup))]
 namespace ERCOFAS
 {
     public partial class Startup
