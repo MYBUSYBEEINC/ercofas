@@ -75,7 +75,14 @@
                                             <div class="form-check">
                                                 <label for="@Model.RERClassificationId" class="text-dark">
                                                     @Html.RadioButtonFor(model => model.RERClassificationId, item.Id, new { @id = "rer-classification" })
-                                                    @item.Code - @item.DisplayName
+                                                    @if (!string.IsNullOrEmpty(item.Code))
+                                                    {
+                                                        <span><strong>@item.Code</strong> - @item.DisplayName</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.DisplayName
+                                                    }
                                                 </label>
                                             </div>
                                         }
@@ -98,73 +105,89 @@
                                         <p class="mb-5">reminder: Kindly reflect here the information as stated in your submitted Authorization/Certification</p>
                                         <p id="juridical-required-fields" class="required-fields text-danger">Please fill-out required fields below marked with red asterisk ( <strong>*</strong> )</p>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.JuridicalEntityName, htmlAttributes: new { @class = "text-dark required" })
+                                            @Html.LabelFor(model => model.JuridicalEntityName, htmlAttributes: new { @class = "text-dark form-label fw600 required" })
                                             @Html.EditorFor(model => model.JuridicalEntityName, new { htmlAttributes = new { id = "juridical-entity-name", @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.JuridicalEntityName, "", new { @class = "invalid-message" })
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.OfficeAddress, htmlAttributes: new { @class = "text-dark required" })
+                                            @Html.LabelFor(model => model.OfficeAddress, htmlAttributes: new { @class = "text-dark form-label fw600 required" })
                                             @Html.EditorFor(model => model.OfficeAddress, new { htmlAttributes = new { id = "office-address", @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.OfficeAddress, "", new { @class = "invalid-message" })
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.OfficeTelephone, htmlAttributes: new { @class = "text-dark" })
+                                            <label class="text-dark form-label fw600">Office Telephone Number (<i>if applicable</i>)</label>
                                             @Html.EditorFor(model => model.OfficeTelephone, new { htmlAttributes = new { id = "office-telephone", @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.OfficeTelephone, "", new { @class = "invalid-message" })
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.EmailAddress1, htmlAttributes: new { @class = "text-dark required" })<br />
+                                            @Html.LabelFor(model => model.EmailAddress1, htmlAttributes: new { @class = "text-dark form-label fw600 required" })<br />
                                             <small class="form-text text-muted">@Resource.DesignatedEmailAddress1</small><br />
                                             <small id="juridical-invalid-email1" class="form-text text-muted invalid-message"></small>
                                             @Html.EditorFor(model => model.EmailAddress1, new { htmlAttributes = new { id = "email-address1", @class = "form-control" } })
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.EmailAddress2, htmlAttributes: new { @class = "text-dark required" })<br />
+                                            @Html.LabelFor(model => model.EmailAddress2, htmlAttributes: new { @class = "text-dark form-label fw600 required" })<br />
                                             <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
                                             <small id="juridical-invalid-email2" class="form-text text-muted invalid-message"></small>
                                             @Html.EditorFor(model => model.EmailAddress2, new { htmlAttributes = new { id = "email-address2", @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.EmailAddress2, "", new { @class = "invalid-message" })
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.EmailAddress3, htmlAttributes: new { @class = "text-dark" })<br />
+                                            @Html.LabelFor(model => model.EmailAddress3, htmlAttributes: new { @class = "text-dark form-label fw600" })<br />
                                             <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
                                             <small id="juridical-invalid-email3" class="form-text text-muted invalid-message"></small>
                                             @Html.EditorFor(model => model.EmailAddress3, new { htmlAttributes = new { id = "email-address3", @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.EmailAddress3, "", new { @class = "invalid-message" })
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.EmailAddress4, htmlAttributes: new { @class = "text-dark" })<br />
+                                            @Html.LabelFor(model => model.EmailAddress4, htmlAttributes: new { @class = "text-dark form-label fw600" })<br />
                                             <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
                                             <small id="juridical-invalid-email4" class="form-text text-muted invalid-message"></small>
                                             @Html.EditorFor(model => model.EmailAddress4, new { htmlAttributes = new { id = "email-address4", @class = "form-control" } })
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.EmailAddress5, htmlAttributes: new { @class = "text-dark" })<br />
+                                            @Html.LabelFor(model => model.EmailAddress5, htmlAttributes: new { @class = "text-dark form-label fw600" })<br />
                                             <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
                                             <small id="juridical-invalid-email5" class="form-text text-muted invalid-message"></small>
                                             @Html.EditorFor(model => model.EmailAddress5, new { htmlAttributes = new { id = "email-address5", @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.EmailAddress5, "", new { @class = "invalid-message" })
                                         </div>
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.MobileNumber1, htmlAttributes: new { @class = "text-dark required" })<br />
-                                            <small class="form-text text-muted">@Resource.DesignatedMobileNumber1Info</small>
-                                            @Html.EditorFor(model => model.MobileNumber1, new { htmlAttributes = new { id = "mobile-number1", @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.MobileNumber1, "", new { @class = "invalid-message" })
+                                        <div class="mb-3 text-break text-dark">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.MobileNumber1, htmlAttributes: new { @class = "form-label fw600 required" })
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        @Html.DropDownList("CountryCode1", Model.CountrySelectList, new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="col-7">
+                                                        @Html.EditorFor(model => model.MobileNumber1, new { htmlAttributes = new { id = "mobile-number1", @class = "form-control", @placeholder = "Mobile number without the country code" } })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(model => model.MobileNumber1, "", new { @class = "invalid-message" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 text-break text-dark">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.MobileNumber2, htmlAttributes: new { @class = "form-label fw600 required" })
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        @Html.DropDownList("CountryCode2", Model.CountrySelectList, new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="col-7">
+                                                        @Html.EditorFor(model => model.MobileNumber2, new { htmlAttributes = new { id = "mobile-number2", @class = "form-control", @placeholder = "Mobile number without the country code" } })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(model => model.MobileNumber2, "", new { @class = "invalid-message" })
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.MobileNumber2, htmlAttributes: new { @class = "text-dark required" })<br />
-                                            <small class="form-text text-muted">@Resource.DesignatedMobileNumber2Info</small>
-                                            @Html.EditorFor(model => model.MobileNumber2, new { htmlAttributes = new { id = "mobile-number2", @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.MobileNumber2, "", new { @class = "invalid-message" })
-                                        </div>
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.LiaisonOfficer1, htmlAttributes: new { @class = "text-dark required" })<br />
+                                            @Html.LabelFor(model => model.LiaisonOfficer1, htmlAttributes: new { @class = "text-dark form-label fw600 required" })<br />
                                             <small class="form-text text-muted">@Resource.DedicatedLiasonInfo</small>
                                             @Html.EditorFor(model => model.LiaisonOfficer1, new { htmlAttributes = new { id = "dedicated-liason1", @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.LiaisonOfficer1, "", new { @class = "invalid-message" })
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.LiaisonOfficer2, htmlAttributes: new { @class = "text-dark required" })<br />
+                                            @Html.LabelFor(model => model.LiaisonOfficer2, htmlAttributes: new { @class = "text-dark form-label fw600 required" })<br />
                                             <small class="form-text text-muted">@Resource.DedicatedLiasonInfo</small>
                                             @Html.EditorFor(model => model.LiaisonOfficer2, new { htmlAttributes = new { id = "dedicated-liason2", @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.LiaisonOfficer2, "", new { @class = "invalid-message" })

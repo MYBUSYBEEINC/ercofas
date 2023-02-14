@@ -495,10 +495,10 @@ namespace ERCOFAS.Controllers
                     await SaveEmailAddress(preRegistration.Id, emailId, emailAddress, emailAddressOrder);
 
                     if (emailAddressOrder == 1)
-                        await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode, model.MobileNumber1, oneTimePassword, emailAddressOrder);
+                        await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode1, model.MobileNumber1, oneTimePassword, emailAddressOrder);
 
                     if (emailAddressOrder == 2)
-                        await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode, model.MobileNumber2, oneTimePassword, emailAddressOrder);
+                        await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode2, model.MobileNumber2, oneTimePassword, emailAddressOrder);
 
                     if (emailAddressOrder == 1 || emailAddressOrder == 2)
                         emailDictionary.Add(emailId, emailAddress);

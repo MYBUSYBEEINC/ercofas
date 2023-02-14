@@ -76,6 +76,10 @@
                                                 <li>@Html.DisplayFor(modelItem => item.EmailAddress)</li>
                                             }
                                         }
+                                        else
+                                        {
+                                            <span>-None Yet-</span>
+                                        }
                                     </ul>
                                 </div>
                             </div>
@@ -91,8 +95,12 @@
                                         {
                                             foreach (var item in Model.MobileNumbers.Where(x => x.IsVerified))
                                             {
-                                                <li>@Html.DisplayFor(modelItem => item.MobileNumber)</li>
+                                                <li>@string.Format("{0}{1}", item.CountryCode, @item.MobileNumber)</li>
                                             }
+                                        } 
+                                        else
+                                        {
+                                            <span>-None Yet-</span>
                                         }
                                     </ul>
                                 </div>

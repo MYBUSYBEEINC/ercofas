@@ -48,6 +48,8 @@ namespace ERCOFAS.Models
         [Display(Name = "EmailAddress", ResourceType = typeof(Resource))]
         public string EmailAddress { get; set; }
         public string CountryCode { get; set; }
+        public string CountryCode1 { get; set; }
+        public string CountryCode2 { get; set; }
         [Display(Name = "MobileNumber", ResourceType = typeof(Resource))]
         public string MobileNumber { get; set; }
         [Display(Name = "JuridicalEntityName", ResourceType = typeof(Resource))]
