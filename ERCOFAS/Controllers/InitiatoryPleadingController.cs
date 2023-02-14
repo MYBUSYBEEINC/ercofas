@@ -233,6 +233,7 @@ namespace ERCOFAS.Controllers
                     initiatoryPleading.DocumentName = model.DocumentName;
                     initiatoryPleading.Description = model.Description;
                     initiatoryPleading.Barcode = model.Barcode;
+                    initiatoryPleading.DocketNumber = model.DocketNumber;
                     initiatoryPleading.CreatedBy = userId;
                     initiatoryPleading.CreatedOn = general.GetSystemTimeZoneDateTimeNow();
                     db.InitiatoryPleadings.Add(initiatoryPleading);
@@ -297,7 +298,8 @@ namespace ERCOFAS.Controllers
                     {
                         DocumentName = preFiledCase.RequestSubject,
                         Description = preFiledCase.RequestSubject,
-                        Barcode = Guid.NewGuid().ToString()
+                        Barcode = Guid.NewGuid().ToString(),
+                        DocketNumber = Guid.NewGuid().ToString()
                     };
                     SaveRecord(initiatoryPleadingModel);
                 }

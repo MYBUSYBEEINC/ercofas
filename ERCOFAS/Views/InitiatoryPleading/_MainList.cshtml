@@ -34,15 +34,15 @@
                         {
                             if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
                             {
-                                <button id="view-@item.Id" type="button" class="btn btn-primary btn-sm view-button-admin" data-id="@item.Id"><i class="fa-solid fa-eye"></i> View</button>;
+                                <button id="view-@item.Id" type="button" class="btn btn-primary btn-sm view-button-admin" data-id="@item.Id"><i class="fa-solid fa-eye"></i> View</button>
                             }
                             else if (userRole == UserTypeEnum.Client.ToString())
                             {
-                                <button id="view-@item.Id" type="button" class="btn btn-primary btn-sm view-button" data-id="@item.Id"><i class="fa-solid fa-eye"></i> View</button>;
+                                <button id="view-@item.Id" type="button" class="btn btn-primary btn-sm view-button" data-id="@item.Id"><i class="fa-solid fa-eye"></i> View</button>
                             }
-                            if(userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Client.ToString())
+                            if (userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Client.ToString())
                             {
-                                <span class="fs-19" style="margin-left: 5px;"><a href="@Url.Action("edit", new { Id = @Html.ValueFor(modelItem => item.Id) })"><i class="fa-solid fa-pen text-edit hover-color-primarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i></a></span>
+                                <button id="view-@item.Id" type="button" class="btn btn-secondary btn-sm edit-button" data-id="@item.Id" style="margin-left: 5px;"><a href="@Url.Action("edit", new { Id = @Html.ValueFor(modelItem => item.Id) })"><i class="fa-solid fa-edit"></i></a> Edit</button>                          
                             }
                         }
                     </div>

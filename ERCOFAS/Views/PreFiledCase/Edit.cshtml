@@ -1076,7 +1076,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="" class="form-label fw600">Office/s Visited:</label>
-                                                @Html.EditorFor(model => model.PreFiledSurveyInformation.OfficeVisited, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.EditorFor(model => model.PreFiledSurveyInformation.OfficeVisited, new { htmlAttributes = new { @class = "form-control" } })                                                
                                                 @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.OfficeVisited, "", new { @class = "invalid-message" })
                                             </div>
                                         </div>
@@ -1622,7 +1622,7 @@
 
             } else if (caseType === "Rate Case") {
                 if (caseNature === "Contract for the Supply of Electric Energy (CSEE)" || caseNature === "Contract for the Supply of Electric Energy"
-                    || caseNature === "FIT-All" || caseNature === "Letter of Agreement (LOA)" || caseNature === "Letter of Agreement"
+                    || caseNature === "FIT-All" || caseNature === "FIT All" || caseNature === "Letter of Agreement (LOA)" || caseNature === "Letter of Agreement"
                     || caseNature === "Market Transaction Fees (MTF)" || caseNature === "Market Transaction Fees"
                     || caseNature === "Price Determination Methodology (PDM)" || caseNature === "Price Determination Methodology") {
                     initialReview = false;
