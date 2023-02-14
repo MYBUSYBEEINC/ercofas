@@ -24,7 +24,7 @@
         <td>@item.Name</td>
         <td>@item.RERTypeId</td>
         <td>@item.RERClassificationId</td>
-        <td>
+        <td class="text-center">
             @if (!string.IsNullOrEmpty(item.RegistrationStatusId))
             {
                 <span class="@TemplateHelpers.GetLabelCss(item.RegistrationStatusId).ToString()">
