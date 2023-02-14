@@ -7,43 +7,43 @@
             <div class="modal-body border-0 pb-4">
                 <div class="container-fluid d-grid gap-4">
                     <div class="bg-white rounded">
-                        <h3 class="text-center p-2" style="color:#499bb3;">Select Action</h3>
+                        <h3 class="text-center text-mauve">Actions</h3>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2">
+                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2 p-5 hover-effect">
                                 <img width="50" src="~/Assets/isp-icons/File a Motion.png" />
-                                <h6 class="text-gold">File a Motion</h6>
+                                <div class="text-gold">File a Motion</div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2">
+                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2 p-5 hover-effect">
                                 <img width="50" src="~/Assets/isp-icons/File a Petition.png" />
-                                <h6 class="text-gold">File a Petition</h6>
+                                <div class="text-gold">File a Petition</div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2">
+                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2 p-5 hover-effect">
                                 <img width="50" src="~/Assets/isp-icons/Compliance.png" />
-                                <h6 class="text-gold">Compliance</h6>
+                                <div class="text-gold">Compliance</div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2">
+                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2 p-5 hover-effect">
                                 <img width="50" src="~/Assets/isp-icons/Manifestation.png" />
-                                <h6 class="text-gold">Manifestation</h6>
+                                <div class="text-gold">Manifestation</div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2">
+                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2 p-5 hover-effect">
                                 <img width="50" src="~/Assets/isp-icons/Submission.png" />
-                                <h6 class="text-gold">Submission</h6>
+                                <div class="text-gold">Submission</div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2">
+                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2 p-5 hover-effect">
                                 <img width="50" src="~/Assets/isp-icons/Others.png" />
                                 <h6 class="text-gold">Others</h6>
                             </div>
@@ -64,25 +64,29 @@
             <div class="modal-body border-0 pb-4">
                 <div class="container-fluid d-grid gap-4">
                     <div class="bg-white rounded">
-                        <h3 class="text-center p-2" style="color:#499bb3;">Select Action</h3>
+                        <h3 class="text-center text-mauve">Actions</h3>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2">
-                                <img width="50" src="~/Assets/isp-icons/File a Motion.png" />
-                                <h6 class="text-gold">Initial Order </h6>
-                            </div>
+                            <a href="@Url.Action("InitialOrder", "InitiatoryPleading")">
+                                <div class="card d-flex flex-column justify-content-center align-items-center p-5 gap-2 hover-effect">
+                                    <img height="50" src="~/Assets/isp-icons/File a Motion.png" />
+                                    <div class="text-gold mt-2">Initial Order </div>
+                                </div>
+                            </a>
                         </div>
                         <div class="col">
-                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2">
-                                <img width="50" src="~/Assets/isp-icons/File a Petition.png" />
-                                <h6 class="text-gold">Notice of Virtual Hearing</h6>
-                            </div>
+                            <a href="@Url.Action("NoticeVirtualHearing", "InitiatoryPleading")">
+                                <div class="card d-flex flex-column justify-content-center align-items-center p-5 gap-2 hover-effect">
+                                    <img height="50" src="~/Assets/isp-icons/File a Petition.png" />
+                                    <div class="text-gold mt-2">Notice of Virtual Hearing</div>
+                                </div>
+                            </a>
                         </div>
                         <div class="col">
-                            <div class="card d-flex flex-column justify-content-center align-items-center gap-2">
-                                <img width="50" src="~/Assets/isp-icons/Compliance.png" />
-                                <h6 class="text-gold">Others</h6>
+                            <div class="card d-flex flex-column justify-content-center align-items-center p-5 gap-2 hover-effect">
+                                <img height="50" src="~/Assets/isp-icons/Compliance.png" />
+                                <div class="text-gold mt-2">Others</div>
                             </div>
                         </div>
                     </div>
@@ -205,6 +209,10 @@
         max-width: 800px !important;
     }
 
+    #select-action-admin-modal .modal-dialog {
+        max-width: 100em !important;
+    }
+
     .card {
         border: 1px solid rgba(0,0,0,.125) !important;
         cursor: pointer;
@@ -212,6 +220,5 @@
 
     #select-action-modal .card {
         min-height: 120px !important;
-    }
+    } 
 </style>
-

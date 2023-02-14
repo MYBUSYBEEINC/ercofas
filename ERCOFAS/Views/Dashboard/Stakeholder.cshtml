@@ -8,7 +8,7 @@
 
 <section id="dashboard">
     <div class="container-fluid px-0">
-        <div class="bg-white mb-5 p-2 shadow" style="border-radius:10px;">
+        <div class="bg-white mb-5 p-2 shadow rounded">
             <div class="row">
                 <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
                     <h6>Notification Highlights</h6>
@@ -36,7 +36,7 @@
         <div class="row mb-4">
             <div class="col">
                 <a href="@Url.Action("Index", "PreFiledCase")">
-                    <div class="card shadow">
+                    <div class="card shadow rounded">
                         <div class="p-2">
                             <span class="my-badge bg-violet float-end text-white">
                                 @Model.TotalPreFilings
@@ -46,7 +46,7 @@
                             <div class="mb-2">
                                 <img src="~/Assets/dashboard-icons/VectorCasePlead.png">
                             </div>
-                            <div class="text-dark-brown">
+                            <div class="text-gold">
                                 Case/Pleading
                             </div>
                         </div>
@@ -55,7 +55,7 @@
             </div>
             <div class="col">
                 <a href="@Url.Action("UnderConstruction", "General")">
-                    <div class="card shadow">
+                    <div class="card shadow rounded">
                         <div class="p-2">
                             <span class="my-badge bg-violet float-end text-white">
                                 @Model.TotalSealingRequestTestingMeters
@@ -65,7 +65,7 @@
                             <div class="mb-2">
                                 <img src="~/Assets/dashboard-icons/VectorReqSealAccTestMet.png">
                             </div>
-                            <div class="text-dark-brown">
+                            <div class="text-gold">
                                 Request for Sealing and Acceptance Testing of Meters
                             </div>
                         </div>
@@ -77,9 +77,9 @@
         <div class="row mb-4">
             <div class="col">
                 <a href="@Url.Action("UnderConstruction", "General")">
-                    <div class="card shadow">
+                    <div class="card shadow rounded">
                         <div class="p-2">
-                            <span class="my-badge bg-violet float-end text-white">
+                            <span class="my-badge bg-blue-green float-end text-white">
                                 @Model.TotalVirtualHearings
                             </span>
                         </div>
@@ -87,7 +87,7 @@
                             <div class="mb-2">
                                 <img src="~/Assets/dashboard-icons/VectorVirtHear.png">
                             </div>
-                            <div class="text-dark-brown">
+                            <div class="text-gold">
                                 Virtual Hearings
                             </div>
                         </div>
@@ -96,9 +96,9 @@
             </div>
             <div class="col">
                 <a href="@Url.Action("UnderConstruction", "General")">
-                    <div class="card shadow">
+                    <div class="card shadow rounded">
                         <div class="p-2">
-                            <span class="my-badge bg-violet float-end text-white">
+                            <span class="my-badge bg-blue-green float-end text-white">
                                 @Model.TotalInServiceMeterSamplings
                             </span>
                         </div>
@@ -106,7 +106,7 @@
                             <div class="mb-2">
                                 <img src="~/Assets/dashboard-icons/VectorValServMetSamp.png">
                             </div>
-                            <div class="text-dark-brown">
+                            <div class="text-gold">
                                 Validation of In-Service Meter Samplings
                             </div>
                         </div>
@@ -118,9 +118,9 @@
         <div class="row mb-4">
             <div class="col">
                 <a href="@Url.Action("UnderConstruction", "General")">
-                    <div class="card shadow">
+                    <div class="card shadow rounded">
                         <div class="p-2">
-                            <span class="my-badge bg-violet float-end text-white">
+                            <span class="my-badge bg-pink float-end text-white">
                                 @Model.TotalRetailElectricitySuppliers
                             </span>
                         </div>
@@ -128,7 +128,7 @@
                             <div class="mb-2">
                                 <img src="~/Assets/dashboard-icons/VectorReqRetElecSup.png">
                             </div>
-                            <div class="text-dark-brown">
+                            <div class="text-gold">
                                 Request for Retail Electricity Suppliers
                             </div>
                         </div>
@@ -137,15 +137,15 @@
             </div>
             <div class="col">
                 <a href="@Url.Action("Index", "Transaction")">
-                    <div class="card shadow">
+                    <div class="card shadow rounded">
                         <div class="p-2">
-                            <span class="my-badge bg-blue-green float-end text-white">3</span>
+                            <span class="my-badge bg-pink float-end text-white">3</span>
                         </div>
                         <div class="card-body text-center">
                             <div class="mb-2">
                                 <img src="~/Assets/dashboard-icons/VectorTransc.png">
                             </div>
-                            <div class="text-dark-brown">
+                            <div class="text-gold">
                                 Transactions
                             </div>
                         </div>
@@ -153,7 +153,6 @@
                 </a>
             </div>
         </div>
-
     </div>
 </section>
 
@@ -205,7 +204,6 @@
 
     .card {
         border: 0;
-        border-radius: 10px;
         min-height: 200px;
     }
 

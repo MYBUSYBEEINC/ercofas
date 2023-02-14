@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+
+<section>
+    <div class="container-fluid px-0">
+        <div class="bg-white mb-5 p-2 shadow rounded">
+            <div class="row">
+                <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
+                    <h6>Notification Highlights</h6>
+                </div>
+                <div class="col px-0">
+                    <div class="row mb-2">
+                        <div class="col text-secondary"><strong>Pre-Filing Case</strong></div>
+                        <div class="col d-flex align-items-center justify-content-end text-muted me-4"><small>[Date] [Time]</small></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="mb-0 text-muted">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="text-mauve text-center mb-5">Notice of Virtual Hearing</h3>
+
+        <div class="row">
+            <div class="col">
+                <div class="bg-white shadow rounded pb-3 pt-5">
+                    <div class="d-flex justify-content-center mb-5">
+                        <small class="text-muted">
+                            <strong>Note: </strong>Please ensure that the file names of the soft/electronic copies of the application/petitions, annexes, other supporting documents, pre-filing requirements are the same as the document title.
+                            <br />
+                            <span style="margin-left:3%;">You may upload files  in PDF or jpeg format.</span>
+                        </small>
+                    </div>
+
+                    <div class="d-flex flex-column justify-content-center text-secondary px-5 mx-5">
+                        <div class="mb-4">
+                            <label class="form-label">
+                                1. Date and Time of Hearing
+                            </label>
+                            <div class="d-flex gap-2">
+                                <div class="w-25">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" class="form-control  text-secondary">
+                                </div>
+                                <div class="w-25">
+                                    <label class="form-label">Time</label>
+                                    <input type="time" class="form-control  text-secondary">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="formFile" class="form-label">
+                                2. Venue of Hearing
+                            </label>
+                            <input class="form-control text-secondary" type="text">
+                        </div>
+                        <div class="mb-4">
+                            <label for="formFile" class="form-label">
+                                3. Online Platform that will be used for the hearing
+                            </label>
+                            <input class="form-control text-secondary" type="text">
+                        </div>
+                        <div class="mb-4">
+                            <label for="formFile" class="form-label">
+                                4. The procedure on how to access the said online platform
+                            </label>
+                            <input class="form-control text-secondary mb-3" type="text">
+                            <input class="form-control text-secondary mb-3" type="text">
+                            <input class="form-control text-secondary mb-3" type="text">
+                        </div>
+                        <div class="mb-4">
+                            <label for="formFile" class="form-label">
+                                5. That any Petition for Intervention, Opposition, or Notice to Act as Observer in Virtual Hearings shall be filed at least ten (io) days prior
+                                to the scheduled Virtual Hearing
+                            </label>
+                            <input class="form-control text-secondary mb-2" type="file">
+                        </div>
+                        <div class="mb-4">
+                            <label for="formFile" class="form-label">
+                                6. That Copy of Expository Presentation, Pre-trial Brief, Judicial Affidavits of Applicants and Intervenors shall be filed
+                                at least ten (1o) days prior to the scheduled Virtual Hearing
+                            </label>
+                            <input class="form-control text-secondary mb-2" type="file">
+                        </div>
+                        <div class="mb-4">
+                            <label for="formFile" class="form-label">
+                                7. Any other relevant information necessary for the party to attend the said virtual hearing
+                            </label>
+                            <input class="form-control text-secondary  mb-2" type="file">
+                        </div>
+                    </div>
+                    <div class="justify-content-center m-5 d-flex gap-2">
+                        <input type="button" class="rounded border-0 bg-light-mauve text-white py-1 px-3 hover-effect" value="Back" onclick="location.href='@Url.Action("Index", "InitiatoryPleading")'" />
+                        <input type="button" class="rounded border-0 bg-mauve text-white py-1 px-3 hover-effect" value="Send" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#timepicker').timepicker({
+                minuteStep: 5,
+                showInputs: false,
+                disableFocus: true
+            });
+        });
+    </script>
+}

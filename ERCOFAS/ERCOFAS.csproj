@@ -707,6 +707,8 @@
     <Content Include="Views\RERClassification\Index.cshtml" />
     <Content Include="Views\RERClassification\ViewRecord.cshtml" />
     <Content Include="Views\RERClassification\_MainList.cshtml" />
+    <Content Include="Views\InitiatoryPleading\InitialOrder.cshtml" />
+    <Content Include="Views\InitiatoryPleading\NoticeVirtualHearing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

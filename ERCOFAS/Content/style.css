@@ -651,3 +651,10 @@ table th {
     border-radius: 0.25em;
 }
 
+.bg-light-mauve {
+    background-color: #d2d8e9;
+}
+
+.bg-mauve {
+    background-color: #5069b1;
+}

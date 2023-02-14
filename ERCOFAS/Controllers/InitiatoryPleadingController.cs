@@ -37,6 +37,16 @@ namespace ERCOFAS.Controllers
             return View();
         }
 
+        public ActionResult NoticeVirtualHearing()
+        {
+            return View();
+        }
+
+        public ActionResult InitialOrder()
+        {
+            return View();
+        }
+
         public ActionResult NoFiledYet()
         {
             return View();
