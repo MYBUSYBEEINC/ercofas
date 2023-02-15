@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
-    ViewBag.Title = "Notice of Virtual Hearing";
+    ViewBag.Title = "Manifestation";
 }
 
 <section>
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <h3 class="text-mauve text-center mb-5">Notice of Virtual Hearing</h3>
+        <h3 class="text-mauve text-center mb-5">Manifestation</h3>
 
         <div class="row">
             <div class="col">
@@ -46,58 +46,16 @@
 
                     <div class="d-flex flex-column justify-content-center text-secondary px-5 mx-5">
                         <div class="mb-4">
-                            <label class="form-label">
-                                1. Date and Time of Hearing
-                            </label>
-                            <div class="d-flex gap-2">
-                                <div class="w-25">
-                                    <label class="form-label">Date</label>
-                                    <input type="date" class="form-control  text-secondary">
-                                </div>
-                                <div class="w-25">
-                                    <label class="form-label">Time</label>
-                                    <input type="time" class="form-control  text-secondary">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
                             <label for="formFile" class="form-label">
-                                2. Venue of Hearing
+                                1. Upload Manifestation
                             </label>
-                            <input class="form-control text-secondary" type="text">
+                            <input class="form-control text-secondary" type="file" id="formFile">
                         </div>
                         <div class="mb-4">
                             <label for="formFile" class="form-label">
-                                3. Online Platform that will be used for the hearing
+                                2. Upload proof of service to all parties of the case
                             </label>
-                            <input class="form-control text-secondary" type="text">
-                        </div>
-                        <div class="mb-4">
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1" class="mb-1">4. The procedure on how to access the said online platform</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <label for="formFile" class="form-label">
-                                5. That any Petition for Intervention, Opposition, or Notice to Act as Observer in Virtual Hearings shall be filed at least ten (io) days prior
-                                to the scheduled Virtual Hearing
-                            </label>
-                            <input class="form-control text-secondary mb-2" type="file">
-                        </div>
-                        <div class="mb-4">
-                            <label for="formFile" class="form-label">
-                                6. That Copy of Expository Presentation, Pre-trial Brief, Judicial Affidavits of Applicants and Intervenors shall be filed
-                                at least ten (1o) days prior to the scheduled Virtual Hearing
-                            </label>
-                            <input class="form-control text-secondary mb-2" type="file">
-                        </div>
-                        <div class="mb-4">
-                            <label for="formFile" class="form-label">
-                                7. Any other relevant information necessary for the party to attend the said virtual hearing
-                            </label>
-                            <input class="form-control text-secondary  mb-2" type="file">
+                            <input class="form-control  text-secondary" type="file" id="formFile">
                         </div>
                     </div>
 

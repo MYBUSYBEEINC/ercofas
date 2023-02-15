@@ -37,6 +37,36 @@ namespace ERCOFAS.Controllers
             return View();
         }
 
+        public ActionResult Submission()
+        {
+            return View();
+        }
+
+        public ActionResult Manifestation()
+        {
+            return View();
+        }
+
+        public ActionResult Compliance()
+        {
+            return View();
+        }
+
+        public ActionResult Petition()
+        {
+            return View();
+        }
+
+        public ActionResult Motion()
+        {
+            return View();
+        }
+
+        public ActionResult Others()
+        {
+            return View();
+        }
+
         public ActionResult NoticeVirtualHearing()
         {
             return View();

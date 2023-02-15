@@ -709,6 +709,12 @@
     <Content Include="Views\RERClassification\_MainList.cshtml" />
     <Content Include="Views\InitiatoryPleading\InitialOrder.cshtml" />
     <Content Include="Views\InitiatoryPleading\NoticeVirtualHearing.cshtml" />
+    <Content Include="Views\InitiatoryPleading\Others.cshtml" />
+    <Content Include="Views\InitiatoryPleading\Motion.cshtml" />
+    <Content Include="Views\InitiatoryPleading\Petition.cshtml" />
+    <Content Include="Views\InitiatoryPleading\Compliance.cshtml" />
+    <Content Include="Views\InitiatoryPleading\Manifestation.cshtml" />
+    <Content Include="Views\InitiatoryPleading\Submission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
