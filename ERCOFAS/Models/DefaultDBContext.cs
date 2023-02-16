@@ -56,5 +56,8 @@ namespace ERCOFAS.Models
         public DbSet<PreFiledRequirementsPublication> PreFiledRequirementsPublications { get; set; }
         public DbSet<Transaction> Transaction { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<PreFiledCaseLogs> PreFiledCaseLogs { get; set; }
+        public DbSet<PreFiledCaseRemarkFileLogs> PreFiledCaseRemarkFileLogs { get; set; }
+
     }
 }
