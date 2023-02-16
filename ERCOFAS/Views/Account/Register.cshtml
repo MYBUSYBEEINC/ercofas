@@ -122,35 +122,33 @@
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.EmailAddress1, htmlAttributes: new { @class = "text-dark form-label fw600 required" })<br />
                                             <small class="form-text text-muted">@Resource.DesignatedEmailAddress1</small><br />
-                                            <small id="juridical-invalid-email1" class="form-text text-muted invalid-message"></small>
                                             @Html.EditorFor(model => model.EmailAddress1, new { htmlAttributes = new { id = "email-address1", @class = "form-control" } })
+                                            <small id="juridical-invalid-email1" class="form-text text-muted invalid-message"></small>
                                         </div>
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.EmailAddress2, htmlAttributes: new { @class = "text-dark form-label fw600 required" })<br />
                                             <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
-                                            <small id="juridical-invalid-email2" class="form-text text-muted invalid-message"></small>
                                             @Html.EditorFor(model => model.EmailAddress2, new { htmlAttributes = new { id = "email-address2", @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.EmailAddress2, "", new { @class = "invalid-message" })
+                                            <small id="juridical-invalid-email2" class="form-text text-muted invalid-message"></small>
                                         </div>
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.EmailAddress3, htmlAttributes: new { @class = "text-dark form-label fw600" })<br />
                                             <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
-                                            <small id="juridical-invalid-email3" class="form-text text-muted invalid-message"></small>
                                             @Html.EditorFor(model => model.EmailAddress3, new { htmlAttributes = new { id = "email-address3", @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.EmailAddress3, "", new { @class = "invalid-message" })
+                                            <small id="juridical-invalid-email3" class="form-text text-muted invalid-message"></small>
                                         </div>
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.EmailAddress4, htmlAttributes: new { @class = "text-dark form-label fw600" })<br />
                                             <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
-                                            <small id="juridical-invalid-email4" class="form-text text-muted invalid-message"></small>
                                             @Html.EditorFor(model => model.EmailAddress4, new { htmlAttributes = new { id = "email-address4", @class = "form-control" } })
+                                            <small id="juridical-invalid-email4" class="form-text text-muted invalid-message"></small>
                                         </div>
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.EmailAddress5, htmlAttributes: new { @class = "text-dark form-label fw600" })<br />
                                             <small class="form-text text-muted">@Resource.DesignatedEmailAddress2</small><br />
-                                            <small id="juridical-invalid-email5" class="form-text text-muted invalid-message"></small>
                                             @Html.EditorFor(model => model.EmailAddress5, new { htmlAttributes = new { id = "email-address5", @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.EmailAddress5, "", new { @class = "invalid-message" })
+                                            <small id="juridical-invalid-email5" class="form-text text-muted invalid-message"></small>
                                         </div>
                                         <div class="mb-3 text-break text-dark">
                                             <div class="form-group">
@@ -492,31 +490,41 @@
                                 $('#juridical-invalid-email2').hide();
                             }
 
-                            if (!isValidEmailAddress($('#email-address3').val())) {
-                                $('#juridical-invalid-email3').html(`<strong>${$('#email-address3').val()}</strong> is not a valid email address.`);
-                                $('#juridical-invalid-email3').show();
-                                scrollToDiv('office-address');
-                                return;
-                            } else {
-                                $('#juridical-invalid-email3').hide();
-                            }
+                            $('#juridical-invalid-email3').hide();
+                            $('#juridical-invalid-email4').hide();
+                            $('#juridical-invalid-email5').hide();
 
-                            if (!isValidEmailAddress($('#email-address4').val())) {
-                                $('#juridical-invalid-email4').html(`<strong>${$('#email-address4').val()}</strong> is not a valid email address.`);
-                                $('#juridical-invalid-email4').show();
-                                scrollToDiv('office-address');
-                                return;
-                            } else {
-                                $('#juridical-invalid-email4').hide();
+                            if ($('#email-address3').val().trim().length > 0) {
+                                if (!isValidEmailAddress($('#email-address3').val())) {
+                                    $('#juridical-invalid-email3').html(`<strong>${$('#email-address3').val()}</strong> is not a valid email address.`);
+                                    $('#juridical-invalid-email3').show();
+                                    scrollToDiv('office-address');
+                                    return;
+                                } else {
+                                    $('#juridical-invalid-email3').hide();
+                                }
                             }
-
-                            if (!isValidEmailAddress($('#email-address5').val())) {
-                                $('#juridical-invalid-email5').html(`<strong>${$('#email-address5').val()}</strong> is not a valid email address.`);
-                                $('#juridical-invalid-email5').show();
-                                scrollToDiv('email-address1');
-                                return;
-                            } else {
-                                $('#juridical-invalid-email5').hide();
+                           
+                            if ($('#email-address4').val().trim().length > 0) {
+                                if (!isValidEmailAddress($('#email-address4').val())) {
+                                    $('#juridical-invalid-email4').html(`<strong>${$('#email-address4').val()}</strong> is not a valid email address.`);
+                                    $('#juridical-invalid-email4').show();
+                                    scrollToDiv('office-address');
+                                    return;
+                                } else {
+                                    $('#juridical-invalid-email4').hide();
+                                }
+                            }
+                            
+                            if ($('#email-address5').val().trim().length > 0) {
+                                if (!isValidEmailAddress($('#email-address5').val())) {
+                                    $('#juridical-invalid-email5').html(`<strong>${$('#email-address5').val()}</strong> is not a valid email address.`);
+                                    $('#juridical-invalid-email5').show();
+                                    scrollToDiv('email-address1');
+                                    return;
+                                } else {
+                                    $('#juridical-invalid-email5').hide();
+                                }
                             }
                         }
                     }
@@ -549,7 +557,6 @@
             });
 
             $(".previous").click(function () {
-
                 current_fs = $(this).parent();
                 previous_fs = $(this).parent().prev();
 
