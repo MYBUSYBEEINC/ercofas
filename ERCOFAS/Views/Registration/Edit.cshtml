@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="col text-secondary">
                                     <ul style="list-style-type:none;padding:0;">
-                                        @if (Model.Emails != null)
+                                        @if (Model.Emails.Count(x => x.IsVerified) > 0)
                                         {
                                             foreach (var item in Model.Emails.Where(x => x.IsVerified))
                                             {
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="col text-secondary">
                                     <ul style="list-style-type:none;padding:0;">
-                                        @if (Model.MobileNumbers != null)
+                                        @if (Model.MobileNumbers.Count(x => x.IsVerified) > 0)
                                         {
                                             foreach (var item in Model.MobileNumbers.Where(x => x.IsVerified))
                                             {

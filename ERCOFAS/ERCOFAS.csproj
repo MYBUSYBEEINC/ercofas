@@ -376,6 +376,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\3214206.png" />
+    <Content Include="Assets\4055731.png" />
     <Content Include="Assets\863915.png" />
     <Content Include="Assets\avatar1.png" />
     <Content Include="Assets\back.png" />
@@ -687,7 +688,7 @@
     <Content Include="Views\PreRegistration\Approve.cshtml" />
     <Content Include="Views\Account\OTP.cshtml" />
     <Content Include="Views\Account\ThankYou.cshtml" />
-    <Content Include="Views\Account\InvalidLink.cshtml" />
+    <Content Include="Views\Account\InvalidVerificationLink.cshtml" />
     <Content Include="Views\Registration\Edit.cshtml" />
     <Content Include="Views\Registration\Index.cshtml" />
     <Content Include="Views\Registration\ViewRecord.cshtml" />
@@ -719,6 +720,9 @@
     <Content Include="Views\InitiatoryPleading\Compliance.cshtml" />
     <Content Include="Views\InitiatoryPleading\Manifestation.cshtml" />
     <Content Include="Views\InitiatoryPleading\Submission.cshtml" />
+    <Content Include="Views\Account\ReUploadDocument.cshtml" />
+    <Content Include="Views\Account\InvalidLink.cshtml" />
+    <Content Include="Views\Account\UploadedDocumentConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
