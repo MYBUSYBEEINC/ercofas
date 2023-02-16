@@ -193,8 +193,9 @@ aside.offcanvas { width: 70%; }
 }
 
 /* screen width smaller than 1199px, padding left and right = 20px, else will be 30px */
-@media (max-width: 1199px) {
-    #main { padding-left: 20px; padding-right: 20px; }
+@media only screen (max-width: 1199px) {
+    /*    #main { padding-left: 20px; padding-right: 20px; } */
+
 }
 
 /*--------------------------------------------------------------
@@ -657,4 +658,22 @@ table th {
 
 .bg-mauve {
     background-color: #5069b1;
+}
+
+
+@media only screen and (max-width: 767px) {
+    .header {
+        margin-left: 110px;
+    }
+    .logo-wrapper {
+        padding: 0 !important;
+    }
+    .profile-wrapper {
+        padding: 0px !important;
+        margin-top: 50% !important;
+    }
+
+    #notif-hightlights {
+        display: none !important;
+    }
 }

@@ -11,7 +11,7 @@
 
 <section id="dashboard">
     <div class="container-fluid px-0">
-        <div class="bg-white mb-4 p-2 rounded shadow">
+        <div id="notif-highlights" class="bg-white mb-4 p-2 rounded shadow">
             <div class="row">
                 <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
                     <h6>Notification Highlights</h6>
@@ -51,9 +51,12 @@
             <div class="col">
                 <div class="bg-white rounded ratio ratio-4x3">
                     <div class="text-secondary ps-4 pt-4"><strong>Pre-Filing Data</strong></div>
-                    <div class="card-body text-center">
+                    <div class="card-body text-center w-100">
                         <canvas id="myDoughnutChart" class="my-4 pt-4"></canvas>
                         <div class="row">
+                            <div class="col text-start">
+                                <small class="text-secondary ms-4 ps-4">Pending</small>
+                            </div>
                             <div class="col text-start">
                                 <small class="text-secondary ms-4 ps-4">Approved</small>
                             </div>
@@ -63,7 +66,10 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col">
-                                <h3 class="text-gold">76%</h3>
+                                <h3 class="text-gold">20%</h3>
+                            </div>
+                            <div class="col">
+                                <h3 class="text-gold">56%</h3>
                             </div>
                             <div class="col">
                                 <h3 class="text-gold">24%</h3>
@@ -75,7 +81,7 @@
             <div class="col">
                 <div class="bg-white rounded ratio ratio-4x3">
                     <div class="text-secondary ps-4 pt-4"><strong>Case Hearing</strong></div>
-                    <div class="card-body text-center">
+                    <div class="card-body text-center w-100">
                         <canvas id="myBarChart" class="my-4 pt-4"></canvas>
                         <div class="row">
                             <div class="col text-start">
@@ -103,7 +109,7 @@
                 <div class="col">
                     <div class="bg-white shadow">
                         <div class="text-secondary ps-4 pt-4"><strong>Payment</strong></div>
-                        <div class="card-body text-center">
+                        <div class="card-body text-center w-100">
                             <canvas id="myLineChart" class="mb-4" height="40"></canvas>
                             <div class="row">
                                 <div class="col text-start">
@@ -440,10 +446,11 @@
         var myChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ["Approved", "Declined"],
+                labels: ["Pending", "Approved", "Declined"],
                 datasets: [{
-                    data: [76, 24],
+                    data: [20, 56, 24],
                     backgroundColor: [
+                        'rgba(249, 231, 159)',
                         'rgba(179, 170, 64)',
                         'rgba(229,222,130)'
                     ]
