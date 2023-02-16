@@ -1,0 +1,419 @@
+﻿@model ERCOFAS.Models.PreRegistrationViewModel
+@using ERCOFAS.Resources
+@{
+    ViewBag.Title = "ERC Request for Email Registration (RER)";
+}
+
+@Html.Partial("~/Views/Shared/_Notification.cshtml")
+@Html.Partial("~/Views/Shared/_DialogPrompt.cshtml")
+
+<header id="masthead" class="table header-full text-white">
+    <div id="companyInfo" class="row-header">
+        <div id="logo" class="cell p-2">
+            <img src="~/Assets/logo/93x93.png">
+        </div>
+        <div id="brand" class="cell col70">
+            <div>Republic of the Philippines</div>
+            <div><h3>ENERGY REGULATORY COMMISSION</h3></div>
+        </div>
+    </div>
+</header>
+
+<section>
+    <div class="container-fluid" id="grad1">
+        <div class="row justify-content-center mt-0">
+            <div class="col-11 col-sm-9 col-md-7 col-lg-8 text-center p-0 mt-3 mb-2">
+                <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                    <div class="row p-5 rounded">
+                        <h2 class="fw600 text-capitalizetitle-lg text-center mb-5">ERC Request for Email Registration (RER)</h2>
+                        <div class="col-md-12 mx-0">
+                            @using (Html.BeginForm("UploadDocuments", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
+                            {
+                                @id = "msform",
+                                role = "form",
+                                enctype = "multipart/form-data"
+                            }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <ul id="progressbar">
+                                    <li class="mb-5" id="account"><img src="~/Assets/type.png" class="reg-icon"><br />Type of RER<br /><svg id="account-svg" class="ProgressBar-icon"></svg></li>
+                                    <li id="class"><img src="~/Assets/class.png" class="reg-icon"><br />Classification of RER<br /><svg id="class-svg" class="ProgressBar-icon"></svg></li>
+                                    <li id="personal"><img src="~/Assets/form.png" class="reg-icon"><br />Form<br /><svg id="personal-svg" class="ProgressBar-icon"></svg></li>
+                                    <li class="mb-5 active" id="payment"><img src="~/Assets/send files.png" class="reg-icon"><br />Upload Files<br /><svg id="payment-svg" class="ProgressBar-icon"></svg></li>
+                                    <li id="confirm"><img src="~/Assets/verification process.png" class="reg-icon"><br />Verification Process<br /><svg id="confirm-svg" class="ProgressBar-icon"></svg></li>
+                                </ul>
+                                <fieldset>
+                                    <div id="requirements" class="form-card rounded">
+                                        <h4 id="upload-files-header" class="text-dark">Step 3 - Upload Files</h4>
+                                        <h5 class="mt-5 text-dark">Upload Documents</h5>
+                                        <p class="mb-2">Upload image, word or pdf file.</p>
+                                        @foreach (var item in Model.RequiredDocuments)
+                                        {
+                                            <div class="mb-3 text-break text-dark @item.RERType">
+                                                <div class="form-group">
+                                                    <small class="form-text text-muted">
+                                                        Attach <strong>@item.Name</strong> here.
+                                                    </small>
+                                                    <div class="clear"></div>
+                                                    @Html.TextBoxFor(m => m.File, new { @id = item.Id, @class = "form-control", type = "file" })
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <input type="submit" name="submit" class="next action-button rounded" value="Re-Upload" />
+                                </fieldset>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+}
+
+<style type="text/css">
+    .required-fields {
+        color: red !important;
+        font-style: italic;
+    }
+
+    .invalid-message {
+        position: absolute;
+        margin-top: -20px;
+    }
+
+    .reg-icon {
+        height: 40px;
+        margin-bottom: 5px;
+    }
+
+    .text-box, input[type=text] {
+        border: 1px solid #dee2e6 !important;
+        border-radius: 0.25rem !important;
+    }
+
+    .upload-btn {
+        background: #B38B64;
+    }
+
+    body, #top-navigation.scrolled {
+        background: #edeff4 !important;
+        font-family: system-ui;
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 0;
+    }
+
+    #masthead {
+        border-collapse: collapse;
+    }
+
+    .table {
+        display: table;
+    }
+
+    .row-header {
+        display: table-row;
+    }
+
+    .cell {
+        width: 1%;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .col70 {
+        width: 70%;
+    }
+
+    .col30 {
+        width: 30%;
+    }
+
+    #logo img {
+        display: block;
+    }
+
+    .header-full {
+        background: #2c3655;
+    }
+
+    .btn-primary:focus {
+        box-shadow: none;
+    }
+
+    .text-erc-blue, i.fa-solid.fa-plus {
+        color: #5069b1 !important;
+    }
+
+    .form-check {
+        margin-bottom: 0.5rem;
+    }
+
+    input#government-agencies {
+        vertical-align: bottom;
+    }
+
+    #class {
+        display: none;
+    }
+
+    #individual, #juridical-entity, #distribution-utilites, #transmition-utility, #generation-companies, #retail-electricity-suppliers,
+    #qualified-third-parties, #government-agencies, #counsel-on-record, #entry-of-appearance, #all-persons, #others, #juridical-entity-form {
+        width: 20px !important;
+    }
+
+    /* slider */
+
+    .ProgressBar-icon {
+        width: 1.5em;
+        height: 1.5em;
+        background-color: #499bb3;
+        fill: $gray;
+        border-radius: 50%;
+        padding: 0.5em;
+        max-width: 100%;
+        z-index: 10;
+        position: relative;
+        transition: all .25s ease-out;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    #msform {
+        text-align: center;
+        position: relative;
+        margin-top: 20px;
+    }
+
+    #msform fieldset .form-card {
+        background: white;
+        border: 0 none;
+        border-radius: 0px;
+        /* box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2); */
+        padding: 20px 40px 30px 40px;
+        box-sizing: border-box;
+        width: 94%;
+        margin: 0 3% 20px 3%;
+        position: relative;
+    }
+
+    #msform fieldset {
+        background: white;
+        border: 0 none;
+        border-radius: 0.5rem;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+        padding-bottom: 20px;
+        position: relative;
+    }
+
+    #msform fieldset:not(:first-of-type) {
+        display: none;
+    }
+
+    #msform fieldset .form-card {
+        text-align: left;
+        color: #9E9E9E;
+    }
+
+    #msform input[type=text] {
+        height: 35px;
+    }
+
+    #msform input, #msform textarea {
+        padding: 0px 8px 4px 8px;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        border-radius: 0px;
+        margin-bottom: 20px;
+        margin-top: 2px;
+        /* width: 100%;*/
+        box-sizing: border-box;
+        color: #2C3E50;
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    #msform input:focus, #msform textarea:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: none;
+        font-weight: bold;
+        border-bottom: 2px solid #5069b1;
+        outline-width: 0;
+    }
+
+    #msform .action-button {
+        width: 100px;
+        background: #5069b1;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
+
+    #msform .action-button:hover, #msform .action-button:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px #5069b1;
+    }
+
+    #msform .action-button-previous {
+        width: 100px;
+        background: #d2d8e9;
+        color: #fff;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
+
+    #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px #616161;
+    }
+
+    select.list-dt {
+        border: none;
+        outline: 0;
+        border-bottom: 1px solid #ccc;
+        padding: 2px 5px 3px 5px;
+        margin: 2px;
+    }
+
+    select.list-dt:focus {
+        border-bottom: 2px solid #5069b1;
+    }
+
+    select {
+        appearance: auto !important;
+    }
+
+    .card {
+        z-index: 0;
+        border: none;
+        border-radius: 0.5rem;
+        position: relative;
+    }
+
+    .fs-title {
+        font-size: 25px;
+        color: #2C3E50;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey;
+        padding: 0;
+    }
+
+        #progressbar .active {
+            color: #000000;
+        }
+
+        #progressbar li {
+            list-style-type: none;
+            font-size: 12px;
+            width: 25%;
+            float: left;
+            position: relative;
+        }
+
+        #progressbar #account:before {
+            height: 25px;
+            width: 25px;
+            background-color: #499bb3;
+            border-radius: 50%;
+        }
+
+        #progressbar #class:before {
+        }
+
+        #progressbar #personal:before {
+        }
+
+        #progressbar #payment:before {
+        }
+
+        #progressbar #confirm:before {
+        }
+
+        #progressbar li:before {
+            width: 50px;
+            height: 50px;
+            line-height: 45px;
+            display: block;
+            font-size: 18px;
+            color: #ffffff;
+            background: lightgray;
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            padding: 2px;
+        }
+
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: lightgray;
+            position: absolute;
+            left: 0;
+            top: 74px;
+            z-index: -1;
+            color: #499bb3;
+        }
+
+        #progressbar li.active:before, #progressbar li.active:after {
+            background: #499bb3;
+        }
+
+    .radio-group {
+        position: relative;
+        margin-bottom: 25px;
+    }
+
+    .radio {
+        display: inline-block;
+        border-radius: 0;
+        background: #5069b1;
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        cursor: pointer;
+        margin: 8px 2px;
+    }
+
+        .radio:hover {
+            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .radio.selected {
+            box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
+        }
+
+    .fit-image {
+        width: 100%;
+        object-fit: cover;
+    }
+</style>

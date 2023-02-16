@@ -134,12 +134,45 @@ namespace ERCOFAS.Controllers
             return View(model);
         }
 
+        // GET: /Account/ReUploadDocument
+        [AllowAnonymous]
+        public ActionResult ReUploadDocument(int? id, string key)
+        {
+            if (id == null || string.IsNullOrEmpty(key))
+                return Redirect("/Account/InvalidLink");
+
+            var preRegistration = _db.PreRegistration.Where(x => x.Id == id && x.TempKey == key).FirstOrDefault();
+            if (preRegistration != null)
+            {
+                PreRegistrationViewModel model = new PreRegistrationViewModel
+                {
+                    RequiredDocuments = (from t1 in _db.PreRegistrationAttachments
+                                         where t1.PreRegistrationId == id && t1.IsApproved == false
+                                         select new RequiredDocumentsViewModel()
+                                         {
+                                             Id = t1.Id,
+                                             Name = t1.DocumentName
+                                         }).ToList()
+                };
+
+                List<string> documents = new List<string>();
+                foreach (var document in model.RequiredDocuments)
+                    documents.Add(document.Name);
+
+                Session["RegistrationID"] = preRegistration.Id;
+                Session["Documents"] = documents;
+
+                return View(model);
+            }
+            else
+                return Redirect("/Account/InvalidLink");
+        }
+
         // GET: /Account/ChangePassword
         public ActionResult ChangePassword()
         {
             return View();
         }
-
 
         // GET: /Account/EmailVerification
         [AllowAnonymous]
@@ -205,7 +238,7 @@ namespace ERCOFAS.Controllers
                     Session["key"] = key;
                 }
                 else
-                    return Redirect("/Account/InvalidLink");
+                    return Redirect("/Account/InvalidVerificationLink");
             }
             catch (Exception ex)
             {
@@ -253,9 +286,16 @@ namespace ERCOFAS.Controllers
             return Redirect(string.Format("/Account/OTP?key={0}", key));
         }
 
-        // GET: /Account/EmailVerification
+        // GET: /Account/InvalidLink
         [AllowAnonymous]
         public ActionResult InvalidLink()
+        {
+            return View();
+        }
+
+        // GET: /Account/InvalidVerificationLink
+        [AllowAnonymous]
+        public ActionResult InvalidVerificationLink()
         {
             return View();
         }
@@ -284,7 +324,14 @@ namespace ERCOFAS.Controllers
             return View();
         }
 
-        // GET: /Account/ConfirmResetPassword
+        // GET: /Account/UploadedDocumentConfirmation
+        [AllowAnonymous]
+        public ActionResult UploadedDocumentConfirmation()
+        {
+            return View();
+        }
+
+        // GET: /Account/InvalidResetPasswordLink
         [AllowAnonymous]
         public ActionResult InvalidResetPasswordLink()
         {
@@ -522,6 +569,49 @@ namespace ERCOFAS.Controllers
                 }
             }
             return Redirect("/Account/EmailVerification");
+        }
+
+        // POST: /Account/UploadDocuments
+        /// <summary>
+        /// Re-upload the failed document(s).
+        /// </summary>
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UploadDocuments(PreRegistrationViewModel model)
+        {
+            long registrationId = (long)Session["RegistrationID"];
+            List<string> documents = (List<string>)Session["Documents"];
+
+            int index = 0;
+            foreach (HttpPostedFileBase file in model.File)
+            {
+                if (file != null)
+                {
+                    string documentName = documents[index];
+
+                    var regAttachment = await _db.PreRegistrationAttachments.FirstOrDefaultAsync(x => x.PreRegistrationId == registrationId && x.DocumentName == documentName);
+                    if (regAttachment != null)
+                    {
+                        if (System.IO.File.Exists(regAttachment.FileUrl))
+                            System.IO.File.Delete(regAttachment.FileUrl);
+
+                        var attachment = AttachmentHelpers.SaveToDirectory(file);
+                        regAttachment.FileUrl = attachment.Item3;
+                        regAttachment.FileName = attachment.Item1;
+                        regAttachment.UniqueFileName = attachment.Item2;
+                        regAttachment.IsApproved = null;
+                        _db.SaveChanges();
+                    }
+
+                    var preRegistration = await _db.PreRegistration.FirstOrDefaultAsync(x => x.Id == registrationId);
+                    preRegistration.TempKey = null;
+                    _db.SaveChanges();
+                }
+                index++;
+            }
+                    
+            return Redirect("/Account/UploadedDocumentConfirmation");
         }
 
         // POST: /Account/ValidateOTP

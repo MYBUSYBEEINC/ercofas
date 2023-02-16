@@ -24,6 +24,7 @@ namespace ERCOFAS.Models
         public string RERClassificationId { get; set; }
         public string TempUsername { get; set; }
         public string TempPassword { get; set; }
+        public string TempKey { get; set; }
         public string RegistrationStatusId { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? ApprovedDate { get; set; }

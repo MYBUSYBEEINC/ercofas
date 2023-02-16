@@ -55,15 +55,15 @@ namespace ERCOFAS.Controllers
         public List<PreFiledCaseViewModel> ReadPreFiledCases(string userId)
         {
             List<PreFiledCaseViewModel> list = new List<PreFiledCaseViewModel>();
-            list = (from t1 in db.PreFiledCases
-                    join t2 in db.AspNetUsers on t1.UserId equals t2.Id
-                    join t3 in db.GlobalOptionSets.Where(x => x.Type == "CaseType") on t1.CaseTypeId equals t3.Id
-                    join t4 in db.GlobalOptionSets.Where(x => x.Type == "CaseNature") on t1.CaseNatureId equals t4.Id
-                    join t5 in db.GlobalOptionSets.Where(x => x.Type == "FileCaseStatus") on t1.FileCaseStatusId equals t5.Id 
+            list = (from t1 in db.PreFiledCases.AsNoTracking()
+                    join t2 in db.AspNetUsers.AsNoTracking() on t1.UserId equals t2.Id
+                    join t3 in db.GlobalOptionSets.AsNoTracking().Where(x => x.Type == "CaseType") on t1.CaseTypeId equals t3.Id
+                    join t4 in db.GlobalOptionSets.AsNoTracking().Where(x => x.Type == "CaseNature") on t1.CaseNatureId equals t4.Id
+                    join t5 in db.GlobalOptionSets.AsNoTracking().Where(x => x.Type == "FileCaseStatus") on t1.FileCaseStatusId equals t5.Id 
                     into fileCaseStatus from preFiledCasesStatus in fileCaseStatus.DefaultIfEmpty()
-                    join t6 in db.UserProfiles on t1.UserId equals t6.AspNetUserId
-                    join t7 in db.AspNetUserRoles on t1.UserId equals t7.UserId
-                    join t8 in db.AspNetRoles on t7.RoleId equals t8.Id
+                    join t6 in db.UserProfiles.AsNoTracking() on t1.UserId equals t6.AspNetUserId
+                    join t7 in db.AspNetUserRoles.AsNoTracking() on t1.UserId equals t7.UserId
+                    join t8 in db.AspNetRoles.AsNoTracking() on t7.RoleId equals t8.Id
                     orderby t1.CreatedOn descending
                     select new PreFiledCaseViewModel
                     {

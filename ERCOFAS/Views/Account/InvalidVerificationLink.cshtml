@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Invalid Reset Password Link";
+    ViewBag.Title = "Invalid Verification Link";
 }
 
 <header id="masthead" class="table header-full text-white">
@@ -21,10 +21,10 @@
                 <div class="card mt-3 border-0">
                     <div class="row p-5 rounded">
                         <div class="col-md-12 mx-0">
-                            <img class="otp-image" height="200" src="~/Assets/invalid-link.png" alt="OTP">
-                            <h3 class="fw600 text-capitalizetitle-lg text-center mb-5">Invalid Link</h3>
-                            <p>The link you clicked is invalid or has expired.</p>
-                            <p>Please make sure you're using the link from the most recent email.</p>
+                            <img class="otp-image" height="200" src="~/Assets/invalid-link.png" alt="We Couldn't Verify Your Email">
+                            <h3 class="fw600 text-capitalizetitle-lg text-center mb-5">We Couldn't Verify Your Email</h3>
+                            <p>The email verification link you clicked is invalid.</p>
+                            <p>Try copying the entire link from your email and pasting it into your browser.</p>
                             <button class="btn btn-p8 hover-color-white btn-primary hover-moveup" onclick="location.href='@Url.Action("Login", "Account")'">Back to Homepage</button>
                         </div>
                     </div>

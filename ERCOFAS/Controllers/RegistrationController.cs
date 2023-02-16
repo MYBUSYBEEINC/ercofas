@@ -247,6 +247,7 @@ namespace ERCOFAS.Controllers
                 else
                 {
                     registration.RegistrationStatusId = "200257E4-E6C8-4159-8A6F-4475E0A95B32";
+                    registration.TempKey = Guid.NewGuid().ToString();
                     db.SaveChanges();
                 }
 
@@ -257,7 +258,9 @@ namespace ERCOFAS.Controllers
                 {
                     if (!model.IsCompleted)
                     {
+                        string reUploadDocumentLink = string.Format("{0}/Account/ReUploadDocument?id={1}&key={2}", settings.BaseUrl, registration.Id, registration.TempKey);
                         emailNotification.Content = emailNotification.Content.Replace("{documents}", documents);
+                        emailNotification.Content = emailNotification.Content.Replace("{reupload-document-link}", reUploadDocumentLink);
                         emailNotification.Content = emailNotification.Content.Replace("{remarks}", !string.IsNullOrEmpty(model.Remarks) ? 
                             string.Format("Reviewer Remarks: {0}", model.Remarks): string.Empty);
                         EmailHelpers.SendEmail(item.EmailAddress, subject, emailNotification.Content);

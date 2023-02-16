@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Invalid Reset Password Link";
+    ViewBag.Title = "Document Uploaded Successfully";
 }
 
 <header id="masthead" class="table header-full text-white">
@@ -21,11 +21,10 @@
                 <div class="card mt-3 border-0">
                     <div class="row p-5 rounded">
                         <div class="col-md-12 mx-0">
-                            <img class="otp-image" height="200" src="~/Assets/invalid-link.png" alt="OTP">
-                            <h3 class="fw600 text-capitalizetitle-lg text-center mb-5">Invalid Link</h3>
-                            <p>The link you clicked is invalid or has expired.</p>
-                            <p>Please make sure you're using the link from the most recent email.</p>
-                            <button class="btn btn-p8 hover-color-white btn-primary hover-moveup" onclick="location.href='@Url.Action("Login", "Account")'">Back to Homepage</button>
+                            <img class="otp-image" height="200" src="~/Assets/4055731.png" alt="Document Uploaded Successfully">
+                            <h3 class="fw600 text-capitalizetitle-lg text-center mb-5">Document Uploaded Successfully</h3>
+                            <p>We have received your uploaded document(s). Please check your email from time to time for the result of your verification process.</p>
+                            <button class="btn btn-primary" onclick="location.href='@Url.Action("Login", "Account")'">Back to Homepage</button>
                         </div>
                     </div>
                 </div>
@@ -33,6 +32,35 @@
         </div>
     </div>
 </section>
+
+@section Scripts{
+    <script type="text/javascript">
+        $('.digit-group').find('input').each(function () {
+            $(this).attr('maxlength', 1);
+            $(this).on('keyup', function (e) {
+                var parent = $($(this).parent());
+
+                if (e.keyCode === 8 || e.keyCode === 37) {
+                    var prev = parent.find('input#' + $(this).data('previous'));
+
+                    if (prev.length) {
+                        $(prev).select();
+                    }
+                } else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+                    var next = parent.find('input#' + $(this).data('next'));
+
+                    if (next.length) {
+                        $(next).select();
+                    } else {
+                        if (parent.data('autosubmit')) {
+                            parent.submit();
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}
 
 <style type="text/css">
     main.position-relative {
@@ -119,9 +147,5 @@
         font-size: 20px;
         text-align: center;
         font-weight: 500;
-    }
-
-    button {
-        width: 100% !important;
     }
 </style>
