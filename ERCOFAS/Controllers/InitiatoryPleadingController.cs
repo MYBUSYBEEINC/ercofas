@@ -103,7 +103,7 @@ namespace ERCOFAS.Controllers
             {
                 list = (from t1 in db.InitiatoryPleadings
                         join t2 in db.AspNetUsers on t1.CreatedBy equals t2.Id
-                        join t3 in db.UserProfiles on t2.Id equals t3.AspNetUserId
+                        join t3 in db.UserProfiles on t2.Id equals t3.AspNetUserId                        
                         where t1.CreatedBy == userId
                         orderby t1.CreatedOn descending
                         select new InitiatoryPleadingModel()
@@ -112,8 +112,8 @@ namespace ERCOFAS.Controllers
                             DocumentName = t1.DocumentName,
                             Description = t1.Description,
                             Barcode = t1.Barcode,
-                            DocketNumber = t1.DocketNumber,
-                            CreatedBy = t3.FirstName + " " + t3.LastName,
+                            DocketNumber = t1.DocketNumber,                                                   
+                            CreatedBy = t3.FullName,
                             CreatedOn = t1.CreatedOn
                         }).ToList();
             }
@@ -152,11 +152,14 @@ namespace ERCOFAS.Controllers
             using (DefaultDBContext db = new DefaultDBContext())
             {
                 InitiatoryPleading initiatoryPleading = db.InitiatoryPleadings.Where(a => a.Id == Id).FirstOrDefault();
+                PreFiledCases preFiledCase = db.PreFiledCases.Where(a => a.Id == initiatoryPleading.PreFiledCaseId).FirstOrDefault();
+
                 model.Id = initiatoryPleading.Id;
                 model.DocumentName = initiatoryPleading.DocumentName;
                 model.Description = initiatoryPleading.Description;
                 model.Barcode = initiatoryPleading.Barcode;
                 model.DocketNumber = initiatoryPleading.DocketNumber;
+                model.CaseNature = preFiledCase != null ? general.GetGlobalOptionSetDisplayName(preFiledCase.CaseNatureId) : string.Empty;
                 model.CreatedBy = db.UserProfiles.FirstOrDefault(x => x.AspNetUserId == initiatoryPleading.CreatedBy).FullName;
                 model.CreatedOn = initiatoryPleading.CreatedOn;
                 model.ModifiedBy = initiatoryPleading.ModifiedBy;
@@ -258,7 +261,7 @@ namespace ERCOFAS.Controllers
                     InitiatoryPleading initiatoryPleading = db.InitiatoryPleadings.Where(a => a.Id == model.Id).FirstOrDefault();
                     initiatoryPleading.DocumentName = model.DocumentName;
                     initiatoryPleading.Description = model.Description;
-                    initiatoryPleading.Barcode = model.Barcode;
+                    initiatoryPleading.Barcode = string.IsNullOrEmpty(model.Barcode) ? Guid.NewGuid().ToString() : initiatoryPleading.Barcode;
                     initiatoryPleading.DocketNumber = model.DocketNumber;
                     initiatoryPleading.ModifiedBy = userId;
                     initiatoryPleading.ModifiedOn = general.GetSystemTimeZoneDateTimeNow();
@@ -274,6 +277,7 @@ namespace ERCOFAS.Controllers
                     initiatoryPleading.Description = model.Description;
                     initiatoryPleading.Barcode = model.Barcode;
                     initiatoryPleading.DocketNumber = model.DocketNumber;
+                    initiatoryPleading.PreFiledCaseId = model.PreFiledCaseId;
                     initiatoryPleading.CreatedBy = userId;
                     initiatoryPleading.CreatedOn = general.GetSystemTimeZoneDateTimeNow();
                     db.InitiatoryPleadings.Add(initiatoryPleading);
@@ -334,12 +338,14 @@ namespace ERCOFAS.Controllers
 
                 if (initiatoryPleading == null)
                 {
+                    var caseType = preFiledCase != null ? general.GetGlobalOptionSetCode(preFiledCase.CaseTypeId) : string.Empty;
                     InitiatoryPleadingModel initiatoryPleadingModel = new InitiatoryPleadingModel
                     {
                         DocumentName = preFiledCase.RequestSubject,
                         Description = preFiledCase.RequestSubject,
                         Barcode = Guid.NewGuid().ToString(),
-                        DocketNumber = Guid.NewGuid().ToString()
+                        DocketNumber = GenerateDocketNumber(caseType),
+                        PreFiledCaseId = preFiledCase.Id
                     };
                     SaveRecord(initiatoryPleadingModel);
                 }
@@ -347,6 +353,44 @@ namespace ERCOFAS.Controllers
             }
 
             return Json(saved, JsonRequestBehavior.AllowGet);
+        }
+
+        private string GenerateDocketNumber(string caseType)
+        {
+            if (string.IsNullOrEmpty(caseType))
+                return caseType;
+
+            string caseCode = string.Empty;            
+            switch (caseType)
+            {
+                case "RateCase":
+                    caseCode = "RC";
+                    break;
+
+                case "MiscellaneousCase":
+                    caseCode = "MC";
+                    break;
+
+                case "ComplianceFiling":
+                    caseCode = "CF";
+                    break;
+
+                case "DisputeResolution":
+                    caseCode = "DP";
+                    break;
+
+                case "PrepaidRetailElectricService":
+                case "PRES":
+                    caseCode = "PRES";
+                    break;
+
+                case "RuleMaking":
+                    caseCode = "RM";
+                    break;
+            }
+
+            string docketNumber = $"{DateTime.Now.ToString("yyyy")}-{000:D3}{caseCode}";
+            return docketNumber;
         }
 
         protected override void Dispose(bool disposing)

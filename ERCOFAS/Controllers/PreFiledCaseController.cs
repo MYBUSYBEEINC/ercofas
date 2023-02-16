@@ -183,6 +183,12 @@ namespace ERCOFAS.Controllers
             model.PreFiledAttachmentViewModels = GetPreFiledAttachments(Id);
             model.InitialReviewRequired = true;
 
+            var preFiledSurveyInformation = new PreFiledSurveyInformationModel();
+            preFiledSurveyInformation.OfficeList = GetOfficeList();
+            preFiledSurveyInformation.VisitPurposeList = GetPurposeVisitList();
+            preFiledSurveyInformation.SurveyQuestions = db.SurveyQuestions.Where(a => a.Type == "PreFiledClientSatisfactory").ToList();
+            model.PreFiledSurveyInformation = preFiledSurveyInformation;
+           
             return View(model);
         }
 
@@ -847,6 +853,8 @@ namespace ERCOFAS.Controllers
             };
         }
 
+        #endregion review        
+
         public ActionResult GetCaseNatureList(string caseTypeId)
         {
             var caseNatureList = general.GetCaseNatureList("", caseTypeId);
@@ -854,6 +862,43 @@ namespace ERCOFAS.Controllers
             return Json(caseNatureList, JsonRequestBehavior.AllowGet);
         }
 
+        #region Survey
+
+        private IList<string> GetOfficeList()
+        {
+            IList<string> officeList = new List<string>();
+
+            officeList.Add("CAS");
+            officeList.Add("ROS");
+            officeList.Add("MOS");
+            officeList.Add("LS");
+            officeList.Add("OGCS/CRD");
+            officeList.Add("FAS");
+            officeList.Add("PPIS");
+            officeList.Add("CCM");
+
+            return officeList;
+        }
+
+        private IList<string> GetPurposeVisitList()
+        {
+            IList<string> purposeList = new List<string>();
+
+            purposeList.Add("Case Filing");
+            purposeList.Add("Certificate of Compliance (COC)");
+            purposeList.Add("Meter Reading");
+            purposeList.Add("Claim Document");
+            purposeList.Add("Document Submission");
+            purposeList.Add("Consumer Complaint");
+            purposeList.Add("Inquiry");
+            purposeList.Add("Payment");
+            purposeList.Add("Retail Electricity Supplier (RES)");
+            purposeList.Add("Others");
+
+            return purposeList;
+        }
+
+        #endregion
+
     }
-    #endregion review
 }

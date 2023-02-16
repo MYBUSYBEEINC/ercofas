@@ -11,6 +11,7 @@ namespace ERCOFAS.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string Company { get; set; }
+        public DateTime SurveyDate { get; set; }
         public DateTime SurveyDateTimeIn { get; set; }
         public DateTime SurveyDateTimeOut { get; set; }
         public string ContactNumber { get; set; }
@@ -18,9 +19,9 @@ namespace ERCOFAS.Models
         public string OfficeVisited { get; set; }
         public string PurposeVisit { get; set; }
         public string CreatedBy { get; set; }
-        public string UpdatedBy { get; set; }
-        public DateTime? DateCreated { get; set; }
-        public DateTime? DateUpdated { get; set; }
+        public string ModifiedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
     }
 
     public class PreFiledSurveyInformationModel
@@ -28,12 +29,17 @@ namespace ERCOFAS.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string Company { get; set; }
+        public DateTime SurveyDate { get; set; }
         public DateTime SurveyDateTimeIn { get; set; }
         public DateTime SurveyDateTimeOut { get; set; }
         public string ContactNumber { get; set; }
         public string EmailAddress { get; set; }
         public string OfficeVisited { get; set; }
+        public IList<string> OfficeList { get; set; }
+        public IList<string> VisitPurposeList { get; set; }
         public string PurposeVisit { get; set; }   
-        public IList<PreFiledSurveyServiceDimension> PreFiledSurveyServiceDimensions { get; set; }
+        public IList<PreFiledSurveyFeedback> PreFiledSurveyServiceDimensions { get; set; }
+        public string SurveyQuestion { get; set; }
+        public IList<SurveyQuestion> SurveyQuestions { get; set; }
     }
 }

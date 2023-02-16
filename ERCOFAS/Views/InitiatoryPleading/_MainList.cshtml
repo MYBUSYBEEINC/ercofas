@@ -11,8 +11,7 @@
 <thead class="table-light">
     <tr>
         <th class="thead">Subject of Request</th>
-        <th class="thead">Full Name</th>
-        <th class="thead">Barcode</th>
+        <th class="thead">Full Name</th>        
         <th class="thead">Docket No.</th>
         <th class="thead">Created On</th>
         <th class="thead text-center">@Resource.Actions</th>
@@ -23,8 +22,7 @@
     {
         <tr style="color: #212529;">
             <td>@Html.DisplayFor(modelItem => item.DocumentName)</td>
-            <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
-            <td>@Html.DisplayFor(modelItem => item.Barcode)</td>
+            <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>           
             <td>@Html.DisplayFor(modelItem => item.DocketNumber)</td>
             <td>@Html.DisplayFor(modelItem => item.CreatedOn)</td>
             <td class="text-center">
@@ -42,7 +40,7 @@
                             }
                             if (userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Client.ToString())
                             {
-                                <button id="view-@item.Id" type="button" class="btn btn-secondary btn-sm edit-button" data-id="@item.Id" style="margin-left: 5px;"><a href="@Url.Action("edit", new { Id = @Html.ValueFor(modelItem => item.Id) })"><i class="fa-solid fa-edit"></i></a> Edit</button>                          
+                                <a href="@Url.Action("edit", new { Id = @Html.ValueFor(modelItem => item.Id) })"><button id="view-@item.Id" type="button" class="btn btn-secondary btn-sm edit-button" data-id="@item.Id" style="margin-left: 5px;"><i class="fa-solid fa-edit"></i> Edit</button></a>                         
                             }
                         }
                     </div>

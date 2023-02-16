@@ -58,6 +58,8 @@ namespace ERCOFAS.Models
         public DbSet<Country> Countries { get; set; }
         public DbSet<PreFiledCaseLogs> PreFiledCaseLogs { get; set; }
         public DbSet<PreFiledCaseRemarkFileLogs> PreFiledCaseRemarkFileLogs { get; set; }
-
+        public DbSet<PreFiledSurveyInformation> PreFiledSurveyInformations { get; set; }
+        public DbSet<PreFiledSurveyFeedback> PreFiledSurveyServiceDimensions { get; set; }
+        public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
     }
 }

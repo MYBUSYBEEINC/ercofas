@@ -16,6 +16,7 @@ namespace ERCOFAS.Models
         public string Description { get; set; }
         public string Barcode { get; set; }
         public string DocketNumber { get; set; }
+        public string PreFiledCaseId { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string ModifiedBy { get; set; }
@@ -45,6 +46,9 @@ namespace ERCOFAS.Models
         public HttpPostedFileBase[] Files { get; set; }
         public List<InitiatoryPleadingAttachment> Attachments { get; set; }
         public string DocketNumber { get; set; }
+        public string PreFiledCaseId { get; set; }
+        public string CaseType { get; set; }
+        public string CaseNature { get; set; }
     }
 
     public class InitiatoryPleadingListing

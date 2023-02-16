@@ -313,7 +313,7 @@
     <Compile Include="Models\PreFiledCaseRequirementsModel.cs" />
     <Compile Include="Models\PreFiledRequirementsCertification.cs" />
     <Compile Include="Models\PreFiledRequirementsPublication.cs" />
-    <Compile Include="Models\PreFiledSurveyServiceDimension.cs" />
+    <Compile Include="Models\PreFiledSurveyFeedbackModel.cs" />
     <Compile Include="Models\PreRegistrationAttachmentModels.cs" />
     <Compile Include="Models\InitiatoryPleadingAttachmentModels.cs" />
     <Compile Include="Models\InitiatoryPleadingModels.cs" />
@@ -331,7 +331,8 @@
     <Compile Include="Models\RequirementsModel.cs" />
     <Compile Include="Models\RoleModulePermissionModels.cs" />
     <Compile Include="Models\SettingsModel.cs" />
-    <Compile Include="Models\PreFiledSurveyInformation.cs" />
+    <Compile Include="Models\PreFiledSurveyInformationModel.cs" />
+    <Compile Include="Models\SurveyQuestionModel.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionAttachmentModels.cs" />
     <Compile Include="Models\UserAttachmentModels.cs" />
