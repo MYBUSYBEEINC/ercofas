@@ -90,6 +90,9 @@ namespace ERCOFAS.Models
         public string Office { get; set; }
         public bool PreFilingCaseComplete { get; set; }
         public PreFiledSurveyInformationModel PreFiledSurveyInformation { get; set; }
+        public List<PreFiledCaseLogs> CaseLogs { get; set; }
+        public List<PreFiledCaseRemarkFileLogs> PreFiledCaseRemarkFileLogs { get; set; }
+
     }
 
     public class PreFiledCaseListing

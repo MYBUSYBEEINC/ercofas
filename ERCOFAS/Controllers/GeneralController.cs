@@ -1530,6 +1530,36 @@ namespace ERCOFAS.Controllers
                 }
             }
         }
+        public void SaveRemarkFileAttachment(List<HttpPostedFileBase> files, string prefiledCaseId, string uid)
+        {
+            foreach (HttpPostedFileBase file in files)
+            {
+                if (file != null)
+                {
+                    var fileNameWithExtension = Path.GetFileName(file.FileName);
+                    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file.FileName);
+                    string extension = Path.GetExtension(file.FileName);
+                    string shortUniqueId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                    string uniqueid = StringExtensions.RemoveSpecialCharacters(shortUniqueId);
+                    string uniqueFileName = fileNameWithoutExtension + "_" + uniqueid + extension;
+                    var path = Path.Combine(HostingEnvironment.MapPath("~/Documents"), uniqueFileName);
+                    file.SaveAs(path);
+
+                    PreFiledCaseRemarkFileLogs attachment = new PreFiledCaseRemarkFileLogs();
+                    attachment.Id = Guid.NewGuid().ToString();
+                    attachment.PreFiledCaseId = prefiledCaseId;
+                    attachment.FileName = fileNameWithExtension;
+                    attachment.UniqueFileName = uniqueFileName;
+                    attachment.CreatedBy = uid;
+                    attachment.FileUrl = path;
+                    attachment.CreatedOn = GetSystemTimeZoneDateTimeNow().Value;
+                    db.PreFiledCaseRemarkFileLogs.Add(attachment);
+                    db.SaveChanges();
+                }
+            }
+        }
+
+
 
         // GET: /General/UnderConstruction
         [AllowAnonymous]

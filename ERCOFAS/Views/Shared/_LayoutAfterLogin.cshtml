@@ -87,12 +87,37 @@
                 });
             }
 
-            function triggerApproveConfirmationModal(recordName, deleteUrl) {
-                $('#confirmApproveModal').modal('show');
+            function triggerApproveFileConfirmationModal(recordName, deleteUrl) {
+                $('#confirmApproveFileModal').modal('show');
+                console.log(recordName, deleteUrl);
                 if (recordName != "" && recordName != null) {
-                    document.getElementById("record-to-approve").innerText = recordName;
+                    document.getElementById("record-to-approve-file").innerText = recordName;
                 }
-                var confirmDeleteButton = document.querySelector("#confirmed-approvebtn");
+                var confirmDeleteButton = document.querySelector("#confirmed-approvefilebtn");
+                confirmDeleteButton.addEventListener('click', () => {
+                    console.log("done")
+                    window.location = deleteUrl;
+                });
+
+            }
+
+            function triggerRejectFileConfirmationModal(recordName, deleteUrl) {
+                $('#confirmRejectFileModal').modal('show');
+                if (recordName != "" && recordName != null) {
+                    document.getElementById("record-to-reject-file").innerText = recordName;
+                }
+                var confirmDeleteButton = document.querySelector("#confirmed-rejectfilebtn");
+                confirmDeleteButton.addEventListener('click', () => {
+                    window.location = deleteUrl;
+                });
+            }
+
+            function triggerDiscardFileConfirmationModal(recordName, deleteUrl) {
+                $('#confirmDiscardFileModal').modal('show');
+                if (recordName != "" && recordName != null) {
+                    document.getElementById("record-to-discard-file").innerText = recordName;
+                }
+                var confirmDeleteButton = document.querySelector("#confirmed-discardbtn");
                 confirmDeleteButton.addEventListener('click', () => {
                     window.location = deleteUrl;
                 });

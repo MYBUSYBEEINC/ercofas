@@ -101,6 +101,21 @@ namespace ERCOFAS.Controllers
             return list;
         }
 
+        public List<PreFiledCaseLogs> ReadPreFiledCaseLogs(string preFiledCaseId)
+        {
+            List<PreFiledCaseLogs> list = new List<PreFiledCaseLogs>();
+            list = db.PreFiledCaseLogs.Where(x => x.PreFiledCaseId == preFiledCaseId).ToList();
+            return list;
+        }
+
+        public List<PreFiledCaseRemarkFileLogs> ReadPreFiledCaseRemarkFileLogs(string preFiledCaseId)
+        {
+            List<PreFiledCaseRemarkFileLogs> list = new List<PreFiledCaseRemarkFileLogs>();
+            list = db.PreFiledCaseRemarkFileLogs.Where(x => x.PreFiledCaseId == preFiledCaseId).ToList();
+            return list;
+        }
+
+
         public PreFiledCaseViewModel GetViewModel(string Id, string type)
         {
             PreFiledCaseViewModel model = new PreFiledCaseViewModel();
@@ -524,7 +539,7 @@ namespace ERCOFAS.Controllers
                 {
                     // Temporarily set the Payment Status to approved while waiting for SOA/Payment to proceed on completion.
                     PreFiledCases preFiledCase = db.PreFiledCases.Where(x => x.Id == prefile).FirstOrDefault();
-                    if(preFiledCase != null)
+                    if (preFiledCase != null)
                     {
                         preFiledCase.PaymentStatus = "Approved";
                         db.Entry(preFiledCase).State = EntityState.Modified;
@@ -556,7 +571,36 @@ namespace ERCOFAS.Controllers
             return RedirectToAction(nameof(ViewRecord), new { id = prefile }); ;
         }
 
-        [CustomAuthorizeFilter(ProjectEnum.ModuleCode.PreFiledCase, "true", "true", "true", "true")]
+        public ActionResult DiscardFile(string Id, string prefile)
+        {
+            try
+            {
+                if (Id != null)
+                {
+                    PreFiledAttachment preFiledAttachment = db.PreFiledAttachments.Where(a => a.Id == Id).FirstOrDefault();
+                    if (preFiledAttachment != null)
+                    {
+                        preFiledAttachment.StatusId = "Discarded";
+                        db.Entry(preFiledAttachment).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                TempData["NotifySuccess"] = "Discarded Successfully";
+            }
+            catch (Exception)
+            {
+                PreFiledAttachment preFiledAttachment = db.PreFiledAttachments.Where(a => a.Id == Id).FirstOrDefault();
+                if (preFiledAttachment == null)
+                {
+                    TempData["NotifySuccess"] = "Discarded Successfully";
+                }
+                else
+                {
+                    TempData["NotifyFailed"] = Resource.FailedExceptionError;
+                }
+            }
+            return RedirectToAction(nameof(ViewRecord), new { id = prefile });
+        }
 
         public ActionResult RejectFile(string Id, string prefile)
         {
@@ -601,23 +645,6 @@ namespace ERCOFAS.Controllers
                     string preFiledCaseId = Request.Form["pi"];
                     string status = Request.Form["v"];
                     string remarks = Request.Form["remarks"];
-                    string applicationFormId = Request.Form["applicationFormId"];
-                    string statusOfApplicationForm = Request.Form["statusOfApplicationForm"];
-                    string servicelguId = Request.Form["servicelguId"];
-                    string statusOfServiceLgu = Request.Form["statusOfServiceLgu"];
-                    string publicationId = Request.Form["publicationId"];
-                    string statusOfPublication = Request.Form["statusOfPublication"];
-                    string notarypresentedId = Request.Form["notarypresentedId"];
-                    string statusOfNotaryPresentedId = Request.Form["statusOfNotaryPresentedId"];
-                    string authoritycounselId = Request.Form["authoritycounselId"];
-                    string statusOfAuthorityCounsel = Request.Form["statusOfAuthorityCounsel"];
-                    string certificationforumId = Request.Form["certificationforumId"];
-                    string statusOfCertificationForum = Request.Form["statusOfCertificationForum"];
-                    string authorityaffiantId = Request.Form["authorityaffiantId"];
-                    string statusOfAuthorityAffiant = Request.Form["statusOfAuthorityAffiant"];
-                    string otherdocumentId = Request.Form["otherdocumentId"];
-                    string statusOfOtherDocument = Request.Form["statusOfOtherDocument"];
-
 
                     HttpFileCollectionBase files = Request.Files;
 
@@ -659,101 +686,20 @@ namespace ERCOFAS.Controllers
 
                         }
 
+                        PreFiledCaseLogs logs = new PreFiledCaseLogs();
+                        logs.Id = Guid.NewGuid().ToString();
+                        logs.PreFiledCaseId = preFiledCaseId;
+                        logs.Remarks = remarks;
+                        logs.CreatedBy = userId;
+                        logs.CreatedOn = general.GetSystemTimeZoneDateTimeNow();
+                        db.PreFiledCaseLogs.Add(logs);
+
                         db.Entry(attachment).State = EntityState.Modified;
                         db.SaveChanges();
                     }
 
                     general.SavePreFiledAttachment(list, preFiledCaseId, userId, fileStatus, "Remarks");
-
-
-                    if (applicationFormId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == applicationFormId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfApplicationForm;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (servicelguId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == servicelguId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfServiceLgu;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (publicationId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == publicationId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfPublication;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (notarypresentedId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == notarypresentedId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfNotaryPresentedId;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-
-                    if (authoritycounselId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == authoritycounselId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfAuthorityCounsel;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (certificationforumId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == certificationforumId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfCertificationForum;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (authorityaffiantId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == authorityaffiantId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfAuthorityAffiant;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (otherdocumentId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == otherdocumentId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfOtherDocument;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
+                    general.SaveRemarkFileAttachment(list, preFiledCaseId, userId);
 
                     return Json(Resource.RecordSavedSuccessfully);
                 }
@@ -767,30 +713,15 @@ namespace ERCOFAS.Controllers
             {
                 try
                 {
+                    string userId = User.Identity.GetUserId();
                     var preFiledCaseId = Request.Form["pi"];
                     var status = Request.Form["v"];
                     var remarks = Request.Form["remarks"];
-                    string applicationFormId = Request.Form["applicationFormId"];
-                    string statusOfApplicationForm = Request.Form["statusOfApplicationForm"];
-                    string servicelguId = Request.Form["servicelguId"];
-                    string statusOfServiceLgu = Request.Form["statusOfServiceLgu"];
-                    string publicationId = Request.Form["publicationId"];
-                    string statusOfPublication = Request.Form["statusOfPublication"];
-                    string notarypresentedId = Request.Form["notarypresentedId"];
-                    string statusOfNotaryPresentedId = Request.Form["statusOfNotaryPresentedId"];
-                    string authoritycounselId = Request.Form["authoritycounselId"];
-                    string statusOfAuthorityCounsel = Request.Form["statusOfAuthorityCounsel"];
-                    string certificationforumId = Request.Form["certificationforumId"];
-                    string statusOfCertificationForum = Request.Form["statusOfCertificationForum"];
-                    string authorityaffiantId = Request.Form["authorityaffiantId"];
-                    string statusOfAuthorityAffiant = Request.Form["statusOfAuthorityAffiant"];
-                    string otherdocumentId = Request.Form["otherdocumentId"];
-                    string statusOfOtherDocument = Request.Form["statusOfOtherDocument"];
 
                     PreFiledCases attachment = db.PreFiledCases.Where(a => a.Id == preFiledCaseId).FirstOrDefault();
                     if (attachment != null)
                     {
-                        string s = status.Substring(0, 2);
+                        string s = status;
 
                         if (s == "ai")
                         {
@@ -819,96 +750,16 @@ namespace ERCOFAS.Controllers
 
                         }
 
+                        PreFiledCaseLogs logs = new PreFiledCaseLogs();
+                        logs.Id = Guid.NewGuid().ToString();
+                        logs.PreFiledCaseId = preFiledCaseId;
+                        logs.Remarks = remarks;
+                        logs.CreatedBy = userId;
+                        logs.CreatedOn = general.GetSystemTimeZoneDateTimeNow();
+                        db.PreFiledCaseLogs.Add(logs);
+
                         db.Entry(attachment).State = EntityState.Modified;
                         db.SaveChanges();
-                    }
-
-                    if (applicationFormId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == applicationFormId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfApplicationForm;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (servicelguId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == servicelguId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfServiceLgu;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (publicationId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == publicationId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfPublication;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (notarypresentedId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == notarypresentedId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfNotaryPresentedId;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (authoritycounselId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == authoritycounselId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfAuthorityCounsel;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (certificationforumId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == certificationforumId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfCertificationForum;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (authorityaffiantId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == authorityaffiantId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfAuthorityAffiant;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-
-                    if (otherdocumentId != null)
-                    {
-                        PreFiledAttachment pfa = db.PreFiledAttachments.Where(a => a.Id == otherdocumentId).FirstOrDefault();
-                        if (pfa != null)
-                        {
-                            pfa.StatusId = statusOfOtherDocument;
-                            db.Entry(pfa).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
                     }
 
                     return Json(Resource.RecordSavedSuccessfully);
@@ -959,7 +810,7 @@ namespace ERCOFAS.Controllers
             string filePath = Path.Combine(HostingEnvironment.MapPath("~/Documents"), fileName);
 
             if (System.IO.File.Exists(filePath))
-            {               
+            {
                 var memory = new MemoryStream();
                 using (var stream = new FileStream(filePath, FileMode.Open))
                 {
@@ -995,14 +846,14 @@ namespace ERCOFAS.Controllers
                 {".csv", "text/csv"}
             };
         }
-        
+
         public ActionResult GetCaseNatureList(string caseTypeId)
         {
             var caseNatureList = general.GetCaseNatureList("", caseTypeId);
 
             return Json(caseNatureList, JsonRequestBehavior.AllowGet);
         }
-                
+
     }
     #endregion review
 }
