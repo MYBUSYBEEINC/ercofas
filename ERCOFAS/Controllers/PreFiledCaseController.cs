@@ -374,6 +374,7 @@ namespace ERCOFAS.Controllers
         [HttpPost]
         public ActionResult UploadDocument(string id, PreFiledCaseViewModel model)
         {
+            bool documentUploadUpdated = false;
             try
             {
                 var preFiledCase = db.PreFiledCases.Where(x => x.Id == id).FirstOrDefault();
@@ -385,10 +386,19 @@ namespace ERCOFAS.Controllers
                     }
                     else
                     {
-                        if (preFiledCase.InitialReviewStatus == "Approved" && preFiledCase.DocumentsUploadStatus == "Rejected")
+                        if (preFiledCase.InitialReviewStatus == "Approved")
                         {
-                            preFiledCase.DocumentsUploadStatus = "Updated";
-                            preFiledCase.Office = "LS";
+                            if (preFiledCase.DocumentsUploadStatus == "Rejected")
+                            {
+                                preFiledCase.DocumentsUploadStatus = "Updated";
+                                preFiledCase.Office = "LS";
+
+                                documentUploadUpdated = true;
+                            }
+                            else if(preFiledCase.DocumentsUploadStatus == "Updated")
+                            {
+                                documentUploadUpdated = true;
+                            }
                         }
                     }
 
@@ -444,27 +454,7 @@ namespace ERCOFAS.Controllers
                     }
 
                     SavePreFileDocumentAttachment(id, httpPostedFileBases, Enum.GetName(typeof(PreFileAttachment), i));
-                }
-
-                //SavePreFileDocumentAttachment(id, model.ApplicationForm, PreFileAttachment.ApplicationForm.ToString());
-
-                //SavePreFileDocumentAttachment(id, model.NotaryPresentedId, PreFileAttachment.NotaryPresentedId.ToString());
-
-                //SavePreFileDocumentAttachment(id, model.CertificationForum, PreFileAttachment.CertificationForum.ToString());
-
-                //SavePreFileDocumentAttachment(id, model.AuthorityCounsel, PreFileAttachment.AuthorityCounsel.ToString());
-
-                //SavePreFileDocumentAttachment(id, model.AuthorityAffiant, PreFileAttachment.AuthorityAffiant.ToString());
-
-                //SavePreFileDocumentAttachment(id, model.ServiceLocalGovernmentUnit, PreFileAttachment.ServiceLgu.ToString());
-
-                //SavePreFileDocumentAttachment(id, model.Publication, PreFileAttachment.Publication.ToString());
-
-                //SavePreFileDocumentAttachment(id, model.ExemptionCompetitive, PreFileAttachment.ExemptionCompetitive.ToString());
-
-                //SavePreFileDocumentAttachment(id, model.Competitive, PreFileAttachment.Competitive.ToString());
-
-                //SavePreFileDocumentAttachment(id, model.Documents, PreFileAttachment.OtherDocument.ToString());
+                }                
 
                 TempData["NotifySuccess"] = "File uploaded successfully";
             }
@@ -473,6 +463,9 @@ namespace ERCOFAS.Controllers
                 TempData["NotifyFailed"] = "File upload encountered error. Please check files uploaded.";
             }
 
+            if (documentUploadUpdated)
+                return RedirectToAction("Edit", new { id = id });
+            
             return RedirectToAction("index");
         }
 
@@ -574,7 +567,7 @@ namespace ERCOFAS.Controllers
                     TempData["NotifyFailed"] = Resource.FailedExceptionError;
                 }
             }
-            return RedirectToAction(nameof(ViewRecord), new { id = prefile }); ;
+            return RedirectToAction(nameof(ViewRecord), new { id = prefile });
         }
 
         public ActionResult DiscardFile(string Id, string prefile)

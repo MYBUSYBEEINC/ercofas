@@ -562,7 +562,7 @@
                             </fieldset>
                             <fieldset>
                                 <div class="form-card rounded mb-0">
-                                    @if (Model.DocumentsUploadStatus == "Pending" || Model.DocumentsUploadStatus == "Updated" || string.IsNullOrEmpty(Model.DocumentsUploadStatus))
+                                    @if (Model.DocumentsUploadStatus == "Pending" || string.IsNullOrEmpty(Model.DocumentsUploadStatus))
                                     {
                                         <div id="docus-on-review" class="form-card rounded d-flex justify-content-center">
                                             <div class="form-card rounded border text-center w-100 mt-5 mb-0 p-5" style="border-radius:1.5rem!important;">
@@ -577,7 +577,7 @@
                                             <div class="form-card rounded border text-center w-100 my-5 p-5" style="border-radius:1.5rem!important;">
                                                 <img src="~/Assets/pre-filing-icons/VectorApproved.png" class="my-5">
                                                 <h3 class="text-secondary">Documents Approved</h3>
-                                                <small class="text-secondary">You may proceed with the next process</small>                                                
+                                                <small class="text-secondary">You may proceed with the next process</small>
                                             </div>
                                         </div>
                                     }
@@ -616,6 +616,30 @@
                                                         <li>Re-upload documents</li>
                                                     </ul>
                                                     <button type="button" class="upload-btn text-white rounded border-0 bg-gold px-2 mx-3 upload-file-document"><small>Upload</small></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (Model.DocumentsUploadStatus == "Updated")
+                                    {
+                                        <div id="docus-declined" class="form-card rounded d-flex justify-content-center">
+                                            <div class="form-card rounded border text-center w-100 my-5 p-5" style="border-radius:1.5rem!important;">
+                                                <img src="~/Assets/pre-filing-icons/VectorDeclined.png" class="my-5">
+                                                <h3 class="text-secondary">Documents Declined</h3>
+                                                <small class="text-secondary"><strong>Note: </strong>There is an error in the Documents submitted</small>
+                                                <div class="border rounded w-100 p-5 text-start mt-5">
+                                                    <h6 class="text-secondary"><strong>Remarks</strong></h6>
+                                                    <ul class="my-3">
+                                                        @if (!string.IsNullOrEmpty(Model.Remarks))
+                                                        {
+                                                            <li>@Html.DisplayFor(model => model.Remarks)</li>
+                                                        }                                                        
+                                                    </ul>
+                                                    <h6 class="text-secondary"><strong>Action Needed</strong></h6>
+                                                    <ul class="my-3">
+                                                        <li>Re-upload documents</li>
+                                                    </ul>
+                                                    <button type="button" class="upload-btn text-white rounded border-0 bg-gold px-2 mx-3 upload-file-document"><small>Upload more documents</small></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1009,6 +1033,13 @@
                                 @Html.TextBox("Documents", "", new { @type = "file", @class = "form-control reupload-document attach-additional-file", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx", @hidden = "hidden" })
                                 @Html.ValidationMessageFor(model => model.Documents, "", new { @class = "invalid-message" })
                             }
+                        }
+
+                        if (Model.InitialReviewStatus == "Approved" && Model.DocumentsUploadStatus == "Updated")
+                        {
+                            <label class="form-label required fw600" for="Competitive">Additional Document(s)</label>
+                            @Html.TextBox("Documents", "", new { @type = "file", @class = "form-control reupload-document attach-additional-file", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
+                            @Html.ValidationMessageFor(model => model.Documents, "", new { @class = "invalid-message" })
                         }
                     }
                 </div>
