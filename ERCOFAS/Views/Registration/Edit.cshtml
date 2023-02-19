@@ -8,12 +8,13 @@
     CurrentUserPermission permission = User.Identity.IsAllowed(ProjectEnum.ModuleCode.PreFiledCase.ToString());
 }
 
+@Html.Partial("~/Views/Shared/_ConfirmationPrompt.cshtml")
+
 <section>
     <div class="row justify-content-center mt-2">
         <div class="col">
             <div class="card p-5 border-0 rounded">
                 <h1 class="erc-text-blue text-center">RER Review</h1>
-
                 <div class="w-100 m-auto py-5">
                     <div class="rule w-50 m-auto"></div>
                     <div class="row mt-5">
@@ -26,8 +27,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="border rounded p-2 px-4">
                     <h2 class="erc-text-blue mb-4">Profile</h2>
                     <div class="row justify-content-end">
@@ -97,7 +96,7 @@
                                             {
                                                 <li>@string.Format("{0}{1}", item.CountryCode, @item.MobileNumber)</li>
                                             }
-                                        } 
+                                        }
                                         else
                                         {
                                             <span>-None Yet-</span>
@@ -373,7 +372,7 @@
                         <button type="button" name="previous" class="action-button-previous" onclick="location.href='@Url.Action("Index", "Registration")'">Back</button>
                         @if (Model.RegistrationStatusId == null || Model.RegistrationStatusId == "200257E4-E6C8-4159-8A6F-4475E0A95B32")
                         {
-                            <button type="submit" class="action-button">Submit</button>
+                            <button id="approve-button" type="button" class="action-button">Submit</button>
                         }
                     </div>
                 }
@@ -403,7 +402,6 @@
     <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
 
     <script type="text/javascript">
-
         const downloadButton = document.getElementById("download-button");
 
         downloadButton.addEventListener("click", () => {
@@ -418,35 +416,63 @@
     </script>
 
     <script type="text/javascript">
-        var url = document.getElementById("canvas-id").href;
-        var pdfjsLib = window['pdfjs-dist/build/pdf'];
+        if (document.getElementById("canvas-id")) {
+            var url = document.getElementById("canvas-id").href;
+            var pdfjsLib = window['pdfjs-dist/build/pdf'];
+            var loadingTask = pdfjsLib.getDocument(url);
 
-        var loadingTask = pdfjsLib.getDocument(url);
-        loadingTask.promise.then(function (pdf) {
+            loadingTask.promise.then(function (pdf) {
 
-            var pageNumber = 1;
-            pdf.getPage(pageNumber).then(function (page) {
+                var pageNumber = 1;
+                pdf.getPage(pageNumber).then(function (page) {
 
-                var scale = 1;
-                var viewport = page.getViewport({ scale: scale });
+                    var scale = 1;
+                    var viewport = page.getViewport({ scale: scale });
 
-                var canvas = document.getElementById('the-canvas');
-                var context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
+                    var canvas = document.getElementById('the-canvas');
+                    var context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
 
-                var renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
-                var renderTask = page.render(renderContext);
-                renderTask.promise.then(function () {
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    var renderTask = page.render(renderContext);
+                    renderTask.promise.then(function () {
+                    });
                 });
             });
-        });
+        }
+        
     </script>
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            $("#approve-button").click(function () {
+                if ($("#iscompleted-yes").prop('checked') == true) {
+                    var url = window.location.href;
+                    var id = url.substring(url.lastIndexOf('/') + 1);
+
+                    $.get(`@Url.Action("PreValidator", "Registration")/${id}`)
+                        .done(function (data) {
+                            if (!data.isValid) {
+                                $('#validation-message').text(data.validationMessage);
+                                $('#confirmRegistrationModal').modal('show');
+                            }
+                        }).fail(function (error) {
+                            console.log('There is a problem validating the registration. Please try again later.');
+                        });
+                } else {
+                    $("#msform").submit();
+                }
+            });
+
+            $("#approve-confirm-button").click(function () {
+                $("#msform").submit();
+            });
+        });
+
         $(function () {
             $('.pop').on('click', function () {
                 $('.imagepreview').attr('src', $(this).find('img').attr('src'));
@@ -461,11 +487,13 @@
 
         let bd = document.getElementById('dl-btn');
         let img = document.querySelector('.imagepreview');
-        bd.addEventListener('click', () => {
-            let impath = img.getAttribute('src');
-            let fn = getFileName(impath);
-            saveAs(impath, fn);
-        });
+        if (bd) {
+            bd.addEventListener('click', () => {
+                let impath = img.getAttribute('src');
+                let fn = getFileName(impath);
+                saveAs(impath, fn);
+            });
+        }
         function getFileName(str) {
             return str.substring(str.lastIndexOf('/') + 1);
         }
@@ -473,138 +501,138 @@
 }
 
 <style type="text/css">
-    .my-cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
-    }
-
-    .my-card {
-        height: 200px;
-        width: 200px;
-    }
-
-    #the-canvas {
-        direction: ltr;
-        max-width: 300px;
-    }
-
-    .modal-dialog {
-        position: relative;
-        display: table; /* This is important */
-        overflow-y: auto;
-        overflow-x: auto;
-        width: auto;
-        min-width: 500px;
-    }
-
-    .rule {
-        height: 4px;
-        background: #bbbbbb;
-    }
-
-    .rule:before, .rule:after {
-        content: '';
-        height: 40px;
-        width: 40px;
-        border-radius: 25px;
-        float: left;
-        background: #bbbbbb;
-        margin-top: -20px;
-    }
-
-    .rule:after {
-        float: right;
-    }
-
-    .erc-text-dark-blue {
-        color: #3a4360;
-    }
-
-    #msform .action-button-approve {
-        width: 100px;
-        border: 0;
-        border-radius: 5px;
-        /*       background: #dcfcfc;
-        color: #37b5b5;*/
-    }
-
-    #msform .action-button-decline {
-        width: 100px;
-        border: 0;
-        border-radius: 5px;
-        /*  background: #ffe4e4;
-        color: #ff0000;*/
-    }
-
-    #msform .action-button {
-        width: 200px;
-        background: #5069b1;
-        color: white;
-        border: 0 none;
-        border-radius: 5px;
-        cursor: pointer;
-        padding: 10px 5px;
-        margin: 10px 5px;
-    }
-
-    #msform .action-button:hover, #msform .action-button:focus {
-        box-shadow: 0 0 0 2px white, 0 0 0 3px #5069b1;
-    }
-
-    #msform .action-button-previous {
-        width: 200px;
-        background: #d2d8e9;
-        color: #000;
-        border: 0 none;
-        border-radius: 5px;
-        cursor: pointer;
-        padding: 10px 5px;
-        margin: 10px 5px;
-    }
-
-        #msform .action-button-previous:hover, #msform .action-button-previous:focus {
-            box-shadow: 0 0 0 2px white, 0 0 0 3px #d2d8e9;
+        .my-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
         }
 
-/*    .rounded {
-        border-radius: 1rem !important;
-    }
-*/
-    .w-49 {
-        width: 49.5%;
-    }
+        .my-card {
+            height: 200px;
+            width: 200px;
+        }
 
-    body {
-        background: #edeff4 !important;
-        font-family: system-ui;
-        font-size: larger;
-    }
+        #the-canvas {
+            direction: ltr;
+            max-width: 300px;
+        }
 
-    .erc-text-blue {
-        color: #6f83bc;
-    }
+        .modal-dialog {
+            position: relative;
+            display: table; /* This is important */
+            overflow-y: auto;
+            overflow-x: auto;
+            width: auto;
+            min-width: 500px;
+        }
 
-    .label-success {
-        background-color: #5cb85c;
-    }
+        .rule {
+            height: 4px;
+            background: #bbbbbb;
+        }
 
-    .label-default {
-        background-color: #777;
-    }
+            .rule:before, .rule:after {
+                content: '';
+                height: 40px;
+                width: 40px;
+                border-radius: 25px;
+                float: left;
+                background: #bbbbbb;
+                margin-top: -20px;
+            }
 
-    .label-danger {
-        background-color: #d9534f;
-    }
+            .rule:after {
+                float: right;
+            }
 
-    .label {
-        display: inline;
-        padding: 0.2em 0.6em 0.3em;
-        font-size: 18px;
-        line-height: 1;
-        color: #fff;
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: baseline;
-        border-radius: 0.25em;
-    }
+        .erc-text-dark-blue {
+            color: #3a4360;
+        }
+
+        #msform .action-button-approve {
+            width: 100px;
+            border: 0;
+            border-radius: 5px;
+            /*       background: #dcfcfc;
+            color: #37b5b5;*/
+        }
+
+        #msform .action-button-decline {
+            width: 100px;
+            border: 0;
+            border-radius: 5px;
+            /*  background: #ffe4e4;
+            color: #ff0000;*/
+        }
+
+        #msform .action-button {
+            width: 200px;
+            background: #5069b1;
+            color: white;
+            border: 0 none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
+
+            #msform .action-button:hover, #msform .action-button:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px #5069b1;
+            }
+
+        #msform .action-button-previous {
+            width: 200px;
+            background: #d2d8e9;
+            color: #000;
+            border: 0 none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
+
+            #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px #d2d8e9;
+            }
+
+        /*    .rounded {
+            border-radius: 1rem !important;
+        }
+    */
+        .w-49 {
+            width: 49.5%;
+        }
+
+        body {
+            background: #edeff4 !important;
+            font-family: system-ui;
+            font-size: larger;
+        }
+
+        .erc-text-blue {
+            color: #6f83bc;
+        }
+
+        .label-success {
+            background-color: #5cb85c;
+        }
+
+        .label-default {
+            background-color: #777;
+        }
+
+        .label-danger {
+            background-color: #d9534f;
+        }
+
+        .label {
+            display: inline;
+            padding: 0.2em 0.6em 0.3em;
+            font-size: 18px;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25em;
+        }
 </style>

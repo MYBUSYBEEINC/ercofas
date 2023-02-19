@@ -145,7 +145,7 @@
     </div>
 
     <div class="profile-wrapper d-flex ps-3 gap-3 mt-5 mb-3">
-        <img class="profile-pic rounded-circle" src="~/Assets/defaultProfilePicture.jpg" />
+        <img class="profile-pic rounded-circle" src="~/UploadedFiles/@UserHelpers.GetProfilePicture(User.Identity.GetUserName())" />
         <div id="txthd" class="d-flex flex-column justify-content-center">
             <h6 id="txthd" class="text-white">
                 @UserHelpers.GetFullName(User.Identity.GetUserName())
@@ -413,17 +413,3 @@
             }
         </ul>
 </aside>
-
-<script type="text/javascript">
-    //function myFunction(x) {
-    //    if (x.matches) { // If media query matches
-    //        document.getElementById("menuBtn").checked = true;
-    //    } else {
-    //        document.getElementById("menuBtn").checked = false;
-    //    }
-    //}
-
-    //var x = window.matchMedia("(max-width: 1199px)")
-    //myFunction(x) // Call listener function at run time
-    //x.addListener(myFunction) // Attach listener function on state changes
-</script>

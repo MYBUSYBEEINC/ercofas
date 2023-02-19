@@ -18,6 +18,15 @@ namespace ERCOFAS.Helpers
             return string.Format("{0} {1}", profile.FirstName, profile.LastName);
         }
 
+        public static string GetProfilePicture(string userName)
+        {
+            var aspNetUser = _db.AspNetUsers.FirstOrDefault(x => x.UserName == userName);
+            var profile = _db.UserProfiles.FirstOrDefault(x => x.AspNetUserId == aspNetUser.Id);
+            var userAttachment = _db.UserAttachments.OrderByDescending(x => x.CreatedOn).FirstOrDefault(x => x.UserProfileId == profile.Id);
+
+            return userAttachment != null ? userAttachment.UniqueFileName : "defaultProfilePicture.jpg";
+        }
+
         public static string GetRoleName(string userName)
         {
             var aspNetUser = _db.AspNetUsers.FirstOrDefault(x => x.UserName == userName);

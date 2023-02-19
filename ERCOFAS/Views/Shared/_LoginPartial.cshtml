@@ -31,12 +31,12 @@
     </div>
 
     <div class="btn-group">
+        <button id="logout-button" class="btn bg-white bg-transparent color-primarycolor">
+            <i class="fa fa-sign-out text-blue-green" style="font-size:1.5em;"></i>
+        </button>
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
         {
             @Html.AntiForgeryToken()
-            <button class="btn bg-white bg-transparent color-primarycolor" onclick="javascript:document.getElementById('logoutForm').submit()">
-                <i class="fa fa-sign-out text-blue-green" style="font-size:1.5em;"></i>
-            </button>
         }
     </div>
 }
@@ -120,6 +120,14 @@ else
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#logout-button").click(function () {
+            $('#confirmLogoutModal').modal('show');
+        });
+
+        $("#logout-confirm-button").click(function () {
+            $("#logoutForm").submit();
+        });
+
         $("#notificationLink").click(function () {
             $("#notificationContainer").slideToggle(200);
             return false;

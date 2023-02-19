@@ -202,6 +202,50 @@ namespace ERCOFAS.Controllers
             return RedirectToAction("index");
         }
 
+        public JsonResult PreValidator(long id)
+        {
+            bool isValid = true;
+            int totalErrorCount = 0;
+            string validationMessage = string.Empty;
+            string unverifiedData = string.Empty;
+
+            int declinedDocument = db.PreRegistrationAttachments.Count(x => x.PreRegistrationId == id && x.IsApproved == false);
+            if (declinedDocument > 0)
+            {
+                unverifiedData += string.Format(" {0} declined document", declinedDocument);
+
+                totalErrorCount += 1;
+                isValid = false;
+            }
+
+            int unverifiedEmail = db.PreRegistrationEmails.Count(x => x.PreRegistrationId == id && x.IsVerified == false);
+            if (unverifiedEmail > 0)
+            {
+                unverifiedData += string.Format("{0} {1} unverified email", declinedDocument > 0 ? "," : string.Empty, unverifiedEmail);
+
+                totalErrorCount += 1;
+                isValid = false;
+            }
+
+            int unverifiedMobile = db.PreRegistrationMobiles.Count(x => x.PreRegistrationId == id && x.IsVerified == false);
+            if (unverifiedMobile > 0)
+            {
+                unverifiedData += string.Format("{0} {1} unverified phone", declinedDocument > 0 || unverifiedEmail > 0 ? "," : string.Empty, unverifiedMobile);
+
+                totalErrorCount += 1;
+                isValid = false;
+            }
+
+            if (!isValid)
+                unverifiedData = string.Format("There {0} {1} on this registration. Do you want to approve?", totalErrorCount > 1 ? "are" : "is", unverifiedData);
+            else
+                unverifiedData = string.Empty;
+
+            validationMessage = unverifiedData;
+
+            return Json(new { isValid, validationMessage }, JsonRequestBehavior.AllowGet);
+        }
+
         // POST: /Registration/ApplicationReview
         /// <summary>
         /// Sends the application review result.

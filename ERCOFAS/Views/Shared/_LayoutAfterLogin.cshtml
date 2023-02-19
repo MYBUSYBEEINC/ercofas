@@ -89,7 +89,6 @@
 
             function triggerApproveFileConfirmationModal(recordName, deleteUrl) {
                 $('#confirmApproveFileModal').modal('show');
-                console.log(recordName, deleteUrl);
                 if (recordName != "" && recordName != null) {
                     document.getElementById("record-to-approve-file").innerText = recordName;
                 }
@@ -143,10 +142,6 @@
                 confirmDeleteButton.addEventListener('click', () => {
                     window.location = deleteUrl;
                 });
-            }
-
-            function confirmLogOut() {
-                $('#confirmLogoutModal').modal('show');
             }
         </script>
     </body>

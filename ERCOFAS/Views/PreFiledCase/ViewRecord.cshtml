@@ -824,49 +824,51 @@
 
     <script type="text/javascript">
         /*pdf 1*/
-        var url = document.getElementById("canvas-id").href;
-        var pdfjsLib = window['pdfjs-dist/build/pdf'];
+        if (!document.getElementById("canvas-id")) {
+            var url = document.getElementById("canvas-id").href;
+            var pdfjsLib = window['pdfjs-dist/build/pdf'];
 
-        var loadingTask = pdfjsLib.getDocument(url);
-        loadingTask.promise.then(function (pdf) {
+            var loadingTask = pdfjsLib.getDocument(url);
+            loadingTask.promise.then(function (pdf) {
 
-            var pageNumber = 1;
-            pdf.getPage(pageNumber).then(function (page) {
+                var pageNumber = 1;
+                pdf.getPage(pageNumber).then(function (page) {
 
-                var scale = 1;
-                var viewport = page.getViewport({ scale: scale });
+                    var scale = 1;
+                    var viewport = page.getViewport({ scale: scale });
 
-                var canvas = document.getElementById('the-canvas');
-                var context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
+                    var canvas = document.getElementById('the-canvas');
+                    var context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
 
-                var renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
-                var renderTask = page.render(renderContext);
-                renderTask.promise.then(function () {
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    var renderTask = page.render(renderContext);
+                    renderTask.promise.then(function () {
+                    });
                 });
             });
-        });
-        /*pdf 2*/
-        pdfUrl2 = document.getElementById("canvas-id-2").href;
-        const pdfCanvas = document.getElementById("the-canvas-2");
-        const pdfContext = pdfCanvas.getContext("2d");
+            /*pdf 2*/
+            pdfUrl2 = document.getElementById("canvas-id-2")?.href;
+            const pdfCanvas = document.getElementById("the-canvas-2");
+            const pdfContext = pdfCanvas.getContext("2d");
 
-        pdfjsLib.getDocument(pdfUrl2).promise.then(pdf => {
-            pdf.getPage(1).then(page => {
-                const viewport = page.getViewport({ scale: 1 });
-                pdfCanvas.width = viewport.width;
-                pdfCanvas.height = viewport.height;
+            pdfjsLib.getDocument(pdfUrl2).promise.then(pdf => {
+                pdf.getPage(1).then(page => {
+                    const viewport = page.getViewport({ scale: 1 });
+                    pdfCanvas.width = viewport.width;
+                    pdfCanvas.height = viewport.height;
 
-                page.render({
-                    canvasContext: pdfContext,
-                    viewport: viewport
+                    page.render({
+                        canvasContext: pdfContext,
+                        viewport: viewport
+                    });
                 });
             });
-        });
+        }
     </script>
 
     <script type="text/javascript">

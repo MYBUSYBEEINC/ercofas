@@ -578,7 +578,6 @@
     <Content Include="Scripts\pdfmake.min.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\vfs_fonts.js" />
-    <Content Include="UploadedFiles\dummy.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -728,6 +727,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="UploadedFiles\" />
     <Folder Include="Views\PreFiledCaseLogModels\" />
     <Folder Include="Views\PreFiledCaseRemarkFileLogModels\" />
   </ItemGroup>

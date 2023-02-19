@@ -788,7 +788,6 @@ namespace ERCOFAS.Controllers
             _db.SaveChanges();
         }
 
-        //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
@@ -851,7 +850,6 @@ namespace ERCOFAS.Controllers
             return View(model);
         }
 
-        //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string userId, string code)
@@ -877,7 +875,6 @@ namespace ERCOFAS.Controllers
             return View();
         }
 
-        //
         // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
@@ -942,7 +939,6 @@ namespace ERCOFAS.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        //
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
@@ -953,14 +949,14 @@ namespace ERCOFAS.Controllers
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
-        //
         // POST: /Account/LogOff
-        [HttpPost]
         //[ValidateAntiForgeryToken]
+        [HttpPost]
         public ActionResult LogOff()
         {
+            Session.Clear();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("login", "account");
+            return RedirectToAction("Login", "Account");
         }
 
         //
