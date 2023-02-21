@@ -47,85 +47,53 @@
             </div>
         </div>
 
-        <div class="row mb-4">
-            <div class="col">
-                <div class="bg-white rounded ratio ratio-4x3">
-                    <div class="text-secondary ps-4 pt-4"><strong>Pre-Filing Data</strong></div>
-                    <div class="card-body text-center w-100">
-                        <canvas id="myDoughnutChart" class="my-4 pt-4"></canvas>
-                        <div class="row">
-                            <div class="col text-start">
-                                <small class="text-secondary ms-4 ps-4">Pending</small>
-                            </div>
-                            <div class="col text-start">
-                                <small class="text-secondary ms-4 ps-4">Approved</small>
-                            </div>
-                            <div class="col text-start">
-                                <small class="text-secondary ms-4 ps-4">Declined</small>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col">
-                                <h3 class="text-gold">20%</h3>
-                            </div>
-                            <div class="col">
-                                <h3 class="text-gold">56%</h3>
-                            </div>
-                            <div class="col">
-                                <h3 class="text-gold">24%</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="bg-white rounded ratio ratio-4x3">
-                    <div class="text-secondary ps-4 pt-4"><strong>Case Hearing</strong></div>
-                    <div class="card-body text-center w-100">
-                        <canvas id="myBarChart" class="my-4 pt-4"></canvas>
-                        <div class="row">
-                            <div class="col text-start">
-                                <small class="text-secondary ms-4 ps-4">Total</small>
-                            </div>
-                            <div class="col text-start">
-                                <small class="text-secondary ms-4 ps-4">This Month</small>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col">
-                                <h3 class="text-gold">726</h3>
-                            </div>
-                            <div class="col">
-                                <h3 class="text-gold">233</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white mb-4 p-2 rounded shadow">
+        <div class="container-fluid d-flex flex-column gap-4 my-4 gx-0">
             <div class="row">
-                <div class="col">
-                    <div class="bg-white shadow">
-                        <div class="text-secondary ps-4 pt-4"><strong>Payment</strong></div>
-                        <div class="card-body text-center w-100">
-                            <canvas id="myLineChart" class="mb-4" height="40"></canvas>
-                            <div class="row">
-                                <div class="col text-start">
-                                    <small class="text-secondary ms-4 ps-4">Total</small>
-                                </div>
-                                <div class="col text-start">
-                                    <small class="text-secondary ms-4 ps-4">This Month</small>
-                                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="bg-white rounded p-2">
+                        <canvas id="myPieChart"></canvas>
+                    </div>
+                    
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="bg-white rounded p-2">
+                        <canvas id="myDoughnutChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="bg-white rounded p-2">
+                        <canvas id="myPolarAreaChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="bg-white rounded p-2">
+                        <canvas id="myRadarChart"></canvas>
+                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="bg-white rounded p-2">
+                        <canvas id="myLineChart" height="166"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 d-flex flex-column gap-4">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="bg-white rounded p-2">
+                                <canvas id="myScatterChart"></canvas>
                             </div>
-                            <div class="row mt-4">
-                                <div class="col">
-                                    <h3 class="text-gold">945,789</h3>
-                                </div>
-                                <div class="col">
-                                    <h3 class="text-gold">124,543</h3>
-                                </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="bg-white rounded p-2">
+                                <canvas id="myHBarChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="bg-white rounded p-2">
+                                <canvas id="myBarChart" height="78"></canvas>
                             </div>
                         </div>
                     </div>
@@ -267,7 +235,7 @@
                             </span>
                         </button>
                     </h2>
-                    <div id="flush-collapseSeven" class="accordion-collapse collapse"  aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
+                    <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body d-flex justify-content-center">
                             <a href="@Url.Action("Index", "Transaction")">
                                 <img src="~/Assets/dashboard-icons/VectorTransc.png">
@@ -421,15 +389,17 @@
         background-color: #f8f9fa !important;
         color: #b38b64 !important;
     }
+
     .accordion-button:focus {
-         border-color: none !important; 
-         box-shadow: none !important;
+        border-color: none !important;
+        box-shadow: none !important;
     }
 
     button {
         outline: 0 !important;
         box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
     }
+
     .accordion-body {
         min-height: 120px;
     }
@@ -441,6 +411,29 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
     <script type="text/javascript">
+        /*Pie Chart: */
+        var ctx = document.getElementById('myPieChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'Pending',
+                    'Approved',
+                    'Declined'
+                ],
+                datasets: [{
+                    label: 'My First Dataset',
+                    data: [300, 50, 100],
+                    backgroundColor: [
+                        'rgba(249, 231, 159)',
+                        'rgba(179, 170, 64)',
+                        'rgba(229,222,130)'
+                    ],
+                    hoverOffset: 4
+                }]
+            }
+        });
+
         /*Doughnut Chart: Pre - Filing Data*/
         var ctx = document.getElementById('myDoughnutChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -450,11 +443,178 @@
                 datasets: [{
                     data: [20, 56, 24],
                     backgroundColor: [
-                        'rgba(249, 231, 159)',
-                        'rgba(179, 170, 64)',
-                        'rgba(229,222,130)'
+                        '#1167B1',
+                        '#187BCD',
+                        '#2A9DF4'
                     ]
                 }]
+            }
+        });
+
+        /*polar area chart: */
+        var ctx = document.getElementById('myPolarAreaChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'polarArea',
+            data: {
+                labels: [
+                    '[Data 1]',
+                    '[Data 2]',
+                    '[Data 3]'
+                ],
+                datasets: [{
+                    label: 'Dataset',
+                    data: [ 7, 3, 14],
+                    backgroundColor: [
+                        '#4b6043',
+                        '#75975E',
+                        '#95BB72'
+                    ]
+                }]
+            }
+        });
+
+        /*radar chart: */
+        var ctx = document.getElementById('myRadarChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    '[Data 1]',
+                    '[Data 2]',
+                    '[Data 3]',
+                    '[Data 4]',
+                    '[Data 5]',
+                    '[Data 6]',
+                    '[Data 7]'
+                ],
+                datasets: [{
+                    label: 'Dataset 1',
+                    data: [65, 59, 90, 81, 56, 55, 40],
+                    fill: true,
+                    backgroundColor: 'rgba(116,91,179, 0.2)',
+                    borderColor: 'rgb(116,91,179)',
+                    pointBackgroundColor: 'rgb(116,91,179)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(116,91,179)'
+                }, {
+                    label: 'Dataset 2',
+                    data: [28, 48, 40, 19, 96, 27, 100],
+                    fill: true,
+                    backgroundColor: 'rgba(129,204,197, 0.2)',
+                    borderColor: 'rgb(129,204,197)',
+                    pointBackgroundColor: 'rgb(129,204,197)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(129,204,197)'
+                }]
+            }
+        });
+
+        /*Line Chart: Payment*/
+        var ctx = document.getElementById('myLineChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+                datasets: [{
+                    label: 'Payments',
+                    data: [400000, 300000, 500000, 400000, 300000, 500000, 400000, 300000, 200000, 400000, 600000],
+                    backgroundColor: 'rgba(132,155,220)'
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 1000000,
+                            stepSize: 500000
+                        }
+                    }]
+                }
+            }
+        });
+
+        /*scatter chart: */
+        var ctx = document.getElementById('myScatterChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Dataset',
+                    data: [{
+                        x: -10,
+                        y: 0
+                    }, {
+                        x: 0,
+                        y: 10
+                    }, {
+                        x: 10,
+                        y: 5
+                    }, {
+                        x: 0.5,
+                        y: 5.5
+                    }],
+                    backgroundColor: 'rgb(73,155,179)'
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            stepSize: 2
+                        }
+                    }]
+                }
+            }
+        });
+
+        /*Horizontal Bar Chart: */
+        var ctx = document.getElementById('myHBarChart').getContext('2d');
+
+        var myChart = new Chart(ctx, {
+
+            type: 'horizontalBar',
+            data: {
+                labels: ["Jan - Feb", "Mar - Apr", "May - Jun", "Jul - Aug", "Sep - Oct", "Nov - Dec"],
+                datasets: [{
+                    axis: 'y',
+                    label: 'Dataset',
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    fill: false,
+                    backgroundColor: [
+                        '#ab7a7a',
+                        '#ab7a7a',
+                        '#ce9c9c',
+                        '#ab7a7a',
+                        '#ce9c9c',
+                        '#ab7a7a',
+                        '#ce9c9c'
+                    ]
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 500,
+                            stepSize: 100
+                        }
+                    }]
+                }
             }
         });
 
@@ -497,38 +657,6 @@
                             min: 0,
                             max: 500,
                             stepSize: 100
-                        }
-                    }]
-                }
-            }
-        });
-        /*Line Chart: Payment*/
-        var ctx = document.getElementById('myLineChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
-                datasets: [{
-                    label: 'Payments',
-                    data: [400000, 300000, 500000, 400000, 300000, 500000, 400000, 300000, 200000, 400000, 600000],
-                    backgroundColor: 'rgba(132,155,220)'
-                }]
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: false
-                        }
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            display: false
-                        },
-                        ticks: {
-                            min: 0,
-                            max: 1000000,
-                            stepSize: 500000
                         }
                     }]
                 }

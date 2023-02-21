@@ -4,7 +4,8 @@
 {   
     <div class="btn-group">
         <button id="notificationLink" class="btn bg-white bg-transparent color-primarycolor">
-            <i class="fa fa-bell text-blue-green" style="font-size:1.5em;"></i>
+            <i class="fa fa-bell text-blue-green" style="font-size:1.5em;" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="Notifications"></i>
             <span class="bell-badge">3</span>
         </button>
         <div id="notificationContainer" class="rounded">
@@ -32,7 +33,8 @@
 
     <div class="btn-group">
         <button id="logout-button" class="btn bg-white bg-transparent color-primarycolor">
-            <i class="fa fa-sign-out text-blue-green" style="font-size:1.5em;"></i>
+            <i class="fa fa-sign-out text-blue-green" style="font-size:1.5em;" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="Log out"></i>
         </button>
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
         {

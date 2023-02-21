@@ -19,21 +19,20 @@
 
 <section class="section dashboard mt-3">
     <div class="bg-white rounded p-3 shadow">
-        <div class="pb-2">
-            @if (permission.AddRight)
-            {
-                <a class="addnewbtn btn btn-p8 hover-boxshadow hover-moveup hover-bg-primarycolor" href="@Url.Action("edit")"><i class="fa-solid fa-plus pe-1"></i> @Resource.AddNewRecord</a>
-            }
-            <span id="exportToExcel" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button"><i class="fa-solid fa-file-excel pe-1"></i> @Resource.ExporttoExcel</span>
-            <span id="exportToPdf" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button"><i class="fa-solid fa-file-pdf pe-1"></i> @Resource.ExporttoPdf</span>
-        </div>
-        <div class="row justify-content-between align-items-end pb-1">
-            <div class="col-sm-7 col-xl-3">
-                @Html.Partial("~/Views/Shared/_TableLengthDropDown.cshtml", new ViewDataDictionary { { "DropDownId", ViewBag.TableIdPrefix + "-tableDropDown" } })
+        <div class="row">
+            <div class="col d-flex align-items-center">
+                @if (permission.AddRight)
+                {
+                    <a class="addnewbtn btn btn-p8 hover-boxshadow hover-moveup hover-bg-primarycolor" href="@Url.Action("edit")"><i class="fa-solid fa-plus pe-1"></i> @Resource.AddNewRecord</a>
+                }
+                <span id="exportToExcel" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button mx-2"><i class="fa-solid fa-file-excel pe-1"></i> @Resource.ExporttoExcel</span>
+                <span id="exportToPdf" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button"><i class="fa-solid fa-file-pdf pe-1"></i> @Resource.ExporttoPdf</span>
             </div>
-            <div class="col-xl-4"></div>
-            <div class="col-xl-5 pt-2 pt-sm-0">
-                <div id="searchinput" class="input-group flex-nowrap">
+            <div class="col-3">
+                <div class="justify-content-end">
+                    @Html.Partial("~/Views/Shared/_TableLengthDropDown.cshtml", new ViewDataDictionary { { "DropDownId", ViewBag.TableIdPrefix + "-tableDropDown" } })
+                </div>
+                <div id="searchinput" class="input-group mt-2">
                     @Html.TextBox("search", "", htmlAttributes: new { type = "text", @class = "form-control", @placeholder = Resource.SearchDot })
                     <button type="button" class="input-group-text bg-transparent hover-bg-primarycolor hover-color-white" id="searchbtn"><i class="fa-solid fa-magnifying-glass pe-1"></i> @Resource.Search</button>
                     <button type="button" class="input-group-text bg-transparent hover-bg-primarycolor hover-color-white" id="resetbtn"><i class="fa-solid fa-rotate-left pe-1"></i> @Resource.Reset</button>

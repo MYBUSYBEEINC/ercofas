@@ -476,9 +476,10 @@
     <Content Include="Assets\logo\menu.png" />
     <Content Include="Assets\message.png" />
     <Content Include="Assets\otp.png" />
-    <Content Include="Assets\pre-filing-icons\docx.svg" />
-    <Content Include="Assets\pre-filing-icons\pdf.svg" />
-    <Content Include="Assets\pre-filing-icons\ppt.svg" />
+    <Content Include="Assets\person_1.jpg" />
+    <Content Include="Assets\person_2.jpg" />
+    <Content Include="Assets\person_3.jpg" />
+    <Content Include="Assets\person_4.jpg" />
     <Content Include="Assets\pre-filing-icons\VectorApproved.png" />
     <Content Include="Assets\pre-filing-icons\VectorCaseTitle.png" />
     <Content Include="Assets\pre-filing-icons\VectorCheck.png" />
@@ -492,7 +493,6 @@
     <Content Include="Assets\pre-filing-icons\VectorRedirect.png" />
     <Content Include="Assets\pre-filing-icons\VectorTypeNature.png" />
     <Content Include="Assets\pre-filing-icons\VectorUploadFiles.png" />
-    <Content Include="Assets\pre-filing-icons\xlsx.svg" />
     <Content Include="Assets\reset-password.png" />
     <Content Include="Assets\resetpassword.jpg" />
     <Content Include="Assets\right.svg" />
@@ -582,6 +582,8 @@
     <Content Include="Scripts\pdfmake.min.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\vfs_fonts.js" />
+    <Content Include="UploadedFiles\admin2pic.jpg" />
+    <Content Include="UploadedFiles\defaultProfilePicture.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -731,7 +733,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
-    <Folder Include="UploadedFiles\" />
     <Folder Include="Views\PreFiledCaseLogModels\" />
     <Folder Include="Views\PreFiledCaseRemarkFileLogModels\" />
   </ItemGroup>
