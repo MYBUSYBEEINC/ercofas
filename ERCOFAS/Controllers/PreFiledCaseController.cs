@@ -84,6 +84,8 @@ namespace ERCOFAS.Controllers
                         PhoneNumber = t2.PhoneNumber,
                         UserType = t8.Name,
                         Office = t1.Office,
+                        TimeStart = t1.TimeStart,
+                        TimeEnd = t1.TimeEnd,
                         PreFilingCaseComplete = !string.IsNullOrEmpty(t1.FileCaseStatusId) && t1.FileCaseStatusId == "Completed"
                     }).OrderByDescending(x => x.CreatedOn).ToList();
 
@@ -143,6 +145,8 @@ namespace ERCOFAS.Controllers
                 model.Email = db.AspNetUsers.FirstOrDefault(x => x.Id == preFiledCase.UserId).Email;
                 model.PhoneNumber = db.AspNetUsers.FirstOrDefault(x => x.Id == preFiledCase.UserId).PhoneNumber;
                 model.UserType = db.AspNetRoles.FirstOrDefault(x => x.Id == role.RoleId).Name;
+                model.TimeStart = preFiledCase.TimeStart;
+                model.TimeEnd= preFiledCase.TimeEnd;
                 if (type == "View") 
                 {
                     string modifiedBy = preFiledCase.ModifiedOn != null ? preFiledCase.UserId : string.Empty;
@@ -378,6 +382,7 @@ namespace ERCOFAS.Controllers
             try
             {
                 var preFiledCase = db.PreFiledCases.Where(x => x.Id == id).FirstOrDefault();
+
                 if(preFiledCase != null)
                 {
                     if (preFiledCase.InitialReviewStatus == "Rejected")
@@ -400,6 +405,13 @@ namespace ERCOFAS.Controllers
                                 documentUploadUpdated = true;
                             }
                         }
+                    }
+
+                    if (preFiledCase.TimeStart != null)
+                    {
+                        preFiledCase.TimeStart = general.GetSystemTimeZoneDateTimeNow();
+                        preFiledCase.TimeStart = general.GetEndDate();
+
                     }
 
                     db.Entry(preFiledCase).State = EntityState.Modified;
@@ -533,6 +545,7 @@ namespace ERCOFAS.Controllers
         public ActionResult ApproveFile(string Id, string prefile)
         {
             try
+
             {
                 if (Id != null)
                 {

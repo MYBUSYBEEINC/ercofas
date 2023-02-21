@@ -23,6 +23,8 @@ namespace ERCOFAS.Models
         public string DocumentsUploadStatus { get; set; }
         public string PaymentStatus { get; set; }
         public string Office { get; set; }
+        public DateTime? TimeStart { get; set; }
+        public DateTime? TimeEnd { get; set; }
         public DateTime? CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
@@ -93,6 +95,11 @@ namespace ERCOFAS.Models
         public PreFiledSurveyInformationModel PreFiledSurveyInformation { get; set; }
         public List<PreFiledCaseLogs> CaseLogs { get; set; }
         public List<PreFiledCaseRemarkFileLogs> PreFiledCaseRemarkFileLogs { get; set; }
+        public DateTime? TimeStart { get; set; }
+        public DateTime? TimeEnd { get; set; }
+
+
+
 
     }
 

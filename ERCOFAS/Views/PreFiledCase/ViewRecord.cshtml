@@ -75,14 +75,6 @@
                 <form id="msform">
                     <div class="border rounded p-2 px-4">
                         <h2 class="erc-text-blue mb-4">Profile</h2>
-                        <div class="row justify-content-end">
-                            <div class="col-3">
-                                <div class="col-6 float-end me-0 ps-3" style="color:#2dea29;"><strong>Verified</strong></div>
-                            </div>
-                            <div class="col-3">
-                                <div class="col-6 float-end me-0 ps-3" style="color:#2dea29;"><strong>Verified</strong></div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col">
                                 <figure class="figure">
@@ -273,10 +265,62 @@
                                         {
                                             <div class="thumbnail">
 
-                                                <div class="align-items-center justify-content-center mb-4 row">
+                                                <div class="align-items-center justify-content-center mb-4 row text-center">
                                                     <input hidden id="pdflinkvalue" value="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" />
                                                     <a id="thispdfurl" href="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" target="_blank">
-                                                        <canvas style="height:70px" id="pdfCanvas"></canvas>
+                                                        <img style="height:70px" src="~/Assets/pre-filing-icons/pdf.svg"></img>
+                                                    </a>
+                                                    <label class="text-sm-center" style="font-size:12px">
+                                                        @Html.DisplayFor(modelItem => item.FileTypeName)
+                                                        @if (item.StatusId == "Approved")
+                                                        {
+                                                            <i class="fa fa-check-circle text-success fa-1x"></i>
+                                                        }
+                                                        else if (item.StatusId == "Rejected")
+                                                        {
+                                                            <i class="fa fa-multiply text-danger fa-1x dt-right"></i>
+
+                                                        }
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        }
+                                        if (Path.GetExtension(item.FileName) == ".pptx" && item.StatusId != "Remarks")
+                                        {
+                                            <div class="thumbnail">
+
+                                                <div class="align-items-center justify-content-center mb-4 row text-center">
+                                                    <input hidden id="pdflinkvalue" value="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" />
+                                                    <a id="thispdfurl" href="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" target="_blank">
+                                                        <img style="height:70px" src="~/Assets/pre-filing-icons/ppt.svg"></img>
+
+                                                    </a>
+                                                    <label class="text-sm-center" style="font-size:12px">
+                                                        @Html.DisplayFor(modelItem => item.FileTypeName)
+                                                        @if (item.StatusId == "Approved")
+                                                        {
+                                                            <i class="fa fa-check-circle text-success fa-1x"></i>
+                                                        }
+                                                        else if (item.StatusId == "Rejected")
+                                                        {
+                                                            <i class="fa fa-multiply text-danger fa-1x dt-right"></i>
+
+                                                        }
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        }
+                                        if (Path.GetExtension(item.FileName) == ".xlsx" && item.StatusId != "Remarks")
+                                        {
+                                            <div class="thumbnail">
+
+                                                <div class="align-items-center justify-content-center mb-4 row text-center">
+                                                    <input hidden id="pdflinkvalue" value="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" />
+                                                    <a id="thispdfurl" href="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" target="_blank">
+                                                        <img style="height:70px" src="~/Assets/pre-filing-icons/xlsx.svg"></img>
+
                                                     </a>
                                                     <label class="text-sm-center" style="font-size:12px">
                                                         @Html.DisplayFor(modelItem => item.FileTypeName)
@@ -298,10 +342,10 @@
                                         {
                                             <div class="thumbnail">
 
-                                                <div class="align-items-center justify-content-center mb-4 row">
+                                                <div class="align-items-center justify-content-center mb-4 row text-center">
                                                     <input hidden id="pdflinkvalue" value="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" />
                                                     <a id="thispdfurl" href="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" target="_blank">
-                                                        <canvas style="height:70px" id="pdfCanvas"></canvas>
+                                                        <img style="height:70px" src="~/Assets/pre-filing-icons/docx.svg"></img>
 
                                                     </a>
                                                     <label class="text-sm-center" style="font-size:12px">
@@ -343,31 +387,6 @@
                                                         }
                                                     </label>
 
-                                                </div>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="thumbnail">
-
-                                                <div class="align-items-center justify-content-center mb-4 row">
-                                                    <input hidden id="pdflinkvalue" value="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" />
-                                                    <a id="thispdfurl" href="~/Documents/@Html.DisplayFor(modelItem => item.UniqueFileName)" target="_blank">
-                                                        <canvas style="height:70px" id="pdfCanvas"></canvas>
-
-                                                    </a>
-                                                    <label class="text-sm-center" style="font-size:12px">
-                                                        @Html.DisplayFor(modelItem => item.FileTypeName)
-                                                        @if (item.StatusId == "Approved")
-                                                        {
-                                                            <i class="fa fa-check-circle text-success fa-1x"></i>
-                                                        }
-                                                        else if (item.StatusId == "Rejected")
-                                                        {
-                                                            <i class="fa fa-multiply text-danger fa-1x dt-right"></i>
-
-                                                        }
-                                                    </label>
                                                 </div>
                                             </div>
                                         }
@@ -457,7 +476,6 @@
                                         if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
                                         {
                                             <th class="text-center erc-text-dark-blue">Action</th>
-
                                         }
                                     }
                                 </tr>
@@ -641,35 +659,36 @@
 
 @section Scripts{
     <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.225/build/pdf.js"></script>
-
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js">
+    </script>
     <script>
-        var canvas = document.getElementById('pdfCanvas');
 
-        // Get the PDF file
-        var url = document.getElementById("thispdfurl").href;
-        var pdfUrl = 'example.pdf';
+        $(function () {
+            var pdfurl = $("#pdflinkvalue").val();
 
-        // Load the PDF file using PDF.js
-        pdfjsLib.getDocument(pdfUrl).promise.then(function (pdf) {
+            pdfjsLib.getDocument(pdfurl).then((pdf) => {
 
-            // Get the first page of the PDF
-            pdf.getPage(1).then(function (page) {
-
-                // Get the viewport of the page at 100% scale
-                var viewport = page.getViewport({ scale: 1 });
-
-                // Set the canvas dimensions to match the viewport
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
-
-                // Render the page on the canvas
-                var ctx = canvas.getContext('2d');
-                page.render({ canvasContext: ctx, viewport: viewport });
-
+                myState.pdf = pdf;
+                render();
             });
+            function render() {
+                myState.pdf.getPage(myState.currentPage).then((page) => {
 
-        });
+                    var canvas = document.getElementById("pdfRenderer");
+                    var ctx = canvas.getContext('2d');
+
+                    var viewport = page.getViewport(myState.zoom);
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    page.render({
+                        canvasContext: ctx,
+                        viewport: viewport
+                    });
+                });
+            }
+        })
+
 
         $("#filemod").click(function () {
             $("#pdfmods").modal("show");
@@ -844,6 +863,7 @@
 
                     var renderContext = {
                         canvasContext: context,
+
                         viewport: viewport
                     };
                     var renderTask = page.render(renderContext);
@@ -902,180 +922,181 @@
 }
 
 <style type="text/css">
-    .thumbnail-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
+        .thumbnail-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
 
-    .thumbnail {
-        width: calc(25% - 10px);
-        height: 100px;
-        margin-bottom: 10px;
-        border-width: 2px;
-        border-style: solid;
-        border-color: #3F5495;
-        padding: 1px;
-    }
+        .thumbnail {
+            width: calc(25% - 10px);
+            height: 100px;
+            margin-bottom: 10px;
+            border-width: 2px;
+            border-style: solid;
+            border-color: #3F5495;
+            padding: 1px;
+        }
 
-    .od-group,
-    .aa-group,
-    .cf-group,
-    .ac-group,
-    .npi-group,
-    .p-group,
-    .sl-group,
-    .a-group {
-        display: flex;
-    }
+        .od-group,
+        .aa-group,
+        .cf-group,
+        .ac-group,
+        .npi-group,
+        .p-group,
+        .sl-group,
+        .a-group {
+            display: flex;
+        }
 
-    .od1-container,
-    .aa1-container,
-    .cf1-container,
-    .ac1-container,
-    .npi1-container,
-    .p1-container,
-    .sl1-container,
-    .a1-container {
-        width: 60%;
-        margin: 0;
-    }
+        .od1-container,
+        .aa1-container,
+        .cf1-container,
+        .ac1-container,
+        .npi1-container,
+        .p1-container,
+        .sl1-container,
+        .a1-container {
+            width: 60%;
+            margin: 0;
+        }
 
-    .od2-container,
-    .aa2-container,
-    .cf2-container,
-    .ac2-container,
-    .npi2-container,
-    .p2-container,
-    .sl2-container,
-    .a2-container {
-        width: 40%;
-        margin: 0;
-    }
+        .od2-container,
+        .aa2-container,
+        .cf2-container,
+        .ac2-container,
+        .npi2-container,
+        .p2-container,
+        .sl2-container,
+        .a2-container {
+            width: 40%;
+            margin: 0;
+        }
 
-    .hidden {
-        display: none;
-    }
+        .hidden {
+            display: none;
+        }
 
-    td {
-        padding: 10px 0 10px 0;
-    }
+        td {
+            padding: 10px 0 10px 0;
+        }
 
-    .text-blue-green {
-        color: #499bb3;
-    }
+        .text-blue-green {
+            color: #499bb3;
+        }
 
-    .my-cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
-    }
+        .my-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
+        }
 
-    .my-card {
-        height: 200px;
-        width: 200px;
-    }
+        .my-card {
+            height: 200px;
+            width: 200px;
+        }
 
-    #the-canvas {
-        direction: ltr;
-        max-width: 300px;
-    }
+        #the-canvas {
+            direction: ltr;
+            max-width: 300px;
+        }
 
-    .modal-dialog {
-        position: relative;
-        display: table; /* This is important */
-        overflow-y: auto;
-        overflow-x: auto;
-        width: auto;
-        min-width: 500px;
-    }
+        .modal-dialog {
+            position: relative;
+            display: table; /* This is important */
+            overflow-y: auto;
+            overflow-x: auto;
+            width: auto;
+            min-width: 500px;
+        }
 
-    .rule {
-        height: 4px;
-        background: #bbbbbb;
-    }
-
-        .rule:before, .rule:after {
-            content: '';
-            height: 40px;
-            width: 40px;
-            border-radius: 25px;
-            float: left;
+        .rule {
+            height: 4px;
             background: #bbbbbb;
-            margin-top: -20px;
         }
 
-        .rule:after {
-            float: right;
+            .rule:before, .rule:after {
+                content: '';
+                height: 40px;
+                width: 40px;
+                border-radius: 25px;
+                float: left;
+                background: #bbbbbb;
+                margin-top: -20px;
+            }
+
+            .rule:after {
+                float: right;
+            }
+
+        .erc-text-dark-blue {
+            color: #3a4360;
         }
 
-    .erc-text-dark-blue {
-        color: #3a4360;
-    }
-
-    #msform .action-button-approve {
-        width: 100px;
-        background: #dcfcfc;
-        color: #37b5b5;
-        border: 0;
-        border-radius: 5px;
-    }
-
-    #msform .action-button-decline {
-        width: 100px;
-        background: #ffe4e4;
-        color: #ff0000;
-        border: 0;
-        border-radius: 5px;
-    }
-
-    #msform .action-button-discard {
-        width: 100px;
-        background: #f7e6c1;
-        color: #e69e05;
-        border: 0;
-        border-radius: 5px;
-    }
-
-    #msform .action-button {
-        width: 200px;
-        background: #5069b1;
-        color: white;
-        border: 0 none;
-        border-radius: 5px;
-        cursor: pointer;
-        padding: 10px 5px;
-        margin: 10px 5px;
-    }
-
-        #msform .action-button:hover, #msform .action-button:focus {
-            box-shadow: 0 0 0 2px white, 0 0 0 3px #5069b1;
+        #msform .action-button-approve {
+            width: 100px;
+            background: #dcfcfc;
+            color: #37b5b5;
+            border: 0;
+            border-radius: 5px;
         }
 
-    #msform .action-button-previous {
-        width: 200px;
-        background: #d2d8e9;
-        color: #000;
-        border: 0 none;
-        border-radius: 5px;
-        cursor: pointer;
-        padding: 10px 5px;
-        margin: 10px 5px;
-    }
-
-        #msform .action-button-previous:hover, #msform .action-button-previous:focus {
-            box-shadow: 0 0 0 2px white, 0 0 0 3px #d2d8e9;
+        #msform .action-button-decline {
+            width: 100px;
+            background: #ffe4e4;
+            color: #ff0000;
+            border: 0;
+            border-radius: 5px;
         }
 
-    .w-49 {
-        width: 49.5%;
-    }
+        #msform .action-button-discard {
+            width: 100px;
+            background: #f7e6c1;
+            color: #e69e05;
+            border: 0;
+            border-radius: 5px;
+        }
 
-    body {
-        background: #edeff4 !important;
-/*        font-size: larger;
-*/    }
+        #msform .action-button {
+            width: 200px;
+            background: #5069b1;
+            color: white;
+            border: 0 none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
 
-    .erc-text-blue {
-        color: #6f83bc;
-    }
+            #msform .action-button:hover, #msform .action-button:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px #5069b1;
+            }
+
+        #msform .action-button-previous {
+            width: 200px;
+            background: #d2d8e9;
+            color: #000;
+            border: 0 none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
+
+            #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px #d2d8e9;
+            }
+
+        .w-49 {
+            width: 49.5%;
+        }
+
+        body {
+            background: #edeff4 !important;
+            /*        font-size: larger;
+    */
+        }
+
+        .erc-text-blue {
+            color: #6f83bc;
+        }
 </style>

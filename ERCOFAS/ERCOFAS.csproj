@@ -476,6 +476,9 @@
     <Content Include="Assets\logo\menu.png" />
     <Content Include="Assets\message.png" />
     <Content Include="Assets\otp.png" />
+    <Content Include="Assets\pre-filing-icons\docx.svg" />
+    <Content Include="Assets\pre-filing-icons\pdf.svg" />
+    <Content Include="Assets\pre-filing-icons\ppt.svg" />
     <Content Include="Assets\pre-filing-icons\VectorApproved.png" />
     <Content Include="Assets\pre-filing-icons\VectorCaseTitle.png" />
     <Content Include="Assets\pre-filing-icons\VectorCheck.png" />
@@ -489,6 +492,7 @@
     <Content Include="Assets\pre-filing-icons\VectorRedirect.png" />
     <Content Include="Assets\pre-filing-icons\VectorTypeNature.png" />
     <Content Include="Assets\pre-filing-icons\VectorUploadFiles.png" />
+    <Content Include="Assets\pre-filing-icons\xlsx.svg" />
     <Content Include="Assets\reset-password.png" />
     <Content Include="Assets\resetpassword.jpg" />
     <Content Include="Assets\right.svg" />

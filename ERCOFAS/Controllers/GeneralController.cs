@@ -167,6 +167,15 @@ namespace ERCOFAS.Controllers
                         attachment.FileTypeId = fileType;
                         attachment.CreatedBy = userId;
                         attachment.CreatedOn = GetSystemTimeZoneDateTimeNow().Value;
+
+                        PreFiledCaseLogs logs = new PreFiledCaseLogs();
+                        logs.Id = Guid.NewGuid().ToString();
+                        logs.PreFiledCaseId = preFiledId;
+                        logs.Remarks = "Uploaded new file";
+                        logs.CreatedBy = userId;
+                        logs.CreatedOn = GetSystemTimeZoneDateTimeNow();
+                        db.PreFiledCaseLogs.Add(logs);
+
                         db.PreFiledAttachments.Add(attachment);
                         db.SaveChanges();
                     //}
@@ -1559,7 +1568,18 @@ namespace ERCOFAS.Controllers
             }
         }
 
+        public DateTime? GetEndDate()
+        {
+            string timeZone = GetAppSettingsValue("timeZone");
+            DateTime dateTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id, timeZone);
+            DateTime utcDt = DateTime.UtcNow;
+            DateTime localDt = utcDt.ToLocalTime();
 
+            // Add 3 days to the current date and time
+            dateTime = dateTime.AddDays(3);
+
+            return dateTime;
+        }
 
         // GET: /General/UnderConstruction
         [AllowAnonymous]

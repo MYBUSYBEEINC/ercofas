@@ -8,6 +8,7 @@
 
 @Html.DisplayFor(modelItem => Model.Listing)
 
+
 <thead class="table-light">
     <tr>
         <th class="thead">Subject of Request</th>
@@ -22,91 +23,135 @@
         }
         <th class="thead text-center">Payment Status</th>
         <th class="thead text-center">Pre-Filing Status</th>
+        <th class="thead text-center">Timer</th>
         <th class="thead text-center">@Resource.Actions</th>
     </tr>
 </thead>
 <tbody>
     @foreach (var item in Model.Listing)
     {
-    <tr style="color: #212529;">
-        <td>@Html.DisplayFor(modelItem => item.RequestSubject)</td>
-        <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CaseTypeId) / @Html.DisplayFor(modelItem => item.CaseNatureId)
-        </td>
-        <td>@Html.DisplayFor(modelItem => item.CreatedOn)</td>
-        <td>
-            @if (!string.IsNullOrEmpty(item.InitialReviewStatus))
-            {
-                <span class="@TemplateHelpers.GetLabelCss(@Html.DisplayFor(modelItem => item.InitialReviewStatus).ToString())">
-                    @Html.DisplayFor(modelItem => item.InitialReviewStatus)
-                </span>
-            }
-            else
-            {
-                <span>N/A</span>
-            }
-        </td>
-        <td>
-            @if (!string.IsNullOrEmpty(item.DocumentsUploadStatus))
-            {
-                <span class="@TemplateHelpers.GetLabelCss(@Html.DisplayFor(modelItem => item.DocumentsUploadStatus).ToString())">
-                    @Html.DisplayFor(modelItem => item.DocumentsUploadStatus)
-                </span>
-            }
-            else
-            {
-                <span>N/A</span>
-            }
-        </td>
-        @if (userRole != null && (userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Admin.ToString()))
-        {
-            <td>@Html.DisplayFor(modelItem => item.Office)</td>
-        }
-        <td class="text-center">
-            @if (!string.IsNullOrEmpty(item.PaymentStatus))
-            {
-                <span class="@TemplateHelpers.GetLabelCss(@Html.DisplayFor(modelItem => item.PaymentStatus).ToString())">
-                    @Html.DisplayFor(modelItem => item.PaymentStatus)
-                </span>
-            } 
-            else
-            {
-                <span>N/A</span>
-            }
-        </td>
-        <td class="text-center">
-            @if (!string.IsNullOrEmpty(item.FileCaseStatusId))
-            {
-                <span class="@TemplateHelpers.GetLabelCss(@Html.DisplayFor(modelItem => item.FileCaseStatusId).ToString())">
-                    @Html.DisplayFor(modelItem => item.FileCaseStatusId)
-                </span>
-            }
-            else
-            {
-                <span>N/A</span>
-            }
-        </td>
-        <td class="text-center">
-            <div class="d-flex text-breakspaces actioncol">
-                @if (userRole != null)
+
+        <tr style="color: #212529;">
+            <td>@Html.DisplayFor(modelItem => item.RequestSubject)</td>
+            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaseTypeId) / @Html.DisplayFor(modelItem => item.CaseNatureId)
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.CreatedOn)</td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.InitialReviewStatus))
                 {
-                    if ((userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Client.ToString()) && item.FileCaseStatusId != "Completed")
-                    {
-                        <span class="fs-19 canedit"><a href="@Url.Action("edit", new { Id = @Html.ValueFor(modelItem => item.Id) })"><i class="fa-solid fa-pen text-edit hover-color-primarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i></a> &nbsp;</span>
-                    }
-                    if ((userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Admin.ToString()) || (userRole == UserTypeEnum.Client.ToString() && item.FileCaseStatusId == "Completed"))
-                    {
-                        <span class="fs-19 canview"><a href="@Url.Action("viewrecord", new { Id = @Html.ValueFor(modelItem => item.Id) })"><i class="fa-solid fa-eye text-primary hover-color-secondarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="View"></i></a></span>
-                    }
+                    <span class="@TemplateHelpers.GetLabelCss(@Html.DisplayFor(modelItem => item.InitialReviewStatus).ToString())">
+                        @Html.DisplayFor(modelItem => item.InitialReviewStatus)
+                    </span>
                 }
-            </div>
-        </td>
-    </tr>
+                else
+                {
+                    <span>N/A</span>
+                }
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.DocumentsUploadStatus))
+                {
+                    <span class="@TemplateHelpers.GetLabelCss(@Html.DisplayFor(modelItem => item.DocumentsUploadStatus).ToString())">
+                        @Html.DisplayFor(modelItem => item.DocumentsUploadStatus)
+                    </span>
+                }
+                else
+                {
+                    <span>N/A</span>
+                }
+            </td>
+            @if (userRole != null && (userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Admin.ToString()))
+            {
+                <td>@Html.DisplayFor(modelItem => item.Office)</td>
+            }
+            <td class="text-center">
+                @if (!string.IsNullOrEmpty(item.PaymentStatus))
+                {
+                    <span class="@TemplateHelpers.GetLabelCss(@Html.DisplayFor(modelItem => item.PaymentStatus).ToString())">
+                        @Html.DisplayFor(modelItem => item.PaymentStatus)
+                    </span>
+                }
+                else
+                {
+                    <span>N/A</span>
+                }
+            </td>
+            <td class="text-center">
+                @if (!string.IsNullOrEmpty(item.FileCaseStatusId))
+                {
+                    <span class="@TemplateHelpers.GetLabelCss(@Html.DisplayFor(modelItem => item.FileCaseStatusId).ToString())">
+                        @Html.DisplayFor(modelItem => item.FileCaseStatusId)
+                    </span>
+                }
+                else
+                {
+                    <span>N/A</span>
+                }
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => item.TimeStart, new { @id = "startDate" })
+                @Html.HiddenFor(modelItem => item.TimeEnd, new { @id = "endDate" })
+                <span id="timer"></span>
+            </td>
+            <td class="text-center">
+                <div class="d-flex text-breakspaces actioncol">
+                    @if (userRole != null)
+                    {
+                        if ((userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Client.ToString()) && item.FileCaseStatusId != "Completed")
+                        {
+                            <span class="fs-19 canedit"><a href="@Url.Action("edit", new { Id = @Html.ValueFor(modelItem => item.Id) })"><i class="fa-solid fa-pen text-edit hover-color-primarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i></a> &nbsp;</span>
+                        }
+                        if ((userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Admin.ToString()) || (userRole == UserTypeEnum.Client.ToString() && item.FileCaseStatusId == "Completed"))
+                        {
+                            <span class="fs-19 canview"><a href="@Url.Action("viewrecord", new { Id = @Html.ValueFor(modelItem => item.Id) })"><i class="fa-solid fa-eye text-primary hover-color-secondarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="View"></i></a></span>
+                        }
+                    }
+                </div>
+            </td>
+        </tr>
     }
 </tbody>
 
 <script>
+    $(document).ready(function () {
+        var sd = $('#startDate').val();
+        console.log(sd)
+        var ed = $('#endDate').val();
+        var startDate = new Date(sd);
+        var endDate = new Date(ed);
+
+        // Calculate the time difference in milliseconds
+        var timeDiff = endDate.getTime() - startDate.getTime();
+
+        // Update the timer every second
+        var timer = setInterval(function () {
+
+            // Get the current date and time
+            var now = new Date().getTime();
+
+            // Calculate the remaining time in milliseconds
+            var remainingTime = timeDiff - (now - startDate.getTime());
+
+            // Calculate the remaining days, hours, minutes, and seconds
+            var days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+            // Update the timer display
+            document.getElementById("timer").innerHTML = days + "d " + hours + "h "
+                + minutes + "m " + seconds + "s ";
+
+            // If the countdown is over, stop the timer
+            if (remainingTime < 0) {
+                clearInterval(timer);
+                document.getElementById("timer").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    });
+
     var fileName = "@Resource.ListOfFiledCases";//the file name for excel and pdf file (Export to excel, pdf feature)
     var indexLastColumn = $('#' + tableIdPrefix + '-table').find('tr')[0].cells.length - 1;
     //initialize datatable
