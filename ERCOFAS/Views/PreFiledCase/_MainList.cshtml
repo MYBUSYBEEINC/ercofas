@@ -2,7 +2,8 @@
 @using ERCOFAS.Resources
 @using ERCOFAS.Helpers;
 @using ERCOFAS.Enumeration;
-@{ 
+@using ERCOFAS.Controllers;
+@{
     var userRole = RoleHelpers.GetMainRole();
 }
 
@@ -30,7 +31,6 @@
 <tbody>
     @foreach (var item in Model.Listing)
     {
-
         <tr style="color: #212529;">
             <td>@Html.DisplayFor(modelItem => item.RequestSubject)</td>
             <td>@Html.DisplayFor(modelItem => item.UserName)</td>
@@ -89,11 +89,6 @@
                 {
                     <span>N/A</span>
                 }
-            </td>
-            <td>
-                @Html.HiddenFor(modelItem => item.TimeStart, new { @id = "startDate" })
-                @Html.HiddenFor(modelItem => item.TimeEnd, new { @id = "endDate" })
-                <span id="timer"></span>
             </td>
             <td class="text-center">
                 <div class="d-flex text-breakspaces actioncol">

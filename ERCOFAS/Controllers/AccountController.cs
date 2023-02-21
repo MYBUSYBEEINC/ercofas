@@ -453,120 +453,130 @@ namespace ERCOFAS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> PreRegister(PreRegistrationViewModel model, FormCollection collection)
         {
-            if (model.RERTypeId == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9")
+            try
             {
-                PreRegistration preRegistration = new PreRegistration
+                if (model.RERTypeId == "CA4ECCA6-63E0-4F84-92CC-301323C1D4F9")
                 {
-                    LastName = model.LastName,
-                    FirstName = model.FirstName,
-                    MiddleName = model.MiddleName,
-                    RERTypeId = model.RERTypeId,
-                    CreatedOn = DateTime.Now
-                };
-                _db.PreRegistration.Add(preRegistration);
-                await _db.SaveChangesAsync();
-
-                int index = 0;
-                foreach (HttpPostedFileBase file in model.File)
-                {
-                    if (file != null)
+                    PreRegistration preRegistration = new PreRegistration
                     {
-                        var attachment = AttachmentHelpers.SaveToDirectory(file);
-                        await SaveAttachment(preRegistration.Id, attachment.Item3, attachment.Item1, attachment.Item2, index);
-                    }
-                    index++;
-                }
+                        LastName = model.LastName,
+                        FirstName = model.FirstName,
+                        MiddleName = model.MiddleName,
+                        RERTypeId = model.RERTypeId,
+                        CreatedOn = DateTime.Now
+                    };
+                    _db.PreRegistration.Add(preRegistration);
+                    await _db.SaveChangesAsync();
 
-                string emailId = Guid.NewGuid().ToString();
-                string emailAddress = string.Empty;
-
-                var emailNotification = await _db.Notifications.FirstOrDefaultAsync(x => x.NotificationTypeId == "CC764087-5B80-480A-B148-EBFF0969C6A2");
-                if (emailNotification != null)
-                {
-                    string oneTimePassword = CodeGenerator.GenerateOneTimePassword(6);
-                    await SaveEmailAddress(preRegistration.Id, emailId, model.EmailAddress);
-                    await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode, model.MobileNumber, oneTimePassword);
-
-                    emailAddress = model.EmailAddress;
-                }
-
-                emailNotification.Content = emailNotification.Content.Replace("{stakeholder}", preRegistration.FirstName);
-                emailNotification.Content = emailNotification.Content.Replace("{baseurl}", _db.Settings.FirstOrDefault(x => x.Id == "FA85FB3A-2A1E-47F8-9B76-6536F6A95ABB").BaseUrl);
-                emailNotification.Content = emailNotification.Content.Replace("{key}", emailId);
-                EmailHelpers.SendEmail(emailAddress, emailNotification.Subject, emailNotification.Content);
-            }
-            else
-            {
-                PreRegistration preRegistration = new PreRegistration
-                {
-                    RERTypeId = model.RERTypeId,
-                    RERClassificationId = model.RERClassificationId,
-                    JuridicalEntityName = model.JuridicalEntityName,
-                    OfficeAddress = model.OfficeAddress,
-                    OfficeTelephone = model.OfficeTelephone,
-                    LiaisonOfficer1 = model.LiaisonOfficer1,
-                    LiaisonOfficer2 = model.LiaisonOfficer2,
-                    CreatedOn = DateTime.Now
-                };
-                _db.PreRegistration.Add(preRegistration);
-                await _db.SaveChangesAsync();
-
-                int index = 0;
-                foreach (HttpPostedFileBase file in model.File)
-                {
-                    if (file != null)
+                    int index = 0;
+                    foreach (HttpPostedFileBase file in model.File)
                     {
-                        var attachment = AttachmentHelpers.SaveToDirectory(file);
-                        await SaveAttachment(preRegistration.Id, attachment.Item3, attachment.Item1, attachment.Item2, index);
+                        if (file != null)
+                        {
+                            var attachment = AttachmentHelpers.SaveToDirectory(file);
+                            await SaveAttachment(preRegistration.Id, attachment.Item3, attachment.Item1, attachment.Item2, index);
+                        }
+                        index++;
                     }
-                    index++;
-                }
-                            
-                List<string> emailAddresses = new List<string>
-                {
-                    model.EmailAddress1,
-                    model.EmailAddress2,
-                    model.EmailAddress3,
-                    model.EmailAddress4,
-                    model.EmailAddress5
-                };
 
-                Dictionary<string, string> emailDictionary = new Dictionary<string, string>();
-
-                int emailAddressOrder = 1;
-                foreach (var emailAddress in emailAddresses)
-                {
                     string emailId = Guid.NewGuid().ToString();
-                    string oneTimePassword = CodeGenerator.GenerateOneTimePassword(6);
+                    string emailAddress = string.Empty;
 
-                    await SaveEmailAddress(preRegistration.Id, emailId, emailAddress, emailAddressOrder);
-
-                    if (emailAddressOrder == 1)
-                        await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode1, model.MobileNumber1, oneTimePassword, emailAddressOrder);
-
-                    if (emailAddressOrder == 2)
-                        await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode2, model.MobileNumber2, oneTimePassword, emailAddressOrder);
-
-                    if (emailAddressOrder == 1 || emailAddressOrder == 2)
-                        emailDictionary.Add(emailId, emailAddress);
-
-                    emailAddressOrder++;
-                }
-
-                int emailDictionaryOrder = 1;
-                foreach (var item in emailDictionary)
-                {
                     var emailNotification = await _db.Notifications.FirstOrDefaultAsync(x => x.NotificationTypeId == "CC764087-5B80-480A-B148-EBFF0969C6A2");
                     if (emailNotification != null)
                     {
-                        string content = emailNotification.Content;
-                        content = content.Replace("{stakeholder}", preRegistration.JuridicalEntityName);
-                        content = content.Replace("{baseurl}", _db.Settings.FirstOrDefault(x => x.Id == "FA85FB3A-2A1E-47F8-9B76-6536F6A95ABB").BaseUrl);
-                        content = content.Replace("{key}", item.Key);
-                        EmailHelpers.SendEmail(item.Value, emailNotification.Subject, content);
+                        string oneTimePassword = CodeGenerator.GenerateOneTimePassword(6);
+                        await SaveEmailAddress(preRegistration.Id, emailId, model.EmailAddress);
+                        await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode, model.MobileNumber, oneTimePassword);
+
+                        emailAddress = model.EmailAddress;
                     }
-                    emailDictionaryOrder++;
+
+                    emailNotification.Content = emailNotification.Content.Replace("{stakeholder}", preRegistration.FirstName);
+                    emailNotification.Content = emailNotification.Content.Replace("{baseurl}", _db.Settings.FirstOrDefault(x => x.Id == "FA85FB3A-2A1E-47F8-9B76-6536F6A95ABB").BaseUrl);
+                    emailNotification.Content = emailNotification.Content.Replace("{key}", emailId);
+                    EmailHelpers.SendEmail(emailAddress, emailNotification.Subject, emailNotification.Content);
                 }
+                else
+                {
+                    PreRegistration preRegistration = new PreRegistration
+                    {
+                        RERTypeId = model.RERTypeId,
+                        RERClassificationId = model.RERClassificationId,
+                        JuridicalEntityName = model.JuridicalEntityName,
+                        OfficeAddress = model.OfficeAddress,
+                        OfficeTelephone = model.OfficeTelephone,
+                        LiaisonOfficer1 = model.LiaisonOfficer1,
+                        LiaisonOfficer2 = model.LiaisonOfficer2,
+                        CreatedOn = DateTime.Now
+                    };
+                    _db.PreRegistration.Add(preRegistration);
+                    await _db.SaveChangesAsync();
+
+                    int index = 0;
+                    foreach (HttpPostedFileBase file in model.File)
+                    {
+                        if (file != null)
+                        {
+                            var attachment = AttachmentHelpers.SaveToDirectory(file);
+                            await SaveAttachment(preRegistration.Id, attachment.Item3, attachment.Item1, attachment.Item2, index);
+                        }
+                        index++;
+                    }
+
+                    List<string> emailAddresses = new List<string>
+                    {
+                        model.EmailAddress1,
+                        model.EmailAddress2,
+                        model.EmailAddress3,
+                        model.EmailAddress4,
+                        model.EmailAddress5
+                    };
+
+                    Dictionary<string, string> emailDictionary = new Dictionary<string, string>();
+
+                    int emailAddressOrder = 1;
+                    foreach (var emailAddress in emailAddresses)
+                    {
+                        if (!string.IsNullOrEmpty(emailAddress))
+                        {
+                            string emailId = Guid.NewGuid().ToString();
+                            string oneTimePassword = CodeGenerator.GenerateOneTimePassword(6);
+
+                            await SaveEmailAddress(preRegistration.Id, emailId, emailAddress, emailAddressOrder);
+
+                            if (emailAddressOrder == 1)
+                                await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode1, model.MobileNumber1, oneTimePassword, emailAddressOrder);
+
+                            if (emailAddressOrder == 2)
+                                await SaveMobileNumber(preRegistration.Id, emailId, model.CountryCode2, model.MobileNumber2, oneTimePassword, emailAddressOrder);
+
+                            if (emailAddressOrder == 1 || emailAddressOrder == 2)
+                                emailDictionary.Add(emailId, emailAddress);
+
+                            emailAddressOrder++;
+                        }
+                    }
+
+                    int emailDictionaryOrder = 1;
+                    foreach (var item in emailDictionary)
+                    {
+                        var emailNotification = await _db.Notifications.FirstOrDefaultAsync(x => x.NotificationTypeId == "CC764087-5B80-480A-B148-EBFF0969C6A2");
+                        if (emailNotification != null)
+                        {
+                            string content = emailNotification.Content;
+                            content = content.Replace("{stakeholder}", preRegistration.JuridicalEntityName);
+                            content = content.Replace("{baseurl}", _db.Settings.FirstOrDefault(x => x.Id == "FA85FB3A-2A1E-47F8-9B76-6536F6A95ABB").BaseUrl);
+                            content = content.Replace("{key}", item.Key);
+                            EmailHelpers.SendEmail(item.Value, emailNotification.Subject, content);
+                        }
+                        emailDictionaryOrder++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelpers.Log(string.Format("{0} ERROR | {1}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss tt"), ex.InnerException));
             }
             return Redirect("/Account/EmailVerification");
         }
