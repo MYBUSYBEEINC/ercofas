@@ -288,24 +288,28 @@
         list-style: none;
     }
 
-        .timeline .timeline-item {
-            position: relative;
-        }
+    .timeline .timeline-item {
+        position: relative;
+    }
 
-        .timeline .timeline-item:after {
-            position: absolute;
-            display: block;
-            top: 0;
-        }
+    .timeline .timeline-item:after {
+        position: absolute;
+        display: block;
+        top: 0;
+    }
 
-        .timeline .timeline-item:after {
-            background-color: hsl(0, 0%, 90%);
-            left: -38px;
-            border-radius: 50%;
-            height: 11px;
-            width: 11px;
-            content: "";
-        }
+    .timeline .timeline-item:after {
+        background-color: hsl(0, 0%, 90%);
+        left: -38px;
+        border-radius: 50%;
+        height: 11px;
+        width: 11px;
+        content: "";
+    }
+
+    .survey-invalid-message{
+        color: red;
+    }
 
 </style>
 
@@ -862,6 +866,58 @@
                                                             @Html.DisplayFor(model => model.Remarks)
                                                         </div>
                                                     </div>
+                                                    <div class="border-bottom my-4"></div>
+                                                    <h2 class="erc-text-blue mb-4">Summary</h2>
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="erc-text-dark-blue ">List of Document submitted</th>
+                                                                <th class="text-center erc-text-dark-blue">Result</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.PreFiledAttachmentViewModels != null && Model.PreFiledAttachmentViewModels.Count > 0)
+                                                            {
+                                                                foreach (var item in Model.PreFiledAttachmentViewModels)
+                                                                {
+                                                                    if (item.StatusId == "Approved")
+                                                                    {
+                                                                        <tr>
+                                                                            <td class="w-75 text-secondary">
+                                                                                @Html.DisplayFor(modelItem => item.FileTypeName)
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <span class="text-success">&#x2714;</span>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    }
+                                                                    else if (item.StatusId == "Discarded")
+                                                                    {
+                                                                        <tr>
+                                                                            <td class="w-75 text-secondary">
+                                                                                @Html.DisplayFor(modelItem => item.FileTypeName)
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <span class="text-warning">-</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                    else if (item.StatusId != "Remarks")
+                                                                    {
+                                                                        <tr>
+                                                                            <td class="w-75 text-secondary">
+                                                                                @Html.DisplayFor(modelItem => item.FileTypeName)
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <span class="text-danger">&#x2715;</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </form>
                                             <input type="button" name="submit" class="next-prefiled-complete action-button rounded my-5" value="Ok" />
@@ -945,13 +1001,7 @@
                                     }
 
                                     if (item.StatusId == "Rejected" || item.StatusId == "Declined")
-                                    {
-                                        @*<div class="form-group">
-                                <label class="form-label required fw600" for="@codeName">@item.FileTypeName</label>
-                                @Html.TextBox(codeName, "", new { @type = "file", @class = "form-control reupload-document", @multiple = true, accept = "application/pdf, image/jpeg, .xls, .xlsx, .doc, .docx, .ppt, .pptx" })
-                                @Html.ValidationMessageFor(model => codeName, "", new { @class = "invalid-message" })
-                            </div>*@
-
+                                    {    
                                         if (codeName == "ApplicationForm")
                                         {
                                             <div class="form-group">
@@ -1058,13 +1108,13 @@
                     <button type="button" id="btnCloseSurvey" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="surveyBody" class="modal-body">
-                    @using (Html.BeginForm("SubmitSurvey", "PreFiledCase", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
+                    @*@using (Html.BeginForm("SubmitSurvey", "PreFiledCase", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
                     {
                         @class = "form-modal-survey",
                         role = "form",
                         enctype = "multipart/form-data"
                     }))
-                    {
+                    {*@
                         @Html.HiddenFor(model => model.Id)
                         @*<div class="mt-2 text-center">*@
                         <section class="section mt-3">                                
@@ -1076,14 +1126,14 @@
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.PreFiledSurveyInformation.Name, htmlAttributes: new { @class = "form-label required fw600" })
                                             @Html.EditorFor(model => model.PreFiledSurveyInformation.Name, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.Name, "", new { @class = "invalid-message" })
+                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.Name, "", new { @class = "survey-invalid-message" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.PreFiledSurveyInformation.Company, htmlAttributes: new { @class = "form-label fw600" })
                                             @Html.EditorFor(model => model.PreFiledSurveyInformation.Company, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.Company, "", new { @class = "invalid-message" })
+                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.Company, "", new { @class = "" })
                                         </div>
                                     </div>
                                 </div>
@@ -1092,14 +1142,14 @@
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.PreFiledSurveyInformation.ContactNumber, htmlAttributes: new { @class = "form-label required fw600" })
                                             @Html.EditorFor(model => model.PreFiledSurveyInformation.ContactNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.ContactNumber, "", new { @class = "invalid-message" })
+                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.ContactNumber, "", new { @class = "survey-invalid-message" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.PreFiledSurveyInformation.EmailAddress, htmlAttributes: new { @class = "form-label fw600" })
                                             @Html.EditorFor(model => model.PreFiledSurveyInformation.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.EmailAddress, "", new { @class = "invalid-message" })
+                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.EmailAddress, "", new { @class = "" })
                                         </div>
                                     </div>
                                 </div>
@@ -1126,12 +1176,14 @@
                                             <div class="form-check">
                                                 @foreach (var item in Model.PreFiledSurveyInformation.OfficeList)
                                                 {
-                                                    @Html.RadioButtonFor(model => model.PreFiledSurveyInformation.OfficeVisited, new { htmlAttributes = new { @class = "form-check-input", @value = item } })
+                                                    @Html.RadioButtonFor(model => model.Office, item)
                                                     <label for="" class="text-dark" style="margin-right: 15px;">
                                                         @item
                                                     </label>
-                                                    @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.OfficeVisited, "", new { @class = "invalid-message" })
                                                 }
+                                                <br />
+                                                @Html.HiddenFor(model => model.PreFiledSurveyInformation.OfficeVisited)
+                                                @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.OfficeVisited, "", new { @class = "survey-invalid-message" })
                                             </div>
                                         </div>
                                     </div>
@@ -1143,12 +1195,14 @@
                                             <div class="form-check">
                                                 @foreach (var item in Model.PreFiledSurveyInformation.VisitPurposeList)
                                                 {
-                                                    @Html.RadioButtonFor(model => model.PreFiledSurveyInformation.PurposeVisit, new { htmlAttributes = new { @class = "form-check-input", @value = item } })
-                                                    <label for="" class="text-dark" style="margin-right: 45px;">
+                                                    @Html.RadioButtonFor(model => model.VisitPurpose, item)
+                                                    <label for="" class="text-dark col-md-2">
                                                         @item
                                                     </label>
-                                                    @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.PurposeVisit, "", new { @class = "invalid-message" })
                                                 }
+                                                <br />
+                                                @Html.HiddenFor(model => model.PreFiledSurveyInformation.PurposeVisit)
+                                                @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.PurposeVisit, "", new { @class = "survey-invalid-message" })
                                             </div>
                                         </div>
                                     </div>
@@ -1161,14 +1215,16 @@
                                     </b>
                                 </p>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-condensed table-striped table-hover sortable">
+                                    <table class="table prefile-client-satisfactory table-bordered table-condensed table-striped table-sm table-hover sortable">
                                         @if (Model.PreFiledSurveyInformation.SurveyQuestions.Count() > 0)
                                         {
                                             <thead>
                                                 <tr class="">
+                                                    <th style="display: none;">Id</th>
                                                     <th>Service Quality Dimension</th>
                                                     <th>Attributes</th>
-                                                    <th>Very
+                                                    <th>
+                                                        Very
                                                         Satisfied
                                                     </th>
                                                     <th>Satisfied</th>
@@ -1177,29 +1233,50 @@
                                                         Dissatisfied
                                                     </th>
                                                     <th>Dissatisfied</th>
-                                                    <th>Very Dissatisfied
+                                                    <th>
+                                                        Very Dissatisfied
                                                     </th>
                                                 </tr>
                                             </thead>
                                             foreach (var item in Model.PreFiledSurveyInformation.SurveyQuestions)
                                             {
+                                                var rate5 = "rateVerySatisfied_" + item.Id;
+                                                var rate4 = "rateSatisfied" + item.Id;
+                                                var rate3 = "rateNeitherSatisfied" + item.Id;
+                                                var rate2 = "rateDissatisfied" + item.Id;
+                                                var rate1 = "rateVeryDissatisfied" + item.Id;
                                                 <tr>
-                                                    <td>@item.Question</td>
-                                                    <td>@item.Description</td>
-                                                    <td>@Html.RadioButtonFor(model => model.PreFiledSurveyInformation.SurveyQuestion, new { htmlAttributes = new { @class = "form-check-input", @value = 5 } }) 5</td>
-                                                    <td>@Html.RadioButtonFor(model => model.PreFiledSurveyInformation.SurveyQuestion, new { htmlAttributes = new { @class = "form-check-input", @value = 4 } }) 4</td>
-                                                    <td>@Html.RadioButtonFor(model => model.PreFiledSurveyInformation.SurveyQuestion, new { htmlAttributes = new { @class = "form-check-input", @value = 3 } }) 3</td>
-                                                    <td>@Html.RadioButtonFor(model => model.PreFiledSurveyInformation.SurveyQuestion, new { htmlAttributes = new { @class = "form-check-input", @value = 2 } }) 2</td>
-                                                    <td>@Html.RadioButtonFor(model => model.PreFiledSurveyInformation.SurveyQuestion, new { htmlAttributes = new { @class = "form-check-input", @value = 1 } }) 1</td>
+                                                    <td style="display: none;" id="questionId">@item.Id</td>
+                                                    <td id="questionName">@item.Question<br /><span style="visibility: hidden; color: red;" class="survey-question-message"></span></td>
+                                                    <td id="questionDescription">@item.Description</td>
+                                                    <td id="rateVerySatisfied"><input id="@rate5" type="radio" class="survey-rate" data-survey-rate="@item.Id" value="5" /> 5</td>
+                                                    <td id="rateSatisfied"><input id="@rate4" type="radio" class="survey-rate" data-survey-rate="@item.Id" value="4" /> 4</td>
+                                                    <td id="rateNeitherSatisfied"><input id="@rate3" type="radio" class="survey-rate" data-survey-rate="@item.Id" value="3" /> 3</td>
+                                                    <td id="rateDissatisfied"><input id="@rate2" type="radio" class="survey-rate" data-survey-rate="@item.Id" value="2" /> 2</td>
+                                                    <td id="rateVeryDissatisfied"><input id="@rate1" type="radio" class="survey-rate" data-survey-rate="@item.Id" value="1" />1</td>
                                                 </tr>
                                             }
                                         }
                                     </table>
                                 </div>
+                                <p>
+                                    <b>
+                                        III. Please share your comments and suggestions for improvements:
+                                    </b>
+                                </p>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PreFiledSurveyInformation.Comment, htmlAttributes: new { @class = "form-label fw600" })
+                                            @Html.EditorFor(model => model.PreFiledSurveyInformation.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.Comment, "")
+                                        </div>
+                                    </div>
+                                </div>
                             </div>                                
                         </section>
                         @*</div>*@
-                    }
+                    @*}*@
                     </div>
                 <div class="modal-footer">
                     <button type="button" class="addnewbtn submit-survey-content btn btn-p8 hover-boxshadow hover-bg-primarycolor">@Resource.Submit</button>
@@ -1337,50 +1414,11 @@
                 $("#uploadInitialDocuments").modal("show");
             });
 
-            $(".submit-upload-document").click(function () {
-
-                //if (!files.length) {
-
-                //    $("#ApplicationForm.reupload-document").next("span").html("Required");
-                //    $("#ApplicationForm.reupload-document").val("");
-                //    return;
-                //}
+            $(".submit-upload-document").click(function () {                             
 
                 if (!validateUploadFileRequirements()) return false;
-                //var uploadedFileRequirements = getReuploadedFileRequirements();
-                //console.log(uploadedFileRequirements);
-
-                $(".form-modal-upload").submit();
-
-                //var inputFile = $("#ApplicationForm.reupload-document").get(0);
-                //var files = inputFile.files;
-
-                //var formData = new FormData();
-                //formData.append("id", $("#Id").val())
-                //formData.append("initialDocument", files[0]);
-
-                //$.ajax({
-                //    url: '/PreFiledCase/UploadInitialDocument',
-                //    type: "POST",
-                //    contentType: false,
-                //    processData: false,
-                //    data: formData,
-                //    success: function (data) {
-                //        if (data) {
-                //            $("#ApplicationForm.reupload-document").next("span").html("");
-                //            $("#ApplicationForm.reupload-document").val("");
-                //            $("#uploadInitialDocuments").modal("hide");
-
-                //            location.href = "/PreFiledCase/Index";
-                //        } else {
-                //            $("#ApplicationForm.reupload-document").next("span").html("File upload failed.");
-                //            $("#ApplicationForm.reupload-document").val("");
-                //        }
-                //    },
-                //    error: function (err) {
-
-                //    }
-                //});
+                
+                $(".form-modal-upload").submit();                
             });
 
             $("#btnNextSubmitInitial, #btnNextSubmitDocumentFiles").click(function () {
@@ -1395,10 +1433,48 @@
             });
 
             $(".submit-survey-content").click(function () {
-                $(".next-document-review").addClass("next");                
-                $("#survey").modal("hide");
-                //showTab(5);
-            });            
+
+                if (!validateSurveyForm()) return false;
+
+                if (!validateSurveyQuestion()) return false;
+
+                var arrSurveyQuestions = new Array;
+                $("table.prefile-client-satisfactory tbody tr").each(function () {
+                    var row = $(this);
+                    var surveyQuestion = {};
+                    surveyQuestion.Id = row.find("[id*=questionId]").text();
+                    surveyQuestion.Question = row.find("[id*=questionName]").text();
+                    surveyQuestion.Description = row.find("[id*=questionDescription]").text();
+                    surveyQuestion.Type = "PreFiledClientSatisfactory";
+                    surveyQuestion.Rate = getSurveyRate(row);
+                    arrSurveyQuestions.push(surveyQuestion);
+                });
+                
+                $.ajax({
+                    type: "POST",
+                    url: "/PreFiledCase/SubmitSurvey",
+                    data: JSON.stringify({
+                        preFiledCaseId: $("#Id").val(),
+                        name: $("#PreFiledSurveyInformation_Name").val(),
+                        company: $("#PreFiledSurveyInformation_Company").val(),
+                        contactNumber: $("#PreFiledSurveyInformation_ContactNumber").val(),
+                        emailAddress: $("#PreFiledSurveyInformation_EmailAddress").val(),
+                        officeVisited: $("#PreFiledSurveyInformation_OfficeVisited").val(),
+                        purposeVisit: $("#PreFiledSurveyInformation_PurposeVisit").val(),
+                        comment: $("#PreFiledSurveyInformation_Comment").val(),
+                        surveyQuestions: arrSurveyQuestions
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        $(".next-document-review").addClass("next");
+                        $("#survey").modal("hide");
+                    },
+                    error: function (xhr, status, error) {
+                        var err = JSON.parse(xhr.responseText);
+                    }
+                });               
+           });            
 
             $('#downloadInitialFile').click(function () {
                 var fileName = $("#hdnInitialUniqueFileName").val();
@@ -1422,9 +1498,28 @@
                 downloadFile(fileName);
             });
 
-            function initTab() {
-                console.log("init tab...");
+            $('input[name=Office]').change(function () {
+                var selectedValue = $("input[name=Office]:checked").val();
+                $("#PreFiledSurveyInformation_OfficeVisited").val(selectedValue);
+            });
 
+            $('input[name=VisitPurpose]').change(function () {
+                var selectedValue = $("input[name=VisitPurpose]:checked").val();
+                $("#PreFiledSurveyInformation_PurposeVisit").val(selectedValue);
+            });
+
+            $('.survey-rate').change(function () {
+                var row = $(this).parent("td").parent("tr");
+                var elemId = $(this).attr("id");
+                
+                if ($("#" + elemId).is(":checked")) {                    
+                    $(row).find("td").children("input.survey-rate").removeAttr("checked");
+                    $("#" + elemId).prop("checked", "checked");
+                }
+            });
+
+            function initTab() {
+                
                 var initialReviewStatus = $("#InitialReviewStatus").val();
                 var documentUploadStatus = $("#DocumentsUploadStatus").val();
                 
@@ -1499,9 +1594,8 @@
             }
 
             function showTab(n) {
-                console.log("show next tab: " + n);
+                
                 var fieldSet = document.getElementsByTagName("fieldset");
-
                 var current_fieldSet = $("fieldset.active");
                 var next_fieldSet = $(fieldSet[n]);
 
@@ -1640,30 +1734,7 @@
 
                 return valid;
             }
-                        
-            function getReuploadedFileRequirements() {
-
-                var formData = new FormData();
-
-                div = document.getElementById("uploadInitialDocumentRequirements");
-                input = div.getElementsByTagName("input");
-
-                for (i = 0; i < input.length; i++) {
-                    if (input[i].type === "file") {
-                        var inputId = "#" + input[i].id;
-                        var inputFile = $(inputId).get(0);
-                        
-                        if (inputFile.length) {
-                            var files = inputFile.files;
-                            formData.append("id", $("#Id").val())
-                            formData.append("initialDocument", files[0]);
-                        }
-                    }
-                }
-
-                return formData;
-            }
-                     
+                                                   
             function downloadFile(fileName) {
 
                 $.ajax({
@@ -1714,8 +1785,55 @@
                     }
                 });
             }
-            
+
+            function validateSurveyForm() {
+
+                var input, i, valid = true;
+                input = document.getElementsByClassName("survey-invalid-message");
+                
+                for (i = 0; i < input.length; i++) {
+                    
+                    var inputValue = $(input[i]).prev()[0].value;                    
+                    if ($(input[i]).prev()[0].type === "text" && (inputValue === "" || inputValue === undefined)) {                        
+                        $($(input[i]).prev()[0]).next().html("Required");
+                        valid = false;
+                    } else if($(input[i]).prev()[0].type === "hidden" && (inputValue === "" || inputValue === undefined)) {
+                        $($(input[i]).prev()[0]).next().html("Required");
+                        valid = false;
+                    }                    
+                }
+
+                return valid;
+            }          
         });
+
+        function validateSurveyQuestion() {
+
+            var valid = true;
+
+            $("table.prefile-client-satisfactory tbody tr").each(function () {
+                var row = $(this);
+
+                if ($(row).find("td").children("input[type=radio]:checked").val() === undefined) {
+                    $(row).find("td").children("span.survey-question-message").html("Required").css("visibility", "visible");
+                    valid = false;
+                } else
+                    $(row).find("td").children("span.survey-question-message").html("").css("visibility", "hidden");
+
+            });
+
+            return valid;
+        }
+
+        function getSurveyRate(row) {
+
+            var rateValue = $(row).find("td").children("input[type=radio]:checked").val();
+
+            if (rateValue === undefined)
+                return 0;
+
+            return rateValue;
+        }
 
         function initialReviewRequired(caseType, caseNature) {
 

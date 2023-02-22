@@ -91,6 +91,7 @@ namespace ERCOFAS.Models
         public List<PreRegistrationMobiles> MobileNumbers { get; set; }
         public string Office { get; set; }
         public IList<string> OfficeList { get; set; }
+        public string VisitPurpose { get; set; }
         public bool PreFilingCaseComplete { get; set; }
         public PreFiledSurveyInformationModel PreFiledSurveyInformation { get; set; }
         public List<PreFiledCaseLogs> CaseLogs { get; set; }

@@ -190,7 +190,7 @@ namespace ERCOFAS.Controllers
             var preFiledSurveyInformation = new PreFiledSurveyInformationModel();
             preFiledSurveyInformation.OfficeList = GetOfficeList();
             preFiledSurveyInformation.VisitPurposeList = GetPurposeVisitList();
-            preFiledSurveyInformation.SurveyQuestions = db.SurveyQuestions.Where(a => a.Type == "PreFiledClientSatisfactory").ToList();
+            preFiledSurveyInformation.SurveyQuestions = GetSurveyQuestions();
             model.PreFiledSurveyInformation = preFiledSurveyInformation;
            
             return View(model);
@@ -902,6 +902,71 @@ namespace ERCOFAS.Controllers
             purposeList.Add("Others");
 
             return purposeList;
+        }
+
+        private IList<SurveyQuestionModel> GetSurveyQuestions()
+        {
+            var surveyQuestions = new List<SurveyQuestionModel>();
+            
+            surveyQuestions = (from a in db.SurveyQuestions
+                               where a.Type == "PreFiledClientSatisfactory"
+                               select new SurveyQuestionModel()
+                               {
+                                   Id = a.Id,
+                                   Question = a.Question,
+                                   Description = a.Description,
+                                   Type = a.Type
+                               }).ToList();
+
+            return surveyQuestions;
+        }
+
+        [HttpPost]
+        public ActionResult SubmitSurvey(PreFiledSurveyInformationModel preFiledSurveyInformationModel)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var preFiledSurveyInformation = new PreFiledSurveyInformation
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = preFiledSurveyInformationModel.Name,
+                Company = preFiledSurveyInformationModel.Company,
+                ContactNumber = preFiledSurveyInformationModel.ContactNumber,
+                EmailAddress = preFiledSurveyInformationModel.EmailAddress,
+                OfficeVisited = preFiledSurveyInformationModel.OfficeVisited,
+                PurposeVisit = preFiledSurveyInformationModel.PurposeVisit,
+                PreFiledCaseId = preFiledSurveyInformationModel.PreFiledCaseId,
+                Comment = preFiledSurveyInformationModel.Comment,
+                CreatedBy = userId,
+                CreatedOn = general.GetSystemTimeZoneDateTimeNow()
+            };
+            db.PreFiledSurveyInformations.Add(preFiledSurveyInformation);
+            db.SaveChanges();
+
+            IList<PreFiledSurveyFeedback> preFiledSurveyFeedbacks = new List<PreFiledSurveyFeedback>();
+            foreach (var surveyQuestion in preFiledSurveyInformationModel.SurveyQuestions)
+            {
+                var preFiledSurveyFeedback = new PreFiledSurveyFeedback
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SurveyQuestion = surveyQuestion.Id,
+                    Description = surveyQuestion.Description,
+                    SurveyType = "PreFiledClientSatisfactory",
+                    SatisfactionRate = surveyQuestion.Rate,
+                    PreFiledSurveyInformationId = preFiledSurveyInformation.Id,
+                    CreatedBy = userId,
+                    CreatedOn = general.GetSystemTimeZoneDateTimeNow()
+                };
+                preFiledSurveyFeedbacks.Add(preFiledSurveyFeedback);
+            }
+
+            if (preFiledSurveyFeedbacks.Any())
+            {
+                db.PreFiledSurveyFeedbacks.AddRange(preFiledSurveyFeedbacks);
+                db.SaveChanges();
+            }
+
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
