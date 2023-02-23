@@ -1099,16 +1099,8 @@
                     <h5 class="modal-title" id="surveyLabel">Survey</h5>
                     <button type="button" id="btnCloseSurvey" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="surveyBody" class="modal-body">
-                    @*@using (Html.BeginForm("SubmitSurvey", "PreFiledCase", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new
-                    {
-                        @class = "form-modal-survey",
-                        role = "form",
-                        enctype = "multipart/form-data"
-                    }))
-                    {*@
-                        @Html.HiddenFor(model => model.Id)
-                        @*<div class="mt-2 text-center">*@
+                <div id="surveyBody" class="modal-body">                    
+                        @Html.HiddenFor(model => model.Id)                        
                         <section class="section mt-3">                                
                             <div class="bg-white rounded p-3 p-lg-4 p-xl-5 shadow">
                                 <p class=""><b>I. Client Information</b></p>
@@ -1125,7 +1117,7 @@
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.PreFiledSurveyInformation.Company, htmlAttributes: new { @class = "form-label fw600" })
                                             @Html.EditorFor(model => model.PreFiledSurveyInformation.Company, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.Company, "", new { @class = "" })
+                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.Company, "", new { @class = "survey-invalid-message" })
                                         </div>
                                     </div>
                                 </div>
@@ -1141,26 +1133,26 @@
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.PreFiledSurveyInformation.EmailAddress, htmlAttributes: new { @class = "form-label fw600" })
                                             @Html.EditorFor(model => model.PreFiledSurveyInformation.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.EmailAddress, "", new { @class = "" })
+                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.EmailAddress, "", new { @class = "survey-invalid-message" })
                                         </div>
                                     </div>
                                 </div>
                                 @*<div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="" class="form-label fw600">Date:</label>
-                    @Html.EditorFor(model => model.PreFiledSurveyInformation.SurveyDateTimeIn, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.SurveyDateTimeIn, "", new { @class = "invalid-message" })
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="" class="form-label fw600">Time In:</label>
-                    @Html.EditorFor(model => model.PreFiledSurveyInformation.SurveyDateTimeOut, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.SurveyDateTimeOut, "", new { @class = "invalid-message" })
-                </div>
-            </div>
-        </div>*@
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="" class="form-label fw600">Date:</label>
+                                            @Html.EditorFor(model => model.PreFiledSurveyInformation.SurveyDateTimeIn, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.SurveyDateTimeIn, "", new { @class = "invalid-message" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="" class="form-label fw600">Time In:</label>
+                                            @Html.EditorFor(model => model.PreFiledSurveyInformation.SurveyDateTimeOut, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.PreFiledSurveyInformation.SurveyDateTimeOut, "", new { @class = "invalid-message" })
+                                        </div>
+                                    </div>
+                                </div>*@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">

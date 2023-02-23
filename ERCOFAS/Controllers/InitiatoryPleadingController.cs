@@ -112,7 +112,7 @@ namespace ERCOFAS.Controllers
                             DocumentName = t1.DocumentName,
                             Description = t1.Description,
                             Barcode = t1.Barcode,
-                            DocketNumber = t1.DocketNumber,                                                   
+                            DocketNumber = t1.DocketNumber,
                             CreatedBy = t3.FullName,
                             CreatedOn = t1.CreatedOn
                         }).ToList();
@@ -159,7 +159,13 @@ namespace ERCOFAS.Controllers
                 model.Description = initiatoryPleading.Description;
                 model.Barcode = initiatoryPleading.Barcode;
                 model.DocketNumber = initiatoryPleading.DocketNumber;
+                model.CaseTitle = initiatoryPleading.CaseTitle;
+                model.ApplicantName = initiatoryPleading.ApplicantName;
+                model.CaseType = preFiledCase != null ? GetCaseCode(general.GetGlobalOptionSetCode(preFiledCase.CaseTypeId)) : string.Empty;
                 model.CaseNature = preFiledCase != null ? general.GetGlobalOptionSetDisplayName(preFiledCase.CaseNatureId) : string.Empty;
+                model.DocketNumberCaseType = DateTime.Now.ToString("yyyy");
+                model.DocketNumberSequence = string.Empty;
+                model.PreFiledAttachmentViewModels = GetPreFiledAttachments(initiatoryPleading.PreFiledCaseId);
                 model.CreatedBy = db.UserProfiles.FirstOrDefault(x => x.AspNetUserId == initiatoryPleading.CreatedBy).FullName;
                 model.CreatedOn = initiatoryPleading.CreatedOn;
                 model.ModifiedBy = initiatoryPleading.ModifiedBy;
@@ -262,7 +268,9 @@ namespace ERCOFAS.Controllers
                     initiatoryPleading.DocumentName = model.DocumentName;
                     initiatoryPleading.Description = model.Description;
                     initiatoryPleading.Barcode = string.IsNullOrEmpty(model.Barcode) ? Guid.NewGuid().ToString() : initiatoryPleading.Barcode;
-                    initiatoryPleading.DocketNumber = model.DocketNumber;
+                    initiatoryPleading.DocketNumber = model.DocketNumberYear + model.DocketNumberSequence + model.CaseType;
+                    initiatoryPleading.CaseTitle = model.CaseTitle;
+                    initiatoryPleading.ApplicantName = model.ApplicantName;
                     initiatoryPleading.ModifiedBy = userId;
                     initiatoryPleading.ModifiedOn = general.GetSystemTimeZoneDateTimeNow();
                     db.Entry(initiatoryPleading).State = EntityState.Modified;
@@ -277,6 +285,8 @@ namespace ERCOFAS.Controllers
                     initiatoryPleading.Description = model.Description;
                     initiatoryPleading.Barcode = model.Barcode;
                     initiatoryPleading.DocketNumber = model.DocketNumber;
+                    initiatoryPleading.CaseTitle = model.CaseTitle;
+                    initiatoryPleading.ApplicantName = model.ApplicantName;
                     initiatoryPleading.PreFiledCaseId = model.PreFiledCaseId;
                     initiatoryPleading.CreatedBy = userId;
                     initiatoryPleading.CreatedOn = general.GetSystemTimeZoneDateTimeNow();
@@ -360,7 +370,14 @@ namespace ERCOFAS.Controllers
             if (string.IsNullOrEmpty(caseType))
                 return caseType;
 
-            string caseCode = string.Empty;            
+            string caseCode = GetCaseCode(caseType);
+            string docketNumber = $"{DateTime.Now.ToString("yyyy")}-{000:D3}{caseCode}";
+            return docketNumber;
+        }
+
+        private string GetCaseCode(string caseType)
+        {
+            string caseCode = string.Empty;
             switch (caseType)
             {
                 case "RateCase":
@@ -389,8 +406,26 @@ namespace ERCOFAS.Controllers
                     break;
             }
 
-            string docketNumber = $"{DateTime.Now.ToString("yyyy")}-{000:D3}{caseCode}";
-            return docketNumber;
+            return caseCode;
+        }
+
+        public IList<PreFiledAttachmentViewModel> GetPreFiledAttachments(string preFiledCaseId)
+        {
+            IList<PreFiledAttachmentViewModel> list = new List<PreFiledAttachmentViewModel>();
+            var preFiledAttachments = db.PreFiledAttachments.Where(x => x.PreFiledCaseId == preFiledCaseId).ToList();
+            list = (from x in preFiledAttachments
+                    select new PreFiledAttachmentViewModel
+                    {
+                        Id = x.Id,
+                        FileName = x.FileName,
+                        FileTypeId = x.FileTypeId,
+                        UniqueFileName = x.UniqueFileName,
+                        FileTypeName = general.GetGlobalOptionSetDisplayName(x.FileTypeId),
+                        CodeName = general.GetGlobalOptionSetCode(x.FileTypeId),
+                        StatusId = x.StatusId
+                    }).ToList();
+
+            return list;
         }
 
         protected override void Dispose(bool disposing)

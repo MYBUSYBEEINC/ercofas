@@ -79,6 +79,7 @@ namespace ERCOFAS.Models
         public HttpPostedFileBase[] Files { get; set; }
         public List<PreFiledAttachment> Attachments { get; set; }
         public IList<PreFiledAttachmentViewModel> PreFiledAttachmentViewModels { get; set; }
+
         [Display(Name = "FullName", ResourceType = typeof(Resource))]
         public string FullName { get; set; }
         [Display(Name = "Email", ResourceType = typeof(Resource))]
