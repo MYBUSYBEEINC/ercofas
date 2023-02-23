@@ -404,34 +404,75 @@
                             {
                                 if (Model.InitialReviewStatus != "Approved")
                                 {
-                                    <div class="form-check" id="ai" style="cursor:pointer;">
-                                        <input type="radio" value="Approved" id="ap" />
-                                        <label for="complete-documentation" class="text-dark">
-                                            Yes <small class="text-muted ms-2">Approved (Endorse Application)</small>
-                                        </label>
-                                    </div>
-                                    <div class="form-check" id="ri" style="cursor:pointer;">
-                                        <input type="radio" value="Rejected" id="re" />
-                                        <label for="complete-documentation" class="text-dark">
-                                            No <small class="text-muted ms-2">(Notify stakeholder for incomplete documents)</small>
-                                        </label>
-                                    </div>
-
+                                    @if (Model.PreFiledAttachmentViewModels != null && Model.PreFiledAttachmentViewModels.Count > 0)
+                                    {
+                                        foreach (var item in Model.PreFiledAttachmentViewModels)
+                                        {
+                                            if (item.FileTypeName == "Application Form" && item.FileTypeName == "Other Document")
+                                            {
+                                                if (item.StatusId == "Approved")
+                                                {
+                                                    <div class="form-check" id="ai" style="cursor:pointer;">
+                                                        <input type="radio" value="Approved" id="ap" />
+                                                        <label for="complete-documentation" class="text-dark">
+                                                            Yes <small class="text-muted ms-2">Approved (Endorse Application)</small>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check" id="ri" style="cursor:pointer;">
+                                                        <input type="radio" value="Rejected" id="re" />
+                                                        <label for="complete-documentation" class="text-dark">
+                                                            No <small class="text-muted ms-2">(Notify stakeholder for incomplete documents)</small>
+                                                        </label>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-check" id="ri" style="cursor:pointer;">
+                                                        <input type="radio" value="Rejected" id="re" />
+                                                        <label for="complete-documentation" class="text-dark">
+                                                            No <small class="text-muted ms-2">(Notify stakeholder for incomplete documents)</small>
+                                                        </label>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                                 else if (Model.InitialReviewStatus == "Approved" && Model.DocumentsUploadStatus != "Approved")
                                 {
-                                    <div class="form-check" id="ad" style="cursor:pointer;">
-                                        <input type="radio" value="Approved" id="ap" />
-                                        <label for="complete-documentation" class="text-dark">
-                                            Yes <small class="text-muted ms-2">Approved</small>
-                                        </label>
-                                    </div>
-                                    <div class="form-check" id="rd" style="cursor:pointer;">
-                                        <input type="radio" value="Rejected" id="re" />
-                                        <label for="complete-documentation" class="text-dark">
-                                            No <small class="text-muted ms-2">(Notify stakeholder for incomplete documents)</small>
-                                        </label>
-                                    </div>
+                                    @if (Model.PreFiledAttachmentViewModels != null && Model.PreFiledAttachmentViewModels.Count > 0)
+                                    {
+                                        foreach (var item in Model.PreFiledAttachmentViewModels)
+                                        {
+                                            if (item.FileTypeName == "Application Form" && item.FileTypeName == "Certification Forum" && item.FileTypeName == "Authority Counsel" && item.FileTypeName == "Service Lgu" && item.FileTypeName == "Publication" && item.FileTypeName == "Exemption Competitive" && item.FileTypeName == "Competitive" && item.FileTypeName == "Notary Presented Id" && item.FileTypeName == "Authority Affiant")
+                                            {
+                                                if (item.StatusId == "Approved")
+                                                {
+                                                    <div class="form-check" id="ad" style="cursor:pointer;">
+                                                        <input type="radio" value="Approved" id="ap" />
+                                                        <label for="complete-documentation" class="text-dark">
+                                                            Yes <small class="text-muted ms-2">Approved</small>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check" id="rd" style="cursor:pointer;">
+                                                        <input type="radio" value="Rejected" id="re" />
+                                                        <label for="complete-documentation" class="text-dark">
+                                                            No <small class="text-muted ms-2">(Notify stakeholder for incomplete documents)</small>
+                                                        </label>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-check" id="rd" style="cursor:pointer;">
+                                                        <input type="radio" value="Rejected" id="re" />
+                                                        <label for="complete-documentation" class="text-dark">
+                                                            No <small class="text-muted ms-2">(Notify stakeholder for incomplete documents)</small>
+                                                        </label>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                                 else if (Model.InitialReviewStatus == "Approved" && Model.DocumentsUploadStatus == "Approved")
                                 {
@@ -558,20 +599,20 @@
                     </div>
 
                     @Html.HiddenFor(model => model.Id)
-                    <div class="float-end mt-4">
-                        <a class="btn btn-p8 bg-light hover-boxshadow me-1" href="@Url.Action("index","PreFiledCase")" style="background-color:white;">Back to List</a>
-                        @if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                <div class="float-end mt-4">
+                    <a class="btn btn-p8 bg-light hover-boxshadow me-1" href="@Url.Action("index","PreFiledCase")" style="background-color:white;">Back to List</a>
+                    @if (userRole == UserTypeEnum.Admin.ToString() || userRole == UserTypeEnum.SuperAdmin.ToString())
+                    {
+                        if (Model.DocumentsUploadStatus == "Approved" && Model.InitialReviewStatus == "Approved")
                         {
-                            if (Model.DocumentsUploadStatus == "Approved" && Model.InitialReviewStatus == "Approved")
-                            {
-                            }
-                            else
-                            {
-                                <a id="tss" class="action-button"> Submit </a>
-
-                            }
                         }
-                    </div>
+                        else
+                        {
+                            <a id="tss" class="action-button"> Submit </a>
+
+                        }
+                    }
+                </div>
                 </form>
             </div>
         </div>
