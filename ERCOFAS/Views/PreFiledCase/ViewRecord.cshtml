@@ -253,6 +253,68 @@
                                     }
                                 </tbody>
                             </table>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="erc-text-dark-blue">List of Email</th>
+                                        <th class="text-center erc-text-dark-blue">Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Emails != null)
+                                    {
+                                        foreach (var item in Model.Emails)
+                                        {
+                                            <tr>
+                                                <td class="w-50 text-secondary">
+                                                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                                                </td>
+                                                <td class="text-center">
+                                                    @if (item.IsVerified)
+                                                    {
+                                                        <span style="color:#80e9e9;">&#x2714;</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span style="color:#ff0000;">&#x2717;</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="erc-text-dark-blue">List of Phone No.</th>
+                                        <th class="text-center erc-text-dark-blue">Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.MobileNumbers != null)
+                                    {
+                                        foreach (var item in Model.MobileNumbers)
+                                        {
+                                            <tr>
+                                                <td class="w-50 text-secondary">
+                                                    @Html.DisplayFor(modelItem => item.MobileNumber)
+                                                </td>
+                                                <td class="text-center">
+                                                    @if (item.IsVerified)
+                                                    {
+                                                        <span style="color:#80e9e9;">&#x2714;</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span style="color:#ff0000;">&#x2717;</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                         <div class="ms-auto border rounded w-49">
                             <h2 class="erc-text-blue mx-2 my-2 mb-4">Submitted Documents</h2>
@@ -261,6 +323,7 @@
                                 {
                                     foreach (var item in Model.PreFiledAttachmentViewModels)
                                     {
+                                        /////////////////////////////////////////////////////////////////////////////////
                                         if (Path.GetExtension(item.FileName) == ".pdf" && item.StatusId != "Remarks")
                                         {
                                             <div class="thumbnail">
@@ -364,7 +427,7 @@
                                             </div>
 
                                         }
-                                        else if (Path.GetExtension(item.FileName) == ".jpg" && item.StatusId != "Remarks" ||
+                                        if (Path.GetExtension(item.FileName) == ".jpg" && item.StatusId != "Remarks" ||
                                         Path.GetExtension(item.FileName) == ".jpeg" && item.StatusId != "Remarks" ||
                                         Path.GetExtension(item.FileName) == ".png" && item.StatusId != "Remarks" ||
                                         Path.GetExtension(item.FileName) == ".gif" && item.StatusId != "Remarks")
@@ -390,6 +453,7 @@
                                                 </div>
                                             </div>
                                         }
+                                        /////////////////////////////////////////////////////////////////////////////////
                                     }
                                 }
                             </div>
