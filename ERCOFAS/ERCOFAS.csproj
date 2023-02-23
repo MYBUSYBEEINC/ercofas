@@ -584,6 +584,7 @@
     <Content Include="Scripts\vfs_fonts.js" />
     <Content Include="UploadedFiles\admin2pic.jpg" />
     <Content Include="UploadedFiles\defaultProfilePicture.jpg" />
+    <Content Include="UploadedFiles\default_ak3CgRnUKcjJ8AcSUAZw.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

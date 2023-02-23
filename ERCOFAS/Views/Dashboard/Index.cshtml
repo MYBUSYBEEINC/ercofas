@@ -42,58 +42,82 @@
                     <h6>Overview</h6>
                 </div>
                 @*<div class="col text-end pe-4 text-muted d-flex align-items-center justify-content-end">
-                    <small>@Convert.ToDateTime(DateTime.Now).ToString("dddd, MMMM dd yyyy hh:mm tt")</small>
-                </div>*@
+                        <small>@Convert.ToDateTime(DateTime.Now).ToString("dddd, MMMM dd yyyy hh:mm tt")</small>
+                    </div>*@
             </div>
         </div>
 
         <div class="container-fluid d-flex flex-column gap-4 my-4 gx-0">
             <div class="row">
                 <div class="col-lg-3 col-md-6">
-                    <div class="bg-white rounded p-2">
+                    <div class="bg-white rounded p-2 d-flex flex-column gap-3">
+                        <small>
+                            <span class="float-start text-secondary"><strong>Pre-Filing Applications</strong></span>
+                            <span class="float-end text-white bg-dark bg-opacity-25 rounded px-1 cursor" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Total">450</span>
+                        </small>
                         <canvas id="myPieChart"></canvas>
                     </div>
-                    
+
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="bg-white rounded p-2">
+                    <div class="bg-white rounded p-2 d-flex flex-column gap-3">
+                        <small>
+                            <span class="float-start text-secondary"><strong>Cases with Docket Number</strong></span>
+                            <span class="float-end text-white bg-dark bg-opacity-25 rounded px-1 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Total">100</span>
+                        </small>
                         <canvas id="myDoughnutChart"></canvas>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="bg-white rounded p-2">
+                    <div class="bg-white rounded p-2 d-flex flex-column gap-3">
+                        <small>
+                            <span class="float-start text-secondary"><strong>Hearings</strong></span>
+                            <span class="float-end text-white bg-dark bg-opacity-25 rounded px-1 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Total">24</span>
+                        </small>
                         <canvas id="myPolarAreaChart"></canvas>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="bg-white rounded p-2">
+                    <div class="bg-white rounded p-2 d-flex flex-column gap-3">
+                        <small>
+                            <span class="float-start text-secondary"><strong>Reports</strong></span>
+                            <span class="float-end text-white bg-dark bg-opacity-25 rounded px-1 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Total">511</span>
+                        </small>
                         <canvas id="myRadarChart"></canvas>
-                     </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <div class="bg-white rounded p-2">
-                        <canvas id="myLineChart" height="166"></canvas>
+                        <canvas id="myBarChart" height="169"></canvas>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12 d-flex flex-column gap-4">
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
-                            <div class="bg-white rounded p-2">
-                                <canvas id="myScatterChart"></canvas>
+                            <div class="bg-white rounded p-2 d-flex flex-column gap-3">
+                                <small>
+                                    <span class="float-start text-secondary"><strong>Sealing and Acceptance Testing of Meters</strong></span>
+                                    <span class="float-end text-white bg-dark bg-opacity-25 rounded px-1 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Total">124</span>
+                                </small>
+                                <canvas id="myHBarChart"></canvas>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
-                            <div class="bg-white rounded p-2">
-                                <canvas id="myHBarChart"></canvas>
+                            <div class="bg-white rounded p-2 d-flex flex-column gap-3">
+                                <small>
+                                    <span class="float-start text-secondary"><strong>In-Service Meter Sampling Tests</strong></span>
+                                    <span class="float-end text-white bg-dark bg-opacity-25 rounded px-1 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Total">124</span>
+                                </small>
+                                <canvas id="myHBarChart2"></canvas>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
                             <div class="bg-white rounded p-2">
-                                <canvas id="myBarChart" height="78"></canvas>
+                                <canvas id="myLineChart" height="65"></canvas>
                             </div>
                         </div>
                     </div>
@@ -409,37 +433,37 @@
 @section Scripts{
     <!-- For Charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-
     <script type="text/javascript">
-        /*Pie Chart: */
+        /*Pie Chart: Pre-filing applications*/
         var ctx = document.getElementById('myPieChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: [
-                    'Pending',
-                    'Approved',
-                    'Declined'
+                    'Unreviewed',
+                    'In-progress',
+                    'Approved'
+                    
                 ],
                 datasets: [{
-                    label: 'My First Dataset',
-                    data: [300, 50, 100],
+                    data: [100, 300, 50],
                     backgroundColor: [
+                        'rgba(229,222,130)',
                         'rgba(249, 231, 159)',
-                        'rgba(179, 170, 64)',
-                        'rgba(229,222,130)'
+                        'rgba(179, 170, 64)'
+                        
                     ],
                     hoverOffset: 4
                 }]
             }
         });
 
-        /*Doughnut Chart: Pre - Filing Data*/
+        /*Doughnut Chart: Cases with docket number*/
         var ctx = document.getElementById('myDoughnutChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ["Pending", "Approved", "Declined"],
+                labels: ["Motions Filed", "Petitions Filed", "Subsequent Pleadings per Case"],
                 datasets: [{
                     data: [20, 56, 24],
                     backgroundColor: [
@@ -451,19 +475,19 @@
             }
         });
 
-        /*polar area chart: */
+        /*polar area chart: Hearings*/
         var ctx = document.getElementById('myPolarAreaChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'polarArea',
             data: {
                 labels: [
-                    '[Data 1]',
-                    '[Data 2]',
-                    '[Data 3]'
+                    'Hearing Scheduled',
+                    'Cancelled Hearings',
+                    'Completed Hearings'
                 ],
                 datasets: [{
                     label: 'Dataset',
-                    data: [ 7, 3, 14],
+                    data: [7, 3, 14],
                     backgroundColor: [
                         '#4b6043',
                         '#75975E',
@@ -479,16 +503,16 @@
             type: 'radar',
             data: {
                 labels: [
-                    '[Data 1]',
-                    '[Data 2]',
-                    '[Data 3]',
-                    '[Data 4]',
-                    '[Data 5]',
-                    '[Data 6]',
-                    '[Data 7]'
+                    'Successful',
+                    'Passed',
+                    'Unsuccessful',
+                    'Failed',
+                    'Pending',
+                    'Ongoing',
+                    'Completed'
                 ],
                 datasets: [{
-                    label: 'Dataset 1',
+                    label: 'Test Reports',
                     data: [65, 59, 90, 81, 56, 55, 40],
                     fill: true,
                     backgroundColor: 'rgba(116,91,179, 0.2)',
@@ -497,16 +521,6 @@
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: 'rgb(116,91,179)'
-                }, {
-                    label: 'Dataset 2',
-                    data: [28, 48, 40, 19, 96, 27, 100],
-                    fill: true,
-                    backgroundColor: 'rgba(129,204,197, 0.2)',
-                    borderColor: 'rgb(129,204,197)',
-                    pointBackgroundColor: 'rgb(129,204,197)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgb(129,204,197)'
                 }]
             }
         });
@@ -544,40 +558,6 @@
             }
         });
 
-        /*scatter chart: */
-        var ctx = document.getElementById('myScatterChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'scatter',
-            data: {
-                datasets: [{
-                    label: 'Dataset',
-                    data: [{
-                        x: -10,
-                        y: 0
-                    }, {
-                        x: 0,
-                        y: 10
-                    }, {
-                        x: 10,
-                        y: 5
-                    }, {
-                        x: 0.5,
-                        y: 5.5
-                    }],
-                    backgroundColor: 'rgb(73,155,179)'
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            stepSize: 2
-                        }
-                    }]
-                }
-            }
-        });
-
         /*Horizontal Bar Chart: */
         var ctx = document.getElementById('myHBarChart').getContext('2d');
 
@@ -585,20 +565,52 @@
 
             type: 'horizontalBar',
             data: {
-                labels: ["Jan - Feb", "Mar - Apr", "May - Jun", "Jul - Aug", "Sep - Oct", "Nov - Dec"],
+                labels: ["Total", "Passed", "Failed"],
                 datasets: [{
                     axis: 'y',
-                    label: 'Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 40],
+                    label: 'Acceptance Test',
+                    data: [124, 59, 65],
                     fill: false,
                     backgroundColor: [
-                        '#ab7a7a',
-                        '#ab7a7a',
                         '#ce9c9c',
                         '#ab7a7a',
+                        '#ab7a7a',
+                    ]
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 500,
+                            stepSize: 100
+                        }
+                    }]
+                }
+            }
+        });
+
+        /*Horizontal Bar Chart 2: */
+        var ctx = document.getElementById('myHBarChart2').getContext('2d');
+
+        var myChart = new Chart(ctx, {
+
+            type: 'horizontalBar',
+            data: {
+                labels: ["Total", "Passed", "Failed"],
+                datasets: [{
+                    axis: 'y',
+                    label: 'In-service Sampling',
+                    data: [124, 59, 65],
+                    fill: false,
+                    backgroundColor: [
                         '#ce9c9c',
                         '#ab7a7a',
-                        '#ce9c9c'
+                        '#ab7a7a',
                     ]
                 }]
             },

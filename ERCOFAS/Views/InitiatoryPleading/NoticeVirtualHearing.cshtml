@@ -65,44 +65,55 @@
                             <label for="formFile" class="form-label">
                                 2. Venue of Hearing
                             </label>
-                            <input class="form-control text-secondary" type="text">
+                            <div class="input-container">
+                                <i class="fa fa-location-dot"></i>
+                                <input class="form-control text-secondary" type="text">
+                            </div>
                         </div>
                         <div class="mb-4">
                             <label for="formFile" class="form-label">
                                 3. Online Platform that will be used for the hearing
                             </label>
-                            <input class="form-control text-secondary" type="text">
+                            <div class="input-container">
+                                <i class="fa fa-video"></i>
+                                <input class="form-control text-secondary" type="text">
+                            </div>
                         </div>
                         <div class="mb-4">
                             <div class="form-group">
-                                <label for="exampleFormControlTextarea1" class="mb-1">4. The procedure on how to access the said online platform</label>
+                                <label for="exampleFormControlTextarea1" class="mb-1">4. Procedure on how to access the said online platform</label>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
                             </div>
                         </div>
                         <div class="mb-4">
                             <label for="formFile" class="form-label">
-                                5. That any Petition for Intervention, Opposition, or Notice to Act as Observer in Virtual Hearings shall be filed at least ten (io) days prior
-                                to the scheduled Virtual Hearing
+                                5. Upload Initial Order
                             </label>
                             <input class="form-control text-secondary mb-2" type="file">
-                        </div>
-                        <div class="mb-4">
-                            <label for="formFile" class="form-label">
-                                6. That Copy of Expository Presentation, Pre-trial Brief, Judicial Affidavits of Applicants and Intervenors shall be filed
-                                at least ten (1o) days prior to the scheduled Virtual Hearing
-                            </label>
-                            <input class="form-control text-secondary mb-2" type="file">
-                        </div>
-                        <div class="mb-4">
-                            <label for="formFile" class="form-label">
-                                7. Any other relevant information necessary for the party to attend the said virtual hearing
-                            </label>
-                            <input class="form-control text-secondary  mb-2" type="file">
-                        </div>
-                    </div>
 
-                    <div class="ms-5 ps-5">
-                        <i class="fa fa-plus rounded bg-mauve text-white p-1"></i><input type="button" value="Upload more" class="rounded border-0 bg-transparent text-mauve" />
+                        </div>
+                        <div class="mb-4">
+                            <label for="formFile" class="form-label">
+                                6. Upload more files
+                            </label>
+                            <input class="form-control text-secondary mb-2" type="file">
+
+                        </div>
+                        <div class="mb-4">
+                            <label for="formFile" class="form-label">
+                                7. Additional Information <small>(if any)</small>
+                            </label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label for="formFile" class="form-label">
+                                7. Remarks <small>(if any)</small>
+                            </label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                        </div>
+                        @*<div>
+                                <i class="fa fa-plus rounded bg-mauve text-white p-1"></i><input type="button" value="Upload more" class="rounded border-0 bg-transparent text-mauve" />
+                            </div>*@
                     </div>
 
                     <div class="justify-content-center m-5 d-flex gap-2">
@@ -114,3 +125,21 @@
         </div>
     </div>
 </section>
+
+<style type="text/css">
+    .input-container {
+        position: relative;
+    }
+
+        .input-container input[type="text"] {
+        }
+
+        .input-container i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #000; /* adjust the color based on your preference */
+            font-size: 16px; /* adjust the size based on your preference */
+        }
+</style>

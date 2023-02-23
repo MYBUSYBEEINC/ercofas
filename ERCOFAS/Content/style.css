@@ -677,3 +677,10 @@ table th {
         display: none !important;
     }
 }
+
+@media (min-width: 576px) {
+    #select-action-modal .modal-dialog {
+        max-width: 100em;
+        margin: 1.75rem auto;
+    }
+}
