@@ -349,24 +349,58 @@
                 {
                     @Html.AntiForgeryToken()
                     <div class="border rounded mt-3 px-4 py-2">
-                        <h2 class="erc-text-blue mb-4">Complete Documentation?</h2>
-                        <div class="form-check">
-                            <label for="@Model.IsCompleted" class="text-dark">
-                                @Html.RadioButtonFor(m => m.IsCompleted, true, new { @id = "iscompleted-yes", @checked = "checked" })
-                                Yes <small class="text-muted ms-2">Approved</small>
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <label for="@Model.IsCompleted" class="text-dark">
-                                @Html.RadioButtonFor(m => m.IsCompleted, false, new { @id = "iscompleted-no" })
-                                No <small class="text-muted ms-2">(Notify stakeholder for incomplete documents)</small>
-                            </label>
-                        </div>
-                        <div class="border-bottom my-4"></div>
-                        <div class="m-auto">
-                            <h5>Remarks</h5>
-                            @Html.TextAreaFor(m => m.Remarks, new { @class = "border rounded w-100 p-4 mt-4", @rows = "5", @placeholder = "Enter your remarks here..." })
-                        </div>
+                        @if (Model.RegistrationStatusId != null && Model.RegistrationStatusId == "200257E4-E6C8-4159-8A6F-4475E0A95B32")
+                        {
+                            <div class="row">
+                                <div class="col erc-text-dark-blue">
+                                    <strong>Status:</strong>
+                                    <span>Declined</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col erc-text-dark-blue">
+                                    <strong>Date Declined:</strong>
+                                    <span>@Model.DeclinedDate</span>
+                                </div>
+                            </div>
+                        }
+                        <br />
+                        @if (Model.RegistrationStatusId == null || Model.RegistrationStatusId == "200257E4-E6C8-4159-8A6F-4475E0A95B32")
+                        {
+                            <h2 class="erc-text-blue mb-4">Complete Documentation?</h2>
+                            <div class="form-check">
+                                <label for="@Model.IsCompleted" class="text-dark">
+                                    @Html.RadioButtonFor(m => m.IsCompleted, true, new { @id = "iscompleted-yes", @checked = "checked" })
+                                    Yes <small class="text-muted ms-2">Approved</small>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label for="@Model.IsCompleted" class="text-dark">
+                                    @Html.RadioButtonFor(m => m.IsCompleted, false, new { @id = "iscompleted-no" })
+                                    No <small class="text-muted ms-2">(Notify stakeholder for incomplete documents)</small>
+                                </label>
+                            </div>
+                            <div class="border-bottom my-4"></div>
+                            <div class="m-auto">
+                                <h5>Remarks</h5>
+                                @Html.TextAreaFor(m => m.Remarks, new { @class = "border rounded w-100 p-4 mt-4", @rows = "5", @placeholder = "Enter your remarks here..." })
+                            </div>
+                        } 
+                        else
+                        {
+                            <div class="row">
+                                <div class="col erc-text-dark-blue">
+                                    <strong>Status:</strong>
+                                    <span>Approved</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col erc-text-dark-blue">
+                                    <strong>Date Approved:</strong>
+                                    <span>@Model.ApprovedDate</span>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="float-end mt-4">
                         <button type="button" name="previous" class="action-button-previous" onclick="location.href='@Url.Action("Index", "Registration")'">Back</button>
@@ -450,7 +484,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#approve-button").click(function () {
-                if ($("#iscompleted-yes").prop('checked') == true) {
+                if ($('#iscompleted-yes').prop('checked') == true) {
                     var url = window.location.href;
                     var id = url.substring(url.lastIndexOf('/') + 1);
 
@@ -459,6 +493,8 @@
                             if (!data.isValid) {
                                 $('#validation-message').text(data.validationMessage);
                                 $('#confirmRegistrationModal').modal('show');
+                            } else {
+                                $("#msform").submit();
                             }
                         }).fail(function (error) {
                             console.log('There is a problem validating the registration. Please try again later.');

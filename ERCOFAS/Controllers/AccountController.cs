@@ -655,7 +655,7 @@ namespace ERCOFAS.Controllers
                     string content = emailNotification.Content;
                     content = content.Replace("{stakeholder}", name);
                     content = content.Replace("{emailaddress}", preRegistrationEmail.EmailAddress);
-                    content = content.Replace("{mobilenumber}", preRegistrationMobile.MobileNumber);
+                    content = content.Replace("{mobilenumber}", string.Format("{0}{1}", preRegistrationMobile.CountryCode, preRegistrationMobile.MobileNumber));
                     content = content.Replace("{baseurl}", _db.Settings.FirstOrDefault(x => x.Id == "FA85FB3A-2A1E-47F8-9B76-6536F6A95ABB").BaseUrl);
                     EmailHelpers.SendEmail(preRegistrationEmail.EmailAddress, emailNotification.Subject, content);
                 }

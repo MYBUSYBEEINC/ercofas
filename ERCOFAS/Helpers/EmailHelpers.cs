@@ -40,7 +40,7 @@ namespace ERCOFAS.Helpers
 
                 if (!string.IsNullOrEmpty(attachmentPath))
                 {
-                    if (Directory.Exists(attachmentPath))
+                    if (System.IO.File.Exists(attachmentPath))
                     {
                         Attachment attachment = new Attachment(attachmentPath);
                         mail.Attachments.Add(attachment);

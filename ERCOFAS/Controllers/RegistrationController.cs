@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using ERCOFAS.Helpers;
 using ERCOFAS.Models;
 using ERCOFAS.Resources;
+using System.Configuration;
 
 namespace ERCOFAS.Controllers
 {
@@ -54,6 +55,7 @@ namespace ERCOFAS.Controllers
                         RegistrationStatusId = t1.RegistrationStatusId == null ? "-No Review Yet-" : t3.DisplayName,
                         CreatedOn = t1.CreatedOn,
                         ApprovedDate = t1.ApprovedDate,
+                        DeclinedDate = t1.DeclinedDate
                     }).ToList();
             return list;
         }
@@ -71,6 +73,8 @@ namespace ERCOFAS.Controllers
                 model.Emails = db.PreRegistrationEmails.Where(x => x.PreRegistrationId == registration.Id).ToList();
                 model.MobileNumbers = db.PreRegistrationMobiles.Where(x => x.PreRegistrationId == registration.Id).ToList();
                 model.RegistrationStatusId = registration.RegistrationStatusId;
+                model.ApprovedDate = registration.ApprovedDate;
+                model.DeclinedDate = registration.DeclinedDate;
 
                 Session["RegistrationID"] = model.Id;
             }
@@ -202,53 +206,9 @@ namespace ERCOFAS.Controllers
             return RedirectToAction("index");
         }
 
-        public JsonResult PreValidator(long id)
-        {
-            bool isValid = true;
-            int totalErrorCount = 0;
-            string validationMessage = string.Empty;
-            string unverifiedData = string.Empty;
-
-            int declinedDocument = db.PreRegistrationAttachments.Count(x => x.PreRegistrationId == id && x.IsApproved == false);
-            if (declinedDocument > 0)
-            {
-                unverifiedData += string.Format(" {0} declined document", declinedDocument);
-
-                totalErrorCount += 1;
-                isValid = false;
-            }
-
-            int unverifiedEmail = db.PreRegistrationEmails.Count(x => x.PreRegistrationId == id && x.IsVerified == false);
-            if (unverifiedEmail > 0)
-            {
-                unverifiedData += string.Format("{0} {1} unverified email", declinedDocument > 0 ? "," : string.Empty, unverifiedEmail);
-
-                totalErrorCount += 1;
-                isValid = false;
-            }
-
-            int unverifiedMobile = db.PreRegistrationMobiles.Count(x => x.PreRegistrationId == id && x.IsVerified == false);
-            if (unverifiedMobile > 0)
-            {
-                unverifiedData += string.Format("{0} {1} unverified phone", declinedDocument > 0 || unverifiedEmail > 0 ? "," : string.Empty, unverifiedMobile);
-
-                totalErrorCount += 1;
-                isValid = false;
-            }
-
-            if (!isValid)
-                unverifiedData = string.Format("There {0} {1} on this registration. Do you want to approve?", totalErrorCount > 1 ? "are" : "is", unverifiedData);
-            else
-                unverifiedData = string.Empty;
-
-            validationMessage = unverifiedData;
-
-            return Json(new { isValid, validationMessage }, JsonRequestBehavior.AllowGet);
-        }
-
         // POST: /Registration/ApplicationReview
         /// <summary>
-        /// Sends the application review result.
+        /// Sends review feedback on the application if pass or fail.
         /// </summary>
         [HttpPost]
         [AllowAnonymous]
@@ -259,8 +219,11 @@ namespace ERCOFAS.Controllers
             var registration = db.PreRegistration.FirstOrDefault(x => x.Id == registrationId);
             var settings = db.Settings.FirstOrDefault(x => x.Id == "FA85FB3A-2A1E-47F8-9B76-6536F6A95ABB");
             string notificationTypeId = !model.IsCompleted ? "D2E7A300-2BF9-4C78-A2CD-4D3201BC48D2" : "D1567F9A-A379-4603-ADAB-66B978A34ADD";
+            string entityName = registration.RERTypeId == "AE2DCD91-DACC-4C75-A2A3-51644ABE69BB" ? registration.JuridicalEntityName : registration.FirstName;
+            string username = registration.RERTypeId == "AE2DCD91-DACC-4C75-A2A3-51644ABE69BB" ? registration.JuridicalEntityName.Replace(" ", string.Empty) :
+                   string.Format("{0} {1}", registration.FirstName.Replace(" ", string.Empty), registration.LastName.Replace(" ", string.Empty));
             string documents = string.Empty;
-
+            
             if (!model.IsCompleted)
             {
                 foreach (var item in db.PreRegistrationAttachments.Where(x => x.PreRegistrationId == registrationId).ToList())
@@ -278,12 +241,13 @@ namespace ERCOFAS.Controllers
             if (emailNotification != null)
             {
                 string subject = emailNotification.Subject.Replace("{fullname}", string.Format("{0} {1}", registration.FirstName, registration.LastName));
-                string username = string.Format("{0}{1}", registration.FirstName.Replace(" ", string.Empty), registration.LastName.Replace(" ", string.Empty));
                 string generatedPassword = PasswordHelpers.GeneratePassword();
 
                 if (model.IsCompleted)
                 {
                     registration.RegistrationStatusId = "84D92AC9-E410-4213-8B52-5900012829BC";
+                    registration.ERNumber = CodeGenerator.GenerateERNumber();
+                    registration.CORFilePath = GenerateCORFile(registration);
                     db.SaveChanges();
 
                     CreateUserAccount(registration, username, generatedPassword);
@@ -292,10 +256,11 @@ namespace ERCOFAS.Controllers
                 {
                     registration.RegistrationStatusId = "200257E4-E6C8-4159-8A6F-4475E0A95B32";
                     registration.TempKey = Guid.NewGuid().ToString();
+                    registration.DeclinedDate = DateTime.Now;
                     db.SaveChanges();
                 }
 
-                emailNotification.Content = emailNotification.Content.Replace("{firstname}", registration.FirstName);
+                emailNotification.Content = emailNotification.Content.Replace("{firstname}", entityName);
                 emailNotification.Content = emailNotification.Content.Replace("{baseurl}", settings.BaseUrl);
 
                 foreach (var item in db.PreRegistrationEmails.Where(x => x.PreRegistrationId == registrationId).ToList())
@@ -310,11 +275,10 @@ namespace ERCOFAS.Controllers
                         EmailHelpers.SendEmail(item.EmailAddress, subject, emailNotification.Content);
                     } 
                     else
-                    {
-                        string attachmentPath = "D:/OFAS/ApplicationFiles/Certificate of Registration (COR).pdf";                  
+                    {            
                         emailNotification.Content = emailNotification.Content.Replace("{username}", username);
                         emailNotification.Content = emailNotification.Content.Replace("{password}", generatedPassword);
-                        EmailHelpers.SendEmail(item.EmailAddress, subject, emailNotification.Content, attachmentPath);
+                        EmailHelpers.SendEmail(item.EmailAddress, subject, emailNotification.Content, registration.CORFilePath);
                     }
                 }
                 TempData["NotifySuccess"] = "You have submitted a review for this application.";
@@ -367,15 +331,103 @@ namespace ERCOFAS.Controllers
             base.Dispose(disposing);
         }
 
-        #region Private 
+        #region Methods
 
+        /// <summary>
+        /// Pre-validates the form if there is an unverified email or mobile number. 
+        /// </summary>
+        public JsonResult PreValidator(long id)
+        {
+            bool isValid = true;
+            int totalErrorCount = 0;
+            string validationMessage = string.Empty;
+            string unverifiedData = string.Empty;
+
+            int declinedDocument = db.PreRegistrationAttachments.Count(x => x.PreRegistrationId == id && x.IsApproved == false);
+            if (declinedDocument > 0)
+            {
+                unverifiedData += string.Format(" {0} declined document", declinedDocument);
+                totalErrorCount += 1;
+                isValid = false;
+            }
+
+            int unverifiedEmail = db.PreRegistrationEmails.Count(x => x.PreRegistrationId == id && x.IsVerified == false);
+            if (unverifiedEmail > 0)
+            {
+                unverifiedData += string.Format("{0} {1} unverified email", declinedDocument > 0 ? "," : string.Empty, unverifiedEmail);
+                totalErrorCount += 1;
+                isValid = false;
+            }
+
+            int unverifiedMobile = db.PreRegistrationMobiles.Count(x => x.PreRegistrationId == id && x.IsVerified == false);
+            if (unverifiedMobile > 0)
+            {
+                unverifiedData += string.Format("{0} {1} unverified phone", declinedDocument > 0 || unverifiedEmail > 0 ? "," : string.Empty, unverifiedMobile);
+                totalErrorCount += 1;
+                isValid = false;
+            }
+
+            if (!isValid)
+                unverifiedData = string.Format("There {0} {1} on this registration. Do you want to approve?", totalErrorCount > 1 ? "are" : "is", unverifiedData);
+            else
+                unverifiedData = string.Empty;
+
+            validationMessage = unverifiedData;
+
+            return Json(new { isValid, validationMessage }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Generates certificate of registration.
+        /// <param name="registration">The registration.</param>
+        /// </summary>
+        /// <returns></returns>
+        public string GenerateCORFile(PreRegistration registration)
+        {
+            string templateBasePath = ConfigurationManager.AppSettings["CORTemplateBasePath"].ToString();
+            string templateOutputPath = ConfigurationManager.AppSettings["CORTemplateOutputBasePath"].ToString();
+            string fileName = string.Format("Certificate of Registration_{0}_{1}_{2}.pdf", DateTime.Now.ToString("MMddyyyy"), 
+                registration.ERNumber, Guid.NewGuid().ToString().Split('-')[0]);
+
+            if (System.IO.File.Exists(templateBasePath))
+            {
+                var htmlContent = string.Format(System.IO.File.ReadAllText(templateBasePath), DateTime.Now);
+                var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
+                string entityName = registration.RERTypeId == "AE2DCD91-DACC-4C75-A2A3-51644ABE69BB" ? registration.JuridicalEntityName :
+                    string.Format("{0} {1}", registration.FirstName, registration.LastName);
+                string emailAddresses = string.Empty;
+                string mobileNumbers = string.Empty;
+
+                foreach (var item in db.PreRegistrationEmails.Where(x => x.PreRegistrationId == registration.Id).ToList())
+                    emailAddresses += string.Format("<div style=\"border-top: 2px solid black; padding: 8px;\">{0}</div>", item.EmailAddress);
+
+                foreach (var item in db.PreRegistrationMobiles.Where(x => x.PreRegistrationId == registration.Id).ToList())
+                    mobileNumbers += string.Format("<div style=\"border-top:2px solid black; padding: 8px;\">{0}</div>", item.MobileNumber);
+
+                htmlContent = htmlContent.Replace("ernumber", registration.ERNumber);
+                htmlContent = htmlContent.Replace("companyname", entityName);
+                htmlContent = htmlContent.Replace("emailaddress", emailAddresses);
+                htmlContent = htmlContent.Replace("mobilenumbers", mobileNumbers);
+                htmlContent = htmlContent.Replace("dedicatedliaison1", registration.LiaisonOfficer1);
+                htmlContent = htmlContent.Replace("dedicatedliaison2", registration.LiaisonOfficer2);
+                htmlContent = htmlContent.Replace("issuedon", DateTime.Now.ToString("MM/dd/yyyy"));
+                htmlToPdf.GeneratePdf(htmlContent, string.Empty, string.Format("{0}/{1}", templateOutputPath, fileName));
+
+                return string.Format(@"{0}\{1}", templateOutputPath, fileName);
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Creates new user account.
+        /// <param name="registration">The registration.</param>
+        /// </summary>
+        /// <returns></returns>
         private void CreateUserAccount(PreRegistration registration, string username, string generatedPassword)
         {
             var emailAddress = db.PreRegistrationEmails.FirstOrDefault(x => x.PreRegistrationId == registration.Id).EmailAddress;
             var mobileNumber = db.PreRegistrationMobiles.FirstOrDefault(x => x.PreRegistrationId == registration.Id).MobileNumber;
-
             var preRegistration = db.PreRegistration.FirstOrDefault(x => x.Id == registration.Id);
-            preRegistration.ERNumber = CodeGenerator.GenerateERNumber();
             preRegistration.ApprovedDate = DateTime.Now;
             db.SaveChanges();
 
@@ -428,6 +480,6 @@ namespace ERCOFAS.Controllers
             db.SaveChanges();
         }
 
-        #endregion Private
+        #endregion Methods
     }
 }

@@ -26,8 +26,10 @@ namespace ERCOFAS.Models
         public string TempPassword { get; set; }
         public string TempKey { get; set; }
         public string RegistrationStatusId { get; set; }
+        public string CORFilePath { get ; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? ApprovedDate { get; set; }
+        public DateTime? DeclinedDate { get; set; }
     }
 
     public class PreRegistrationViewModel
@@ -100,6 +102,7 @@ namespace ERCOFAS.Models
         public bool IsCompleted { get; set; }
         public string Remarks { get; set; }
         public DateTime? ApprovedDate { get; set; }
+        public DateTime? DeclinedDate { get; set; }
     }
 
     public class PreRegistrationListing
