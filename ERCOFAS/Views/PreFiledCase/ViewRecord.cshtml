@@ -153,8 +153,8 @@
                             <table class="mb-6">
                                 <thead>
                                     <tr>
-                                        <th class="erc-text-dark-blue">Pre-Filing Application Form</th>
-                                        <th class="text-center erc-text-dark-blue">Action</th>
+                                        <th class="erc-text-dark-blue w-50">Pre-Filing Application Form</th>
+                                        <th class="text-center erc-text-dark-blue w-25">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -169,10 +169,10 @@
                                                     if (item.StatusId != "Remarks")
                                                     {
                                                         <tr>
-                                                            <td class="text-secondary w-75">
+                                                            <td class="text-secondary ps-2">
                                                                 @Html.DisplayFor(model => item.FileTypeName)
                                                             </td>
-                                                            <td>
+                                                            <td class="text-center">
                                                                 @if (item.StatusId == "Rejected")
                                                                 {
                                                                     <span class="action-button-decline">Rejected</span>
@@ -205,8 +205,8 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th class="erc-text-dark-blue ">List of Document submitted</th>
-                                        <th class="text-center erc-text-dark-blue">Result</th>
+                                        <th class="erc-text-dark-blue w-50">List of Document submitted</th>
+                                        <th class="text-center erc-text-dark-blue w-25">Result</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -217,7 +217,7 @@
                                             if (item.StatusId == "Approved")
                                             {
                                                 <tr>
-                                                    <td class="w-75 text-secondary">
+                                                    <td class="text-secondary ps-2">
                                                         @Html.DisplayFor(modelItem => item.FileTypeName)
                                                     </td>
                                                     <td class="text-center">
@@ -229,7 +229,7 @@
                                             else if (item.StatusId == "Discarded")
                                             {
                                                 <tr>
-                                                    <td class="w-75 text-secondary">
+                                                    <td class="text-secondary ps-2">
                                                         @Html.DisplayFor(modelItem => item.FileTypeName)
                                                     </td>
                                                     <td class="text-center">
@@ -240,7 +240,7 @@
                                             else if (item.StatusId != "Remarks")
                                             {
                                                 <tr>
-                                                    <td class="w-75 text-secondary">
+                                                    <td class="text-secondary ps-2">
                                                         @Html.DisplayFor(modelItem => item.FileTypeName)
                                                     </td>
                                                     <td class="text-center">
