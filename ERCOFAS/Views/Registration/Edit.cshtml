@@ -113,7 +113,7 @@
                             <thead>
                                 <tr>
                                     <th class="erc-text-dark-blue">List of Document Submitted</th>
-                                    <th class="text-center erc-text-dark-blue">Actions</th>
+                                    <th class="text-center erc-text-dark-blue w-25">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,18 +128,18 @@
                                             <td class="text-center">
                                                 @if (!item.IsApproved.HasValue)
                                                 {
-                                                    <input type="button" onclick="location.href='@Url.Action("ApproveDocument", "Registration", new { registrationId = item.PreRegistrationId, documentId = item.Id })'" name="approve" class="action-button-approve btn-outline-success p-0 m-1" value="Approve" />
-                                                    <input type="button" onclick="location.href='@Url.Action("DeclineDocument", "Registration", new { registrationId = item.PreRegistrationId, documentId = item.Id })'" name="decline" class="action-button-decline btn-outline-danger p-0 m-1" value="Decline" />
+                                                    <input type="button" onclick="location.href='@Url.Action("ApproveDocument", "Registration", new { registrationId = item.PreRegistrationId, documentId = item.Id })'" name="approve" class="action-button-approve btn-outline-success px-1 m-1 rounded" value="Approve" />
+                                                    <input type="button" onclick="location.href='@Url.Action("DeclineDocument", "Registration", new { registrationId = item.PreRegistrationId, documentId = item.Id })'" name="decline" class="action-button-decline btn-outline-danger px-1 m-1 rounded" value="Decline" />
                                                 }
                                                 else
                                                 {
                                                     if (item.IsApproved == true)
                                                     {
-                                                        <span class="label label-success m-1">Approved</span>
+                                                        <span class="text-white label-success rounded px-1">Approved</span>
                                                     }
                                                     else
                                                     {
-                                                        <span class="label label-danger m-1">Declined</span>
+                                                        <span class="text-white label-danger rounded px-1">Declined</span>
                                                     }
                                                 }
                                             </td>
@@ -152,7 +152,7 @@
                             <thead>
                                 <tr>
                                     <th class="erc-text-dark-blue">List of Email</th>
-                                    <th class="erc-text-dark-blue text-center">Status</th>
+                                    <th class="erc-text-dark-blue text-center w-25">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -161,17 +161,17 @@
                                     foreach (var item in Model.Emails)
                                     {
                                         <tr>
-                                            <td class="w-50 text-secondary">
+                                            <td class="text-secondary">
                                                 @Html.DisplayFor(modelItem => item.EmailAddress)
                                             </td>
                                             <td class="text-center">
                                                 @if (item.IsVerified)
                                                 {
-                                                    <span class="label label-success m-1">Verified</span>
+                                                    <span class="text-white label-success rounded px-1">Verified</span>
                                                 }
                                                 else
                                                 {
-                                                    <span class="label label-default m-1">Unverified</span>
+                                                    <span class="text-white label-default rounded px-1">Unverified</span>
                                                 }
                                             </td>
                                         </tr>
@@ -183,7 +183,7 @@
                             <thead>
                                 <tr>
                                     <th class="erc-text-dark-blue">List of Phone No.</th>
-                                    <th class="erc-text-dark-blue text-center">Status</th>
+                                    <th class="erc-text-dark-blue text-center w-25">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -198,11 +198,11 @@
                                             <td class="text-center">
                                                 @if (item.IsVerified)
                                                 {
-                                                    <span class="label label-success m-1">Verified</span>
+                                                    <span class="text-white label-success rounded px-1">Verified</span>
                                                 }
                                                 else
                                                 {
-                                                    <span class="label label-default m-1">Unverified</span>
+                                                    <span class="text-white label-default rounded px-1">Unverified</span>
                                                 }
                                             </td>
                                         </tr>
@@ -216,7 +216,7 @@
                             <thead>
                                 <tr>
                                     <th class="erc-text-dark-blue">List of Document Submitted</th>
-                                    <th class="text-center erc-text-dark-blue">Result</th>
+                                    <th class="text-center erc-text-dark-blue w-25">Result</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -254,7 +254,7 @@
                             <thead>
                                 <tr>
                                     <th class="erc-text-dark-blue">List of Email</th>
-                                    <th class="text-center erc-text-dark-blue">Result</th>
+                                    <th class="text-center erc-text-dark-blue w-25">Result</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -285,7 +285,7 @@
                             <thead>
                                 <tr>
                                     <th class="erc-text-dark-blue">List of Phone No.</th>
-                                    <th class="text-center erc-text-dark-blue">Result</th>
+                                    <th class="text-center erc-text-dark-blue w-25">Result</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -416,7 +416,7 @@
 
     <!-- image modal -->
     <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div id="img-modal" class="modal-dialog">
+        <div id="img-modal" class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-dialog-scrollable-auto">
             <div class="modal-content border-0">
                 <div class="mx-2 mt-2">
                     <button type="button" class="btn float-end  p-2" data-dismiss="modal" id="closeMediaModal"><strong>&#10005;</strong></button>

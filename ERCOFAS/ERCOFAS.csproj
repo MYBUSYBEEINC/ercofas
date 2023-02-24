@@ -743,6 +743,7 @@
     <Content Include="Views\ValidationMeterSampling\Edit.cshtml" />
     <Content Include="Views\ValidationMeterSampling\Index.cshtml" />
     <Content Include="Views\ValidationMeterSampling\ViewRecord.cshtml" />
+    <Content Include="Views\ValidationMeterSampling\ResultsValidation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
