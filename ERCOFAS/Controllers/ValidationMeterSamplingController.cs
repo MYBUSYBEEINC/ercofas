@@ -21,6 +21,12 @@ namespace ERCOFAS.Controllers
         /// [CustomAuthorizeFilter(ProjectEnum.ModuleCode.CaseType, "true", "", "", "")]
         /// </summary>
         /// <returns></returns>
+
+        public ViewResult ResultsValidation()
+        {
+            return View();
+        }
+
         public ViewResult Index()
         {
             return View();
