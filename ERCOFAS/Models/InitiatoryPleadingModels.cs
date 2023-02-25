@@ -19,6 +19,8 @@ namespace ERCOFAS.Models
         public string CaseTitle { get; set; }
         public string ApplicantName { get; set; }
         public string PreFiledCaseId { get; set; }
+        public string AdditionalComment { get; set; }
+        public string Remarks { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string ModifiedBy { get; set; }
@@ -57,6 +59,8 @@ namespace ERCOFAS.Models
         public string CaseNature { get; set; }
         public string CaseTitle { get; set; }
         public string ApplicantName { get; set; }
+        public string AdditionalComment { get; set; }
+        public string Remarks { get; set; }
     }
 
     public class InitiatoryPleadingListing

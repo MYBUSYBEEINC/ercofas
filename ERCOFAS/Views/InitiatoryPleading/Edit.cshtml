@@ -13,6 +13,13 @@
     Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
 }
 
+<style type="text/css">
+
+    .field-editor, .invalid-message {
+        margin-left: 25px !important;
+    }
+</style>
+
 <div class="row">
     <div class="col-12">
         <div style="--bs-breadcrumb-divider: '>';">
@@ -46,141 +53,162 @@
             <br />
             <br />
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.DocumentName, htmlAttributes: new { @class = "form-label required fw600" })
-                        @Html.EditorFor(model => model.DocumentName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.CaseType, htmlAttributes: new { @class = "form-label fw600" })
-                        @Html.EditorFor(model => model.CaseType, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.CaseNature, htmlAttributes: new { @class = "form-label fw600" })
-                        @Html.EditorFor(model => model.CaseNature, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        (1.) @Html.LabelFor(model => model.DocumentName, htmlAttributes: new { @class = "form-label required fw600" })
+                        @Html.EditorFor(model => model.DocumentName, new { htmlAttributes = new { @class = "form-control field-editor", @readonly = "readonly" } })
                     </div>
                 </div>
             </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CaseType, htmlAttributes: new { @class = "form-label field-editor fw600" })
+                        @Html.EditorFor(model => model.CaseType, new { htmlAttributes = new { @class = "form-control field-editor", @readonly = "readonly" } })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CaseNature, htmlAttributes: new { @class = "form-label field-editor fw600" })
+                        @Html.EditorFor(model => model.CaseNature, new { htmlAttributes = new { @class = "form-control field-editor", @readonly = "readonly" } })
+                    </div>
+                </div>
+            </div>
+            <br />
             <div class="row">
                 <div class="form-group">
-                    <label for="applicantName" class="form-label required fw600">Applicant Name</label>
-                    @Html.EditorFor(model => model.ApplicantName, new { htmlAttributes = new { @class = "form-control" } })
+                    (2.) <label for="applicantName" class="form-label required fw600">Applicant Name</label>
+                    @Html.EditorFor(model => model.ApplicantName, new { htmlAttributes = new { @class = "form-control field-editor" } })
                     @Html.ValidationMessageFor(model => model.ApplicantName, "", new { @class = "invalid-message" })
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="form-group">
-                    <label for="caseTitle" class="form-label required fw600">Case Title</label>
-                    @Html.EditorFor(model => model.CaseTitle, new { htmlAttributes = new { @class = "form-control" } })
+                    (3.) <label for="caseTitle" class="form-label required fw600">Case Title</label>
+                    @Html.EditorFor(model => model.CaseTitle, new { htmlAttributes = new { @class = "form-control field-editor" } })
                     @Html.ValidationMessageFor(model => model.CaseTitle, "", new { @class = "invalid-message" })
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="caseDocketNumber" class="form-label required fw600">Case Docket Number</label>
-                        @Html.EditorFor(model => model.DocketNumberCaseType, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        (4.) <label for="caseDocketNumber" class="form-label required fw600">Case Docket Number</label>
+                        @Html.EditorFor(model => model.DocketNumberYear, new { htmlAttributes = new { @class = "form-control field-editor", @readonly = "readonly" } })
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="form-label fw600"></label>
-                        @Html.EditorFor(model => model.DocketNumberSequence, new { htmlAttributes = new { @class = "form-control", @maxLength = "3" } })
+                        <label class="form-label fw600" style="margin-top: 16px;"></label>
+                        @Html.EditorFor(model => model.DocketNumberSequence, new { htmlAttributes = new { @class = "form-control field-editor", @maxLength = "3" } })
                         @Html.ValidationMessageFor(model => model.DocketNumberSequence, "", new { @class = "invalid-message" })
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="form-label fw600"></label>
-                        @Html.EditorFor(model => model.CaseType, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        <label class="form-label fw600" style="margin-top: 16px;"></label>
+                        @Html.EditorFor(model => model.CaseType, new { htmlAttributes = new { @class = "form-control field-editor", @readonly = "readonly" } })
                     </div>
                 </div>
             </div>
+            <br />
             <div class="row mt-2">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label fw600" })
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    (5.) @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label fw600" })
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control field-editor" } })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "invalid-message" })
                 </div>
             </div>
+            <br />
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        (6.) <label class="form-label fw600">Documents Submitted</label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label class="form-labe">Download</label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label class="form-label">View</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-responsive-sm table-striped field-editor">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.PreFiledAttachmentViewModels != null && Model.PreFiledAttachmentViewModels.Count > 0)
+                            {
+                                foreach (var item in Model.PreFiledAttachmentViewModels)
+                                {                                    
+                                    <tr>
+                                        <td class="col-md-10">
+                                            @Html.DisplayFor(modelItem => item.FileTypeName)
+                                        </td>
+                                        <td class="col-md-1 text-center">
+                                            <span class="fs-19 canedit">
+                                                <a style="cursor: pointer;" data-bs-placement="right" title="Download">                                                    
+                                                    <i class="fa-solid download-document fa-download text-primary hover-color-primarycolor" data-unique-file="@item.UniqueFileName" data-bs-toggle="tooltip" data-bs-placement="top" title="Download"></i>
+                                                </a>
+                                            </span>
+                                        </td>
+                                        <td class="col-md-1">
+                                            <span class="fs-19 canedit">
+                                                <a href="~/Documents/@item.UniqueFileName" data-bs-placement="right" target="_blank" title="View">
+                                                    <i class="fa-solid view-document fa-eye text-info hover-color-primarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="View"></i>
+                                                </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br />
             <div class="row mt-3">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Documents, htmlAttributes: new { @class = "form-label fw600" }) <i class="fa-solid fa-circle-info align-middle" data-bs-toggle="tooltip" data-bs-placement="top" title="You can upload multiple files here."></i>
-                    @Html.TextBox("Documents", "", new { @type = "file", @class = "form-control", @multiple = true })
+                    (7.) <label class="form-label fw600">Attach Files</label> <i class="fa-solid fa-circle-info align-middle" data-bs-toggle="tooltip" data-bs-placement="top" title="You can upload multiple files here."></i>
+                    @Html.TextBox("Documents", "", new { @type = "file", @class = "form-control field-editor", @multiple = true })
                     @Html.ValidationMessageFor(model => model.Documents, "", new { @class = "invalid-message" })
                 </div>
             </div>
             <br />
             <div class="row">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="erc-text-dark-blue ">Document submitted</th>
-                            <th class="text-center erc-text-dark-blue"></th>
-                            <th class="text-center erc-text-dark-blue"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.PreFiledAttachmentViewModels != null && Model.PreFiledAttachmentViewModels.Count > 0)
-                        {
-                            foreach (var item in Model.PreFiledAttachmentViewModels)
-                            {
-                                if (item.StatusId == "Approved")
-                                {
-                                    <tr>
-                                        <td class="w-75 text-secondary">
-                                            @Html.DisplayFor(modelItem => item.FileTypeName)
-                                        </td>
-                                        <td class="text-center">
-                                            <i class="fa fa-download text-primary"></i>
-                                        </td>
-                                         <td class="text-center">
-                                            <i class="fa fa-list text-info"></i>
-                                        </td>
-                                    </tr>
-
-                                }                                
-                            }
-                        }
-                    </tbody>
-                </table>
+                <div class="form-group">
+                    (8.) <label class="form-label fw600">Additional Information (If any)</label>
+                    @Html.EditorFor(model => model.AdditionalComment, new { htmlAttributes = new { @class = "form-control field-editor" } })
+                    @Html.ValidationMessageFor(model => model.AdditionalComment, "", new { @class = "" })
+                </div>
             </div>
-            <hr />
-            @if (Model.Attachments != null && Model.Attachments.Count > 0)
-            {
-                <p><strong>List of Uploaded Document(s)</strong></p>
-                <ul class="list-group">
-                    @foreach (var item in Model.Attachments)
-                    {
-                        <li class="list-group-item">
-                            @Html.DisplayFor(modelItem => item.UniqueFileName)
-                            <span class="fs-19 canedit">
-                                <a href="~/Documents/@item.UniqueFileName" data-bs-placement="right" title="Download" download>
-                                    <i class="fa-solid fa-download text-edit hover-color-secondarycolor" data-bs-toggle="tooltip" data-bs-placement="top" title="Download"></i>
-                                </a> &nbsp;
-                            </span>
-                            @*<span class="fs-19 candelete" onclick="triggerDeleteConfirmationModal('@item.UniqueFileName', '@Url.Action("deletefile", new { id= item.Id})')">
-                            <i class="fa-solid fa-trash-can text-delete hover-color-secondarycolor cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"></i>
-                        </span>*@
-                        </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <i>No uploaded document yet.</i>
-            }
+            <div class="row">
+                <div class="form-group">
+                    (9.) <label class="form-label fw600">Remarks (If any)</label>
+                    @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control field-editor" } })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "" })
+                </div>
+            </div>
         </div>
         <div class="row mt-4">
             <div class="col-12">
-                <a type="button" class="btn btn-p8 bg-light hover-boxshadow me-1" href="@Url.Action("index")">@Resource.BackToList</a>
+                <a type="button" class="btn btn-p8 bg-light hover-boxshadow me-1" href="@Url.Action("index")">@Resource.Back</a>
                 @if (Model.SystemDefault == false)
                 {
-                    <button type="button" class="addnewbtn btn btn-p8 submit-initiatory hover-boxshadow hover-bg-primarycolor">@Resource.Save</button>
+                    <button type="button" class="addnewbtn btn btn-p8 submit-initiatory hover-boxshadow hover-bg-primarycolor">@Resource.Send</button>
                 }
             </div>
         </div>
@@ -188,13 +216,17 @@
 }
 
 @section Scripts {
- 
+        
     <script>
 
         $(document).ready(function () {
 
             $(".submit-initiatory").click(function () {
-                                
+                
+                var valid = validateFormFields();               
+                if (!valid)
+                    return false;
+
                 var id = "#" + "DocketNumberSequence";
                 var docketNumberSequence = $(id).val();
                 if (docketNumberSequence === "" || docketNumberSequence === null) {
@@ -205,57 +237,66 @@
 
                 } else {
 
-                    //var docketNumberFormat = docketNumber.split("-");
-                    //var sequenceNo = docketNumberFormat[1].substring(0, 3);
-                   
                     if (!$.isNumeric(docketNumberSequence)) {
                         $(id).next().html("Invalid sequence number, must be a numeric value.");
                         return;
                     } else
                         $(id).next().html("");
 
-                    //var caseCode = docketNumberFormat[1].substring(3, 5)                    
-                    //if (!validCaseCode(caseCode)) {
-                    //    $(id).next().html("Invalid case code, value must not be changed.");
-                    //    return;
-                    //} else
-                    //    $(id).next().html("");
-
                 }
-                                
+
                 $(".form-horizontal").submit();
             });
-        });
 
-        function validateForm() {
+            $(".download-document").click(function () {
 
-            var form, input, i, valid = true;
-            form = document.getElementsByClassName("form-group");
-            input = form.getElementsByTagName("input");
+                var fileName = $(this).data("unique-file");
 
+                downloadFile(fileName);
+            });           
+
+        });               
+
+        function downloadFile(fileName) {
+
+            $.ajax({
+                type: "POST",
+                url: "/PreFiledCase/DownloadFile",
+                data: { fileName: fileName },
+                success: function (data) {
+
+                    // get the file name to download.
+                    const blob = new Blob([data], { type: 'application/octetstream' });
+                    var a = document.createElement('a');
+                    var url = window.URL.createObjectURL(blob);
+                    a.href = url;
+                    a.download = fileName;
+                    document.body.append(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                }
+                , error: function (xhr, status, error) {
+                    var err = JSON.parse(xhr.responseText);
+                }
+            });
+        }
+
+        function validateFormFields() {
+            
+            var input, i, valid = true;
+            input = document.getElementsByClassName("field-editor");
+            
             for (i = 0; i < input.length; i++) {
 
                 var inputValue = input[i].value;
-                if ((inputValue === "" || inputValue === "0") && $(input[i]).next().hasClass("invalid-message")) {
+                if ((inputValue === "" || inputValue === undefined) && $(input[i]).next().hasClass("invalid-message")) {
                     $(input[i]).next().html("Required");
                     valid = false;
-                } else if (inputValue === "null" && $(input[i]).hasClass("custom-option")) {
-                    $(".select-invalid-message").html("Required");
-                    valid = false;
-                }
+                }                
             }
 
             return valid;
-        }
-
-        function validCaseCode(caseCode) {
-
-            if (caseCode === "RC" || caseCode === "MC" || caseCode === "CF"
-                || caseCode === "DP" || caseCode === "PRES" || caseCode === "RM") {
-                return true;
-            }
-
-            return false;
         }
 
     </script>

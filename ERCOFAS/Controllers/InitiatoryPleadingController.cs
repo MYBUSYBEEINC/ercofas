@@ -163,8 +163,10 @@ namespace ERCOFAS.Controllers
                 model.ApplicantName = initiatoryPleading.ApplicantName;
                 model.CaseType = preFiledCase != null ? GetCaseCode(general.GetGlobalOptionSetCode(preFiledCase.CaseTypeId)) : string.Empty;
                 model.CaseNature = preFiledCase != null ? general.GetGlobalOptionSetDisplayName(preFiledCase.CaseNatureId) : string.Empty;
-                model.DocketNumberCaseType = DateTime.Now.ToString("yyyy");
-                model.DocketNumberSequence = string.Empty;
+                model.DocketNumberYear = initiatoryPleading != null ? initiatoryPleading.DocketNumber.Substring(0, 4) : string.Empty;
+                model.DocketNumberSequence = initiatoryPleading != null ? GetDocketSequenceNumber(initiatoryPleading.DocketNumber) : string.Empty;
+                model.AdditionalComment = initiatoryPleading.AdditionalComment;
+                model.Remarks = initiatoryPleading.Remarks;
                 model.PreFiledAttachmentViewModels = GetPreFiledAttachments(initiatoryPleading.PreFiledCaseId);
                 model.CreatedBy = db.UserProfiles.FirstOrDefault(x => x.AspNetUserId == initiatoryPleading.CreatedBy).FullName;
                 model.CreatedOn = initiatoryPleading.CreatedOn;
@@ -268,9 +270,11 @@ namespace ERCOFAS.Controllers
                     initiatoryPleading.DocumentName = model.DocumentName;
                     initiatoryPleading.Description = model.Description;
                     initiatoryPleading.Barcode = string.IsNullOrEmpty(model.Barcode) ? Guid.NewGuid().ToString() : initiatoryPleading.Barcode;
-                    initiatoryPleading.DocketNumber = model.DocketNumberYear + model.DocketNumberSequence + model.CaseType;
+                    initiatoryPleading.DocketNumber = model.DocketNumberYear + "-" + model.DocketNumberSequence + model.CaseType;
                     initiatoryPleading.CaseTitle = model.CaseTitle;
                     initiatoryPleading.ApplicantName = model.ApplicantName;
+                    initiatoryPleading.AdditionalComment = model.AdditionalComment;
+                    initiatoryPleading.Remarks = model.Remarks;
                     initiatoryPleading.ModifiedBy = userId;
                     initiatoryPleading.ModifiedOn = general.GetSystemTimeZoneDateTimeNow();
                     db.Entry(initiatoryPleading).State = EntityState.Modified;
@@ -288,6 +292,8 @@ namespace ERCOFAS.Controllers
                     initiatoryPleading.CaseTitle = model.CaseTitle;
                     initiatoryPleading.ApplicantName = model.ApplicantName;
                     initiatoryPleading.PreFiledCaseId = model.PreFiledCaseId;
+                    initiatoryPleading.AdditionalComment = model.AdditionalComment;
+                    initiatoryPleading.Remarks = model.Remarks;
                     initiatoryPleading.CreatedBy = userId;
                     initiatoryPleading.CreatedOn = general.GetSystemTimeZoneDateTimeNow();
                     db.InitiatoryPleadings.Add(initiatoryPleading);
@@ -426,6 +432,19 @@ namespace ERCOFAS.Controllers
                     }).ToList();
 
             return list;
+        }
+
+        private string GetDocketSequenceNumber(string docketNumber)
+        {
+            string sequenceNumber = string.Empty;
+
+            if(!string.IsNullOrEmpty(docketNumber) && docketNumber.Length >= 10)
+            {
+                var strDocketNumber = docketNumber.Split('-');
+                sequenceNumber = strDocketNumber[1].Substring(0, 3);
+            }
+
+            return sequenceNumber;
         }
 
         protected override void Dispose(bool disposing)

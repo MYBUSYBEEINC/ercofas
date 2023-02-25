@@ -832,7 +832,7 @@ namespace ERCOFAS.Controllers
                 return File(memory, GetContentType(filePath), Path.GetFileName(filePath));
             }
 
-            return File(filePath, GetContentType(filePath));
+            return null;
         }
 
         private string GetContentType(string path)
