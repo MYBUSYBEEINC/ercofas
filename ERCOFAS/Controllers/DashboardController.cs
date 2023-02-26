@@ -20,41 +20,48 @@ namespace ERCOFAS.Controllers
         [CustomAuthorizeFilter(ProjectEnum.ModuleCode.Dashboard, "true", "", "", "")]
         public ActionResult Index()
         {
-            string userId = User.Identity.GetUserId();
-
             TotalCountViewModel model = new TotalCountViewModel()
             {
-                TotalRegistrations = _db.PreRegistration.Count(),
+                TotalRegistrations = _db.PreRegistration.AsNoTracking().Count(),
                 TotalAmendments = 0,
-                TotalPreFilings = _db.PreFiledCases.Count(),
+                TotalPreFilings = _db.PreFiledCases.AsNoTracking().Count(),
                 TotalLetterCorrespondents = 0,
                 TotalInitiatorySubsequentPleadings = 0,
                 TotalValidatioMeterSamplings = 0,
                 TotalSealingRequestTestingMeters = 0,
-                TotalVirtualHearings = _db.Hearings.Count(),
+                TotalVirtualHearings = _db.Hearings.AsNoTracking().Count(),
                 TotalTransactions = 0,
                 TotalRetailElectricitySuppliers = 0
             };
 
-            if (RoleHelpers.GetMainRole() == UserTypeEnum.Admin.ToString() || RoleHelpers.GetMainRole() == UserTypeEnum.SuperAdmin.ToString())
-                return View(model);
-            else
+            if (!string.IsNullOrEmpty(RoleHelpers.GetMainRole()))
+            {
+                if (RoleHelpers.GetMainRole() == UserTypeEnum.Admin.ToString() || RoleHelpers.GetMainRole() == UserTypeEnum.SuperAdmin.ToString())
+                    return View(model);
+
                 return Redirect("Stakeholder");
+            }
+            return Redirect("Default");   
         }
 
         #region Get
 
+        // GET: Dashboard/Default
+        public ActionResult Default()
+        {
+            return View();
+        }
+
         // GET: Dashboard/Stakeholder
-        [AllowAnonymous]
         public ActionResult Stakeholder()
         {
             string userId = User.Identity.GetUserId();
 
             TotalCountViewModel model = new TotalCountViewModel()
             {
-                TotalPreFilings = _db.PreFiledCases.Count(x => x.UserId == userId),
+                TotalPreFilings = _db.PreFiledCases.AsNoTracking().Count(x => x.UserId == userId),
                 TotalSealingRequestTestingMeters = 0,
-                TotalVirtualHearings = _db.Hearings.Count(),
+                TotalVirtualHearings = _db.Hearings.AsNoTracking().Count(),
                 TotalInServiceMeterSamplings = 0,
                 TotalRetailElectricitySuppliers = 0,
                 TotalTransactions = 0

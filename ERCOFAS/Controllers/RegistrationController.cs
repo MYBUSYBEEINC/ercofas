@@ -36,10 +36,10 @@ namespace ERCOFAS.Controllers
         {
             List<PreRegistrationViewModel> list = new List<PreRegistrationViewModel>();
             list = (from t1 in db.PreRegistration
-                    join t2 in db.GlobalOptionSets.Where(x => x.Type == "RERType") on t1.RERTypeId equals t2.Id
-                    join t3 in db.GlobalOptionSets.Where(x => x.Type == "RegistrationStatus") on t1.RegistrationStatusId equals t3.Id into t3X
+                    join t2 in db.GlobalOptionSets.AsNoTracking().Where(x => x.Type == "RERType") on t1.RERTypeId equals t2.Id
+                    join t3 in db.GlobalOptionSets.AsNoTracking().Where(x => x.Type == "RegistrationStatus") on t1.RegistrationStatusId equals t3.Id into t3X
                     from t3 in t3X.DefaultIfEmpty()
-                    join t4 in db.GlobalOptionSets.Where(x => x.Type == "RERClassification") on t1.RERClassificationId equals t4.Id into t4X
+                    join t4 in db.GlobalOptionSets.AsNoTracking().Where(x => x.Type == "RERClassification") on t1.RERClassificationId equals t4.Id into t4X
                     from t4 in t4X.DefaultIfEmpty()
                     where t1.RegistrationStatusId != ""
                     orderby t1.CreatedOn descending

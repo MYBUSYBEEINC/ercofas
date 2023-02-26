@@ -381,10 +381,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\3214206.png" />
     <Content Include="Assets\4055731.png" />
     <Content Include="Assets\863915.png" />
-    <Content Include="Assets\avatar1.png" />
     <Content Include="Assets\back.png" />
     <Content Include="Assets\bell.png" />
     <Content Include="Assets\bottompattern.svg" />
@@ -525,13 +523,6 @@
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\country-selector\css\countrySelect.css" />
-    <Content Include="Content\country-selector\css\countrySelect.min.css" />
-    <Content Include="Content\country-selector\css\demo.css" />
-    <Content Include="Content\country-selector\img\flags%402x.png" />
-    <Content Include="Content\country-selector\img\flags.png" />
-    <Content Include="Content\country-selector\js\countrySelect.js" />
-    <Content Include="Content\country-selector\js\countrySelect.min.js" />
     <Content Include="Content\dataTables.bootstrap5.min.css" />
     <Content Include="Content\datatables.min.css" />
     <Content Include="Content\all.min.css" />
@@ -744,6 +735,7 @@
     <Content Include="Views\ValidationMeterSampling\Index.cshtml" />
     <Content Include="Views\ValidationMeterSampling\ViewRecord.cshtml" />
     <Content Include="Views\ValidationMeterSampling\ResultsValidation.cshtml" />
+    <Content Include="Views\Dashboard\Default.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

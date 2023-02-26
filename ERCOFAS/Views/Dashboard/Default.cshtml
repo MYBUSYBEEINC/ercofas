@@ -1,0 +1,11 @@
+﻿@using ERCOFAS.Helpers
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+
+<section id="dashboard">
+    Welcome <strong>@UserHelpers.GetFullName(User.Identity.GetUserName())</strong><br /><br />
+    <p>Get familiar with the dashboard, here are some ways to get started.</p>
+</section>

@@ -216,9 +216,9 @@
         @if (userManagementPermission.ViewRight == true)
         {
             <li class="nav-item" id="cent">
-                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString().ToLower() == "validationmetersampling" || ViewContext.RouteData.Values["Controller"].ToString().ToLower() == "validationmetersampling" ? "active" : "")" href="@Url.Action("index","validationmetersampling")">
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString().ToLower() == "validationmetersampling" || ViewContext.RouteData.Values["Controller"].ToString().ToLower() == "validationmetersampling" ? "active" : "")" href="@Url.Action("resultsvalidation","validationmetersampling")">
                     <img width="25" id="icon" src="~/Assets/erc-icons/validation.png" data-bs-toggle="tooltip" data-bs-placement="right" title="Validation of In-service Meter Sampling" />
-                    <span class="ms-3 py-1 text-white">Validation of In-service Meter Sampling</span>
+                    <span class="ms-3 py-1 text-white">Validation of In-Service Meter Sampling</span>
                 </a>
             </li>
         }

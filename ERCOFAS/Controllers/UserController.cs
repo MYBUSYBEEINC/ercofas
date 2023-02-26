@@ -79,8 +79,8 @@ namespace ERCOFAS.Controllers
             string datetimeFormat = general.GetAppSettingsValue("datetimeFormat");
             
             userList = (from t1 in db.UserProfiles
-                        join t2 in db.AspNetUsers on t1.AspNetUserId equals t2.Id
-                        join t3 in db.GlobalOptionSets on t1.UserStatusId equals t3.Id into g1
+                        join t2 in db.AspNetUsers.AsNoTracking() on t1.AspNetUserId equals t2.Id
+                        join t3 in db.GlobalOptionSets.AsNoTracking() on t1.UserStatusId equals t3.Id into g1
                         from t4 in g1.DefaultIfEmpty()
                         orderby t1.CreatedOn
                         select new UserProfileViewModel
@@ -121,8 +121,8 @@ namespace ERCOFAS.Controllers
         {
             UserProfileViewModel model = new UserProfileViewModel();
             string profilePicTypeId = general.GetGlobalOptionSetId(ProjectEnum.UserAttachment.ProfilePicture.ToString(), "UserAttachment");
-            model = (from t1 in db.UserProfiles
-                     join t2 in db.AspNetUsers on t1.AspNetUserId equals t2.Id
+            model = (from t1 in db.UserProfiles.AsNoTracking()
+                     join t2 in db.AspNetUsers.AsNoTracking() on t1.AspNetUserId equals t2.Id
                      where t1.Id == Id
                      select new UserProfileViewModel
                      {
@@ -149,14 +149,14 @@ namespace ERCOFAS.Controllers
                          IsoUtcModifiedOn = t1.IsoUtcModifiedOn,
                          IsoUtcDateOfBirth = t1.IsoUtcDateOfBirth
                      }).FirstOrDefault();
-            model.UserStatusName = db.GlobalOptionSets.Where(a => a.Id == model.UserStatusId).Select(a => a.DisplayName).DefaultIfEmpty("").FirstOrDefault();
-            model.UserTypeIdList = (from t1 in db.AspNetUserTypes
-                                    join t2 in db.GlobalOptionSets on t1.UserTypeId equals t2.Id
+            model.UserStatusName = db.GlobalOptionSets.AsNoTracking().Where(a => a.Id == model.UserStatusId).Select(a => a.DisplayName).DefaultIfEmpty("").FirstOrDefault();
+            model.UserTypeIdList = (from t1 in db.AspNetUserTypes.AsNoTracking()
+                                    join t2 in db.GlobalOptionSets.AsNoTracking() on t1.UserTypeId equals t2.Id
                                     where t1.UserId == model.AspNetUserId
                                     select t2.DisplayName).ToList();
             model.UserTypeName = String.Join(", ", model.UserTypeIdList);
-            model.GenderName = db.GlobalOptionSets.Where(a => a.Id == model.GenderId).Select(a => a.DisplayName).DefaultIfEmpty("").FirstOrDefault();
-            model.ProfilePictureFileName = db.UserAttachments.Where(a => a.UserProfileId == model.Id && a.AttachmentTypeId == profilePicTypeId).OrderByDescending(a => a.CreatedOn).Select(a => a.UniqueFileName).FirstOrDefault();
+            model.GenderName = db.GlobalOptionSets.AsNoTracking().Where(a => a.Id == model.GenderId).Select(a => a.DisplayName).DefaultIfEmpty("").FirstOrDefault();
+            model.ProfilePictureFileName = db.UserAttachments.AsNoTracking().Where(a => a.UserProfileId == model.Id && a.AttachmentTypeId == profilePicTypeId).OrderByDescending(a => a.CreatedOn).Select(a => a.UniqueFileName).FirstOrDefault();
             if (type == "View")
             {
                 model.FormattedDateOfBirth = model.DateOfBirth?.ToString(general.GetAppSettingsValue("dateFormat"));

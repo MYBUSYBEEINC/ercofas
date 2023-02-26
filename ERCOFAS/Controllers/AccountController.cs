@@ -374,18 +374,18 @@ namespace ERCOFAS.Controllers
                 return View(model);
             }
 
-            string userid = "";
+            string userId = string.Empty;
 
             // if username input contains @ sign, means that user use email to login
             if (model.UserName.Contains("@"))
             {
                 // select the UserName of the user from AspNetUsers table and assign to model.UserName because instead of email, SignInManager use username to sign in 
                 model.UserName = _db.AspNetUsers.Where(a => a.Email == model.UserName).Select(a => a.UserName).DefaultIfEmpty("").FirstOrDefault();
-                userid = _db.AspNetUsers.Where(a => a.Email == model.UserName).Select(a => a.Id).DefaultIfEmpty("").FirstOrDefault();
+                userId = _db.AspNetUsers.Where(a => a.Email == model.UserName).Select(a => a.Id).DefaultIfEmpty("").FirstOrDefault();
             }
             else
             {
-                userid = _db.AspNetUsers.Where(a => a.UserName == model.UserName).Select(a => a.Id).DefaultIfEmpty("").FirstOrDefault();
+                userId = _db.AspNetUsers.Where(a => a.UserName == model.UserName).Select(a => a.Id).DefaultIfEmpty("").FirstOrDefault();
             }
 
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
@@ -394,15 +394,16 @@ namespace ERCOFAS.Controllers
             {
                 case SignInStatus.Success:
                     //save login history
-                    _general.SaveLoginHistory(userid);
+                    _general.SaveLoginHistory(userId);
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
 
-                    var userTypesId = _db.AspNetUserTypes.Where(x => x.UserId == userid).ToList();
+                    var userTypesId = _db.AspNetUserTypes.Where(x => x.UserId == userId).ToList();
                     if (userTypesId != null)
                     {
                         string roleId = userTypesId.Select(x => x.UserTypeId).FirstOrDefault();
                         string roleName = _db.GlobalOptionSets.FirstOrDefault(x => x.Type == "UserType" && x.Id == roleId).DisplayName;
 
+                        Session["UserId"] = userId;
                         Session["UserTypes"] = userTypesId;
                     }
                     return RedirectToAction("index", "dashboard");
