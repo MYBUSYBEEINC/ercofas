@@ -163,7 +163,7 @@ namespace ERCOFAS.Controllers
                 model.ApplicantName = initiatoryPleading.ApplicantName;
                 model.CaseType = preFiledCase != null ? GetCaseCode(general.GetGlobalOptionSetCode(preFiledCase.CaseTypeId)) : string.Empty;
                 model.CaseNature = preFiledCase != null ? general.GetGlobalOptionSetDisplayName(preFiledCase.CaseNatureId) : string.Empty;
-                model.DocketNumberYear = initiatoryPleading != null ? initiatoryPleading.DocketNumber.Substring(0, 4) : string.Empty;
+                model.DocketNumberYear = !string.IsNullOrEmpty(initiatoryPleading.DocketNumber) ? initiatoryPleading.DocketNumber.Substring(0, 4) : string.Empty;
                 model.DocketNumberSequence = initiatoryPleading != null ? GetDocketSequenceNumber(initiatoryPleading.DocketNumber) : string.Empty;
                 model.AdditionalComment = initiatoryPleading.AdditionalComment;
                 model.Remarks = initiatoryPleading.Remarks;
