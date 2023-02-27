@@ -42,6 +42,8 @@ namespace ERCOFAS.Models
         [MaxLength(128)]
         public string Id { get; set; }
         public string Stakeholder { get; set; }
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "RequestDescription", ResourceType = typeof(Resource))]
         public string RequestDescription { get; set; }
         public DateTime Date { get; set; }
         public DateTime Time { get; set; }
@@ -62,8 +64,21 @@ namespace ERCOFAS.Models
         public string OED { get; set; }
         public string TravelAuthorityStatus { get; set; }
         public string ModifiedBy { get; set; }
-        public DateTime ModifiedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public HttpPostedFileBase[] Files { get; set; }
+        public List<SealingAndAcceptanceAttachment> Attachments { get; set; }
+        public IList<PreFiledAttachmentViewModel> PreFiledAttachmentViewModels { get; set; }
+        public List<HttpPostedFileBase> DocumentRequest { get; set; }
+        public List<HttpPostedFileBase> StatementOfAccount { get; set; }
+        public List<HttpPostedFileBase> TravelAuthority { get; set; }
+        public List<HttpPostedFileBase> AttachSignature { get; set; }
+        public List<HttpPostedFileBase> ProofOfPayment { get; set; }
+    }
+
+    public class SealingAndAcceptanceListing
+    {
+        public List<SealingAndAcceptanceViewModel> Listing { get; set; }
     }
 }

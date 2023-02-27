@@ -335,6 +335,8 @@
     <Compile Include="Models\RequiredDocumentsModel.cs" />
     <Compile Include="Models\RequirementsModel.cs" />
     <Compile Include="Models\RoleModulePermissionModels.cs" />
+    <Compile Include="Models\SealingAndAcceptanceAttachmentModels.cs" />
+    <Compile Include="Models\SealingAndAcceptanceModels.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Models\PreFiledSurveyInformationModel.cs" />
     <Compile Include="Models\SurveyQuestionModel.cs" />
@@ -735,6 +737,7 @@
     <Content Include="Views\ValidationMeterSampling\ViewRecord.cshtml" />
     <Content Include="Views\Dashboard\Default.cshtml" />
     <Content Include="Views\RequestSealingAcceptance\Index.cshtml" />
+    <Content Include="Views\RequestSealingAcceptance\NoFiledYet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
