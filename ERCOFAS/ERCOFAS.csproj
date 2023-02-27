@@ -736,6 +736,7 @@
     <Content Include="Views\ValidationMeterSampling\ViewRecord.cshtml" />
     <Content Include="Views\ValidationMeterSampling\ResultsValidation.cshtml" />
     <Content Include="Views\Dashboard\Default.cshtml" />
+    <Content Include="Views\ValidationMeterSampling\SealingAcceptance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

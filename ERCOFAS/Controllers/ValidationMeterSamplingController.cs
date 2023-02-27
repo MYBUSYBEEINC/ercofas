@@ -22,6 +22,11 @@ namespace ERCOFAS.Controllers
         /// </summary>
         /// <returns></returns>
 
+        public ViewResult SealingAcceptance()
+        {
+            return View();
+        }
+
         public ViewResult ResultsValidation()
         {
             return View();
