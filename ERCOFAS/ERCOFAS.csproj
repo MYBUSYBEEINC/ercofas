@@ -247,7 +247,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CaseNatureController.cs" />
-    <Compile Include="Controllers\RequestForSealingController.cs" />
+    <Compile Include="Controllers\RequestSealingAcceptanceController.cs" />
     <Compile Include="Controllers\ValidationMeterSamplingController.cs" />
     <Compile Include="Controllers\PreRegistrationController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
@@ -726,17 +726,15 @@
     <Content Include="Views\Account\ReUploadDocument.cshtml" />
     <Content Include="Views\Account\InvalidLink.cshtml" />
     <Content Include="Views\Account\UploadedDocumentConfirmation.cshtml" />
-    <Content Include="Views\RequestForSealing\_MainList.cshtml" />
-    <Content Include="Views\RequestForSealing\Edit.cshtml" />
-    <Content Include="Views\RequestForSealing\Index.cshtml" />
-    <Content Include="Views\RequestForSealing\ViewRecord.cshtml" />
+    <Content Include="Views\RequestSealingAcceptance\_MainList.cshtml" />
+    <Content Include="Views\RequestSealingAcceptance\Edit.cshtml" />
+    <Content Include="Views\RequestSealingAcceptance\ViewRecord.cshtml" />
     <Content Include="Views\ValidationMeterSampling\_MainList.cshtml" />
     <Content Include="Views\ValidationMeterSampling\Edit.cshtml" />
     <Content Include="Views\ValidationMeterSampling\Index.cshtml" />
     <Content Include="Views\ValidationMeterSampling\ViewRecord.cshtml" />
-    <Content Include="Views\ValidationMeterSampling\ResultsValidation.cshtml" />
     <Content Include="Views\Dashboard\Default.cshtml" />
-    <Content Include="Views\ValidationMeterSampling\SealingAcceptance.cshtml" />
+    <Content Include="Views\RequestSealingAcceptance\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -12,7 +12,7 @@ using ERCOFAS.Resources;
 namespace ERCOFAS.Controllers
 {
     [Authorize]
-    public class RequestForSealingController : Controller
+    public class RequestSealingAcceptanceController : Controller
     {
         private DefaultDBContext db = new DefaultDBContext();
         private GeneralController general = new GeneralController();

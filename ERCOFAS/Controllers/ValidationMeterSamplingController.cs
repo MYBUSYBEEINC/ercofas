@@ -17,6 +17,13 @@ namespace ERCOFAS.Controllers
         private DefaultDBContext db = new DefaultDBContext();
         private GeneralController general = new GeneralController();
 
+
+        // GET: ValidationMeterSampling
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         /// <summary>
         /// [CustomAuthorizeFilter(ProjectEnum.ModuleCode.CaseType, "true", "", "", "")]
         /// </summary>
@@ -32,10 +39,6 @@ namespace ERCOFAS.Controllers
             return View();
         }
 
-        public ViewResult Index()
-        {
-            return View();
-        }
 
         protected override void Dispose(bool disposing)
         {
