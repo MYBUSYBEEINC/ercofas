@@ -3,229 +3,199 @@
     ViewBag.Title = "Virtual Hearing";
 }
 
+@{
+    ViewBag.Title = "Request for Sealing and Acceptance Testing of Meters";
+    Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+}
+<h3 class="text-center text-mauve my-4">Virtual Hearings</h3>
+
 <section>
     <div class="container-fluid">
-        <div class="row bg-white mx-2 py-2 rounded">
-            <div class="col-2 ps-4 d-flex align-items-center text-blue-green">
-                <h6>Notification Highlights</h6>
-            </div>
-            <div class="col px-0">
-                <div class="row mb-2">
-                    <div class="col text-secondary"><strong>Pre-Filing Case</strong></div>
-                    <div class="col d-flex align-items-center justify-content-end text-muted me-4"><small>[Date] [Time]</small></div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p class="m-0 text-muted">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        </p>
+        <div class="card px-2 py-5">
+            <form id="msform" class="text-center">
+                <!-- progressbar -->
+                <ul id="progressbar" class="p-0">
+                    <li class="active" id="submit">Notice of Virtual Hearing</li>
+                    <li id="review">Determination of Compliance w/ Juridical Requirements</li>
+                    <li id="generate">Expository Presentation</li>
+                    <li id="payment">Pre-Trial Conference</li>
+                    <li id="verify">Presentation Evidence</li>
+                    <li id="release">Notice of Decision</li>
+                </ul>
+                <fieldset class="px-5">
+                    <div class="text-start">
+                        <h5 class="text-mauve my-3">Schedule of Hearings</h5>
+                        <label>
+                            Select Type
+                        </label>
+                        <select class="form-select w-50 mb-5" aria-label="Default select example">
+                            <option selected></option>
+                            <option value="1">[Type 1]</option>
+                            <option value="2">[Type 2]</option>
+                            <option value="3">[Type 3]</option>
+                        </select>
+                        <hr />
+                        <div class="d-flex align-items-center">
+                            <h5 class="text-mauve my-3">Request Schedule of Hearing</h5>
+                            <input class="form-check-input m-0 ms-5 me-3" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Make a Request
+                            </label>
+                        </div>
+                        <hr />
                     </div>
-                </div>
-            </div>
-            <div class="col-2 pe-0 d-flex align-items-center justify-content-center">
-                <button class="btn text-secondary rounded-circle border-secondary border-2 me-4"><strong><</strong></button>
-                <button class="btn text-secondary rounded-circle border-secondary border-2"><strong>></strong></button>
-            </div>
-        </div>
-        <h3 class="text-mauve text-center my-5">Virtual Hearings</h3>
-        <div class="bg-white mx-2 p-4 rounded">
-            <div class="container-fluid">
-                <form id="msform">
-                    <fieldset>
-                        <div class="float-start text-start w-100 p-0 m-0">
-                            <h6 class="text-secondary mb-4"><strong>Type of Hearing</strong></h6>
-                            <div class="ms-3">
-                                <div>
-                                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-                                    <label class="ps-2 text-secondary">Inital Hearing</label>
-                                </div>
-                                <div>
-                                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-                                    <label class="ps-2 text-secondary">Written Order</label>
-                                </div>
-                                <div>
-                                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-                                    <label class="ps-2 text-secondary">Open Court</label>
-                                </div>
-                            </div>
-                            <hr class="my-5" />
-                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-                            <label class="ps-2 text-secondary">Request Schedule</label>
+                    <input type="button" name="next" class="next action-button rounded hover-effect mt-5" value="Send" />
+                </fieldset>
+                <fieldset class="px-5">
+                    <div class="d-flex gap-3">
+                        <div class="w-50 text-start">
+                            <label>
+                                Select Date
+                            </label>
+                            <input type="date" class="form-control" />
                         </div>
-                        <input type="button" name="next" class="next rounded hover-effect border-0 my-5 px-4 py-1" value="Send Request" />
-                    </fieldset>
-                    <fieldset>
-                        <div class="border rounded p-5 mb-5">
-                            <img src="~/Assets/VectorLoading.png" />
-                            <h6 class="my-4 text-secondary">Scheduling on Process</h6>
+                        <div class="w-50 text-start">
+                            <label>
+                                Select Time
+                            </label>
+                            <input type="time" class="form-control" />
                         </div>
-                        <input type="button" name="previous" class="previous rounded hover-effect border-0 my-5 me-2 px-4 py-1" value="Back" />
-                        <input type="button" name="next" class="next rounded hover-effect border-0 my-5 px-4 py-1" value="Next" />
-                    </fieldset>
-                    <fieldset>
-                        <div class="border rounded p-5 mb-5">
-                            <h5 class="text-center text-secondary" mb-2"><strong>Notification</strong></h5>
-                            <div class="text-start">
-                                <h6 class="text-secondary mt-4"><strong>Date of Hearing</strong></h6>
-                                <small class="text-secondary mb-4">[Date] [Time]</small>
-                                <h6 class="text-secondary mt-4"><strong>Other Details</strong></h6>
-                                <small class="text-secondary mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
-                                <h6 class="text-secondary mt-4"><strong>Virtual Hearing Link</strong></h6>
-                                <small class="text-secondary mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
-                            </div>
+                    </div>
+                    <label class="mt-4 float-start">Other Details</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                    <input type="button" name="previous" class="previous action-button-previous rounded hover-effect mt-5" value="Back" />
+                    <input type="button" name="next" class="next action-button rounded hover-effectmt-5" value="Send" />
+                </fieldset>
+                <fieldset class="px-5">
+                    <div>
+                        <h5 class="text-mauve my-3 text-start">Date of Hearing</h5>
+                        <input type="text" class="form-control w-50" placeholder="February 27, 2023 - 8:00am" readonly />
+                    </div>
+                    <div class="mt-3 mb-5">
+                        <label class="float-start">Other Details</label>
+                        <textarea class="form-control text-secondary" id="exampleFormControlTextarea1" rows="4" readonly>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel   </textarea>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button-previous rounded hover-effect" value="Back" />
+                    <input type="button" name="next" class="next action-button rounded hover-effect" value="Send" />
+                </fieldset>
+                <fieldset class="px-5">
+                    <div class="mb-3 text-start">
+                        <label for="formFile" class="form-label">Promulgation of IO/NVH</label>
+                        <div class="d-flex flex-row gap-2">
+                            <input class="form-control w-50" type="file" id="formFile">
+                            <button class="border rounded"><i class="fa fa-plus text-secondary px-1"></i></button>
                         </div>
-                        <input type="button" name="previous" class="previous hover-effect rounded border-0 my-5 me-2 px-4 py-1" value="Back" />
-                        <input type="button" name="next" class="next rounded hover-effect border-0 my-5 px-4 py-1" value="Next" />
-                    </fieldset>
-                    <fieldset>
-                        <div class="text-start">
-                            <div class="mb-5">
-                                <label for="formFile" class="form-label text-secondary">Promulgation of IO/NVH</label>
-                                <input class="form-control w-50" type="file" id="formFile">
-                            </div>
-                            <div class="mb-5">
-                                <label for="formFile" class="form-label text-secondary">Hearing Documents</label>
-                                <input class="form-control w-50" type="file" id="formFile">
-                            </div>
-                            <h5 class="text-mauve">Select Key Personnel</h5>
-                            <hr />
-                            <label class="form-label text-secondary">Personnel</label>
-                            <select class="form-select w-50 mb-5" aria-label="">
-                                <option selected> </option>
-                                <option value="1">[Personnel 1]</option>
-                                <option value="2">[Personnel 2]</option>
-                                <option value="3">[Personnel 3]</option>
-                            </select>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label for="formFile" class="form-label">Hearing Documents</label>
+                        <div class="d-flex flex-row gap-2">
+                            <input class="form-control w-50" type="file" id="formFile">
+                            <button class="border rounded"><i class="fa fa-plus text-secondary px-1"></i></button>
                         </div>
-                        <input type="button" name="previous" class="previous hover-effect rounded border-0 my-5 me-2 px-4 py-1" value="Back" />
-                        <input type="button" name="next" class="next rounded hover-effect border-0 my-5 px-4 py-1" value="Next" />
-                    </fieldset>
-                    <fieldset>
-                        <div class="row mb-5">
-                            <div class="col">
-                                <h5 class="text-center text-secondary"><strong>Notify Stakeholder and concerned Services</strong></h5>
+                    </div>
+                    <div class="my-5">
+                        <h5 class="text-mauve my-3 text-start">Select Key Personnel</h5>
+                        <hr />
+                        <div class="d-flex flex-row gap-3">
+                            <div class="mb-3 w-50 text-start">
+                                <label for="exampleFormControlInput1" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="exampleFormControlInput1">
                             </div>
-                        </div>
-                        <div class="w-75 mx-auto">
-                            <div class="row my-5">
-                                <div class="col text-start">
-                                    <label class="form-label text-secondary">Stakeholder</label>
-                                    <select class="form-select mb-5" aria-label="">
-                                        <option selected> </option>
-                                        <option value="1">[Stakeholder 1]</option>
-                                        <option value="2">[Stakeholder 2]</option>
-                                        <option value="3">[Stakeholder 3]</option>
-                                    </select>
-                                </div>
-                                <div class="col text-start">
-                                    <label class="form-label text-secondary">Concerned Services</label>
-                                    <select class="form-select mb-5" aria-label="">
-                                        <option selected> </option>
-                                        <option value="1">[Concerned Services 1]</option>
-                                        <option value="2">[Concerned Services 2]</option>
-                                        <option value="3">[Concerned Services 3]</option>
-                                    </select>
-                                </div>
+                            <div class="mb-3 w-50 text-start">
+                                <label for="exampleFormControlInput1" class="form-label">Contact No.</label>
+                                <input type="text" class="form-control" id="exampleFormControlInput1">
                             </div>
-                        </div>
-                        <input type="button" name="previous" class="previous hover-effect rounded border-0 my-5 me-2 px-4 py-1" value="Back" />
-                        <input type="button" name="next" class="next rounded hover-effect border-0 my-5 px-4 py-1" value="Next" />
-                    </fieldset>
-                    <fieldset>
-                        <div class="row mb-5">
-                            <div class="col">
-                                <h5 class="text-center text-secondary"><strong>Registration of Hearing Participants</strong></h5>
-                            </div>
-                        </div>
-                        <div class="w-75 mx-auto">
-                            <div class="row text-start mb-4">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="text-secondary">Name</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="text-secondary">Email Address</label>
-                                        <input type="email" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row text-start mb-4">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="text-secondary">Contact No.</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="text-secondary">Other Details</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="my-5" />
-                        <div class="w-75 mx-auto">
-                            <div class="row text-start mb-4">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="text-secondary">Name</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="text-secondary">Email Address</label>
-                                        <input type="email" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row text-start mb-4">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="text-secondary">Contact No.</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="text-secondary">Other Details</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="my-5" />
-                        <div class="text-start w-75 mx-auto">
-                            <span class="btn border-0 bg-white hover-effect p-0 ps-2">
-                                <i class="text-secondary fas fa-plus "></i> <input class="bg-white border-0 text-secondary" type="reset" value="Add Participants" />
-                            </span>
-                        </div>
 
-                        <input type="button" name="previous" class="previous hover-effect rounded border-0 my-5 me-2 px-4 py-1" value="Back" />
-                        <input type="button" name="next" class="submit rounded hover-effect border-0 my-5 px-4 py-1" value="Submit" />
-                    </fieldset>
-                </form>
-            </div>
+                        </div>
+                        <div class="float-start">
+                            <button class="border-0 bg-transparent text-secondary p-0"><i class="fa fa-plus text-secondary border rounded p-1 me-1"></i>Add Personnel</button>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button-previous rounded hover-effect" value="Back" />
+                    <input type="button" name="next" class="next action-button rounded hover-effect" value="Send" />
+                </fieldset>
+                <fieldset class="px-5">
+                    <h5 class="text-mauve my-3 text-start">Notify Stakeholder and concerned Services</h5>
+                    <div class="d-flex flex-row gap-3 mb-5">
+                        <div class="w-50 text-start">
+                            <label>
+                                Stakeholder
+                            </label>
+                            <select class="form-select mb-2" aria-label="Default select example">
+                                <option selected></option>
+                                <option value="1">[Stakeholder 1]</option>
+                                <option value="2">[Stakeholder 2]</option>
+                                <option value="3">[Stakeholder 3]</option>
+                            </select>
+                            <button class="border-0 bg-transparent text-secondary p-0"><i class="fa fa-plus text-secondary border rounded p-1 me-1"></i>Add More</button>
+                        </div>
+                        <div class="w-50 text-start">
+                            <label>
+                                Concerned Services
+                            </label>
+                            <select class="form-select mb-2" aria-label="Default select example">
+                                <option selected></option>
+                                <option value="1">[Services 1]</option>
+                                <option value="2">[Services 2]</option>
+                                <option value="3">[Services 3]</option>
+                            </select>
+                            <button class="border-0 bg-transparent text-secondary p-0"><i class="fa fa-plus text-secondary border rounded p-1 me-1"></i>Add More</button>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button-previous rounded hover-effect" value="Back" />
+                    <input type="button" name="next" class="next action-button rounded hover-effect" value="Notify" />
+                </fieldset>
+                <fieldset class="px-5">
+                    <h5 class="text-mauve my-3 text-start">Notify Stakeholder and concerned Services</h5>
+                    <div class="d-flex flex-row gap-3 mb-5">
+                        <div class="w-50 d-flex flex-column gap-2 text-start">
+                            <label>Name</label>
+                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" />
+                            <div class="text-start">
+                                <button class="border rounded"><i class="fa fa-plus text-secondary"></i></button>
+                            </div>
+                        </div>
+                        <div class="w-50 d-flex flex-column gap-2 text-start">
+                            <label>Email Address</label>
+                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" />
+                            <div class="text-start">
+                                <button class="border rounded"><i class="fa fa-plus text-secondary"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button-previous rounded hover-effect" value="Back" />
+                    <input type="button" name="next" class="next action-button rounded hover-effect" value="Register" />
+                </fieldset>
+            </form>
         </div>
     </div>
 </section>
 
 <style type="text/css">
+
+    tr td:last-child {
+        width: 1%;
+        white-space: nowrap;
+    }
+
     #msform {
-        text-align: center;
         position: relative;
-        margin-top: 20px
     }
 
         #msform fieldset {
             background: white;
             border: 0 none;
+            border-radius: 0.5rem;
             width: 100%;
+            margin: 0;
             position: relative
         }
 
@@ -233,62 +203,164 @@
                 display: none
             }
 
-    .next, .submit {
-        background-color: #566eb4;
-        color: #fff;
+        #msform .action-button {
+            width: 100px;
+            background: #566eb4;
+            color: white;
+            border: 0 none;
+            cursor: pointer;
+        }
+
+        #msform .action-button-previous {
+            width: 100px;
+            background: #96abe9;
+            color: white;
+            border: 0 none;
+            cursor: pointer;
+        }
+
+    .card {
+        z-index: 0;
+        border: none;
+        position: relative
     }
-    .previous {
-        background-color: #96abe9;
-        color: #fff;
+
+    .steps {
+        color: gray;
+        margin-bottom: 10px;
+        text-align: right
     }
+
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey
+    }
+
+        #progressbar .active {
+            color: #499bb3;
+        }
+
+        #progressbar li {
+            list-style-type: none;
+            width: calc(100% / 6);
+            float: left;
+            position: relative;
+            text-align: center;
+            padding: 0 10px 0 10px;
+        }
+
+        #progressbar #submit:before, #progressbar #review:before, #progressbar #generate:before, #progressbar #payment:before, #progressbar #verify:before,
+        #progressbar #release:before, #progressbar #validate:before, #progressbar #report:before, #progressbar #dissemate:before, #progressbar #issue:before {
+            font-family: FontAwesome;
+            content: ""
+        }
+
+        #progressbar li:before {
+            width: 10px;
+            height: 10px;
+            display: block;
+            font-size: 11px;
+            background: lightgray;
+            border-radius: 50%;
+            margin: 21px auto 10px auto;
+        }
+
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: lightgray;
+            position: absolute;
+            left: 0;
+            top: 25px;
+            z-index: -1
+        }
+
+        #progressbar li.active:before,
+        #progressbar li.active:after {
+            background: #499bb3;
+        }
 </style>
 
 @section Scripts {
+
     <script type="text/javascript">
+        $(document).ready(function () {
 
-        var current_fs, next_fs, previous_fs;
-        var opacity;
+            var current_fs, next_fs, previous_fs; //fieldsets
+            var opacity;
+            var current = 1;
+            var steps = $("fieldset").length;
 
-        $(".next").click(function () {
+            setProgressBar(current);
 
-            current_fs = $(this).parent();
-            next_fs = $(this).parent().next();
+            $(".next").click(function () {
 
-            next_fs.show();
+                current_fs = $(this).parent();
+                next_fs = $(this).parent().next();
 
-            current_fs.animate({ opacity: 0 }, {
-                step: function (now) {
+                //Add Class Active
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
-                    opacity = 1 - now;
+                //show the next fieldset
+                next_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
 
-                    current_fs.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    next_fs.css({ 'opacity': opacity });
-                },
-
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        next_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 500
+                });
+                setProgressBar(++current);
             });
-        });
 
-        $(".previous").click(function () {
+            $(".previous").click(function () {
 
-            current_fs = $(this).parent();
-            previous_fs = $(this).parent().prev();
+                current_fs = $(this).parent();
+                previous_fs = $(this).parent().prev();
 
-            previous_fs.show();
+                //Remove class active
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
 
-            current_fs.animate({ opacity: 0 }, {
-                step: function (now) {
-                    opacity = 1 - now;
+                //show the previous fieldset
+                previous_fs.show();
 
-                    current_fs.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    previous_fs.css({ 'opacity': opacity });
-                },
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        previous_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 500
+                });
+                setProgressBar(--current);
             });
+
+            function setProgressBar(curStep) {
+                var percent = parseFloat(100 / steps) * curStep;
+                percent = percent.toFixed();
+                $(".progress-bar")
+                    .css("width", percent + "%")
+            }
+
+            $(".submit").click(function () {
+                return false;
+            })
+
         });
     </script>
 }
