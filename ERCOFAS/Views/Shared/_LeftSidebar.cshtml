@@ -207,8 +207,8 @@
             <li class="nav-item">
                 <div id="cent">
                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString().ToLower() == "systemrole" ? "active" : "")" href="#">
-                        <img width="25" id="icon" src="~/Assets/erc-icons/receiving.png" data-bs-toggle="tooltip" data-bs-placement="right" title="Receiving of letters/ Correspondences" />
-                        <span class="ms-3 py-1 text-white">Receiving of letters/ Correspondences</span>
+                        <img width="25" id="icon" src="~/Assets/erc-icons/receiving.png" data-bs-toggle="tooltip" data-bs-placement="right" title="Letters & Correspondences" />
+                        <span class="ms-3 py-1 text-white">Letters & Correspondences</span>
                     </a>
                 </div>
             </li>
@@ -226,12 +226,6 @@
             <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString().ToLower() == "requestsealingacceptance" || ViewContext.RouteData.Values["Controller"].ToString().ToLower() == "requestsealingacceptance" ? "active" : "")" href="@Url.Action("index","requestsealingacceptance")">
                 <img width="25" id="icon" src="~/Assets/erc-icons/request.png" data-bs-toggle="tooltip" data-bs-placement="right" title="Request for Sealing and Acceptance Testing of Meters" />
                 <span class="ms-3 py-1 text-white">Request for Sealing and Acceptance Testing of Meters</span>
-            </a>
-        </li>
-        <li class="nav-item" id="cent">
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString().ToLower() == "retailelectricitysupplier" ? "active" : "")">
-                <img width="25" id="icon" src="~/Assets/erc-icons/retail.png" data-bs-toggle="tooltip" data-bs-placement="right" title="Request for Retail Electricity Supplier" />
-                <span class="ms-3 py-1 text-white">Request for Retail Electricity Supplier</span>
             </a>
         </li>
         @if (userRole == UserTypeEnum.SuperAdmin.ToString() || userRole == UserTypeEnum.Admin.ToString())
