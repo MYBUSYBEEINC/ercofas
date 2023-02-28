@@ -163,7 +163,7 @@ namespace ERCOFAS.Controllers
                 model.ApplicantName = initiatoryPleading.ApplicantName;
                 model.CaseType = preFiledCase != null ? GetCaseCode(general.GetGlobalOptionSetCode(preFiledCase.CaseTypeId)) : string.Empty;
                 model.CaseNature = preFiledCase != null ? general.GetGlobalOptionSetDisplayName(preFiledCase.CaseNatureId) : string.Empty;
-                model.DocketNumberYear = !string.IsNullOrEmpty(initiatoryPleading.DocketNumber) ? initiatoryPleading.DocketNumber.Substring(0, 4) : string.Empty;
+                model.DocketNumberYear = initiatoryPleading != null && !string.IsNullOrEmpty(initiatoryPleading.DocketNumber) ? initiatoryPleading.DocketNumber.Substring(0, 4) : string.Empty;
                 model.DocketNumberSequence = initiatoryPleading != null ? GetDocketSequenceNumber(initiatoryPleading.DocketNumber) : string.Empty;
                 model.AdditionalComment = initiatoryPleading.AdditionalComment;
                 model.Remarks = initiatoryPleading.Remarks;
@@ -355,13 +355,16 @@ namespace ERCOFAS.Controllers
                 if (initiatoryPleading == null)
                 {
                     var caseType = preFiledCase != null ? general.GetGlobalOptionSetCode(preFiledCase.CaseTypeId) : string.Empty;
+                    var applicantName = preFiledCase != null ? general.GetCurrentUserFullName(preFiledCase.UserId) : string.Empty;
                     InitiatoryPleadingModel initiatoryPleadingModel = new InitiatoryPleadingModel
                     {
                         DocumentName = preFiledCase.RequestSubject,
                         Description = preFiledCase.RequestSubject,
                         Barcode = Guid.NewGuid().ToString(),
                         DocketNumber = GenerateDocketNumber(caseType),
-                        PreFiledCaseId = preFiledCase.Id
+                        PreFiledCaseId = preFiledCase.Id,
+                        CaseTitle = preFiledCase.RequestSubject,
+                        ApplicantName = applicantName
                     };
                     SaveRecord(initiatoryPleadingModel);
                 }

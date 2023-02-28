@@ -835,6 +835,12 @@ namespace ERCOFAS.Controllers
             return list;
         }
 
+        public string GetCurrentUserFullName(string id)
+        {
+            string name = db.UserProfiles.Where(a => a.AspNetUserId == id).Select(a => a.FullName).DefaultIfEmpty("").FirstOrDefault();
+            return name;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

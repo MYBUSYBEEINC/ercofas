@@ -1,6 +1,8 @@
 ﻿@model ERCOFAS.Models.InitiatoryPleadingModel
 @using ERCOFAS.CustomHelper
 @using ERCOFAS.Resources
+@using ERCOFAS.Helpers;
+@using ERCOFAS.Enumeration;
 @{
     if (string.IsNullOrEmpty(Model.Id))
     {
@@ -11,6 +13,7 @@
         ViewBag.Title = Resource.Edit + " Initiatory Pleading";
     }
     Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+    var userRole = RoleHelpers.GetMainRole();
 }
 
 <style type="text/css">
@@ -102,8 +105,15 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="form-label fw600" style="margin-top: 16px;"></label>
-                        @Html.EditorFor(model => model.DocketNumberSequence, new { htmlAttributes = new { @class = "form-control field-editor", @maxLength = "3" } })
-                        @Html.ValidationMessageFor(model => model.DocketNumberSequence, "", new { @class = "invalid-message" })
+                        @if (userRole == UserTypeEnum.SuperAdmin.ToString())
+                        {
+                            @Html.EditorFor(model => model.DocketNumberSequence, new { htmlAttributes = new { @class = "form-control field-editor", @maxLength = "3" } })
+                            @Html.ValidationMessageFor(model => model.DocketNumberSequence, "", new { @class = "invalid-message" })
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.DocketNumberSequence, new { htmlAttributes = new { @class = "form-control field-editor", @readonly = "readonly", @maxLength = "3" } })
+                        }
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -195,6 +205,7 @@
                     @Html.ValidationMessageFor(model => model.AdditionalComment, "", new { @class = "" })
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="form-group">
                     (9.) <label class="form-label fw600">Remarks (If any)</label>
