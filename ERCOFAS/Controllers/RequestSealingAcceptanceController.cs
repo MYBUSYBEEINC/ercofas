@@ -10,6 +10,7 @@ using ERCOFAS.Models;
 using ERCOFAS.Resources;
 using ERCOFAS.Enumeration;
 using ERCOFAS.Helpers;
+using static ERCOFAS.Models.ProjectEnum;
 
 namespace ERCOFAS.Controllers
 {
@@ -25,19 +26,19 @@ namespace ERCOFAS.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            /*if (RoleHelpers.GetMainRole() == UserTypeEnum.Client.ToString())
+            if (RoleHelpers.GetMainRole() == UserTypeEnum.Client.ToString())
             {
                 string userId = User.Identity.GetUserId();
 
-                int preFilings = db.SealingAndAcceptanceAttachments.Count(x => x.UserId == userId);
-                if (preFilings == 0)
+                int sealingAcceptance = db.SealingAndAcceptances.Count(x => x.Stakeholder == userId);
+                if (sealingAcceptance == 0)
                     return Redirect("/RequestSealingAcceptance/NoFiledYet");
-            }*/
+            }
 
             return View();
         }
 
-        /*public ActionResult NoFiledYet()
+        public ActionResult NoFiledYet()
         {
             return View();
         }
@@ -56,9 +57,8 @@ namespace ERCOFAS.Controllers
             list = (from t1 in db.SealingAndAcceptances.AsNoTracking()
                     join t2 in db.AspNetUsers.AsNoTracking() on t1.CreatedBy equals t2.Id
                     join t3 in db.UserProfiles.AsNoTracking() on t1.Stakeholder equals t3.AspNetUserId
-                    join t8 in db.AspNetRoles.AsNoTracking() on t7.RoleId equals t8.Id
                     orderby t1.CreatedOn descending
-                    select new PreFiledCaseViewModel
+                    select new SealingAndAcceptanceViewModel
                     {
                         Id = t1.Id,
                         RequestDescription = t1.RequestDescription,
@@ -70,26 +70,26 @@ namespace ERCOFAS.Controllers
                         ReviewStatus = t1.ReviewStatus,
                         PaymentStatus = t1.PaymentStatus,
                         AssignedNumber = t1.AssignedNumber,
-                        AssignedPersonel = t1.AssignedPersonel,
+                        AssignedPersonnel = t1.AssignedPersonnel,
                         AssignedPersonnelStatus = t1.AssignedPersonnelStatus,
                         Supervisor = t1.Supervisor,
-                        SupervisorStatus = t1.SurvivorStatus,
+                        SupervisorStatus = t1.SupervisorStatus,
                         DivisionChief = t1.DivisionChief,
                         DivisionChiefStatus = t1.DivisionChiefStatus,
                         Director = t1.Director,
                         DirectorAssignedNumber = t1.DirectorAssignedNumber,
                         OED = t1.OED,
-                        TravelAuthorityApprovalStatus = t1.TravelAuthorityApprovalStatus,
+                        TravelAuthorityStatus = t1.TravelAuthorityStatus,
                     }).OrderByDescending(x => x.CreatedOn).ToList();
 
             var userRole = RoleHelpers.GetMainRole();
             if (userRole != null && userRole == UserTypeEnum.Client.ToString())
-                list = list.Where(x => x.UserId == userId).ToList();
+                list = list.Where(x => x.Stakeholder == userId).ToList();
 
             return list;
         }
 
-        public List<SealingAndAcceptanceAttachment> ReadSealingAndAcceptance(string sealingAcceptanceId)
+        public List<SealingAndAcceptanceAttachment> ReadSealingAndAcceptanceAttachment(string sealingAcceptanceId)
         {
             List<SealingAndAcceptanceAttachment> list = new List<SealingAndAcceptanceAttachment>();
             list = db.SealingAndAcceptanceAttachments.Where(x => x.SealingAndAcceptanceId == sealingAcceptanceId).ToList();
@@ -103,9 +103,9 @@ namespace ERCOFAS.Controllers
             using (DefaultDBContext db = new DefaultDBContext())
             {
                 SealingAndAcceptance sealingAcceptance = db.SealingAndAcceptances.Where(a => a.Id == Id).FirstOrDefault();
-                AspNetUserRoles role = db.AspNetUserRoles.Where(a => a.UserId == sealingAcceptance.UserId).FirstOrDefault();
+                AspNetUserRoles role = db.AspNetUserRoles.Where(a => a.UserId == sealingAcceptance.Stakeholder).FirstOrDefault();
                 model.Id = sealingAcceptance.Id;
-                model.DocumentRequest = sealingAcceptance.DocumentRequest;
+                model.RequestDescription = sealingAcceptance.RequestDescription;
                 model.Stakeholder = db.UserProfiles.FirstOrDefault(x => x.AspNetUserId == sealingAcceptance.Stakeholder).FullName;
                 model.Remarks = sealingAcceptance.Remarks;
                 model.Date = sealingAcceptance.Date;
@@ -122,7 +122,7 @@ namespace ERCOFAS.Controllers
                 model.Director = sealingAcceptance.Director;
                 model.DirectorAssignedNumber = sealingAcceptance.DirectorAssignedNumber;
                 model.OED = sealingAcceptance.OED;
-                model.TravelAuthorityApprovalStatus = sealingAcceptance.TravelAuthorityApprovalStatus;
+                model.TravelAuthorityStatus = sealingAcceptance.TravelAuthorityStatus;
                 model.PaymentStatus = sealingAcceptance.PaymentStatus;
                 model.CreatedOn = sealingAcceptance.CreatedOn;
                 model.ModifiedOn = sealingAcceptance.ModifiedOn;
@@ -163,7 +163,7 @@ namespace ERCOFAS.Controllers
             {
                 model = GetViewModel(Id, "Edit");
             }
-            model.Attachments = ReadSealingAndAcceptance(Id);
+            model.Attachments = ReadSealingAndAcceptanceAttachment(Id);
 
             return View(model);
         }
@@ -175,13 +175,12 @@ namespace ERCOFAS.Controllers
         /// <returns></returns>
         public ActionResult ViewRecord(string Id)
         {
-            PreFiledCaseViewModel model = new PreFiledCaseViewModel();
+            SealingAndAcceptanceViewModel model = new SealingAndAcceptanceViewModel();
             if (Id != null)
             {
                 model = GetViewModel(Id, "View");
             }
-            model.Attachments = ReadPreFiledAttachments(Id);
-            model.PreFiledAttachmentViewModels = GetPreFiledAttachments(Id);
+            model.Attachments = ReadSealingAndAcceptanceAttachment(Id);
             return View(model);
         }
 
@@ -195,7 +194,7 @@ namespace ERCOFAS.Controllers
                 return View(model);
             }
 
-            SaveRecord(model);
+            //SaveRecord(model);
             TempData["NotifySuccess"] = Resource.RecordSavedSuccessfully;
             return RedirectToAction("index");
         }
@@ -207,11 +206,11 @@ namespace ERCOFAS.Controllers
                 bool duplicated = false;
                 if (model.Id != null)
                 {
-                    duplicated = db.SealingAndAcceptances.Where(a => a.RequestDocument == model.RequestDocument && a.Id != model.Id).Any();
+                    duplicated = db.SealingAndAcceptances.Where(a => a.RequestDescription == model.RequestDescription && a.Id != model.Id).Any();
                 }
                 else
                 {
-                    duplicated = db.SealingAndAcceptances.Where(a => a.RequestDocument == model.RequestDocument).Select(a => a.Id).Any();
+                    duplicated = db.SealingAndAcceptances.Where(a => a.RequestDescription == model.RequestDescription).Select(a => a.Id).Any();
                 }
 
                 if (duplicated == true)
@@ -238,6 +237,6 @@ namespace ERCOFAS.Controllers
             }
 
             base.Dispose(disposing);
-        }*/
+        }
     }
 }

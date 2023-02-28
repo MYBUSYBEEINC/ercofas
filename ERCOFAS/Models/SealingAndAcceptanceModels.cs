@@ -32,7 +32,7 @@ namespace ERCOFAS.Models
         public string OED { get; set; }
         public string TravelAuthorityStatus { get; set; }
         public string ModifiedBy { get; set; }
-        public string ModifiedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
         public string Stakeholder { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
@@ -66,5 +66,13 @@ namespace ERCOFAS.Models
         public DateTime ModifiedOn { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
+
+        public List<SealingAndAcceptanceAttachment> Attachments { get; set; }
+
+    }
+
+    public class SealingAndAcceptanceListing
+    {
+        public List<SealingAndAcceptanceViewModel> Listing { get; set; }
     }
 }
