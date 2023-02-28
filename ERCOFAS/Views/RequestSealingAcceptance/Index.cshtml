@@ -1,4 +1,7 @@
-﻿@{
+﻿@using ERCOFAS.Models;
+@using ERCOFAS.Resources
+
+@{
     ViewBag.Title = "Request for Sealing and Acceptance Testing of Meters";
     Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
 }
@@ -71,240 +74,240 @@
                         </div>
                     </div>
 
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="pagetitle mb-sm-0 fw600">@ViewBag.Title</h4>
-        </div>
-    </div>
-</div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="pagetitle mb-sm-0 fw600">@ViewBag.Title</h4>
+                            </div>
+                        </div>
+                    </div>
 
-<section class="section dashboard mt-3">
-    <div class="bg-white rounded p-3 shadow">
-        <div class="pb-2">
-            <a class="addnewbtn btn btn-p8 hover-boxshadow hover-moveup hover-bg-primarycolor" href="@Url.Action("edit")"><i class="fa-solid fa-plus pe-1"></i> @Resource.AddNewRecord</a>
-            <span id="exportToExcel" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button"><i class="fa-solid fa-file-excel pe-1"></i> @Resource.ExporttoExcel</span>
-            <span id="exportToPdf" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button"><i class="fa-solid fa-file-pdf pe-1"></i> @Resource.ExporttoPdf</span>
-        </div>
-        <div class="row justify-content-between align-items-end pb-1">
-            <div class="col-sm-7 col-xl-3">
-                @Html.Partial("~/Views/Shared/_TableLengthDropDown.cshtml", new ViewDataDictionary { { "DropDownId", ViewBag.TableIdPrefix + "-tableDropDown" } })
-            </div>
-            <div class="col-xl-4"></div>
-            <div class="col-xl-5 pt-2 pt-sm-0">
-                <div id="searchinput" class="input-group flex-nowrap">
-                    @Html.TextBox("search", "", htmlAttributes: new { type = "text", @class = "form-control", @placeholder = Resource.SearchDot })
-                    <button type="button" class="input-group-text bg-transparent hover-bg-primarycolor hover-color-white" id="searchbtn"><i class="fa-solid fa-magnifying-glass pe-1"></i> @Resource.Search</button>
-                    <button type="button" class="input-group-text bg-transparent hover-bg-primarycolor hover-color-white" id="resetbtn"><i class="fa-solid fa-rotate-left pe-1"></i> @Resource.Reset</button>
-                </div>
-            </div>
-        </div>
-        <div id="@ViewBag.TableIdPrefix-table-wrapper">
-            <div class="table-responsive">
-                <table id="@ViewBag.TableIdPrefix-table" class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th class="thead"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <div class="spinner d-flex justify-content-center align-items-center text-center color-primarycolor py-5">
-                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div><strong> &nbsp; @Resource.Loading </strong>
-                </div>
-            </div>
-            <div class="dummyfooter row justify-content-between">
-                <div class="col-md-6">@Resource.Showing0Entries</div>
-                <div class="col-md-6 text-end">@Resource.Page0OfPage0</div>
-            </div>
-        </div>
-    </div>
-</section>
+                    <section class="section dashboard mt-3">
+                        <div class="bg-white rounded p-3 shadow">
+                            <div class="pb-2">
+                                <a class="addnewbtn btn btn-p8 hover-boxshadow hover-moveup hover-bg-primarycolor" href="@Url.Action("edit")"><i class="fa-solid fa-plus pe-1"></i> @Resource.AddNewRecord</a>
+                                <span id="exportToExcel" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button"><i class="fa-solid fa-file-excel pe-1"></i> @Resource.ExporttoExcel</span>
+                                <span id="exportToPdf" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button"><i class="fa-solid fa-file-pdf pe-1"></i> @Resource.ExporttoPdf</span>
+                            </div>
+                            <div class="row justify-content-between align-items-end pb-1">
+                                <div class="col-sm-7 col-xl-3">
+                                    @Html.Partial("~/Views/Shared/_TableLengthDropDown.cshtml", new ViewDataDictionary { { "DropDownId", ViewBag.TableIdPrefix + "-tableDropDown" } })
+                                </div>
+                                <div class="col-xl-4"></div>
+                                <div class="col-xl-5 pt-2 pt-sm-0">
+                                    <div id="searchinput" class="input-group flex-nowrap">
+                                        @Html.TextBox("search", "", htmlAttributes: new { type = "text", @class = "form-control", @placeholder = Resource.SearchDot })
+                                        <button type="button" class="input-group-text bg-transparent hover-bg-primarycolor hover-color-white" id="searchbtn"><i class="fa-solid fa-magnifying-glass pe-1"></i> @Resource.Search</button>
+                                        <button type="button" class="input-group-text bg-transparent hover-bg-primarycolor hover-color-white" id="resetbtn"><i class="fa-solid fa-rotate-left pe-1"></i> @Resource.Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="@ViewBag.TableIdPrefix-table-wrapper">
+                                <div class="table-responsive">
+                                    <table id="@ViewBag.TableIdPrefix-table" class="table table-hover align-middle mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th class="thead"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    <div class="spinner d-flex justify-content-center align-items-center text-center color-primarycolor py-5">
+                                        <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div><strong> &nbsp; @Resource.Loading </strong>
+                                    </div>
+                                </div>
+                                <div class="dummyfooter row justify-content-between">
+                                    <div class="col-md-6">@Resource.Showing0Entries</div>
+                                    <div class="col-md-6 text-end">@Resource.Page0OfPage0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
 
-<style type="text/css">
+                    <style type="text/css">
 
-    tr td:last-child {
-        width: 1%;
-        white-space: nowrap;
-    }
+                        tr td:last-child {
+                            width: 1%;
+                            white-space: nowrap;
+                        }
 
-    #msform {
-        position: relative;
-    }
+                        #msform {
+                            position: relative;
+                        }
 
-        #msform fieldset {
-            background: white;
-            border: 0 none;
-            border-radius: 0.5rem;
-            width: 100%;
-            margin: 0;
-            position: relative
-        }
+                            #msform fieldset {
+                                background: white;
+                                border: 0 none;
+                                border-radius: 0.5rem;
+                                width: 100%;
+                                margin: 0;
+                                position: relative
+                            }
 
-            #msform fieldset:not(:first-of-type) {
-                display: none
-            }
+                                #msform fieldset:not(:first-of-type) {
+                                    display: none
+                                }
 
-        #msform .action-button {
-            width: 100px;
-            background: #566eb4;
-            color: white;
-            border: 0 none;
-            cursor: pointer;
-        }
+                            #msform .action-button {
+                                width: 100px;
+                                background: #566eb4;
+                                color: white;
+                                border: 0 none;
+                                cursor: pointer;
+                            }
 
-        #msform .action-button-previous {
-            width: 100px;
-            background: #96abe9;
-            color: white;
-            border: 0 none;
-            cursor: pointer;
-        }
+                            #msform .action-button-previous {
+                                width: 100px;
+                                background: #96abe9;
+                                color: white;
+                                border: 0 none;
+                                cursor: pointer;
+                            }
 
-    .card {
-        z-index: 0;
-        border: none;
-        position: relative
-    }
+                        .card {
+                            z-index: 0;
+                            border: none;
+                            position: relative
+                        }
 
-    .steps {
-        color: gray;
-        margin-bottom: 10px;
-        text-align: right
-    }
+                        .steps {
+                            color: gray;
+                            margin-bottom: 10px;
+                            text-align: right
+                        }
 
-    #progressbar {
-        margin-bottom: 30px;
-        overflow: hidden;
-        color: lightgrey
-    }
+                        #progressbar {
+                            margin-bottom: 30px;
+                            overflow: hidden;
+                            color: lightgrey
+                        }
 
-        #progressbar .active {
-            color: #499bb3;
-        }
+                            #progressbar .active {
+                                color: #499bb3;
+                            }
 
-        #progressbar li {
-            list-style-type: none;
-            width: calc(100% / 6);
-            float: left;
-            position: relative;
-            text-align: center;
-            padding: 0 10px 0 10px;
-        }
+                            #progressbar li {
+                                list-style-type: none;
+                                width: calc(100% / 6);
+                                float: left;
+                                position: relative;
+                                text-align: center;
+                                padding: 0 10px 0 10px;
+                            }
 
-        #progressbar #submit:before, #progressbar #review:before, #progressbar #generate:before, #progressbar #payment:before, #progressbar #verify:before,
-        #progressbar #release:before, #progressbar #validate:before, #progressbar #report:before, #progressbar #dissemate:before, #progressbar #issue:before {
-            font-family: FontAwesome;
-            content: ""
-        }
+                            #progressbar #submit:before, #progressbar #review:before, #progressbar #generate:before, #progressbar #payment:before, #progressbar #verify:before,
+                            #progressbar #release:before, #progressbar #validate:before, #progressbar #report:before, #progressbar #dissemate:before, #progressbar #issue:before {
+                                font-family: FontAwesome;
+                                content: ""
+                            }
 
-        #progressbar li:before {
-            width: 10px;
-            height: 10px;
-            display: block;
-            font-size: 11px;
-            background: lightgray;
-            border-radius: 50%;
-            margin: 21px auto 10px auto;
-        }
+                            #progressbar li:before {
+                                width: 10px;
+                                height: 10px;
+                                display: block;
+                                font-size: 11px;
+                                background: lightgray;
+                                border-radius: 50%;
+                                margin: 21px auto 10px auto;
+                            }
 
-        #progressbar li:after {
-            content: '';
-            width: 100%;
-            height: 2px;
-            background: lightgray;
-            position: absolute;
-            left: 0;
-            top: 25px;
-            z-index: -1
-        }
+                            #progressbar li:after {
+                                content: '';
+                                width: 100%;
+                                height: 2px;
+                                background: lightgray;
+                                position: absolute;
+                                left: 0;
+                                top: 25px;
+                                z-index: -1
+                            }
 
-        #progressbar li.active:before,
-        #progressbar li.active:after {
-            background: #499bb3;
-        }
-</style>
+                            #progressbar li.active:before,
+                            #progressbar li.active:after {
+                                background: #499bb3;
+                            }
+                    </style>
 
-@section Scripts {
+                    @section Scripts {
 
-    <script type="text/javascript">
-        $(document).ready(function () {
+                        <script type="text/javascript">
+                            $(document).ready(function () {
 
-            var current_fs, next_fs, previous_fs; //fieldsets
-            var opacity;
-            var current = 1;
-            var steps = $("fieldset").length;
+                                var current_fs, next_fs, previous_fs; //fieldsets
+                                var opacity;
+                                var current = 1;
+                                var steps = $("fieldset").length;
 
-            setProgressBar(current);
+                                setProgressBar(current);
 
-            $(".next").click(function () {
+                                $(".next").click(function () {
 
-                current_fs = $(this).parent();
-                next_fs = $(this).parent().next();
+                                    current_fs = $(this).parent();
+                                    next_fs = $(this).parent().next();
 
-                //Add Class Active
-                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                                    //Add Class Active
+                                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
-                //show the next fieldset
-                next_fs.show();
-                //hide the current fieldset with style
-                current_fs.animate({ opacity: 0 }, {
-                    step: function (now) {
-                        // for making fielset appear animation
-                        opacity = 1 - now;
+                                    //show the next fieldset
+                                    next_fs.show();
+                                    //hide the current fieldset with style
+                                    current_fs.animate({ opacity: 0 }, {
+                                        step: function (now) {
+                                            // for making fielset appear animation
+                                            opacity = 1 - now;
 
-                        current_fs.css({
-                            'display': 'none',
-                            'position': 'relative'
-                        });
-                        next_fs.css({ 'opacity': opacity });
-                    },
-                    duration: 500
-                });
-                setProgressBar(++current);
-            });
+                                            current_fs.css({
+                                                'display': 'none',
+                                                'position': 'relative'
+                                            });
+                                            next_fs.css({ 'opacity': opacity });
+                                        },
+                                        duration: 500
+                                    });
+                                    setProgressBar(++current);
+                                });
 
-            $(".previous").click(function () {
+                                $(".previous").click(function () {
 
-                current_fs = $(this).parent();
-                previous_fs = $(this).parent().prev();
+                                    current_fs = $(this).parent();
+                                    previous_fs = $(this).parent().prev();
 
-                //Remove class active
-                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                                    //Remove class active
+                                    $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
 
-                //show the previous fieldset
-                previous_fs.show();
+                                    //show the previous fieldset
+                                    previous_fs.show();
 
-                //hide the current fieldset with style
-                current_fs.animate({ opacity: 0 }, {
-                    step: function (now) {
-                        // for making fielset appear animation
-                        opacity = 1 - now;
+                                    //hide the current fieldset with style
+                                    current_fs.animate({ opacity: 0 }, {
+                                        step: function (now) {
+                                            // for making fielset appear animation
+                                            opacity = 1 - now;
 
-                        current_fs.css({
-                            'display': 'none',
-                            'position': 'relative'
-                        });
-                        previous_fs.css({ 'opacity': opacity });
-                    },
-                    duration: 500
-                });
-                setProgressBar(--current);
-            });
+                                            current_fs.css({
+                                                'display': 'none',
+                                                'position': 'relative'
+                                            });
+                                            previous_fs.css({ 'opacity': opacity });
+                                        },
+                                        duration: 500
+                                    });
+                                    setProgressBar(--current);
+                                });
 
-            function setProgressBar(curStep) {
-                var percent = parseFloat(100 / steps) * curStep;
-                percent = percent.toFixed();
-                $(".progress-bar")
-                    .css("width", percent + "%")
-            }
+                                function setProgressBar(curStep) {
+                                    var percent = parseFloat(100 / steps) * curStep;
+                                    percent = percent.toFixed();
+                                    $(".progress-bar")
+                                        .css("width", percent + "%")
+                                }
 
-            $(".submit").click(function () {
-                return false;
-            })
+                                $(".submit").click(function () {
+                                    return false;
+                                })
 
-        });
-    </script>
-}
+                            });
+                        </script>
+                    }
 
