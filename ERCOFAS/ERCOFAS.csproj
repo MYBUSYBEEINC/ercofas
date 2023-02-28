@@ -511,6 +511,16 @@
     <Content Include="Assets\thumbs-up.png" />
     <Content Include="Assets\toppattern.svg" />
     <Content Include="Assets\type.png" />
+    <Content Include="Assets\validation-meter-sampling-icons\VectorDisem.png" />
+    <Content Include="Assets\validation-meter-sampling-icons\VectorGen.png" />
+    <Content Include="Assets\validation-meter-sampling-icons\VectorIssue.png" />
+    <Content Include="Assets\validation-meter-sampling-icons\VectorPayment.png" />
+    <Content Include="Assets\validation-meter-sampling-icons\VectorRelease.png" />
+    <Content Include="Assets\validation-meter-sampling-icons\VectorReport.png" />
+    <Content Include="Assets\validation-meter-sampling-icons\VectorReview.png" />
+    <Content Include="Assets\validation-meter-sampling-icons\VectorSubmit.png" />
+    <Content Include="Assets\validation-meter-sampling-icons\VectorValidate.png" />
+    <Content Include="Assets\validation-meter-sampling-icons\VectorVerif.png" />
     <Content Include="Assets\vector0.png" />
     <Content Include="Assets\vector1.png" />
     <Content Include="Assets\vector2.png" />
