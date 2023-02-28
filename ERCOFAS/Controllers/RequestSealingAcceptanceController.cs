@@ -25,19 +25,19 @@ namespace ERCOFAS.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            if (RoleHelpers.GetMainRole() == UserTypeEnum.Client.ToString())
+            /*if (RoleHelpers.GetMainRole() == UserTypeEnum.Client.ToString())
             {
                 string userId = User.Identity.GetUserId();
 
                 int preFilings = db.SealingAndAcceptanceAttachments.Count(x => x.UserId == userId);
                 if (preFilings == 0)
                     return Redirect("/RequestSealingAcceptance/NoFiledYet");
-            }
+            }*/
 
             return View();
         }
 
-        public ActionResult NoFiledYet()
+        /*public ActionResult NoFiledYet()
         {
             return View();
         }
@@ -130,11 +130,11 @@ namespace ERCOFAS.Controllers
             return model;
         }
 
-       /// <summary>
-       /// [CustomAuthorizeFilter(ProjectEnum.ModuleCode.PreFiledCase, "", "true", "true", "")]
-       /// </summary>
-       /// <param name="Id"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// [CustomAuthorizeFilter(ProjectEnum.ModuleCode.PreFiledCase, "", "true", "true", "")]
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         public ActionResult DeleteFile(string Id)
         {
             if (Id != null)
@@ -238,6 +238,6 @@ namespace ERCOFAS.Controllers
             }
 
             base.Dispose(disposing);
-        }
+        }*/
     }
 }
