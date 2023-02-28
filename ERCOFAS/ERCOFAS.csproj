@@ -516,6 +516,12 @@
     <Content Include="Assets\vector4.png" />
     <Content Include="Assets\VectorLoading.png" />
     <Content Include="Assets\verification process.png" />
+    <Content Include="Assets\virt-hear-icons\VectorConf.png" />
+    <Content Include="Assets\virt-hear-icons\VectorDec.png" />
+    <Content Include="Assets\virt-hear-icons\VectorExpo.png" />
+    <Content Include="Assets\virt-hear-icons\VectorNotice.png" />
+    <Content Include="Assets\virt-hear-icons\VectorPres.png" />
+    <Content Include="Assets\virt-hear-icons\VectorReq.png" />
     <Content Include="Assets\whatyouget.png" />
     <Content Include="Assets\whyus1.png" />
     <Content Include="Assets\whyus2.png" />
