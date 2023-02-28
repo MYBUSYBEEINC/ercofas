@@ -14,9 +14,8 @@ namespace ERCOFAS.Controllers
     [Authorize]
     public class ValidationMeterSamplingController : Controller
     {
-        private DefaultDBContext db = new DefaultDBContext();
+        private DefaultDBContext _db = new DefaultDBContext();
         private GeneralController general = new GeneralController();
-
 
         // GET: ValidationMeterSampling
         public ActionResult Index()
@@ -24,30 +23,40 @@ namespace ERCOFAS.Controllers
             return View();
         }
 
+        /// POST: /ValidationMeterSampling/SubmitProgressReport
         /// <summary>
-        /// [CustomAuthorizeFilter(ProjectEnum.ModuleCode.CaseType, "true", "", "", "")]
+        /// Submits a progress report with attachment.
+        /// <param name="model">The progress report view model.</param>
         /// </summary>
-        /// <returns></returns>
-
-        public ViewResult SealingAcceptance()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitProgressReport(ProgressReportViewModel model)
         {
-            return View();
-        }
+            if (model == null)
+                throw new ArgumentNullException(nameof(model));
 
-        public ViewResult ResultsValidation()
-        {
-            return View();
-        }
+            ProgressReport report = new ProgressReport
+            {
+                Description = model.Description,
+                SubmittedBy = User.Identity.GetUserId(),
+                DateSubmitted = DateTime.Now
+            };
+            _db.ProgressReports.Add(report);
+            _db.SaveChanges();
 
+            TempData["NotifySuccess"] = "Progress report has been successfully submitted";
+
+            return RedirectToAction("Index");
+        }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                if (db != null)
+                if (_db != null)
                 {
-                    db.Dispose();
-                    db = null;
+                    _db.Dispose();
+                    _db = null;
                 }
                 if (general != null)
                 {

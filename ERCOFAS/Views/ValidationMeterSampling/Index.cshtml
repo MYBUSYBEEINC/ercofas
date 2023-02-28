@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ERCOFAS.Models.ProgressReportViewModel
+@{
     ViewBag.Title = "Validation of In-Service Meter Sampling";
     Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
 }
@@ -6,7 +7,7 @@
 <section>
     <div class="container-fluid">
         <div class="card px-2 py-5">
-            <form id="msform" class="text-center">
+            <div id="msform" class="text-center">
                 <!-- progressbar -->
                 <ul id="progressbar" class="p-0">
                     <li class="active" id="submit"><img src="~/Assets/validation-meter-sampling-icons/VectorSubmit.png" height="40" class="mb-2" /><br />Submit Progress Report</li>
@@ -21,16 +22,29 @@
                     <li id="issue"><img src="~/Assets/validation-meter-sampling-icons/VectorIssue.png" height="40" class="mb-2" /><br />Issuance of Certification</li>
                 </ul>
                 <fieldset class="px-5">
-                    <div class="form-group">
-                        <label class="text-secondary float-start">Description of Progress Report</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
-                        <label class="text-secondary text-start w-100 text-start mt-3">Date</label>
-                        <input type="date" class="form-control w-50" />
-                        <label class="text-secondary text-start w-100 text-start mt-3">Upload Progress Report</label>
-                        <input type="file" class="form-control w-50" />
-                        <div class="text-start text-muted mt-3"><i class="fa fa-add p-1 me-1 bg-mauve text-white rounded"></i><small>Attach more document</small></div>
-                    </div>
-                    <input type="button" name="next" class="next action-button rounded hover-effect mt-5" value="Submit" />
+                    @using (Html.BeginForm("SubmitProgressReport", "ValidationMeterSampling", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "progress-report-form", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label class="text-secondary float-start required">
+                                Description of Progress Report
+                            </label>
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "4", @placeholder = "Enter the description of progress report here..." })
+                            <label class="text-secondary text-start w-100 text-start mt-3 required">
+                                Date
+                            </label>
+                            @Html.EditorFor(model => model.DateSubmitted, new { htmlAttributes = new { @class = "form-control w-50", @type = "date" } })
+                            <label class="text-secondary text-start w-100 text-start mt-3 required">
+                                Upload Progress Report
+                            </label>
+                            @Html.TextBoxFor(model => model.File, new { @id = "file-upload", @class = "form-control w-50", @type = "file" })
+                            <div class="text-start text-muted mt-3">
+                                <i class="fa fa-add p-1 me-1 bg-mauve text-white rounded"></i>
+                                <small>Attach more document</small>
+                            </div>
+                        </div>
+                        <input type="submit" name="next" class="next action-button rounded hover-effect mt-5" value="Submit" />
+                    }
                 </fieldset>
                 <fieldset class="px-5">
                     <div class="border rounded p-3">
@@ -705,7 +719,7 @@
                     <input type="button" name="previous" class="previous action-button-previous rounded hover-effect" value="Back" />
                     <input type="button" name="next" class="next action-button rounded hover-effect" value="Ok" />
                 </fieldset>
-            </form>
+            </div>
         </div>
     </div>
 </section>
@@ -818,7 +832,6 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
             var current_fs, next_fs, previous_fs; //fieldsets
             var opacity;
             var current = 1;
