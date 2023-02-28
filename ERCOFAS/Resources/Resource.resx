@@ -1101,7 +1101,4 @@
   <data name="YourPasswordResetSuccessfully" xml:space="preserve">
     <value>Your password has been reset successfully!</value>
   </data>
-  <data name="RequestDescription" xml:space="preserve">
-    <value>Description of Request</value>
-  </data>
 </root>

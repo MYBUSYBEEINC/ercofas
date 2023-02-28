@@ -33,10 +33,10 @@ namespace ERCOFAS.Controllers
         [CustomAuthorizeFilter(ProjectEnum.ModuleCode.Hearing, "true", "", "", "")]
         public ActionResult Index()
         {
-            generalController.SaveGeneralLogs(User.Identity.GetUserId().ToString(),
-            GeneralHelpers.GetData(GeneralEnum.ModuleId.Hearing).ToString(),
-            GeneralHelpers.GetData(GeneralEnum.Type.View).ToString(),
-            "", "", "");
+            //generalController.SaveGeneralLogs(User.Identity.GetUserId().ToString(),
+            //GeneralHelpers.GetData(GeneralEnum.ModuleId.Hearing).ToString(),
+            //GeneralHelpers.GetData(GeneralEnum.Type.View).ToString(),
+            //"", "", "");
 
             return View();
         }

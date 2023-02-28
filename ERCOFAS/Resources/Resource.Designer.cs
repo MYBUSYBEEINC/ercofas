@@ -2113,15 +2113,6 @@ namespace ERCOFAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description of Request.
-        /// </summary>
-        public static string RequestDescription {
-            get {
-                return ResourceManager.GetString("RequestDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Request Subject.
         /// </summary>
         public static string RequestSubject {

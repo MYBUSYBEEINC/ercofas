@@ -1,12 +1,75 @@
-﻿@model ERCOFAS.Models.SealingAndAcceptanceListing
-@using ERCOFAS.Models;
-@using ERCOFAS.Resources
-@{
+﻿@{
     ViewBag.Title = "Request for Sealing and Acceptance Testing of Meters";
     Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
-    ViewBag.TableIdPrefix = "casenature";
-    ///CurrentUserPermission permission = User.Identity.IsAllowed(ProjectEnum.ModuleCode.CaseNature.ToString());
 }
+<h3 class="text-center text-mauve my-4">Request for Sealing and Acceptance Testing of Meters</h3>
+<section>
+    <div class="container-fluid">
+        <div class="card px-2 py-5">
+            <form id="msform" class="text-center">
+                <!-- progressbar -->
+                <ul id="progressbar" class="p-0">
+                    <li class="active" id="submit">File a Request</li>
+                    <li id="review">Review</li>
+                    <li id="generate">Payment</li>
+                    <li id="payment">Travel Authority Approval</li>
+                    <li id="verify">Meter Inspection</li>
+                    <li id="release">Reporting</li>
+                </ul>
+                <fieldset class="px-5">
+                    <div class="form-group">
+                        <label class="text-secondary float-start">Description of Request</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                        <label class="text-secondary text-start w-100 text-start mt-3">Date</label>
+                        <input type="date" class="form-control w-50" />
+                        <label class="text-secondary text-start w-100 text-start mt-3">Upload Request</label>
+                        <input type="file" class="form-control w-50" />
+                    </div>
+                    <input type="button" name="next" class="next action-button rounded hover-effect mt-5" value="Submit" />
+                </fieldset>
+                <fieldset class="px-5">
+                    <div class="border rounded p-3">
+                        <h4 class="text-start text-mauve">Stakeholder 01</h4>
+                        <div class="row mt-3">
+                            <div class="col-2 ms-3">
+                                <div class="row text-secondary fw-bold">
+                                    Document Request
+                                </div>
+                                <div class="row text-secondary fw-bold">
+                                    Date
+                                </div>
+                                <div class="row text-secondary fw-bold">
+                                    Time
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="row text-start">
+                                    <div class="col">
+                                        <span class="text-secondary"><i class="fa fa-paperclip text-mauve me-1"></i>Attach</span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="text-secondary"><i class="fa fa-search text-mauve me-1"></i>View</span>
+                                    </div>
+                                </div>
+                                <div class="row text-start">
+                                    <span class="text-secondary">February 24, 2023</span>
+                                </div>
+                                <div class="row text-start">
+                                    <span class="text-secondary">8:25am</span>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="row text-secondary fw-bold">
+                                    Details
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="row text-secondary">
+                                    Details 01
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 <div class="row">
     <div class="col-12">
@@ -59,28 +122,189 @@
     </div>
 </section>
 
-@section scripts{
-    <script>
-        var tableIdPrefix = "@ViewBag.TableIdPrefix";
-        var canView = "@permission.ViewRight";
-        var canAdd = "@permission.AddRight";
-        var canEdit = "@permission.EditRight";
-        var canDelete = "@permission.DeleteRight";
+<style type="text/css">
 
-        $(document).ready(function(){
-            var url = "@(Html.Raw(Url.Action("GetPartialViewSealingAndAcceptance", "SealingAndAcceptance")))";
-            $("#" + tableIdPrefix +"-table").load(url, function(responseTxt, statusTxt, xhr){
-                if (statusTxt == "success") {
-                    hideDummySpinnerHeaderFooter(tableIdPrefix+"-table-wrapper");
-                }
-                if (statusTxt == "error") {
-                    //no record in database
-                    if (xhr.status == 500) {
-                        hideDummySpinnerHeaderFooter(tableIdPrefix+"-table-wrapper");
-                        var table = $("#" + tableIdPrefix +"-table").DataTable({ dom: 'rtip', "pageLength": 10 });
-                    }
-                }
-              });
+    tr td:last-child {
+        width: 1%;
+        white-space: nowrap;
+    }
+
+    #msform {
+        position: relative;
+    }
+
+        #msform fieldset {
+            background: white;
+            border: 0 none;
+            border-radius: 0.5rem;
+            width: 100%;
+            margin: 0;
+            position: relative
+        }
+
+            #msform fieldset:not(:first-of-type) {
+                display: none
+            }
+
+        #msform .action-button {
+            width: 100px;
+            background: #566eb4;
+            color: white;
+            border: 0 none;
+            cursor: pointer;
+        }
+
+        #msform .action-button-previous {
+            width: 100px;
+            background: #96abe9;
+            color: white;
+            border: 0 none;
+            cursor: pointer;
+        }
+
+    .card {
+        z-index: 0;
+        border: none;
+        position: relative
+    }
+
+    .steps {
+        color: gray;
+        margin-bottom: 10px;
+        text-align: right
+    }
+
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey
+    }
+
+        #progressbar .active {
+            color: #499bb3;
+        }
+
+        #progressbar li {
+            list-style-type: none;
+            width: calc(100% / 6);
+            float: left;
+            position: relative;
+            text-align: center;
+            padding: 0 10px 0 10px;
+        }
+
+        #progressbar #submit:before, #progressbar #review:before, #progressbar #generate:before, #progressbar #payment:before, #progressbar #verify:before,
+        #progressbar #release:before, #progressbar #validate:before, #progressbar #report:before, #progressbar #dissemate:before, #progressbar #issue:before {
+            font-family: FontAwesome;
+            content: ""
+        }
+
+        #progressbar li:before {
+            width: 10px;
+            height: 10px;
+            display: block;
+            font-size: 11px;
+            background: lightgray;
+            border-radius: 50%;
+            margin: 21px auto 10px auto;
+        }
+
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: lightgray;
+            position: absolute;
+            left: 0;
+            top: 25px;
+            z-index: -1
+        }
+
+        #progressbar li.active:before,
+        #progressbar li.active:after {
+            background: #499bb3;
+        }
+</style>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var current_fs, next_fs, previous_fs; //fieldsets
+            var opacity;
+            var current = 1;
+            var steps = $("fieldset").length;
+
+            setProgressBar(current);
+
+            $(".next").click(function () {
+
+                current_fs = $(this).parent();
+                next_fs = $(this).parent().next();
+
+                //Add Class Active
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                //show the next fieldset
+                next_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        next_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 500
+                });
+                setProgressBar(++current);
+            });
+
+            $(".previous").click(function () {
+
+                current_fs = $(this).parent();
+                previous_fs = $(this).parent().prev();
+
+                //Remove class active
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                //show the previous fieldset
+                previous_fs.show();
+
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        previous_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 500
+                });
+                setProgressBar(--current);
+            });
+
+            function setProgressBar(curStep) {
+                var percent = parseFloat(100 / steps) * curStep;
+                percent = percent.toFixed();
+                $(".progress-bar")
+                    .css("width", percent + "%")
+            }
+
+            $(".submit").click(function () {
+                return false;
+            })
+
         });
     </script>
 }
+
