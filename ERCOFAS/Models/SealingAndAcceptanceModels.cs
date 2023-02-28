@@ -66,5 +66,13 @@ namespace ERCOFAS.Models
         public DateTime ModifiedOn { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
+
+        public List<SealingAndAcceptanceAttachment> Attachments { get; set; }
+
+    }
+
+    public class SealingAndAcceptanceListing
+    {
+        public List<SealingAndAcceptanceViewModel> Listing { get; set; }
     }
 }

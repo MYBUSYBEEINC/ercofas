@@ -26,19 +26,19 @@ namespace ERCOFAS.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            /*if (RoleHelpers.GetMainRole() == UserTypeEnum.Client.ToString())
+            if (RoleHelpers.GetMainRole() == UserTypeEnum.Client.ToString())
             {
                 string userId = User.Identity.GetUserId();
 
                 int sealingAcceptance = db.SealingAndAcceptances.Count(x => x.Stakeholder == userId);
                 if (sealingAcceptance == 0)
                     return Redirect("/RequestSealingAcceptance/NoFiledYet");
-            }*/
+            }
 
             return View();
         }
 
-        /*public ActionResult NoFiledYet()
+        public ActionResult NoFiledYet()
         {
             return View();
         }
@@ -211,7 +211,7 @@ namespace ERCOFAS.Controllers
                 else
                 {
                     duplicated = db.SealingAndAcceptances.Where(a => a.RequestDescription == model.RequestDescription).Select(a => a.Id).Any();
-                }   
+                }
 
                 if (duplicated == true)
                 {
@@ -237,6 +237,6 @@ namespace ERCOFAS.Controllers
             }
 
             base.Dispose(disposing);
-        }*/
+        }
     }
 }
