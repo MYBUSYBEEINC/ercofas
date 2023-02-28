@@ -71,382 +71,53 @@
                         </div>
                     </div>
 
-                    <div class="border rounded p-3 mt-3">
-                        <h4 class="text-start text-mauve">Complete Documentation?</h4>
-                        <div class="p-3">
-                            <div class="form-check text-start">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    <strong class="px-3">Yes</strong><small class="text-muted">Approved (Notify stakeholder for Payment)</small>
-                                </label>
-                            </div>
-                            <div class="form-check text-start">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    <strong class="px-3">No</strong><small class="text-muted">Decline (Notify stakeholder for revise Progress Report)</small>
-                                </label>
-                            </div>
-                            <div class="text-start mt-3">
-                                <strong>Notify Billing to prepare SOA:</strong><input type="button" class="border-0 rounded bg-mauve text-white px-3 ms-2" value="Notify" />
-                            </div>
-                            <div class="text-start d-flex flex-row mt-3">
-                                <strong style="line-height:35px;">Attach Travel Authority:</strong>
-                                <div class="border rounded p-1 px-2 ms-2">
-                                    PRG-02-172023 <i class="fa fa-file-pdf text-mauve"></i>
-                                </div>
-                            </div>
-                            <label class="pt-3 float-start text-secondary fw-bold">Remarks</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
-                        </div>
-                    </div>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="pagetitle mb-sm-0 fw600">@ViewBag.Title</h4>
+        </div>
+    </div>
+</div>
 
-                    <input type="button" name="previous" class="previous action-button-previous rounded hover-effect mt-5" value="Back" />
-                    <input type="button" name="next" class="next action-button rounded hover-effectmt-5" value="Next" />
-                </fieldset>
-                <fieldset class="px-5">
-                    <div>
-                        <div id="payment-tag" class="form-card mb-5">
-                            <h6 class="text-secondary text-start">Online Payment</h6>
-                            <div class="row mt-3 d-flex align-items-center text-secondary">
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col erc-text-dark-blue">
-                                            <strong>Name:</strong>
-                                        </div>
-                                        <div class="col">
-                                            [Name]
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col erc-text-dark-blue">
-                                            <strong>Email:</strong>
-                                        </div>
-                                        <div class="col">
-                                            [Email]
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col erc-text-dark-blue">
-                                            <strong>Mobile No.:</strong>
-                                        </div>
-                                        <div class="col">
-                                            [Mobile No.]
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col erc-text-dark-blue">
-                                            <strong>Case Type:</strong>
-                                        </div>
-                                        <div class="col">
-                                            [Case Type]
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col erc-text-dark-blue">
-                                            <strong>Case Nature:</strong>
-                                        </div>
-                                        <div class="col">
-                                            [Case Nature]
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col text-center">
-                                    <h6 class="erc-text-dark-blue">Payment Reference No.:</h6>
-                                    <input type="text" class="my-3 p-3 text-center erc-text-dark-blue" />
-                                </div>
-                            </div>
-                            <div class="row d-flex justify-content-center py-3 text-secondary">
-                                Payment thru:
-                            </div>
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-3 boxShadow border rounded text-center p-2 mx-2">
-                                    <h6 class="text-mauve fw-bold">Pay Maya</h6>
-                                </div>
-                                <div class="col-3 boxShadow border rounded text-center p-2 mx-2">
-                                    <h6 class="text-mauve fw-bold">GCash</h6>
-                                </div>
-                                <div class="col-3 boxShadow border rounded text-center p-2 mx-2">
-                                    <h6 class="text-mauve fw-bold">Bank Transfer</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="button" name="previous" class="previous action-button-previous rounded hover-effect" value="Back" />
-                    <input type="button" name="next" class="next action-button rounded hover-effect" value="Next" />
-                </fieldset>
-                <fieldset class="px-5">
-                    <div class="border rounded p-3 mt-3">
-                        <h4 class="text-start text-mauve">Stakeholder 01</h4>
-                        <div class="row">
-                            <div class="col">
-                                <table class="text-start">
-                                    <tr>
-                                        <td>Date</td>
-                                        <td>Februrary 24, 2023</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Time</td>
-                                        <td>8:25am</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Details</td>
-                                        <td>Details 01</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="col">
-                                <table>
-                                    <tr>
-                                        <td>Payment Status</td>
-                                        <td>Paid</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Assigned Number</td>
-                                        <td>0118462848</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <hr />
-                        <table class="text-start w-50">
-                            <tr>
-                                <td>Statement of Account</td>
-                                <td>Invoice no. 10-12345</td>
-                                <td></td>
-                                <td><i class="fa fa-search"></i>View</td>
-                            </tr>
-                            <tr>
-                                <td>Progress Report</td>
-                                <td><i class="fa fa-paperclip"></i>Attach </td>
-                                <td><i class="fa fa-file-pdf"></i></td>
-                                <td><i class="fa fa-search"></i>View</td>
-                            </tr>
-                            <tr>
-                                <td>Travel Authority</td>
-                                <td><i class="fa fa-paperclip"></i>Attach </td>
-                                <td><i class="fa fa-file-pdf"></i></td>
-                                <td><i class="fa fa-search"></i>View</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="border rounded p-3 mt-3">
-                        <h4 class="text-start text-mauve">Assigned Personnel</h4>
-                        <div class="row">
-                            <div class="col">
-                                <label>Name</label>
-                                <input type="text" />
-                                <button><i class="fa fa-paperclip"></i>Attach Signature</button>
-                            </div>
-                            <div class="col">
-                                <input type="button" value="Approve" />
-                                <input type="button" value="Decline" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-check mb-5 mt-3 text-start">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled">
-                        <label class="form-check-label" for="flexCheckCheckedDisabled">
-                            Forward to Supervisor for Signature
-                        </label>
-                    </div>
-                    <input type="button" name="previous" class="previous action-button-previous rounded hover-effect" value="Back" />
-                    <input type="button" name="next" class="next action-button rounded hover-effect" value="Next" />
-                </fieldset>
-                <fieldset class="px-5">
-                    <div class="border rounded p-3 mt-3 mb-5">
-                        <h4 class="text-start text-mauve">Stakeholder 01</h4>
-                        <div class="row">
-                            <div class="col">
-                                <table class="text-start">
-                                    <tr>
-                                        <td>Date</td>
-                                        <td>Februrary 24, 2023</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Time</td>
-                                        <td>8:25am</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Assigned Personnel</td>
-                                        <td>Lydia Ramirez</td>
-                                        <td>Approved</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Supervisor</td>
-                                        <td>Kate Suarez</td>
-                                        <td>Approved</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Division Chief</td>
-                                        <td>Tom Cruise</td>
-                                        <td>Approved</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Director</td>
-                                        <td>Queen Dela Rosa</td>
-                                        <td>Approved</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Commission</td>
-                                        <td>Mike Vera</td>
-                                        <td>Approved</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="col">
-                                <table>
-                                    <tr>
-                                        <td>Details</td>
-                                        <td>Details 01</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Payment Status</td>
-                                        <td>Paid</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Assigned Number</td>
-                                        <td>0118462848</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <hr />
-                        <table class="text-start w-50">
-                            <tr>
-                                <td>Statement of Account</td>
-                                <td>Invoice no. 10-12345</td>
-                                <td></td>
-                                <td><i class="fa fa-search"></i>View</td>
-                            </tr>
-                            <tr>
-                                <td>Progress Report</td>
-                                <td><i class="fa fa-paperclip"></i>Attach </td>
-                                <td><i class="fa fa-file-pdf"></i></td>
-                                <td><i class="fa fa-search"></i>View</td>
-                            </tr>
-                            <tr>
-                                <td>Travel Authority</td>
-                                <td><i class="fa fa-paperclip"></i>Attach </td>
-                                <td><i class="fa fa-file-pdf"></i></td>
-                                <td><i class="fa fa-search"></i>View</td>
-                                <td><button>Print/Download</button></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <input type="button" name="previous" class="previous action-button-previous rounded hover-effect" value="Back" />
-                    <input type="button" name="next" class="next action-button rounded hover-effect" value="Next" />
-                </fieldset>
-                <fieldset class="px-5">
-                    <div class="border rounded p-3 mt-3">
-                        <h4 class="text-start text-mauve">Stakeholder 01</h4>
-                        <div class="row">
-                            <div class="col">
-                                <table class="text-start">
-                                    <tr>
-                                        <td>Date</td>
-                                        <td>Februrary 24, 2023</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Time</td>
-                                        <td>8:25am</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Assigned Personnel</td>
-                                        <td>Lydia Ramirez</td>
-                                        <td>Approved</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Supervisor</td>
-                                        <td>Kate Suarez</td>
-                                        <td>Approved</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Division Chief</td>
-                                        <td>Tom Cruise</td>
-                                        <td>Approved</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Director</td>
-                                        <td>Queen Dela Rosa</td>
-                                        <td>Approved</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Commission</td>
-                                        <td>Mike Vera</td>
-                                        <td>Approved</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="col">
-                                <table>
-                                    <tr>
-                                        <td>Details</td>
-                                        <td>Details 01</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Payment Status</td>
-                                        <td>Paid</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Assigned Number</td>
-                                        <td>0118462848</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <hr />
-                        <table class="text-start w-50">
-                            <tr>
-                                <td>Statement of Account</td>
-                                <td>Invoice no. 10-12345</td>
-                                <td></td>
-                                <td><i class="fa fa-search"></i>View</td>
-                            </tr>
-                            <tr>
-                                <td>Progress Report</td>
-                                <td><i class="fa fa-paperclip"></i>Attach </td>
-                                <td><i class="fa fa-file-pdf"></i></td>
-                                <td><i class="fa fa-search"></i>View</td>
-                            </tr>
-                            <tr>
-                                <td>Travel Authority</td>
-                                <td><i class="fa fa-paperclip"></i>Attach </td>
-                                <td><i class="fa fa-file-pdf"></i></td>
-                                <td><i class="fa fa-search"></i>View</td>
-                                <td><button>Print/Download</button></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="p-3 my-3 border rounded">
-                        <h4 class="text-start text-mauve">Report</h4>
-
-                        <div class="row">
-                            <div class="col">
-                                <table class="w-50">
-                                    <tr>
-                                        <td>General Report</td>
-                                        <td><button><i class="fa fa-paperclip"></i> Attach</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Testing Report</td>
-                                        <td><button><i class="fa fa-paperclip"></i> Attach</button></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <label class="text-secondary float-start">Remarks</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
-                    </div>
-                    <input type="button" name="previous" class="previous action-button-previous rounded hover-effect" value="Back" />
-                    <input type="button" name="next" class="next action-button rounded hover-effect" value="Ok" />
-                </fieldset>
-            </form>
+<section class="section dashboard mt-3">
+    <div class="bg-white rounded p-3 shadow">
+        <div class="pb-2">
+            <a class="addnewbtn btn btn-p8 hover-boxshadow hover-moveup hover-bg-primarycolor" href="@Url.Action("edit")"><i class="fa-solid fa-plus pe-1"></i> @Resource.AddNewRecord</a>
+            <span id="exportToExcel" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button"><i class="fa-solid fa-file-excel pe-1"></i> @Resource.ExporttoExcel</span>
+            <span id="exportToPdf" class="addnewbtn btn btn-p8 hover-boxshadow cursor-pointer hover-moveup hover-bg-primarycolor secondary-button"><i class="fa-solid fa-file-pdf pe-1"></i> @Resource.ExporttoPdf</span>
+        </div>
+        <div class="row justify-content-between align-items-end pb-1">
+            <div class="col-sm-7 col-xl-3">
+                @Html.Partial("~/Views/Shared/_TableLengthDropDown.cshtml", new ViewDataDictionary { { "DropDownId", ViewBag.TableIdPrefix + "-tableDropDown" } })
+            </div>
+            <div class="col-xl-4"></div>
+            <div class="col-xl-5 pt-2 pt-sm-0">
+                <div id="searchinput" class="input-group flex-nowrap">
+                    @Html.TextBox("search", "", htmlAttributes: new { type = "text", @class = "form-control", @placeholder = Resource.SearchDot })
+                    <button type="button" class="input-group-text bg-transparent hover-bg-primarycolor hover-color-white" id="searchbtn"><i class="fa-solid fa-magnifying-glass pe-1"></i> @Resource.Search</button>
+                    <button type="button" class="input-group-text bg-transparent hover-bg-primarycolor hover-color-white" id="resetbtn"><i class="fa-solid fa-rotate-left pe-1"></i> @Resource.Reset</button>
+                </div>
+            </div>
+        </div>
+        <div id="@ViewBag.TableIdPrefix-table-wrapper">
+            <div class="table-responsive">
+                <table id="@ViewBag.TableIdPrefix-table" class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="thead"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="spinner d-flex justify-content-center align-items-center text-center color-primarycolor py-5">
+                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div><strong> &nbsp; @Resource.Loading </strong>
+                </div>
+            </div>
+            <div class="dummyfooter row justify-content-between">
+                <div class="col-md-6">@Resource.Showing0Entries</div>
+                <div class="col-md-6 text-end">@Resource.Page0OfPage0</div>
+            </div>
         </div>
     </div>
 </section>
