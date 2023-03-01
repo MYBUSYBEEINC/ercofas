@@ -68,6 +68,11 @@ namespace ERCOFAS.Models
         public DateTime CreatedOn { get; set; }
 
         public List<SealingAndAcceptanceAttachment> Attachments { get; set; }
+        public List<HttpPostedFileBase> Documents { get; set; }
+        public HttpPostedFileBase[] Files { get; set; }
+
+
+
 
     }
 

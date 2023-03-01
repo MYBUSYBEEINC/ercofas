@@ -194,7 +194,7 @@ namespace ERCOFAS.Controllers
                 return View(model);
             }
 
-            //SaveRecord(model);
+            SaveRecord(model);
             TempData["NotifySuccess"] = Resource.RecordSavedSuccessfully;
             return RedirectToAction("index");
         }
@@ -217,6 +217,81 @@ namespace ERCOFAS.Controllers
                 {
                     ModelState.AddModelError("RequestSubject", Resource.RequestSubjectAlreadyExist);
                 }
+            }
+        }
+
+        public void SaveRecord(SealingAndAcceptanceViewModel model)
+        {
+            if (model != null)
+            {
+                string sealingAcceptanceId = string.Empty;
+                string userId = User.Identity.GetUserId();
+                //edit
+                if (model.Id != null)
+                {
+                    SealingAndAcceptance sealingAndAcceptance = db.SealingAndAcceptances.Where(a => a.Id == model.Id).FirstOrDefault();
+                    sealingAndAcceptance.RequestDescription = model.RequestDescription;
+                    sealingAndAcceptance.Stakeholder = userId;
+                    sealingAndAcceptance.Date = model.Date;
+                    sealingAndAcceptance.Time = model.Time;
+                    sealingAndAcceptance.ReviewStatus = model.ReviewStatus;
+                    sealingAndAcceptance.NotifyBilling = model.NotifyBilling;
+                    sealingAndAcceptance.PaymentStatus = model.PaymentStatus;
+                    sealingAndAcceptance.AssignedNumber = model.AssignedNumber;
+                    sealingAndAcceptance.AssignedPersonnel = model.AssignedPersonnel;
+                    sealingAndAcceptance.Supervisor = model.Supervisor;
+                    sealingAndAcceptance.SupervisorStatus = model.SupervisorStatus;
+                    sealingAndAcceptance.DivisionChief = model.DivisionChief;
+                    sealingAndAcceptance.DivisionChiefStatus = model.DivisionChiefStatus;
+                    sealingAndAcceptance.Director = model.Director;
+                    sealingAndAcceptance.DirectorAssignedNumber = model.DirectorAssignedNumber;
+                    sealingAndAcceptance.OED = model.OED;
+                    sealingAndAcceptance.TravelAuthorityStatus = model.TravelAuthorityStatus;
+                    sealingAndAcceptance.PaymentStatus = model.PaymentStatus;
+                    sealingAndAcceptance.ModifiedOn = (DateTime)general.GetSystemTimeZoneDateTimeNow();
+                    sealingAndAcceptance.ModifiedBy = userId;
+                    db.Entry(sealingAndAcceptance).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    sealingAcceptanceId = sealingAndAcceptance.Id;
+                }
+                //new record
+                else
+                {
+                    SealingAndAcceptance sealingAndAcceptance = new SealingAndAcceptance();
+                    sealingAndAcceptance.Id = Guid.NewGuid().ToString();
+                    sealingAndAcceptance.RequestDescription = model.RequestDescription;
+                    sealingAndAcceptance.Stakeholder = userId;
+                    sealingAndAcceptance.Date = model.Date;
+                    sealingAndAcceptance.Time = model.Time;
+                    sealingAndAcceptance.ReviewStatus = model.ReviewStatus;
+                    sealingAndAcceptance.NotifyBilling = model.NotifyBilling;
+                    sealingAndAcceptance.PaymentStatus = model.PaymentStatus;
+                    sealingAndAcceptance.AssignedNumber = model.AssignedNumber;
+                    sealingAndAcceptance.AssignedPersonnel = model.AssignedPersonnel;
+                    sealingAndAcceptance.Supervisor = model.Supervisor;
+                    sealingAndAcceptance.SupervisorStatus = model.SupervisorStatus;
+                    sealingAndAcceptance.DivisionChief = model.DivisionChief;
+                    sealingAndAcceptance.DivisionChiefStatus = model.DivisionChiefStatus;
+                    sealingAndAcceptance.Director = model.Director;
+                    sealingAndAcceptance.DirectorAssignedNumber = model.DirectorAssignedNumber;
+                    sealingAndAcceptance.OED = model.OED;
+                    sealingAndAcceptance.TravelAuthorityStatus = model.TravelAuthorityStatus;
+                    sealingAndAcceptance.PaymentStatus = model.PaymentStatus;
+                    sealingAndAcceptance.CreatedOn = (DateTime)general.GetSystemTimeZoneDateTimeNow();
+                    db.SealingAndAcceptances.Add(sealingAndAcceptance);
+                    db.SaveChanges();
+
+                    sealingAcceptanceId = sealingAndAcceptance.Id;
+                }
+
+                string fileStatus = "Pending";
+                var sealingAcceptanceAttachment = "Document Request";
+                if (model.Id == null)
+                {
+                    general.SaveSealingAcceptanceAttachment(model.Documents, sealingAcceptanceId, userId, fileStatus, sealingAcceptanceAttachment);
+                }
+
             }
         }
 
