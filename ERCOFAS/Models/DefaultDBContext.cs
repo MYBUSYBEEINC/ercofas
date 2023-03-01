@@ -63,6 +63,7 @@ namespace ERCOFAS.Models
         public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
         public DbSet<SealingAndAcceptance> SealingAndAcceptances { get; set; }
         public DbSet<SealingAndAcceptanceAttachment> SealingAndAcceptanceAttachments { get; set; }
-
+        public DbSet<ProgressReport> ProgressReports { get; set; }
+        public DbSet<ProgressReportAttachment> ProgressReportAttachments { get; set; }
     }
 }

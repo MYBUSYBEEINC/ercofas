@@ -331,6 +331,8 @@
     <Compile Include="Models\PreRegistrationEmailsModel.cs" />
     <Compile Include="Models\PreRegistrationMobilesModel.cs" />
     <Compile Include="Models\PreRegistrationModels.cs" />
+    <Compile Include="Models\ProgressReportAttachmentModels.cs" />
+    <Compile Include="Models\ProgressReportModels.cs" />
     <Compile Include="Models\ProjectEnum.cs" />
     <Compile Include="Models\RequiredDocumentsModel.cs" />
     <Compile Include="Models\RequirementsModel.cs" />

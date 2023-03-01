@@ -1574,6 +1574,36 @@ namespace ERCOFAS.Controllers
             }
         }
 
+        public void SaveSealingAcceptanceAttachment(List<HttpPostedFileBase> files, string sealingId, string uid, string sealingStatus, string sealingName)
+        {
+            foreach (HttpPostedFileBase file in files)
+            {
+                if (file != null)
+                {
+                    var fileNameWithExtension = Path.GetFileName(file.FileName);
+                    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file.FileName);
+                    string extension = Path.GetExtension(file.FileName);
+                    string shortUniqueId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                    string uniqueid = StringExtensions.RemoveSpecialCharacters(shortUniqueId);
+                    string uniqueFileName = fileNameWithoutExtension + "_" + uniqueid + extension;
+                    var path = Path.Combine(HostingEnvironment.MapPath("~/Documents"), uniqueFileName);
+                    file.SaveAs(path);
+
+                    SealingAndAcceptanceAttachment attachment = new SealingAndAcceptanceAttachment();
+                    attachment.Id = Guid.NewGuid().ToString();
+                    attachment.SealingAndAcceptanceId = sealingId;
+                    attachment.FileName = fileNameWithExtension;
+                    attachment.UniqueFileName = uniqueFileName;
+                    attachment.Status = sealingStatus;
+                    attachment.CreatedBy = uid;
+                    attachment.FileUrl = path;
+                    attachment.CreatedOn = GetSystemTimeZoneDateTimeNow().Value;
+                    db.SealingAndAcceptanceAttachments.Add(attachment);
+                    db.SaveChanges();
+                }
+            }
+        }
+
         public DateTime? GetEndDate()
         {
             string timeZone = GetAppSettingsValue("timeZone");
