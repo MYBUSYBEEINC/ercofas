@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutAfterLogin.cshtml";
+    ViewBag.Title = "Request for Sealing and Acceptance Testing of Meters";
 }
 
 <h3 class="text-center text-mauve my-4">Request for Sealing and Acceptance Testing of Meters</h3>
@@ -9,12 +10,12 @@
             <form id="msform" class="text-center">
                 <!-- progressbar -->
                 <ul id="progressbar" class="p-0">
-                    <li class="active" id="submit">File a Request</li>
-                    <li id="review">Review</li>
-                    <li id="generate">Payment</li>
-                    <li id="payment">Travel Authority Approval</li>
-                    <li id="verify">Meter Inspection</li>
-                    <li id="release">Reporting</li>
+                    <li class="active d-flex justify-content-center" id="submit"><div class="d-flex flex-column align-items-center"><img src="~/Assets/sealing-acceptance-icons/VectorRequest.png" height="40" width="40" class="mb-2" /><span>File a Request</span></div></li>
+                    <li class="d-flex justify-content-center" id="review"><div class="d-flex flex-column align-items-center"><img src="~/Assets/sealing-acceptance-icons/VectorReview.png" height="40" width="40" class="mb-2" /><span>Review</span></div></li>
+                    <li class="d-flex justify-content-center" id="generate"><div class="d-flex flex-column align-items-center"><img src="~/Assets/sealing-acceptance-icons/VectorPayment.png" height="40" width="40" class="mb-2" /><span>Payment</span></div></li>
+                    <li class="d-flex justify-content-center" id="payment"><div class="d-flex flex-column align-items-center"><img src="~/Assets/sealing-acceptance-icons/VectorApproval.png" height="40" width="40" class="mb-2" /><span>Travel Authority Approval</span></div></li>
+                    <li class="d-flex justify-content-center" id="verify"><div class="d-flex flex-column align-items-center"><img src="~/Assets/sealing-acceptance-icons/VectorInspect.png" height="40" width="40" class="mb-2" /><span>Meter Inspection</span></div></li>
+                    <li class="d-flex justify-content-center" id="release"><div class="d-flex flex-column align-items-center"><img src="~/Assets/sealing-acceptance-icons/VectorReport.png" height="40" width="40" class="mb-2" /><span>Reporting</span></div></li>
                 </ul>
                 <fieldset class="px-5">
                     <div class="form-group">
@@ -515,11 +516,11 @@
 
         #progressbar li {
             list-style-type: none;
+            font-size: 12px;
             width: calc(100% / 6);
             float: left;
             position: relative;
-            text-align: center;
-            padding: 0 10px 0 10px;
+            min-height: 150px;
         }
 
         #progressbar #submit:before, #progressbar #review:before, #progressbar #generate:before, #progressbar #payment:before, #progressbar #verify:before,
@@ -529,13 +530,17 @@
         }
 
         #progressbar li:before {
-            width: 10px;
-            height: 10px;
-            display: block;
-            font-size: 11px;
-            background: lightgray;
-            border-radius: 50%;
-            margin: 21px auto 10px auto;
+            width: 1em;
+            height: 1em;
+            background-color: #499bb3;
+            border-radius: 10px;
+            max-width: 100%;
+            z-index: 10;
+            position: relative;
+            transition: all .25s ease-out;
+            position: absolute;
+            bottom: 30%;
+            margin: 0 auto 0 auto;
         }
 
         #progressbar li:after {
@@ -545,8 +550,9 @@
             background: lightgray;
             position: absolute;
             left: 0;
-            top: 25px;
-            z-index: -1
+            bottom: 33%;
+            z-index: -1;
+            color: #499bb3;
         }
 
         #progressbar li.active:before,

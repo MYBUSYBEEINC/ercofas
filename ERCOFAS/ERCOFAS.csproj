@@ -501,6 +501,12 @@
     <Content Include="Assets\reset-password.png" />
     <Content Include="Assets\resetpassword.jpg" />
     <Content Include="Assets\right.svg" />
+    <Content Include="Assets\sealing-acceptance-icons\VectorApproval.png" />
+    <Content Include="Assets\sealing-acceptance-icons\VectorInspect.png" />
+    <Content Include="Assets\sealing-acceptance-icons\VectorPayment.png" />
+    <Content Include="Assets\sealing-acceptance-icons\VectorReport.png" />
+    <Content Include="Assets\sealing-acceptance-icons\VectorRequest.png" />
+    <Content Include="Assets\sealing-acceptance-icons\VectorReview.png" />
     <Content Include="Assets\sec-icons\Audit trail.png" />
     <Content Include="Assets\sec-icons\Role Management.png" />
     <Content Include="Assets\sec-icons\User Manangement.png" />

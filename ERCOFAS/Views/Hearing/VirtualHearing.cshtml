@@ -11,12 +11,14 @@
             <form id="msform" class="text-center">
                 <!-- progressbar -->
                 <ul id="progressbar" class="p-0">
-                    <li class="active" id="submit"><img src="~/Assets/virt-hear-icons/VectorNotice.png" height="40" class="mb-2" /><br />Notice of Virtual Hearing</li>
-                    <li id="review"><img src="~/Assets/virt-hear-icons/VectorReq.png" height="40" class="mb-2" /><br />Determination of Compliance w/ Juridical Requirements</li>
-                    <li id="generate"><img src="~/Assets/virt-hear-icons/VectorPres.png" height="40" class="mb-2" /><br />Expository Presentation</li>
-                    <li id="payment"><img src="~/Assets/virt-hear-icons/VectorConf.png" height="40" class="mb-2" /><br />Pre-Trial Conference</li>
-                    <li id="verify"><img src="~/Assets/virt-hear-icons/VectorPres.png" height="40" class="mb-2" /><br />Presentation Evidence</li>
-                    <li id="release"><img src="~/Assets/virt-hear-icons/VectorDec.png" height="40" class="mb-2" /><br />Notice of Decision</li>
+
+                    @*<li class="active mb-5" id="account"><img src="~/Assets/type.png" class="reg-icon"><br />Type of RER<br /><svg id="account-svg" class="ProgressBar-icon"></svg></li>*@
+                    <li class="active d-flex justify-content-center" id="submit"><div class="d-flex flex-column align-items-center"><img src="~/Assets/virt-hear-icons/VectorNotice.png" height="40" width="40" class="mb-2" /><span>Notice of Virtual Hearing</span></div></li>
+                    <li class="d-flex justify-content-center" id="review"><div class="d-flex flex-column align-items-center"><img src="~/Assets/virt-hear-icons/VectorReq.png" height="40" width="40" class="mb-2" /><span>Determination of Compliance w/ Juridical Requirements</span></div></li>
+                    <li class="d-flex justify-content-center" id="generate"><div class="d-flex flex-column align-items-center"><img src="~/Assets/virt-hear-icons/VectorPres.png" height="40" width="40" class="mb-2" /><span>Expository Presentation</span></div></li>
+                    <li class="d-flex justify-content-center" id="payment"><div class="d-flex flex-column align-items-center"><img src="~/Assets/virt-hear-icons/VectorConf.png" height="40" width="40" class="mb-2" /><span>Pre-Trial Conference</span></div></li>
+                    <li class="d-flex justify-content-center" id="verify"><div class="d-flex flex-column align-items-center"><img src="~/Assets/virt-hear-icons/VectorPres.png" height="40" width="40" class="mb-2" /><span>Presentation Evidence</span></div></li>
+                    <li class="d-flex justify-content-center" id="release"><div class="d-flex flex-column align-items-center"><img src="~/Assets/virt-hear-icons/VectorDec.png" height="40" width="40" class="mb-2" /><span>Notice of Decision</span></div></li>
                 </ul>
                 <fieldset class="px-5">
                     <div class="text-start">
@@ -221,16 +223,21 @@
         position: relative
     }
 
-    .steps {
+/*    .steps {
         color: gray;
         margin-bottom: 10px;
         text-align: right
     }
-
+*/
     #progressbar {
         margin-bottom: 30px;
         overflow: hidden;
-        color: lightgrey
+        color: lightgrey;
+        padding: 0;
+
+        /*margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey*/
     }
 
         #progressbar .active {
@@ -239,11 +246,18 @@
 
         #progressbar li {
             list-style-type: none;
+            font-size: 12px;
+            width: calc(100% / 6);
+            float: left;
+            position: relative;
+            min-height: 150px;
+
+            /*list-style-type: none;
             width: calc(100% / 6);
             float: left;
             position: relative;
             text-align: center;
-            padding: 0 10px 0 10px;
+            padding: 0 10px 0 10px;*/
         }
 
         #progressbar #submit:before, #progressbar #review:before, #progressbar #generate:before, #progressbar #payment:before, #progressbar #verify:before,
@@ -253,13 +267,36 @@
         }
 
         #progressbar li:before {
-            width: 10px;
+            width: 1em;
+            height: 1em;
+            background-color: #499bb3;
+            border-radius: 10px;
+            max-width: 100%;
+            z-index: 10;
+            position: relative;
+            transition: all .25s ease-out;
+            position: absolute;
+            bottom: 15%;
+            margin: 0 auto 0 auto;
+
+            /*width: 50px;
+            height: 50px;
+            line-height: 45px;
+            display: block;
+            font-size: 18px;
+            color: #ffffff;
+            background: lightgray;
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            padding: 2px;*/
+
+            /*width: 10px;
             height: 10px;
             display: block;
             font-size: 11px;
             background: lightgray;
             border-radius: 50%;
-            margin: 21px auto 10px auto;
+            margin: 21px auto 10px auto;*/
         }
 
         #progressbar li:after {
@@ -269,8 +306,18 @@
             background: lightgray;
             position: absolute;
             left: 0;
+            bottom: 19%;
+            z-index: -1;
+            color: #499bb3;
+
+            /*content: '';
+            width: 100%;
+            height: 2px;
+            background: lightgray;
+            position: absolute;
+            left: 0;
             top: 25px;
-            z-index: -1
+            z-index: -1*/
         }
 
         #progressbar li.active:before,

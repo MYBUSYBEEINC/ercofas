@@ -9,16 +9,16 @@
             <form id="msform" class="text-center">
                 <!-- progressbar -->
                 <ul id="progressbar" class="p-0">
-                    <li class="active" id="submit"><img src="~/Assets/validation-meter-sampling-icons/VectorSubmit.png" height="40" class="mb-2" /><br />Submit Progress Report</li>
-                    <li id="review"><img src="~/Assets/validation-meter-sampling-icons/VectorReview.png" height="40" class="mb-2" /><br />Review and Validation</li>
-                    <li id="generate"><img src="~/Assets/validation-meter-sampling-icons/VectorGen.png" height="40" class="mb-2" /><br />Generate SOA</li>
-                    <li id="payment"><img src="~/Assets/validation-meter-sampling-icons/VectorPayment.png" height="40" class="mb-2" /><br />Payment</li>
-                    <li id="verify"><img src="~/Assets/validation-meter-sampling-icons/VectorVerif.png" height="40" class="mb-2" /><br />Payment Verification</li>
-                    <li id="release"><img src="~/Assets/validation-meter-sampling-icons/VectorRelease.png" height="40" class="mb-2" /><br />Release Approved/Numbered Travel Order</li>
-                    <li id="validate"><img src="~/Assets/validation-meter-sampling-icons/VectorValidate.png" height="40" class="mb-2" /><br />Field Validation</li>
-                    <li id="report"><img src="~/Assets/validation-meter-sampling-icons/VectorReport.png" height="40" class="mb-2" /><br />Reporting</li>
-                    <li id="dissemate"><img src="~/Assets/validation-meter-sampling-icons/VectorDisem.png" height="40" class="mb-2" /><br />Dissemation</li>
-                    <li id="issue"><img src="~/Assets/validation-meter-sampling-icons/VectorIssue.png" height="40" class="mb-2" /><br />Issuance of Certification</li>
+                    <li class="active d-flex justify-content-center" id="submit"><div class="d-flex flex-column align-items-center"><img src="~/Assets/validation-meter-sampling-icons/VectorSubmit.png" height="40" class="mb-2" /><span>Submit Progress Report</span></div></li>
+                    <li class="d-flex justify-content-center" id="review"><div class="d-flex flex-column align-items-center"><img src="~/Assets/validation-meter-sampling-icons/VectorReview.png" height="40" class="mb-2" /><span>Review and Validation</span></div></li>
+                    <li class="d-flex justify-content-center" id="generate"><div class="d-flex flex-column align-items-center"><img src="~/Assets/validation-meter-sampling-icons/VectorGen.png" height="40" class="mb-2" /><span>Generate SOA</span></div></li>
+                    <li class="d-flex justify-content-center" id="payment"><div class="d-flex flex-column align-items-center"><img src="~/Assets/validation-meter-sampling-icons/VectorPayment.png" height="40" class="mb-2" /><span>Payment</span></div></li>
+                    <li class="d-flex justify-content-center" id="verify"><div class="d-flex flex-column align-items-center"><img src="~/Assets/validation-meter-sampling-icons/VectorVerif.png" height="40" class="mb-2" /><span>Payment Verification</span></div></li>
+                    <li class="d-flex justify-content-center" id="release"><div class="d-flex flex-column align-items-center"><img src="~/Assets/validation-meter-sampling-icons/VectorRelease.png" height="40" class="mb-2" /><span>Release Approved/Numbered Travel Order</span></div></li>
+                    <li class="d-flex justify-content-center" id="validate"><div class="d-flex flex-column align-items-center"><img src="~/Assets/validation-meter-sampling-icons/VectorValidate.png" height="40" class="mb-2" /><span>Field Validation</span></div></li>
+                    <li class="d-flex justify-content-center" id="report"><div class="d-flex flex-column align-items-center"><img src="~/Assets/validation-meter-sampling-icons/VectorReport.png" height="40" class="mb-2" /><span>Reporting</span></div></li>
+                    <li class="d-flex justify-content-center" id="dissemate"><div class="d-flex flex-column align-items-center"><img src="~/Assets/validation-meter-sampling-icons/VectorDisem.png" height="40" class="mb-2" /><span>Dissemation</span></div></li>
+                    <li class="d-flex justify-content-center" id="issue"><div class="d-flex flex-column align-items-center"><img src="~/Assets/validation-meter-sampling-icons/VectorIssue.png" height="40" class="mb-2" /><span>Issuance of Certification</span></div></li>
                 </ul>
                 <fieldset class="px-5">
                     <div class="form-group">
@@ -774,11 +774,18 @@
 
         #progressbar li {
             list-style-type: none;
+            font-size: 12px;
+            width: calc(100% / 10);
+            float: left;
+            position: relative;
+            min-height: 150px;
+
+            /*list-style-type: none;
             width: calc(100% / 10);
             float: left;
             position: relative;
             text-align: center;
-            padding: 0 10px 0 10px;
+            padding: 0 10px 0 10px;*/
         }
 
         #progressbar #submit:before, #progressbar #review:before, #progressbar #generate:before, #progressbar #payment:before, #progressbar #verify:before,
@@ -788,13 +795,17 @@
         }
 
         #progressbar li:before {
-            width: 10px;
-            height: 10px;
-            display: block;
-            font-size: 11px;
-            background: lightgray;
-            border-radius: 50%;
-            margin: 21px auto 10px auto;
+            width: 1em;
+            height: 1em;
+            background-color: #499bb3;
+            border-radius: 10px;
+            max-width: 100%;
+            z-index: 10;
+            position: relative;
+            transition: all .25s ease-out;
+            position: absolute;
+            bottom: 15%;
+            margin: 0 auto 0 auto;
         }
 
         #progressbar li:after {
@@ -804,8 +815,9 @@
             background: lightgray;
             position: absolute;
             left: 0;
-            top: 25px;
-            z-index: -1
+            bottom: 19%;
+            z-index: -1;
+            color: #499bb3;
         }
 
         #progressbar li.active:before,
