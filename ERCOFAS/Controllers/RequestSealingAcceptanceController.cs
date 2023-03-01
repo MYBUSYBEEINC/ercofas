@@ -48,7 +48,7 @@ namespace ERCOFAS.Controllers
             string userId = User.Identity.GetUserId();
             SealingAndAcceptanceListing theListing = new SealingAndAcceptanceListing();
             theListing.Listing = ReadSealingAndAcceptance(userId);
-            return PartialView("~/Views/SealingAndAcceptance/_MainList.cshtml", theListing);
+            return PartialView("~/Views/RequestSealingAcceptance/_MainList.cshtml", theListing);
         }
 
         public List<SealingAndAcceptanceViewModel> ReadSealingAndAcceptance(string userId)
@@ -57,7 +57,6 @@ namespace ERCOFAS.Controllers
             list = (from t1 in db.SealingAndAcceptances.AsNoTracking()
                     join t2 in db.AspNetUsers.AsNoTracking() on t1.CreatedBy equals t2.Id
                     join t3 in db.UserProfiles.AsNoTracking() on t1.Stakeholder equals t3.AspNetUserId
-                    orderby t1.CreatedOn descending
                     select new SealingAndAcceptanceViewModel
                     {
                         Id = t1.Id,
@@ -80,11 +79,12 @@ namespace ERCOFAS.Controllers
                         DirectorAssignedNumber = t1.DirectorAssignedNumber,
                         OED = t1.OED,
                         TravelAuthorityStatus = t1.TravelAuthorityStatus,
-                    }).OrderByDescending(x => x.CreatedOn).ToList();
-
+                        Stakeholder = t3.FullName,
+                    }).ToList();
+            /*
             var userRole = RoleHelpers.GetMainRole();
             if (userRole != null && userRole == UserTypeEnum.Client.ToString())
-                list = list.Where(x => x.Stakeholder == userId).ToList();
+                list = list.Where(x => x.Stakeholder == userId).ToList();*/
 
             return list;
         }
